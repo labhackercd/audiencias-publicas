@@ -64,6 +64,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+YOUTUBE_API_KEY = config('YOUTUBE_API_KEY')
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

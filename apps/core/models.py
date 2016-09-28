@@ -9,8 +9,8 @@ class Video(models.Model):
     thumb_default = models.URLField(null=True, blank=True)
     thumb_medium = models.URLField(null=True, blank=True)
     thumb_high = models.URLField(null=True, blank=True)
-    title = models.CharField(max_length=200)
-    description = models.TextField()
+    title = models.CharField(max_length=200, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     published_date = models.DateTimeField(auto_now=True)
     closed_date = models.DateTimeField(null=True, blank=True)
 
