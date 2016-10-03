@@ -5,7 +5,7 @@ from apps.core.models import Video, Message, Question
 from django.views.generic import TemplateView, DetailView
 
 
-def receive_callback(request):
+def receive_callback(request=None):
     params = {'part': 'snippet,id',
               'channelId': 'UC-ZkSRh-7UEuwXJQ9UMCFJA',
               'q': 'audiencias publicas',
@@ -30,8 +30,8 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['videos_closed'] = Video.objects.filter(closed_date__is_null=False).order_by('-published_date')
-        context['videos_live'] = Video.objects.filter(closed_date__is_null=True).order_by('-published_date')
+        context['videos_closed'] = Video.objects.filter(closed_date__isnull=False).order_by('-published_date')
+        context['videos_live'] = Video.objects.filter(closed_date__isnull=True).order_by('-published_date')
 
         return context
 

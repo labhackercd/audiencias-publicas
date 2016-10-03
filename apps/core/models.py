@@ -16,12 +16,12 @@ class Video(models.Model):
     closed_date = models.DateTimeField(null=True, blank=True)
     slug = models.SlugField(max_length=200, blank=True)
 
-    def __unicode__(self):
-        return self.videoId
-
     class Meta:
         verbose_name = _('video')
         verbose_name_plural = _('videos')
+
+    def __unicode__(self):
+        return self.videoId
 
     @models.permalink
     def get_absolute_url(self):
@@ -34,12 +34,12 @@ class Message(models.Model):
     message = models.TextField()
     timestamp = models.DateTimeField(auto_now=True, db_index=True)
 
-    def __unicode__(self):
-        return self.message
-
     class Meta:
         verbose_name = _('message')
         verbose_name_plural = _('messages')
+
+    def __unicode__(self):
+        return self.message
 
 
 class Question(models.Model):
@@ -50,12 +50,30 @@ class Question(models.Model):
     up_votes = models.IntegerField(default=0)
     down_votes = models.IntegerField(default=0)
 
-    def __unicode__(self):
-        return self.question
-
     class Meta:
         verbose_name = _('question')
         verbose_name_plural = _('questions')
+
+    def __unicode__(self):
+        return self.question
+
+
+class Agenda(models.Model):
+    date = models.DateTimeField(null=True, blank=True)
+    session = models.CharField(max_length=200, null=True, blank=True)
+    location = models.CharField(max_length=200, null=True, blank=True)
+    situation = models.CharField(max_length=200, null=True, blank=True)
+    commission = models.CharField(max_length=200, null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('agenda')
+        verbose_name_plural = _('agendas')
+
+    def __unicode__(self):
+        if self.session and self.location:
+            return self.session + ', ' + self.location
+        else:
+            return 'Agenda'
 
 
 def video_pre_save(signal, instance, sender, **kwargs):
