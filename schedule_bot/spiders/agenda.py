@@ -3,6 +3,7 @@ import scrapy
 from schedule_bot.items import ScheduleBotItem
 from scrapy.selector import Selector
 from datetime import datetime
+from apps.core.models import Agenda
 
 
 class AgendaSpider(scrapy.Spider):
@@ -13,6 +14,7 @@ class AgendaSpider(scrapy.Spider):
     )
 
     def parse(self, response):
+        Agenda.objects.all().delete()
         for sessionbox in Selector(response=response).xpath('//div[@class="sessionBox"]'):
             for line in sessionbox.xpath('table/tbody[1]/tr'):
                 commission = sessionbox.xpath('h4/text()').re('[^\t\n\r]+')[0]
