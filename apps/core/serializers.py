@@ -5,7 +5,7 @@ from apps.core.models import Agenda, Message, Question, Video
 class AgendaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Agenda
-        fields = ('date', 'session', 'location', 'situation', 'commission')
+        fields = ('id', 'date', 'session', 'location', 'situation', 'commission')
 
 
 class QuestionSerializer(serializers.ModelSerializer):
