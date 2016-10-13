@@ -1,5 +1,16 @@
 from rest_framework import serializers
-from apps.core.models import Agenda, Message, Question, Video
+from apps.core.models import Agenda, Message, Question, Video, UpDownVote
+
+
+class VoteSerializer(serializers.ModelSerializer):
+    content_type = serializers.SerializerMethodField('get_content_type_name')
+
+    def get_content_type_name(self, obj):
+        return obj.content_type.name
+
+    class Meta:
+        model = UpDownVote
+        fields = ('id', 'user', 'content_type', 'vote', 'object_pk')
 
 
 class AgendaSerializer(serializers.ModelSerializer):
@@ -9,21 +20,23 @@ class AgendaSerializer(serializers.ModelSerializer):
 
 
 class QuestionSerializer(serializers.ModelSerializer):
+    votes = VoteSerializer(many=True)
+
     class Meta:
         model = Question
-        fields = ('video', 'user', 'question',
-                  'timestamp', 'up_votes', 'down_votes')
+        fields = ('id', 'video', 'user', 'question',
+                  'created', 'modified', 'votes')
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ('video', 'user', 'message', 'timestamp')
+        fields = ('id', 'video', 'user', 'message', 'created', 'modified')
 
 
 class VideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Video
-        fields = ('videoId', 'thumb_default', 'thumb_medium',
-                  'thumb_high', 'title', 'description',
-                  'published_date', 'closed_date', 'slug')
+        fields = ('id', 'videoId', 'thumb_default', 'thumb_medium',
+                  'thumb_high', 'title', 'description', 'published_date',
+                  'closed_date', 'slug', 'created', 'modified')
