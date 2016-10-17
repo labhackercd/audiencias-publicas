@@ -1,0 +1,9 @@
+@import 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700';
+
+@font-face {
+  font-family: 'Fontastic';
+	src:	url('../bower_components/fontastic-labhacker/fontastic-labhacker.eot'); /* IE9 Compat Modes */
+	src:	url('../bower_components/fontastic-labhacker/fontastic-labhacker.woff') format('woff'), /* Pretty Modern Browsers */
+				url('../bower_components/fontastic-labhacker/fontastic-labhacker.ttf')  format('truetype'), /* Safari, Android, iOS */
+				url('../bower_components/fontastic-labhacker/fontastic-labhacker.svg#fontastic') format('svg'); /* Legacy iOS */
+}

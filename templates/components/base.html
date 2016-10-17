@@ -1,3 +1,6 @@
+{% load compress %}
+{% load static from staticfiles %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,9 +8,13 @@
     {% block extrameta %}
     {% endblock %}
     <title>{% block title %}Audiências Públicas{% endblock %}</title>
+    {% compress css %}
+        <link rel="stylesheet" href="{% static 'scss/app.scss' %}" type="text/x-scss" />
+    {% endcompress %}
     {% block extracss %}
     {% endblock %}
 </head>
+
 <body>
     {% block content %}       
     {% endblock %}
