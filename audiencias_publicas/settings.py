@@ -136,6 +136,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+# Django Q configuration
+
 Q_CLUSTER = {
     'name': 'audiencias_publicas',
     'workers': 8,
@@ -151,3 +154,22 @@ Q_CLUSTER = {
         'port': 6379,
         'db': 0, }
 }
+
+# Authentication stuffs
+
+FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default=None)
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', default='sessionid')
+SESSION_COOKIE_PATH = config('SESSION_COOKIE_PATH', default='/')
+
+# Email configuration
+
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')
