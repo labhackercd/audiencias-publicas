@@ -76,3 +76,6 @@ target/
 __pycache__/
 local_settings.py
 
+### Front-end ###
+bower_components/
+assets/
