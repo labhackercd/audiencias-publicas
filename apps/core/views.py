@@ -7,12 +7,13 @@ from django.views.generic import TemplateView, DetailView
 
 def receive_callback(request=None):
     params = {'part': 'snippet,id',
-              'channelId': 'UC-ZkSRh-7UEuwXJQ9UMCFJA',
-              'q': 'audiencias publicas',
+              'channelId': settings.YOUTUBE_CHANNEL_ID,
+              'q': settings.YOUTUBE_SEARCH_QUERY,
               'type': 'video',
               'eventType': 'live',
               'key': settings.YOUTUBE_API_KEY}
-    response = requests.get('https://www.googleapis.com/youtube/v3/search', params=params)
+    response = requests.get('https://www.googleapis.com/youtube/v3/search',
+                            params=params)
     data = json.loads(response.text)
     for item in data['items']:
         video = Video()
@@ -30,8 +31,10 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['videos_closed'] = Video.objects.filter(closed_date__isnull=False).order_by('-published_date')
-        context['videos_live'] = Video.objects.filter(closed_date__isnull=True).order_by('-published_date')
+        context['videos_closed'] = Video.objects.filter(
+            closed_date__isnull=False).order_by('-published_date')
+        context['videos_live'] = Video.objects.filter(
+            closed_date__isnull=True).order_by('-published_date')
 
         return context
 

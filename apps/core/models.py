@@ -5,11 +5,14 @@ from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import fields
 from django.utils import timezone
+from django_q.tasks import schedule
 
 
 class TimestampedMixin(models.Model):
-    created = models.DateTimeField(_('created'), editable=False, blank=True, auto_now_add=True)
-    modified = models.DateTimeField(_('modified'), editable=False, blank=True, auto_now=True)
+    created = models.DateTimeField(_('created'), editable=False,
+                                   blank=True, auto_now_add=True)
+    modified = models.DateTimeField(_('modified'), editable=False,
+                                    blank=True, auto_now=True)
 
     class Meta:
         abstract = True
@@ -26,7 +29,8 @@ class UpDownVote(TimestampedMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
     object_pk = models.PositiveIntegerField()
     content_type = models.ForeignKey('contenttypes.ContentType')
-    vote = models.BooleanField(default=False, choices=((True, _('Up Vote')), (False, _('Down Vote'))))
+    vote = models.BooleanField(default=False, choices=((True, _('Up Vote')),
+                               (False, _('Down Vote'))))
 
     class Meta:
         unique_together = ('user', 'object_pk', 'content_type')
@@ -36,7 +40,7 @@ class UpDownVote(TimestampedMixin):
 
 
 class Video(TimestampedMixin):
-    videoId = models.CharField(max_length=200)
+    videoId = models.CharField(max_length=200, unique=True)
     thumb_default = models.URLField(null=True, blank=True)
     thumb_medium = models.URLField(null=True, blank=True)
     thumb_high = models.URLField(null=True, blank=True)
@@ -108,4 +112,11 @@ def video_pre_save(signal, instance, sender, **kwargs):
         instance.slug = slugify(instance.title)
 
 
+def video_post_save(sender, instance, created, **kwargs):
+    if created:
+        schedule('apps.core.tasks.close_room', instance.videoId,
+                 name=instance.videoId, schedule_type='I')
+
+
 models.signals.pre_save.connect(video_pre_save, sender=Video)
+models.signals.post_save.connect(video_post_save, sender=Video)

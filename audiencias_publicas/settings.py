@@ -22,13 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('DJANGO_SECRET_KEY', default='#$^hlagccn!-%&kc#^gke)z+rc0yuv&u$vq4g86a1_@+_cn3it')
+SECRET_KEY = config('DJANGO_SECRET_KEY', default='secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(lambda x: x.strip().strip(',').strip()), default='127.0.0.1')
-
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',
+                       cast=Csv(lambda x: x.strip().strip(',').strip()),
+                       default='127.0.0.1')
 
 # Application definition
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'corsheaders',
     'debug_toolbar',
+    'django_q',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -70,6 +72,8 @@ REST_FRAMEWORK = {
 }
 
 YOUTUBE_API_KEY = config('YOUTUBE_API_KEY')
+YOUTUBE_CHANNEL_ID = config('YOUTUBE_CHANNEL_ID')
+YOUTUBE_SEARCH_QUERY = config('YOUTUBE_SEARCH_QUERY', default='')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -107,9 +111,10 @@ WSGI_APPLICATION = 'audiencias_publicas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = dict(default=config('DATABASE_URL',
-                                cast=db_url,
-                                default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')))
+DATABASES = dict(default=config(
+    'DATABASE_URL', cast=db_url,
+    default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
+)
 
 
 # Internationalization
@@ -130,3 +135,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+Q_CLUSTER = {
+    'name': 'audiencias_publicas',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': '127.0.0.1',
+        'port': 6379,
+        'db': 0, }
+}
