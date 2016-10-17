@@ -79,3 +79,4 @@ local_settings.py
 ### Front-end ###
 bower_components/
 assets/
+CACHE/
