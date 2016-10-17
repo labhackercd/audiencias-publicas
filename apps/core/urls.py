@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from apps.core.views import HomeView, VideoDetail
 from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
-                           QuestionListAPI, VideoListAPI)
+                           QuestionListAPI, VideoListAPI, VoteListAPI)
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
@@ -19,4 +19,6 @@ urlpatterns += [
         name='question_list_api'),
     url(r'^api/video/$', VideoListAPI.as_view(),
         name='video_list_api'),
+    url(r'^api/vote/$', VoteListAPI.as_view(),
+        name='vote_list_api'),
 ]

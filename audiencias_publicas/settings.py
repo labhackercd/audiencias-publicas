@@ -22,13 +22,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('DJANGO_SECRET_KEY', default='#$^hlagccn!-%&kc#^gke)z+rc0yuv&u$vq4g86a1_@+_cn3it')
+SECRET_KEY = config('DJANGO_SECRET_KEY', default='secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(lambda x: x.strip().strip(',').strip()), default='127.0.0.1')
-
+ALLOWED_HOSTS = config('ALLOWED_HOSTS',
+                       cast=Csv(lambda x: x.strip().strip(',').strip()),
+                       default='127.0.0.1')
 
 # Application definition
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = (
 
     'djangobower',
     'compressor',
+    'django_q',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -73,6 +75,8 @@ REST_FRAMEWORK = {
 }
 
 YOUTUBE_API_KEY = config('YOUTUBE_API_KEY')
+YOUTUBE_CHANNEL_ID = config('YOUTUBE_CHANNEL_ID')
+YOUTUBE_SEARCH_QUERY = config('YOUTUBE_SEARCH_QUERY', default='')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -110,9 +114,10 @@ WSGI_APPLICATION = 'audiencias_publicas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = dict(default=config('DATABASE_URL',
-                                cast=db_url,
-                                default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')))
+DATABASES = dict(default=config(
+    'DATABASE_URL', cast=db_url,
+    default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
+)
 
 
 # Internationalization
@@ -158,3 +163,40 @@ COMPRESS_PRECOMPILERS = [
 LIBSASS_SOURCEMAPS = 'DEBUG'
 
 COMPRESS_ROOT = './static'
+
+# Django Q configuration
+
+Q_CLUSTER = {
+    'name': 'audiencias_publicas',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'redis': {
+        'host': '127.0.0.1',
+        'port': 6379,
+        'db': 0, }
+}
+
+# Authentication stuffs
+
+FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default=None)
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', default='sessionid')
+SESSION_COOKIE_PATH = config('SESSION_COOKIE_PATH', default='/')
+
+# Email configuration
+
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', cast=int, default=587)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')

@@ -4,9 +4,19 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import generics, filters
 from datetime import datetime
-from apps.core.models import Agenda, Message, Question, Video
+from apps.core.models import Agenda, Message, Question, Video, UpDownVote
 from apps.core.serializers import (AgendaSerializer, QuestionSerializer,
-                                   MessageSerializer, VideoSerializer)
+                                   MessageSerializer, VideoSerializer,
+                                   VoteSerializer)
+
+
+class VoteListAPI(generics.ListAPIView):
+    queryset = UpDownVote.objects.all()
+    serializer_class = VoteSerializer
+    filter_backends = (filters.DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filter_fields = ('user', 'content_type', 'vote')
+    search_fields = ('user', 'content_type', 'vote', 'object_pk')
+    ordering_fields = ('user', 'vote')
 
 
 class AgendaListAPI(generics.ListAPIView):
@@ -55,4 +65,6 @@ def api_root(request, format=None):
                             request=request, format=format),
         'questions': reverse('question_list_api',
                              request=request, format=format),
+        'votes': reverse('vote_list_api',
+                         request=request, format=format),
     })
