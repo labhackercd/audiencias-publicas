@@ -48,6 +48,9 @@ INSTALLED_APPS = (
     'crispy_forms',
     'corsheaders',
     'debug_toolbar',
+
+    'djangobower',
+    'compressor',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -130,3 +133,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = 'assets'
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+    'compressor.finders.CompressorFinder',
+]
+
+BOWER_COMPONENTS_ROOT = './static'
+
+BOWER_INSTALLED_APPS = [
+    'jquery',
+    'foundation-sites',
+    'https://github.com/labhackercd/fontastic-labhacker.git',
+]
+
+COMPRESS_PRECOMPILERS = [
+    ('text/x-scss', 'django_libsass.SassCompiler')
+]
+
+LIBSASS_SOURCEMAPS = 'DEBUG'
+
+COMPRESS_ROOT = './static'
