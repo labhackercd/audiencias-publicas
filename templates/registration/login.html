@@ -32,6 +32,9 @@
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
+<p>Enter with <a href="{% url 'social:begin' backend='google-oauth2' %}">Google+</a></p>
+<p>Enter with <a href="{% url 'social:begin' backend='facebook' %}">Facebook</a></p>
+
 {# Assumes you setup the password_reset view in your URLconf #}
 <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 

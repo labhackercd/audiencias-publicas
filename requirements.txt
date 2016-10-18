@@ -13,3 +13,5 @@ django-bower>=5.2.0
 django-compressor>=2.1
 django-libsass>=0.7
 django-q>=0.7.18
+python-social-auth==0.2.21
+rules==1.1.1
