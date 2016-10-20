@@ -1,3 +1,27 @@
 {% extends "components/base.html" %}
-{% block content %}     
+{% load staticfiles %}
+{% block content %}
+  <div class="row">
+    <div class="columns small-6">
+      <h1>Live Videos</h1>
+      <div class="live-videos">
+        {% for video in live_videos %}
+          {% include "includes/home_video.html" with video=video %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="columns small-6">
+      <h1>Closed videos</h1>
+      <div class="closed-videos">
+        {% for video in closed_videos %}
+          {% include "includes/home_video.html" with video=video %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block websockets %}
+  <script type="text/javascript" src="{% static 'js/websockets/home.js' %}"></script>
 {% endblock %}

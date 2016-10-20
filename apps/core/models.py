@@ -4,8 +4,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import fields
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django_q.tasks import schedule
+from django_q.models import Schedule
+from channels import Group
+import json
 
 
 class TimestampedMixin(models.Model):
@@ -61,6 +65,18 @@ class Video(TimestampedMixin):
     def get_absolute_url(self):
         return ('video_room', [self.slug, self.pk])
 
+    def html_body(self):
+        return render_to_string('includes/home_video.html', {'video': self})
+
+    def send_notification(self, deleted=False, is_closed=False):
+        notification = {
+            'id': self.id,
+            'html': self.html_body(),
+            'deleted': deleted,
+            'is_closed': is_closed
+        }
+        Group('home').send({'text': json.dumps(notification)})
+
 
 class Message(TimestampedMixin):
     video = models.ForeignKey(Video, related_name='messages')
@@ -113,10 +129,22 @@ def video_pre_save(signal, instance, sender, **kwargs):
 
 
 def video_post_save(sender, instance, created, **kwargs):
+    is_closed = False
     if created:
         schedule('apps.core.tasks.close_room', instance.videoId,
                  name=instance.videoId, schedule_type='I')
 
+    if instance.closed_date is not None:
+        is_closed = True
+
+    instance.send_notification(is_closed=is_closed)
+
+
+def video_post_delete(sender, instance, **kwargs):
+    instance.send_notification(deleted=True)
+    Schedule.objects.get(name=instance.videoId).delete()
+
 
 models.signals.pre_save.connect(video_pre_save, sender=Video)
 models.signals.post_save.connect(video_post_save, sender=Video)
+models.signals.post_delete.connect(video_post_delete, sender=Video)

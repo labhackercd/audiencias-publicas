@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'compressor',
     'django_q',
     'social.apps.django_app.default',
+    'channels',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -90,6 +91,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'audiencias_publicas.urls'

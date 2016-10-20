@@ -31,9 +31,9 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['videos_closed'] = Video.objects.filter(
+        context['closed_videos'] = Video.objects.filter(
             closed_date__isnull=False).order_by('-published_date')
-        context['videos_live'] = Video.objects.filter(
+        context['live_videos'] = Video.objects.filter(
             closed_date__isnull=True).order_by('-published_date')
 
         return context
