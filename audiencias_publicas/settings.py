@@ -158,6 +158,7 @@ BOWER_INSTALLED_APPS = [
     'jquery',
     'foundation-sites',
     'https://github.com/labhackercd/fontastic-labhacker.git',
+    'https://github.com/joewalnes/reconnecting-websocket.git',
 ]
 
 COMPRESS_PRECOMPILERS = [
@@ -235,3 +236,11 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')
+
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "ROUTING": "apps.core.routing.channel_routing",
+    },
+}
