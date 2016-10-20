@@ -16,7 +16,13 @@
 </head>
 
 <body>
-    {% block content %}       
+    {% block content %}
+    {% endblock %}
+
+    <script type="text/javascript" src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'reconnectingWebsocket/reconnecting-websocket.min.js' %}"></script>
+
+    {% block websockets %}
     {% endblock %}
     {% block extrajs %}
     {% endblock %}
