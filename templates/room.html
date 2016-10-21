@@ -10,7 +10,8 @@
     </ul>
     {% if not object.closed_date and user.is_authenticated %}
     <form id="chatform">
-        <input id="message" type="text" placeholder="message">
+        <input id="message" name="message" type="text" placeholder="message">
+        <input type="hidden" name="handler" value="{{handler}}">
         <button type="submit" id="go">Enviar</button>
     </form>
     {% endif %}
@@ -33,8 +34,8 @@
 
             $("#chatform").on("submit", function(event) {
                 socket.send(JSON.stringify({
-                    user: "{{ request.user.pk }}",
-                    message: $('#message').val(),
+                    handler: $(this)[0].handler.value,
+                    message: $(this)[0].message.value,
                 }));
                 $("#message").val('').focus();
                 return false;

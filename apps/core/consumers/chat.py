@@ -2,6 +2,7 @@ import json
 import logging
 from channels import Group
 from apps.core.models import Video, Message
+from apps.core.utils import decrypt
 from django.contrib.auth.models import User
 
 log = logging.getLogger("chat")
@@ -36,13 +37,13 @@ def receive_room(message, pk):
     except ValueError:
         log.debug("ws message isn't json text=%s", message['text'])
         return
-    if set(data.keys()) != set(('user', 'message')):
+    if set(data.keys()) != set(('handler', 'message')):
         log.debug("ws message unexpected format data=%s", data)
         return
 
     if data:
-        log.debug('chat message video=%s user=%s message=%s', video.pk, data['user'], data['message'])
-        user = User.objects.get(id=data['user'])
+        log.debug('chat message video=%s user=%s message=%s', video.pk, data['handler'], data['message'])
+        user = User.objects.get(id=decrypt(data['handler']))
         m = Message.objects.create(video=video, user=user, message=data['message'])
         Group(video.group_name).send({'text': json.dumps({"hmtl": m.html_body()})})
 

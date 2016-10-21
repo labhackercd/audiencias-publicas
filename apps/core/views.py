@@ -1,8 +1,9 @@
 from django.conf import settings
+from apps.core.models import Video
+from apps.core.utils import encrypt
+from django.views.generic import TemplateView, DetailView
 import requests
 import json
-from apps.core.models import Video
-from django.views.generic import TemplateView, DetailView
 
 
 def receive_callback(request=None):
@@ -42,3 +43,9 @@ class HomeView(TemplateView):
 class VideoDetail(DetailView):
     model = Video
     template_name = 'room.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(VideoDetail, self).get_context_data(**kwargs)
+        context['handler'] = encrypt(str(self.request.user.id).rjust(10))
+
+        return context

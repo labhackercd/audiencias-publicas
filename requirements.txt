@@ -17,3 +17,4 @@ python-social-auth>=0.2.21
 rules>=1.1.1
 channels>=0.17.3
 asgi-redis>=0.14.1
+pycrypto>=2.6.1
