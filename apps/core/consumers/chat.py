@@ -47,7 +47,7 @@ def receive_room(message, pk):
         Group(video.group_name).send(
             {'text': json.dumps({"user": m.user.username,
                                  "message": m.message,
-                                 "created": m.created.strftime("%a %d %b %Y %H:%M")})})
+                                 "created": m.created.strftime("%d/%m/%Y %H:%M")})})
 
 
 def disconnect_room(message, pk):

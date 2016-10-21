@@ -17,14 +17,12 @@
 {% block websockets %}
     <script>
         $(function () {
-            // Correctly decide between ws:// and wss://
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
             var ws_path = ws_scheme + '://' + window.location.host + window.location.pathname + "stream/";
             console.log("Connecting to " + ws_path);
             var socket = new ReconnectingWebSocket(ws_path);
 
             socket.onmessage = function(message) {
-                console.log('entrou');
                 var data = JSON.parse(message.data);
                 var chat = $("#chat")
                 chat.append(`<li>${data.user} - ${data.message} - ${data.created} </li>`)
