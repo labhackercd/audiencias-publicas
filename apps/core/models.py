@@ -39,7 +39,7 @@ class UpDownVote(TimestampedMixin):
     class Meta:
         unique_together = ('user', 'object_pk', 'content_type')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.user.get_full_name() or self.user.username
 
 
@@ -58,7 +58,7 @@ class Video(TimestampedMixin):
         verbose_name = _('video')
         verbose_name_plural = _('videos')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.videoId
 
     @models.permalink
@@ -77,6 +77,10 @@ class Video(TimestampedMixin):
         }
         Group('home').send({'text': json.dumps(notification)})
 
+    @property
+    def group_name(self):
+        return "video-%s" % self.id
+
 
 class Message(TimestampedMixin):
     video = models.ForeignKey(Video, related_name='messages')
@@ -87,7 +91,7 @@ class Message(TimestampedMixin):
         verbose_name = _('message')
         verbose_name_plural = _('messages')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.message
 
 
@@ -101,7 +105,7 @@ class Question(TimestampedMixin):
         verbose_name = _('question')
         verbose_name_plural = _('questions')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.question
 
 
@@ -116,7 +120,7 @@ class Agenda(models.Model):
         verbose_name = _('agenda')
         verbose_name_plural = _('agendas')
 
-    def __unicode__(self):
+    def __str__(self):
         if self.session and self.location:
             return self.session + ', ' + self.location
         else:

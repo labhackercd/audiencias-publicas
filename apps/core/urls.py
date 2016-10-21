@@ -5,7 +5,7 @@ from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
-    url(r'^salas/(?P<slug>[\w_-]+)-(?P<pk>\d+)/',
+    url(r'^salas/(?P<pk>\d+)/',
         VideoDetail.as_view(), name='video_room'),
 ]
 

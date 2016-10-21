@@ -1,0 +1,46 @@
+{% extends "components/base.html" %}
+{% block content %}   
+    <h5>{{ object.title }}</h5>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ object.videoId }}" frameborder="0" allowfullscreen></iframe>
+    <ul id="chat">
+        {% for message in object.messages.all %}
+          <li>
+            {{ message.user }} - {{ message.message }} - {{ message.created }}
+          </li> 
+        {% endfor %}
+    </ul>
+    <form id="chatform">
+        <input id="message" type="text" placeholder="message">
+        <button type="submit" id="go">Enviar</button>
+    </form>  
+{% endblock %}
+{% block websockets %}
+    <script>
+        $(function () {
+            // Correctly decide between ws:// and wss://
+            var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+            var ws_path = ws_scheme + '://' + window.location.host + window.location.pathname + "stream/";
+            console.log("Connecting to " + ws_path);
+            var socket = new ReconnectingWebSocket(ws_path);
+
+            socket.onmessage = function(message) {
+                console.log('entrou');
+                var data = JSON.parse(message.data);
+                var chat = $("#chat")
+                chat.append(`<li>${data.user} - ${data.message} - ${data.created} </li>`)
+            };
+
+            $("#chatform").on("submit", function(event) {
+                socket.send(JSON.stringify({
+                    user: "{{ request.user.pk }}",
+                    message: $('#message').val(),
+                }));
+                $("#message").val('').focus();
+                return false;
+            });
+
+            socket.onopen = function() { console.log("Connected to notification socket"); }
+            socket.onclose = function() { console.log("Disconnected to notification socket"); }
+        });
+    </script>
+{% endblock %}

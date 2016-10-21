@@ -1,7 +1,7 @@
 from django.conf import settings
 import requests
 import json
-from apps.core.models import Video, Message, Question
+from apps.core.models import Video
 from django.views.generic import TemplateView, DetailView
 
 
@@ -41,10 +41,4 @@ class HomeView(TemplateView):
 
 class VideoDetail(DetailView):
     model = Video
-    template_name = 'video-room.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(VideoDetail, self).get_context_data(**kwargs)
-        context['messages'] = Message.objects.filter(video=self.object)
-        context['questions'] = Question.objects.filter(video=self.object)
-        return context
+    template_name = 'room.html'
