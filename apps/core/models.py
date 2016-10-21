@@ -63,7 +63,7 @@ class Video(TimestampedMixin):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('video_room', [self.slug, self.pk])
+        return ('video_room', [self.pk])
 
     def html_body(self):
         return render_to_string('includes/home_video.html', {'video': self})
@@ -93,6 +93,9 @@ class Message(TimestampedMixin):
 
     def __str__(self):
         return self.message
+
+    def html_body(self):
+        return render_to_string('includes/chat_message.html', {'message': self})
 
 
 class Question(TimestampedMixin):

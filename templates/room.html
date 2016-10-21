@@ -1,19 +1,24 @@
 {% extends "components/base.html" %}
+
 {% block content %}   
     <h5>{{ object.title }}</h5>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ object.videoId }}" frameborder="0" allowfullscreen></iframe>
     <ul id="chat">
         {% for message in object.messages.all %}
-          <li>
-            {{ message.user }} - {{ message.message }} - {{ message.created }}
-          </li> 
+            <li data-message-id="{{message.id}}">
+              <p><b>{{message.user}}</b> {{message.message}} <i>{{message.created}}</i></p>
+            </li>
         {% endfor %}
     </ul>
+    {% if not object.closed_date and user.is_authenticated %}
     <form id="chatform">
         <input id="message" type="text" placeholder="message">
         <button type="submit" id="go">Enviar</button>
-    </form>  
+    </form>
+    {% endif %}  
 {% endblock %}
+
+{% if not object.closed_date %}
 {% block websockets %}
     <script>
         $(function () {
@@ -24,8 +29,8 @@
 
             socket.onmessage = function(message) {
                 var data = JSON.parse(message.data);
-                var chat = $("#chat")
-                chat.append(`<li>${data.user} - ${data.message} - ${data.created} </li>`)
+                var chat = $("#chat");
+                chat.append(data.hmtl);
             };
 
             $("#chatform").on("submit", function(event) {
@@ -42,3 +47,4 @@
         });
     </script>
 {% endblock %}
+{% endif %}

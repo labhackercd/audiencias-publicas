@@ -44,10 +44,7 @@ def receive_room(message, pk):
         log.debug('chat message video=%s user=%s message=%s', video.pk, data['user'], data['message'])
         user = User.objects.get(id=data['user'])
         m = Message.objects.create(video=video, user=user, message=data['message'])
-        Group(video.group_name).send(
-            {'text': json.dumps({"user": m.user.username,
-                                 "message": m.message,
-                                 "created": m.created.strftime("%d/%m/%Y %H:%M")})})
+        Group(video.group_name).send({'text': json.dumps({"hmtl": m.html_body()})})
 
 
 def disconnect_room(message, pk):
