@@ -1,13 +1,11 @@
 {% extends "components/base.html" %}
 
-{% block content %}   
+{% block content %}
     <h5>{{ object.title }}</h5>
     <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ object.videoId }}" frameborder="0" allowfullscreen></iframe>
     <ul id="chat">
         {% for message in object.messages.all %}
-            <li data-message-id="{{message.id}}">
-              <p><b>{{message.user}}</b> {{message.message}} <i>{{message.created}}</i></p>
-            </li>
+            {% include "includes/chat_message.html" with message=message %}
         {% endfor %}
     </ul>
     {% if not object.closed_date and user.is_authenticated %}
@@ -15,7 +13,7 @@
         <input id="message" type="text" placeholder="message">
         <button type="submit" id="go">Enviar</button>
     </form>
-    {% endif %}  
+    {% endif %}
 {% endblock %}
 
 {% if not object.closed_date %}
@@ -23,7 +21,7 @@
     <script>
         $(function () {
             var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-            var ws_path = ws_scheme + '://' + window.location.host + window.location.pathname + "stream/";
+            var ws_path = ws_scheme + '://' + window.location.host + window.location.pathname + "chat/stream/";
             console.log("Connecting to " + ws_path);
             var socket = new ReconnectingWebSocket(ws_path);
 
