@@ -1,12 +1,11 @@
 //Hide and show nav bar when on home
 $(document).ready(function() {
-  var aboutHeight = $('.section--home').outerHeight();
-
-  if ($(window).scrollTop() >= aboutHeight) {
+  if ($(window).scrollTop() >= $('.section--home').outerHeight()) {
     $('.navigation.navigation--hidden').addClass('show-translate');
   }
 
   $(window).scroll(function() {
+    var aboutHeight = $('.section--home').outerHeight();
     var scroll = $(window).scrollTop();
     
     if (scroll >= aboutHeight) {
@@ -15,6 +14,5 @@ $(document).ready(function() {
     } else {
       $('.navigation.navigation--hidden').removeClass('show-translate');
     }
-
   });
 });
