@@ -1,9 +1,9 @@
 from channels import Group
 
 
-def connect(message):
+def on_connect(message):
     Group('home').add(message.reply_channel)
 
 
-def disconnect(message):
+def on_disconnect(message):
     Group('home').discard(message.reply_channel)

@@ -1,49 +1,42 @@
 {% extends "components/base.html" %}
-
+{% load staticfiles %}
 {% block content %}
-    <h5>{{ object.title }}</h5>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ object.videoId }}" frameborder="0" allowfullscreen></iframe>
-    <ul id="chat">
-        {% for message in object.messages.all %}
-            {% include "includes/chat_message.html" with message=message %}
-        {% endfor %}
-    </ul>
-    {% if not object.closed_date and user.is_authenticated %}
-    <form id="chatform">
-        <input id="message" name="message" type="text" placeholder="message">
-        <input type="hidden" name="handler" value="{{handler}}">
-        <button type="submit" id="go">Enviar</button>
-    </form>
-    {% endif %}
+    <div class="row">
+        <h5>{{ object.title }}</h5>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ object.videoId }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="row">
+        <div class="columns small-6">
+            <ul id="chat">
+                {% for message in object.messages.all %}
+                    {% include "includes/chat_message.html" with message=message %}
+                {% endfor %}
+            </ul>
+            {% if not object.closed_date and user.is_authenticated %}
+            <form id="chatform">
+                <input id="message" name="message" type="text" placeholder="message">
+                <button type="submit" id="go">Enviar</button>
+            </form>
+            {% endif %}
+        </div>
+        <div class="columns small-6">
+            <ul id="questions">
+                {% include "includes/video_questions.html" with questions=questions %}
+            </ul>
+            {% if not object.closed_date and user.is_authenticated %}
+            <form id="questionform">
+                <input id="question" name="question" type="text" placeholder="question">
+                <button type="submit" id="go">Enviar</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}
 
 {% if not object.closed_date %}
-{% block websockets %}
-    <script>
-        $(function () {
-            var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-            var ws_path = ws_scheme + '://' + window.location.host + window.location.pathname + "chat/stream/";
-            console.log("Connecting to " + ws_path);
-            var socket = new ReconnectingWebSocket(ws_path);
-
-            socket.onmessage = function(message) {
-                var data = JSON.parse(message.data);
-                var chat = $("#chat");
-                chat.append(data.hmtl);
-            };
-
-            $("#chatform").on("submit", function(event) {
-                socket.send(JSON.stringify({
-                    handler: $(this)[0].handler.value,
-                    message: $(this)[0].message.value,
-                }));
-                $("#message").val('').focus();
-                return false;
-            });
-
-            socket.onopen = function() { console.log("Connected to notification socket"); }
-            socket.onclose = function() { console.log("Disconnected to notification socket"); }
-        });
-    </script>
-{% endblock %}
+    {% block websockets %}
+        <script>var HANDLER = '{{handler}}';</script>
+        <script type="text/javascript" src="{% static 'js/websockets/chat.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/websockets/questions.js' %}"></script>
+    {% endblock %}
 {% endif %}

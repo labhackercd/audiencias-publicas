@@ -31,13 +31,12 @@ class TimestampedMixin(models.Model):
 
 class UpDownVote(TimestampedMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
-    object_pk = models.PositiveIntegerField()
-    content_type = models.ForeignKey('contenttypes.ContentType')
+    question = models.ForeignKey('Question', related_name='votes')
     vote = models.BooleanField(default=False, choices=((True, _('Up Vote')),
                                (False, _('Down Vote'))))
 
     class Meta:
-        unique_together = ('user', 'object_pk', 'content_type')
+        unique_together = ('user', 'question')
 
     def __str__(self):
         return self.user.get_full_name() or self.user.username
@@ -68,6 +67,15 @@ class Video(TimestampedMixin):
     def html_body(self):
         return render_to_string('includes/home_video.html', {'video': self})
 
+    def html_questions_body(self):
+        return render_to_string(
+            'includes/video_questions.html',
+            {'questions': sorted(
+                self.questions.all(),
+                key=lambda vote: vote.votes_count, reverse=True
+            )}
+        )
+
     def send_notification(self, deleted=False, is_closed=False):
         notification = {
             'id': self.id,
@@ -78,8 +86,12 @@ class Video(TimestampedMixin):
         Group('home').send({'text': json.dumps(notification)})
 
     @property
-    def group_name(self):
-        return "video-%s" % self.id
+    def group_chat_name(self):
+        return "video-chat-%s" % self.id
+
+    @property
+    def group_questions_name(self):
+        return "video-questions-%s" % self.id
 
 
 class Message(TimestampedMixin):
@@ -95,14 +107,18 @@ class Message(TimestampedMixin):
         return self.message
 
     def html_body(self):
-        return render_to_string('includes/chat_message.html', {'message': self})
+        return render_to_string('includes/chat_message.html',
+                                {'message': self})
 
 
 class Question(TimestampedMixin):
     video = models.ForeignKey(Video, related_name='questions')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.CharField(max_length=200)
-    votes = fields.GenericRelation(UpDownVote, object_id_field="object_pk")
+
+    @property
+    def votes_count(self):
+        return self.votes.filter(vote=True).count()
 
     class Meta:
         verbose_name = _('question')

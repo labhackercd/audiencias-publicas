@@ -1,0 +1,3 @@
+{% for question in questions %}
+  <li data-question-id="{{question.id}}">[{{question.votes_count}}] {{question.user}}: {{question.question}} <a class="question-vote">Votar</a></li>
+{% endfor %}
