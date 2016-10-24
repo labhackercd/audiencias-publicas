@@ -9,6 +9,7 @@
   width: 100%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23);
   z-index: 10000;
+  transition: transform $swift-out 0.3s;
   @media screen and (max-width: 39.9375em) {
     height: 3em;
     padding: 0;
@@ -41,5 +42,9 @@
 
   .logo--menu-list .logo__image {
     height: 1.75em;
+  }
+
+  &--hidden {
+    transform: translateY(-100%)
   }
 }

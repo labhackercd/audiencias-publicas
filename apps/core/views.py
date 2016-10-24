@@ -35,7 +35,8 @@ class HomeView(TemplateView):
             closed_date__isnull=False).order_by('-published_date')
         context['videos_live'] = Video.objects.filter(
             closed_date__isnull=True).order_by('-published_date')
-
+        context['no_offset_top'] = 'no-offset-top'
+        context['hidden_nav'] = 'navigation--hidden'
         return context
 
 
