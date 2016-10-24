@@ -1,0 +1,44 @@
+.footer {
+  padding: 3rem 0;
+  background-color: #213d4d;
+  color: white;
+  @include breakpoint(small only) {
+    padding: 2rem 0;
+  }
+
+  &__container {
+    align-items: center;
+  }
+
+  &__logos {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0.5rem 0;
+  }
+
+  &__logo-wrapper {
+    margin: 1rem;
+  }
+
+  &__logo.image {
+    height: 3rem;
+  }
+
+  &__about {
+    margin: 0.5rem 0;
+  }
+
+  &__text {
+    margin: 0;
+  }
+
+  &__link {
+    color: $secondary-color;
+    font-weight: 400;
+    &:hover {
+      color: darken($secondary-color, 20%);
+    }
+  }
+}
