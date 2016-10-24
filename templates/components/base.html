@@ -2,13 +2,17 @@
 {% load static from staticfiles %}
 
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    {% block extrameta %}
-    {% endblock %}
-    <title>{% block title %}Audiências Públicas{% endblock %}</title>
-    {% compress css %}
+{% block html %}
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+      
+      {# Title #} 
+      <title>
+        {% block title %}Audiências Públicas{% endblock title%}
+      </title>
+
       {# Favicon #}
       <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}">
       <link rel="icon" type="image/png" href="{% static 'img/favicon/favicon-32x32.png' %}" sizes="32x32">
@@ -19,6 +23,7 @@
       <meta name="msapplication-config" content="{% static 'img/favicon/browserconfig.xml' %}">
       <meta name="theme-color" content="#1d694f">
 
+      {% compress css %}
         <link rel="stylesheet" href="{% static 'scss/app.scss' %}" type="text/x-scss" />
     {% endcompress %}
     {% block extracss %}
@@ -31,4 +36,4 @@
     {% block extrajs %}
     {% endblock %}
 </body>
-</html>
+</html>      {% endcompress %}
