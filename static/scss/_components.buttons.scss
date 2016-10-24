@@ -67,3 +67,24 @@
   }
 
 }
+
+.show-all {
+  text-align: center;
+  padding: 1rem 0;
+  border-top: 1px solid #cccccc;
+
+  &--video-list {
+    margin: 0 3rem;
+  }
+
+  &__button {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: hsla(0,0%,40%,1);
+    text-transform: uppercase;
+
+    &:hover {
+      color: black;
+    }
+  }
+}

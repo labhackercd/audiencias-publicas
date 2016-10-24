@@ -1,0 +1,24 @@
+.calendar-table {
+  margin-bottom: 0;
+  font-size: 1.2rem;
+
+  &__body {
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  &__column {
+    
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    &:first-child {
+      font-weight: 600;
+      padding-left: 3rem;
+    }
+    &:last-child {
+      padding-right: 3rem;
+    }
+  }
+}

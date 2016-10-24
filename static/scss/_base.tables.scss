@@ -1,0 +1,6 @@
+table {
+  @include breakpoint(small only) {
+    display: block;
+    overflow-x: auto;
+  }
+}

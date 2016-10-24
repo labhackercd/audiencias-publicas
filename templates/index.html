@@ -1,3 +1,109 @@
 {% extends "components/base.html" %}
-{% block content %}     
-{% endblock %}
+{% load staticfiles %}
+
+{% block title %}Audiencias Públicas{% endblock %}
+
+{% block main %}
+
+  <section class="section section--home">
+    <div class="row expanded">
+      <div class="section__info section__block section__block--hero columns small-12">
+        <img class="section__logo" src="{% static 'img/logo-audiencias-full.svg' %}" data-fallback="{% static 'img/logo-audiencias-full.png' %}">
+        <p class="section__text">
+          Acompanhe ao vivo e participe enviando perguntas aos deputados!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--videos section--live-videos">
+    <div class="row">
+      <div class="hovering-block">
+        <div class="hovering-block__header hovering-block__header--live">
+          <span class="header__icon-wrapper header__icon-wrapper--live">
+            <i class="header__icon header__icon--live icon icon-circle"></i>
+          </span>
+          <h1 class="header__title">Ao Vivo</h1>
+        </div>
+        <div class="video-list">
+          <ul class="video-list__list">
+            <li class="video-list__item">
+              <a class="video-list__video-link" href="#">
+                <img class="video-list__thumbnail" src="">
+              </a>
+              <h2 class="video-list__title">
+                <span class="title__icon-wrapper">
+                  <i class="title__icon title__icon--live icon icon-circle"></i>
+                </span>
+                <a class="title__link" href="#">Lorem Ipsum Dolor</a>
+              </h2>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--videos section--old-videos">
+    <div class="row">
+      <div class="hovering-block">
+        <div class="hovering-block__header hovering-block__header--old-videos">
+          <span class="header__icon-wrapper">
+            <i class="header__icon header__icon--old-videos icon icon-play"></i>
+          </span>
+          <h1 class="header__title">Veja Audiências Que Já Aconteceram</h1>
+        </div>
+        <div class="video-list">
+
+          <ul class="video-list__list">
+            <li class="video-list__item">
+              <a class="video-list__video-link" href="#">
+                <img class="video-list__thumbnail" src="">
+              </a>
+              <h2 class="video-list__title">
+                <a class="title__link" href="#">Lorem Ipsum Dolor</a>
+              </h2>
+            </li>
+          </ul>
+
+        </div>
+      <div class="show-all show-all--video-list">
+        <a href="#" class="show-all__button">Ver Tudo</a>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--videos section--calendar">
+    <div class="row">
+      <div class="hovering-block">
+        <div class="hovering-block__header hovering-block__header--calendar">
+          <span class="header__icon-wrapper">
+            <i class="header__icon header__icon--calendar icon icon-calendar"></i>
+          </span>
+          <h1 class="header__title">Previsão de Audiências Públicas</h1>
+        </div>
+        <table class="calendar-table">
+          <tbody class="calendar-table__body">
+            <tr class="calendar-table__row">
+              <td class="calendar-table__column">04/10</td>
+              <td class="calendar-table__column">Audiência Pública - Esportes da Mente</td>
+            </tr>
+            <tr class="calendar-table__row">
+              <td class="calendar-table__column">06/11</td>
+              <td class="calendar-table__column">Utilização da Vegetação Nativa do Cerrado</td>
+            </tr>
+            <tr class="calendar-table__row">
+              <td class="calendar-table__column">07/11</td>
+              <td class="calendar-table__column">Importância dos grupos da Terceira Idade e a Assistência ao Idoso</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="show-all">
+          <a href="#" class="show-all__button">Ver Tudo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock main %}

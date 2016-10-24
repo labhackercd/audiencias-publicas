@@ -1,0 +1,60 @@
+.video-list {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 0 2rem;
+  padding: 0 0.5rem;
+
+  &__list {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  &__item {
+    list-style: none;
+    max-width: 208px;
+    margin: 0 0.5rem;
+  }
+
+  &__video-link {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  &__thumbnail {
+    width: 208px;
+    height: 116px;
+    background: #525252;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    @include breakpoint(small only) {
+      font-size: 0.9rem
+    }
+
+
+    .title__link {
+      color: #3798c8;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    .title__icon-wrapper {
+      display: inline-flex;
+      vertical-align: middle;
+    }
+
+    .title__icon--live {
+      font-size: 0.5rem;
+      color: #ff3333;
+    }
+  }
+}
