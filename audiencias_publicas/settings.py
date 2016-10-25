@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'compressor',
     'django_q',
     'social.apps.django_app.default',
+    'channels',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -90,6 +91,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'audiencias_publicas.urls'
@@ -158,6 +160,7 @@ BOWER_INSTALLED_APPS = [
     'jquery',
     'foundation-sites',
     'https://github.com/labhackercd/fontastic-labhacker.git',
+    'https://github.com/joewalnes/reconnecting-websocket.git',
 ]
 
 COMPRESS_PRECOMPILERS = [
@@ -235,3 +238,34 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='')
+
+CHANNEL_LAYERS = {
+    "default": {
+        # This example app uses the Redis channel layer implementation asgi_redis
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "ROUTING": "apps.core.routing.channel_routing",
+    },
+}
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level': 'INFO'
+        },
+        'chat': {
+            'handlers': ['console'],
+            'propagate': False,
+            'level': 'DEBUG',
+        },
+    },
+}

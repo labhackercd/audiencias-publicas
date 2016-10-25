@@ -1,0 +1,42 @@
+{% extends "components/base.html" %}
+{% load staticfiles %}
+{% block content %}
+    <div class="row">
+        <h5>{{ object.title }}</h5>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ object.videoId }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="row">
+        <div class="columns small-6">
+            <ul id="chat">
+                {% for message in object.messages.all %}
+                    {% include "includes/chat_message.html" with message=message %}
+                {% endfor %}
+            </ul>
+            {% if not object.closed_date and user.is_authenticated %}
+            <form id="chatform">
+                <input id="message" name="message" type="text" placeholder="message">
+                <button type="submit" id="go">Enviar</button>
+            </form>
+            {% endif %}
+        </div>
+        <div class="columns small-6">
+            <ul id="questions">
+                {% include "includes/video_questions.html" with questions=questions %}
+            </ul>
+            {% if not object.closed_date and user.is_authenticated %}
+            <form id="questionform">
+                <input id="question" name="question" type="text" placeholder="question">
+                <button type="submit" id="go">Enviar</button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% if not object.closed_date %}
+    {% block websockets %}
+        <script>var HANDLER = '{{handler}}';</script>
+        <script type="text/javascript" src="{% static 'js/websockets/chat.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/websockets/questions.js' %}"></script>
+    {% endblock %}
+{% endif %}

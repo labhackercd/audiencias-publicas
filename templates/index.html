@@ -16,6 +16,7 @@
     </div>
   </section>
 
+{% if live_videos %}
   <section class="section section--videos section--live-videos">
     <div class="row">
       <div class="hovering-block">
@@ -27,23 +28,16 @@
         </div>
         <div class="video-list">
           <ul class="video-list__list">
-            <li class="video-list__item">
-              <a class="video-list__video-link" href="#">
-                <img class="video-list__thumbnail" src="">
-              </a>
-              <h2 class="video-list__title">
-                <span class="title__icon-wrapper">
-                  <i class="title__icon title__icon--live icon icon-circle"></i>
-                </span>
-                <a class="title__link" href="#">Lorem Ipsum Dolor</a>
-              </h2>
-            </li>
+            {% for video in live_videos %}
+              {% include "includes/home_video.html" with video=video %}
+            {% endfor %}
           </ul>
         </div>
       </div>
     </div>
   </section>
-
+{% endif %}
+{% if closed_videos %}
   <section class="section section--videos section--old-videos">
     <div class="row">
       <div class="hovering-block">
@@ -56,14 +50,9 @@
         <div class="video-list">
 
           <ul class="video-list__list">
-            <li class="video-list__item">
-              <a class="video-list__video-link" href="#">
-                <img class="video-list__thumbnail" src="">
-              </a>
-              <h2 class="video-list__title">
-                <a class="title__link" href="#">Lorem Ipsum Dolor</a>
-              </h2>
-            </li>
+            {% for video in closed_videos %}
+              {% include "includes/home_video.html" with video=video %}
+            {% endfor %}
           </ul>
 
         </div>
@@ -73,7 +62,7 @@
       </div>
     </div>
   </section>
-
+{% endif %}
   <section class="section section--videos section--calendar">
     <div class="row">
       <div class="hovering-block">
@@ -107,3 +96,7 @@
   </section>
 
 {% endblock main %}
+
+{% block websockets %}
+  <script type="text/javascript" src="{% static 'js/websockets/home.js' %}"></script>
+{% endblock %}

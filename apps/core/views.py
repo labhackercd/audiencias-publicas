@@ -1,8 +1,9 @@
 from django.conf import settings
+from apps.core.models import Video
+from apps.core.utils import encrypt
+from django.views.generic import TemplateView, DetailView
 import requests
 import json
-from apps.core.models import Video, Message, Question
-from django.views.generic import TemplateView, DetailView
 
 
 def receive_callback(request=None):
@@ -31,9 +32,9 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['videos_closed'] = Video.objects.filter(
+        context['closed_videos'] = Video.objects.filter(
             closed_date__isnull=False).order_by('-published_date')
-        context['videos_live'] = Video.objects.filter(
+        context['live_videos'] = Video.objects.filter(
             closed_date__isnull=True).order_by('-published_date')
         context['no_offset_top'] = 'no-offset-top'
         context['hidden_nav'] = 'navigation--hidden'
@@ -42,10 +43,13 @@ class HomeView(TemplateView):
 
 class VideoDetail(DetailView):
     model = Video
-    template_name = 'video-room.html'
+    template_name = 'room.html'
 
     def get_context_data(self, **kwargs):
         context = super(VideoDetail, self).get_context_data(**kwargs)
-        context['messages'] = Message.objects.filter(video=self.object)
-        context['questions'] = Question.objects.filter(video=self.object)
+        context['handler'] = encrypt(str(self.request.user.id).rjust(10))
+        context['questions'] = sorted(self.object.questions.all(),
+                                      key=lambda vote: vote.votes_count,
+                                      reverse=True)
+
         return context

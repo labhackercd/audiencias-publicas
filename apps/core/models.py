@@ -4,8 +4,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.contrib.contenttypes import fields
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django_q.tasks import schedule
+from django_q.models import Schedule
+from channels import Group
+import json
 
 
 class TimestampedMixin(models.Model):
@@ -27,15 +31,14 @@ class TimestampedMixin(models.Model):
 
 class UpDownVote(TimestampedMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
-    object_pk = models.PositiveIntegerField()
-    content_type = models.ForeignKey('contenttypes.ContentType')
+    question = models.ForeignKey('Question', related_name='votes')
     vote = models.BooleanField(default=False, choices=((True, _('Up Vote')),
                                (False, _('Down Vote'))))
 
     class Meta:
-        unique_together = ('user', 'object_pk', 'content_type')
+        unique_together = ('user', 'question')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.user.get_full_name() or self.user.username
 
 
@@ -54,12 +57,41 @@ class Video(TimestampedMixin):
         verbose_name = _('video')
         verbose_name_plural = _('videos')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.videoId
 
     @models.permalink
     def get_absolute_url(self):
-        return ('video_room', [self.slug, self.pk])
+        return ('video_room', [self.pk])
+
+    def html_body(self):
+        return render_to_string('includes/home_video.html', {'video': self})
+
+    def html_questions_body(self):
+        return render_to_string(
+            'includes/video_questions.html',
+            {'questions': sorted(
+                self.questions.all(),
+                key=lambda vote: vote.votes_count, reverse=True
+            )}
+        )
+
+    def send_notification(self, deleted=False, is_closed=False):
+        notification = {
+            'id': self.id,
+            'html': self.html_body(),
+            'deleted': deleted,
+            'is_closed': is_closed
+        }
+        Group('home').send({'text': json.dumps(notification)})
+
+    @property
+    def group_chat_name(self):
+        return "video-chat-%s" % self.id
+
+    @property
+    def group_questions_name(self):
+        return "video-questions-%s" % self.id
 
 
 class Message(TimestampedMixin):
@@ -71,21 +103,28 @@ class Message(TimestampedMixin):
         verbose_name = _('message')
         verbose_name_plural = _('messages')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.message
+
+    def html_body(self):
+        return render_to_string('includes/chat_message.html',
+                                {'message': self})
 
 
 class Question(TimestampedMixin):
     video = models.ForeignKey(Video, related_name='questions')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.CharField(max_length=200)
-    votes = fields.GenericRelation(UpDownVote, object_id_field="object_pk")
+
+    @property
+    def votes_count(self):
+        return self.votes.filter(vote=True).count()
 
     class Meta:
         verbose_name = _('question')
         verbose_name_plural = _('questions')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.question
 
 
@@ -100,7 +139,7 @@ class Agenda(models.Model):
         verbose_name = _('agenda')
         verbose_name_plural = _('agendas')
 
-    def __unicode__(self):
+    def __str__(self):
         if self.session and self.location:
             return self.session + ', ' + self.location
         else:
@@ -113,10 +152,22 @@ def video_pre_save(signal, instance, sender, **kwargs):
 
 
 def video_post_save(sender, instance, created, **kwargs):
+    is_closed = False
     if created:
         schedule('apps.core.tasks.close_room', instance.videoId,
                  name=instance.videoId, schedule_type='I')
 
+    if instance.closed_date is not None:
+        is_closed = True
+
+    instance.send_notification(is_closed=is_closed)
+
+
+def video_post_delete(sender, instance, **kwargs):
+    instance.send_notification(deleted=True)
+    Schedule.objects.get(name=instance.videoId).delete()
+
 
 models.signals.pre_save.connect(video_pre_save, sender=Video)
 models.signals.post_save.connect(video_post_save, sender=Video)
+models.signals.post_delete.connect(video_post_delete, sender=Video)
