@@ -17,83 +17,89 @@
   </section>
 
 {% if live_videos %}
-  <section class="section section--videos section--live-videos">
-    <div class="row">
-      <div class="hovering-block">
-        <div class="hovering-block__header hovering-block__header--live">
-          <span class="header__icon-wrapper header__icon-wrapper--live">
-            <i class="header__icon header__icon--live icon icon-circle live-blink"></i>
-          </span>
-          <h1 class="header__title">Ao Vivo</h1>
-        </div>
-        <div class="video-list-wrapper">
-          <ul class="video-list video-list--live">
-            {% for video in live_videos %}
-              {% include "includes/home_video.html" with video=video %}
-            {% endfor %}
-          </ul>
-        </div>
+<section class="section section--videos section--live-videos">
+{% else %}
+<section class="section section--videos section--live-videos hide">
+{% endif %}
+  <div class="row">
+    <div class="hovering-block">
+      <div class="hovering-block__header hovering-block__header--live">
+        <span class="header__icon-wrapper header__icon-wrapper--live">
+          <i class="header__icon header__icon--live icon icon-circle live-blink"></i>
+        </span>
+        <h1 class="header__title">Ao Vivo</h1>
+      </div>
+      <div class="video-list-wrapper">
+        <ul class="video-list video-list--live">
+          {% for video in live_videos %}
+            {% include "includes/home_video.html" with video=video %}
+          {% endfor %}
+        </ul>
       </div>
     </div>
-  </section>
-{% endif %}
+  </div>
+</section>
+
 {% if closed_videos %}
-  <section class="section section--videos section--closed-videos">
-    <div class="row">
-      <div class="hovering-block">
-        <div class="hovering-block__header hovering-block__header--closed-videos">
-          <span class="header__icon-wrapper">
-            <i class="header__icon header__icon--closed-videos icon icon-play"></i>
-          </span>
-          <h1 class="header__title">Veja Audiências Que Já Aconteceram</h1>
-        </div>
-        <div class="video-list-wrapper">
+<section class="section section--videos section--closed-videos">
+{% else %}
+<section class="section section--videos section--closed-videos hide">
+{% endif %}
+  <div class="row">
+    <div class="hovering-block">
+      <div class="hovering-block__header hovering-block__header--closed-videos">
+        <span class="header__icon-wrapper">
+          <i class="header__icon header__icon--closed-videos icon icon-play"></i>
+        </span>
+        <h1 class="header__title">Veja Audiências Que Já Aconteceram</h1>
+      </div>
+      <div class="video-list-wrapper">
 
-          <ul class="video-list video-list--closed-videos">
-            {% for video in closed_videos %}
-              {% include "includes/home_video.html" with video=video %}
-            {% endfor %}
-          </ul>
+        <ul class="video-list video-list--closed-videos">
+          {% for video in closed_videos %}
+            {% include "includes/home_video.html" with video=video %}
+          {% endfor %}
+        </ul>
 
-        </div>
-      <div class="show-all show-all--video-list">
+      </div>
+    <div class="show-all show-all--video-list">
+      <a href="#" class="show-all__button">Ver Tudo</a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--videos section--calendar">
+  <div class="row">
+    <div class="hovering-block">
+      <div class="hovering-block__header hovering-block__header--calendar">
+        <span class="header__icon-wrapper">
+          <i class="header__icon header__icon--calendar icon icon-calendar"></i>
+        </span>
+        <h1 class="header__title">Previsão de Audiências Públicas</h1>
+      </div>
+      <table class="calendar-table">
+        <tbody class="calendar-table__body">
+          <tr class="calendar-table__row">
+            <td class="calendar-table__column">04/10</td>
+            <td class="calendar-table__column">Audiência Pública - Esportes da Mente</td>
+          </tr>
+          <tr class="calendar-table__row">
+            <td class="calendar-table__column">06/11</td>
+            <td class="calendar-table__column">Utilização da Vegetação Nativa do Cerrado</td>
+          </tr>
+          <tr class="calendar-table__row">
+            <td class="calendar-table__column">07/11</td>
+            <td class="calendar-table__column">Importância dos grupos da Terceira Idade e a Assistência ao Idoso</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="show-all">
         <a href="#" class="show-all__button">Ver Tudo</a>
       </div>
-      </div>
     </div>
-  </section>
-{% endif %}
-  <section class="section section--videos section--calendar">
-    <div class="row">
-      <div class="hovering-block">
-        <div class="hovering-block__header hovering-block__header--calendar">
-          <span class="header__icon-wrapper">
-            <i class="header__icon header__icon--calendar icon icon-calendar"></i>
-          </span>
-          <h1 class="header__title">Previsão de Audiências Públicas</h1>
-        </div>
-        <table class="calendar-table">
-          <tbody class="calendar-table__body">
-            <tr class="calendar-table__row">
-              <td class="calendar-table__column">04/10</td>
-              <td class="calendar-table__column">Audiência Pública - Esportes da Mente</td>
-            </tr>
-            <tr class="calendar-table__row">
-              <td class="calendar-table__column">06/11</td>
-              <td class="calendar-table__column">Utilização da Vegetação Nativa do Cerrado</td>
-            </tr>
-            <tr class="calendar-table__row">
-              <td class="calendar-table__column">07/11</td>
-              <td class="calendar-table__column">Importância dos grupos da Terceira Idade e a Assistência ao Idoso</td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="show-all">
-          <a href="#" class="show-all__button">Ver Tudo</a>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
 {% endblock main %}
 

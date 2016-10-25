@@ -33,7 +33,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['closed_videos'] = Video.objects.filter(
-            closed_date__isnull=False).order_by('-published_date')
+            closed_date__isnull=False).order_by('-published_date')[:5]
         context['live_videos'] = Video.objects.filter(
             closed_date__isnull=True).order_by('-published_date')
         context['no_offset_top'] = 'no-offset-top'

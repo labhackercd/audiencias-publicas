@@ -18,9 +18,20 @@ socket.onmessage = function(message) {
       exists.replaceWith(data.html);
     } else if(exists.length && data.is_closed) {
       exists.remove();
-      $(".closed-videos").prepend(data.html);
+      if ($('.video-list--live').children().length === 0) {
+        $('.section--live-videos').addClass('hide');
+      }
+      if ($('.video-list--closed-videos').children().length === 0) {
+        $('.section--closed-videos').removeClass('hide');
+      } else if ($('.video-list--closed-videos').children().length >= 5) {
+        $('.video-list--closed-videos>li:last-child').remove();
+      }
+      $(".video-list--closed-videos ").prepend(data.html);
     } else {
-      $(".live-videos").prepend(data.html);
+      if ($('.video-list--live').children().length === 0) {
+        $('.section--live-videos').removeClass('hide');
+      }
+      $(".video-list--live").prepend(data.html);
     }
   } else {
     $(`[data-video-id=${data.id}]`).remove();
