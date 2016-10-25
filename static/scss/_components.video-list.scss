@@ -1,17 +1,17 @@
-.video-list {
+.video-list-wrapper {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
   margin: 0 2rem;
   padding: 0 0.5rem;
+}
 
-  &__list {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin: 0;
-  }
+.video-list {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0;
 
   &__item {
     list-style: none;

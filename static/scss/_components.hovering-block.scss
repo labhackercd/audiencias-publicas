@@ -18,7 +18,7 @@
       background-color: #1d694f;
     }
 
-    &--old-videos {
+    &--closed-videos {
       background-color: #11496c;
     }
     &--calendar {
@@ -57,7 +57,7 @@
         color: #ff3333;
       }
 
-      &--old-videos {
+      &--closed-videos {
         transform: translateX(10%);
       }
     }
