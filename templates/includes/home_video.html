@@ -1,8 +1,10 @@
+{% load video_utils %}
+
 <li class="video-list__item" data-video-id="{{video.id}}">
   <a class="video-list__video-link" href="{{video.get_absolute_url}}">
     <img class="video-list__thumbnail" src="{{video.thumb_medium}}">
   </a>
   <h2 class="video-list__title">
-    <a class="title__link" href="{{video.get_absolute_url}}">{{video.title}}</a>
+    <a class="title__link" href="{{video.get_absolute_url}}">{{video.title|simplify}}</a>
   </h2>
 </li>

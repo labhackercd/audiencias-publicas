@@ -1,41 +1,60 @@
 {% extends "components/base.html" %}
 
-{% block content %}
-
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
-
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
-
-<p>Enter with <a href="{% url 'social:begin' backend='google-oauth2' %}">Google+</a></p>
-<p>Enter with <a href="{% url 'social:begin' backend='facebook' %}">Facebook</a></p>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+{% block main %}
+<section class="section section--auth">
+  <div class="row align-center">
+    <div class="section__block section__block--title columns small-12 medium-7 large-5">
+      <div class="section__content">
+        <h1 class="section__title">Login</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row align-center">
+    <div class="section__block columns small-12 medium-7 large-5">
+      {% if form.errors %}
+        <div class="section__block section__block--error">
+          {{form.non_field_errors}}
+        </div>
+      {% endif %}
+      <form action="{% url 'login' %}" method="POST" class="form">
+        {% csrf_token %}
+        <label class="form__input-wrapper input-group">
+          <i class="form__icon icon icon-user input-group-label" aria-hidden="true"></i>
+          <span class="show-for-sr">Nome de usuário</span>
+          <div class="form__input-container">
+            <input type="text" class="form__input input input-group-field" name="username" placeholder="Nome de usuário" required>
+            {% if form.username.errors %}
+              <div class="form__error form-error is-visible">
+                <span class="form__error-message">{{ form.old_password.errors.as_text }}</span>
+                <i class="form__error-icon icon icon-e-arrow-circle-left"></i>
+              </div>
+            {% endif %}
+          </div>
+        </label>
+        <label class="form__input-wrapper input-group">
+          <i class="form__icon icon icon-lock input-group-label" aria-hidden="true"></i>
+          <span class="show-for-sr">Senha</span>
+          <div class="form__input-container">
+            <input type="password" class="form__input input input-group-field" name="password" placeholder="Senha" required>
+          </div>
+        </label>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button class="button expanded button--expanded">Entrar</button>
+        <p><a href="{% url 'password_reset' %}" class="section__link">Esqueceu a senha?</a></p>
+        <p>Não possui cadastro? <a href="" class="section__link--signup">Cadastre-se aqui!</a></p>
+        <div class="section__block--social">
+          <div class="button-group">
+            <a href="{% url 'social:begin' backend='facebook' %}" class="button button--social button--facebook">
+              <span class="button--social__icon"><i class="icon icon-facebook"></i></span><span class="button--social__label">Entrar com Facebook</span>
+            </a>
+            <a href="{% url 'social:begin' backend='google-oauth2' %}" class="button button--social button--google-plus">
+              <span class="button--social__icon"><i class="icon icon-google-plus"></i></span><span class="button--social__label">Entrar com Google+</span>
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

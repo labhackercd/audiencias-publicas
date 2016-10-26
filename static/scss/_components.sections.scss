@@ -57,7 +57,7 @@
     font-size: 1.2rem;
     font-weight: 700;
     @include breakpoint(small only) {
-      font-size: 1.2rem; 
+      font-size: 1.2rem;
     }
   }
 
@@ -128,4 +128,43 @@
 .section--videos {
   padding: 2rem 0;
   background-color: #e6e6e6;
+}
+
+.section--auth {
+  background: #f6f6f6;
+
+  & .section__title {
+    color: #082524;
+    border-bottom: 0.5rem solid #11496c;
+  }
+
+  & .section__link {
+    color: #11496c;
+
+    &--signup {
+      font-weight: bold;
+      color: #f8c300;
+    }
+  }
+
+  & .section__block {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+
+    &--social {
+      padding-top: 1rem;
+      margin-top: 1rem;
+      border-top: 1px solid #dddddd;
+    }
+
+    &--error {
+      background: #ededed;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      ul {
+        list-style-type: none;
+        margin: 0;
+      }
+    }
+  }
 }
