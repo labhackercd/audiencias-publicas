@@ -68,7 +68,7 @@
     </div>
   </div>
 </section>
-
+{% if agendas %}
 <section class="section section--videos section--calendar">
   <div class="row">
     <div class="hovering-block">
@@ -80,27 +80,21 @@
       </div>
       <table class="calendar-table">
         <tbody class="calendar-table__body">
+          {% for agenda in agendas %}
           <tr class="calendar-table__row">
-            <td class="calendar-table__column">04/10</td>
-            <td class="calendar-table__column">Audiência Pública - Esportes da Mente</td>
+            <td class="calendar-table__column">{{ agenda.date|date:"d/M - H:i" }}</td>
+            <td class="calendar-table__column">{{ agenda.commission }} | {{ agenda.location }}</td>
           </tr>
-          <tr class="calendar-table__row">
-            <td class="calendar-table__column">06/11</td>
-            <td class="calendar-table__column">Utilização da Vegetação Nativa do Cerrado</td>
-          </tr>
-          <tr class="calendar-table__row">
-            <td class="calendar-table__column">07/11</td>
-            <td class="calendar-table__column">Importância dos grupos da Terceira Idade e a Assistência ao Idoso</td>
-          </tr>
+          {% endfor %}
         </tbody>
       </table>
-      <div class="show-all">
+      <!--<div class="show-all">
         <a href="#" class="show-all__button">Ver Tudo</a>
-      </div>
+      </div>-->
     </div>
   </div>
 </section>
-
+{% endif %}
 {% endblock main %}
 
 {% block websockets %}
