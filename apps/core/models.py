@@ -165,7 +165,10 @@ def video_post_save(sender, instance, created, **kwargs):
 
 def video_post_delete(sender, instance, **kwargs):
     instance.send_notification(deleted=True)
-    Schedule.objects.get(name=instance.videoId).delete()
+    try:
+        Schedule.objects.get(name=instance.videoId).delete()
+    except Schedule.DoesNotExist:
+        pass
 
 
 models.signals.pre_save.connect(video_pre_save, sender=Video)
