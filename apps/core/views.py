@@ -14,6 +14,8 @@ def receive_callback(request=None):
               'q': settings.YOUTUBE_SEARCH_QUERY,
               'type': 'video',
               'eventType': 'live',
+              'order': 'date',
+              'maxResults': 50,
               'key': settings.YOUTUBE_API_KEY}
     response = requests.get('https://www.googleapis.com/youtube/v3/search',
                             params=params)
