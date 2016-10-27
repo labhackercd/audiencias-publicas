@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import HttpResponse
 from apps.core.models import Video, Agenda
 from apps.core.utils import encrypt
 from django.views.generic import TemplateView, DetailView
@@ -26,6 +27,7 @@ def receive_callback(request=None):
         video.thumb_medium = item['snippet']['thumbnails']['medium']['url']
         video.thumb_high = item['snippet']['thumbnails']['high']['url']
         video.save()
+    return HttpResponse('<h1>Receive callback</h1>', status=200)
 
 
 class HomeView(TemplateView):
