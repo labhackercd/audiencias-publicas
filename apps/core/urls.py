@@ -1,13 +1,12 @@
 from django.conf.urls import url
-from apps.core.views import HomeView, VideoDetail
+from apps.core.views import HomeView, VideoDetail, receive_callback
 from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
                            QuestionListAPI, VideoListAPI, VoteListAPI)
 
 urlpatterns = [
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^sala/(?P<pk>\d+)/', VideoDetail.as_view(), name='video_room'),
-    url(r'^notification/callback/', 'apps.core.views.receive_callback',
-        name='receive_callback'),
+    url(r'^notification/callback/', receive_callback, name='receive_callback'),
 ]
 
 urlpatterns += [
