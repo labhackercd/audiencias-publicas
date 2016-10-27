@@ -19,8 +19,8 @@ def receive_callback(request=None):
                             params=params)
     data = json.loads(response.text)
     for item in data['items']:
-        video = Video()
-        video.videoId = item['id']['videoId']
+        video, created = Video.objects.get_or_create(
+            videoId=item['id']['videoId'])
         video.title = item['snippet']['title']
         video.description = item['snippet']['description']
         video.thumb_default = item['snippet']['thumbnails']['default']['url']
