@@ -3,11 +3,14 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from audiencias_publicas.decorators import anonymous_required
+from apps.accounts import views
 
 urlpatterns = [
     url(r'^login/$', anonymous_required(auth_views.login), name='login'),
     url(r'^logout/$', login_required(auth_views.logout_then_login),
         name='logout'),
+    url(r'^signup/$', anonymous_required(views.SignUpView.as_view()),
+        name='signup'),
     url(r'^password_change/$', auth_views.password_change,
         name='password_change'),
     url(r'^password_change/done/$',

@@ -35,7 +35,7 @@
         <input type="hidden" name="next" value="{{ next }}" />
         <button class="button expanded button--expanded">Entrar</button>
         <p><a href="{% url 'password_reset' %}" class="section__link">Esqueceu a senha?</a></p>
-        <p>Não possui cadastro? <a href="" class="section__link section__link--signup">Cadastre-se aqui!</a></p>
+        <p>Não possui cadastro? <a href="{% url 'signup' %}" class="section__link section__link--signup">Cadastre-se aqui!</a></p>
         <div class="section__block--social">
           <div class="button-group">
             <a href="{% url 'social:begin' backend='facebook' %}" class="button button--social button--facebook">
