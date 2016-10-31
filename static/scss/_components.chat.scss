@@ -1,3 +1,9 @@
+.chat-wrapper {
+  position: relative;
+  overflow-y: hidden;
+  margin-top: -2.8rem;
+}
+
 .chat {
 
   &__list {
@@ -8,7 +14,6 @@
     overflow-y: scroll;
     word-break: break-word;
     margin-left: 0;
-    margin-top: -2.8rem;
     margin-bottom: 0;
     padding-top: 2.3rem;
     @include breakpoint(small only) {
@@ -37,5 +42,27 @@
     font-weight: 400;
     color: #737373;
     word-break: break-word;
+  }
+
+  &__read-more {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(9,166,124,0.85);
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    @include transition-default(transform);
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &--hidden {
+      transform: translateY(100%);
+    }
   }
 }

@@ -5,6 +5,7 @@
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 
   &__header {
+    position: relative;
     display: flex;
     align-items: center;
     width: calc(100% - 2rem);
@@ -13,6 +14,7 @@
     margin: 0 auto;
     background-color: #235643;
     transform: translateY(-50%);
+    z-index: 1;
     @include material-shadow(1);
 
     &--live {
