@@ -4,7 +4,7 @@ questionSocket.onmessage = function(message) {
   var data = JSON.parse(message.data);
   var questions = $("#questions");
   questions.html(data.html);
-  $(".question-vote").on('click', onClick);
+  $(".question-vote").on('click', upVote);
 };
 
 $("#questionform").on("submit", function(event) {
@@ -26,7 +26,7 @@ function onClick() {
   }))
 }
 
-$(".question-vote").on('click', onClick);
+$(".question-vote").on('click', upVote);
 
 questionSocket.onopen = function() { console.log("Connected to question socket"); }
 questionSocket.onclose = function() { console.log("Disconnected to question socket"); }
