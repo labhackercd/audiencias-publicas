@@ -27,7 +27,7 @@ $(".chat__list").scroll(function() {
   }
 });
 
-//
+//Scroll to bottom of chat when clicked on read more
 $(".chat__read-more").click(function() {
   var chatBottom = $(".chat__list")[0].scrollHeight;
   $(".chat__list").animate({ scrollTop: chatBottom }, "slow");
