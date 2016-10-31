@@ -1,0 +1,67 @@
+{% extends "components/base.html" %}
+
+{% block main %}
+<section class="section section--auth">
+  <div class="row align-center">
+    <div class="section__block section__block--title columns small-12 medium-7 large-5">
+      <div class="section__content">
+        <h1 class="section__title">Cadastro</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row align-center">
+    <div class="section__block columns small-12 medium-7 large-5">
+      {% if errors %}
+        <div class="section__block section__block--error">
+          <ul>
+            {% for error in errors %}
+              <li>{{error}}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <form action="{% url 'signup' %}" method="POST" class="form">
+        {% csrf_token %}
+        <label class="form__input-wrapper input-group">
+          <i class="form__icon icon icon-user input-group-label" aria-hidden="true"></i>
+          <span class="show-for-sr">Nome de usuário</span>
+          <div class="form__input-container">
+            <input type="text" class="form__input input input-group-field" name="username" placeholder="Nome de usuário" required>
+          </div>
+        </label>
+        <label class="form__input-wrapper input-group">
+          <i class="form__icon icon icon-user input-group-label" aria-hidden="true"></i>
+          <span class="show-for-sr">Nome</span>
+          <div class="form__input-container">
+            <input type="text" class="form__input input input-group-field" name="first_name" placeholder="Nome">
+          </div>
+        </label>
+        <label class="form__input-wrapper input-group">
+          <i class="form__icon icon icon-user input-group-label" aria-hidden="true"></i>
+          <span class="show-for-sr">Sobrenome</span>
+          <div class="form__input-container">
+            <input type="text" class="form__input input input-group-field" name="last_name" placeholder="Sobrenome">
+          </div>
+        </label>
+        <label class="form__input-wrapper input-group">
+          <i class="form__icon icon icon-envelope input-group-label" aria-hidden="true"></i>
+          <span class="show-for-sr">Email</span>
+          <div class="form__input-container">
+            <input type="email" class="form__input input input-group-field" name="email" placeholder="Email" required>
+          </div>
+        </label>
+        <label class="form__input-wrapper input-group">
+          <i class="form__icon icon icon-lock input-group-label" aria-hidden="true"></i>
+          <span class="show-for-sr">Senha</span>
+          <div class="form__input-container">
+            <input type="password" class="form__input input input-group-field" name="password" placeholder="Senha" required>
+          </div>
+        </label>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button class="button expanded button--expanded">Enviar</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
