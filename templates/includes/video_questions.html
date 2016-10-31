@@ -1,3 +1,15 @@
+{% load video_utils %}
 {% for question in questions %}
-  <li data-question-id="{{question.id}}">[{{question.votes_count}}] {{question.user}}: {{question.question}} <a class="question-vote">Votar</a></li>
+  <li class="questions__item" data-question-id="{{question.id}}">
+    <div class="questions__vote-block">
+      {% vote_action question user.username %}
+    </div>
+
+    <div class="questions__question-block">
+      <div class="questions__user-info"> <span class="questions__user-name">{{question.user}}</span>
+        <div class="questions__timestamp"> {{question.created | date:'H:i'}}</div>
+      </div>
+      <p class="questions__user-question">{{question.question}}</p>
+    </div>
+  </li>
 {% endfor %}

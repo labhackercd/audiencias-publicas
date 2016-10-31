@@ -67,10 +67,10 @@ class Video(TimestampedMixin):
     def html_body(self):
         return render_to_string('includes/home_video.html', {'video': self})
 
-    def html_questions_body(self):
+    def html_questions_body(self, user):
         return render_to_string(
             'includes/video_questions.html',
-            {'questions': sorted(
+            {'user': user, 'questions': sorted(
                 self.questions.all(),
                 key=lambda vote: vote.votes_count, reverse=True
             )}

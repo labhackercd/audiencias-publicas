@@ -1,9 +1,14 @@
 .section {
+  &:last-child {
+    flex: 1;
+  }
+
   &__block {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    min-height: 100%;
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
     @include breakpoint(small only) {
@@ -14,9 +19,58 @@
     &--title {
       padding-bottom: 0;
     }
+
     &--hero {
       height: calc(70vh - 4rem);
       min-height: 22rem;
+    }
+
+    &--video-frame {
+      width: 100%;
+      background-color: $secondary-color;
+    }
+
+    &--chat {
+      background-color: #d5d5d5;
+    }
+
+    &--questions {
+      height: 100%;
+      background-color: #082827;
+    }
+
+    &--full-bg-left {
+      @include breakpoint(medium) {
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 50vw;
+          height: 100%;
+          background-color: inherit;
+          z-index: -1;
+        }
+      }
+    }
+
+    &--full-bg-right {
+      @include breakpoint(medium) {
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 50vw;
+          height: 100%;
+          background-color: inherit;
+          z-index: -1;
+        }
+      }
     }
   }
 
@@ -178,3 +232,5 @@
     }
   }
 }
+
+

@@ -1,3 +1,6 @@
-<li data-message-id="{{message.id}}">
-  <p><b>{{message.user}}</b> {{message.message}} <i>{{message.created}}</i></p>
+<li class="chat__item chat__item--self" data-message-id="{{message.id}}">
+  <span class="chat__user-name">{{message.user}}</span>
+  <span class="chat__colon">: </span>
+  <span class="chat__message">{{message.message}}</span>
+  <span class="chat__timestamp"> {{message.created | date:'H:i'}}</span>
 </li>

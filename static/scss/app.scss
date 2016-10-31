@@ -7,6 +7,7 @@
 @import 'base.page';
 @import 'base.icons';
 @import 'base.tables';
+@import 'components.flex-column';
 @import 'components.navigation';
 @import 'components.footer';
 @import 'components.sections';
@@ -15,5 +16,9 @@
 @import 'components.hamburguer';
 @import 'components.hovering-block';
 @import 'components.video-list';
+@import 'components.video';
 @import 'components.calendar-table';
+@import 'components.chat';
+@import 'components.questions';
+@import 'components.send-form';
 @import 'trumps.hide-show';

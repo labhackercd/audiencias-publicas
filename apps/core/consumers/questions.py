@@ -40,7 +40,8 @@ def on_receive(message, pk):
         UpDownVote.objects.create(question=question, user=user, vote=True)
 
     Group(video.group_questions_name).send(
-        {'text': json.dumps({"html": question.video.html_questions_body()})}
+        {'text': json.dumps({
+            "html": question.video.html_questions_body(user)})}
     )
 
 

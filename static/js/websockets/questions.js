@@ -17,8 +17,8 @@ $("#questionform").on("submit", function(event) {
   return false;
 });
 
-function onClick() {
-  var question_id = $(this).parent().attr('data-question-id');
+function upVote() {
+  var question_id = $(this).closest('.questions__item').data('question-id');
   questionSocket.send(JSON.stringify({
     handler: HANDLER,
     question: question_id,
