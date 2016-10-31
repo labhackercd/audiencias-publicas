@@ -1,0 +1,28 @@
+.send-form {
+  display: flex;
+  align-items: center;
+  background-color: #eaeaea;
+  padding: 1rem 1rem;
+
+  &--questions {
+    background-color: #133837;
+  }
+
+  &__text-input {
+    margin: 0;
+    resize: none;
+  }
+
+  &__button {
+    margin: 0;
+    margin-left: 0.5rem;
+    border: none;
+    padding-right: 0.5rem;
+    background-color: #09a67c
+  }
+
+  &__button-wrapper {
+    display: flex;
+    align-items: center;
+  }
+}

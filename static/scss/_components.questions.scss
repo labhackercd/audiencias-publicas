@@ -1,0 +1,127 @@
+.questions {
+  margin: 0;
+  list-style: none;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &::after {
+      content: '';
+      background-color: #fbc707;
+      display: flex;
+      flex: 1;height: 0.8rem;
+      margin-top: 0.1rem;
+      margin-left: 1rem;
+    }
+  }
+
+  &__description {
+    color: white;
+    font-weight: 400;
+  }
+
+  &__item {
+    display: flex;
+    margin-bottom: 1rem;
+  }
+
+  &__question-block {
+    flex: 1;
+    margin-left: 1rem;
+    padding: 0.75rem;
+    background-color: white;
+  }
+
+  &__vote-block {
+    display: flex;
+    flex-basis: 6rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .vote-block__upvote-link {
+      color: #09a67c;
+      display: inline-flex;
+      font-size: 1.6rem;
+    }
+
+    .vote-block__total-votes {
+      color: #09a67c;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+
+      &.voted {
+        color: #fbc707;
+      }
+
+      &.disabled {
+        color: #09a67c;
+      }
+    }
+
+    .vote-block__upvote-button {
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      display: inline-flex;
+      justify-content: center;
+      min-height: 2.1rem;
+      width: 100%;
+      padding: 0.3rem;
+      border: 1px solid #09a67c;
+      border-radius: 1rem;
+      transition: all $swift-out 0.25s;
+
+      &:hover, &:focus {
+        background-color: #09a67c;
+        border-color: #09a67c;
+        outline: none;
+      }
+
+      &.voted {
+        border-color: #fbc707;
+
+        &:hover {
+          border-color: #09a67c;
+        }
+      }
+
+      &.disabled {
+        border-color: #999999;
+        color: #999999;
+        cursor: default;
+
+        &:hover {
+          background-color: transparent;
+          border-color: #999999;
+        }
+      }
+    }
+  }
+
+  &__user-question {
+    margin-bottom: 0.5rem;
+  }
+
+  &__user-name {
+    font-weight: 700;
+  }
+
+  &__timestamp {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: #737373;
+  }
+
+  &__user-info {
+    margin-bottom: 0.5rem;
+  }
+
+}
