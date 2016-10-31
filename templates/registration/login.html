@@ -23,12 +23,6 @@
           <span class="show-for-sr">Nome de usuário</span>
           <div class="form__input-container">
             <input type="text" class="form__input input input-group-field" name="username" placeholder="Nome de usuário" required>
-            {% if form.username.errors %}
-              <div class="form__error form-error is-visible">
-                <span class="form__error-message">{{ form.old_password.errors.as_text }}</span>
-                <i class="form__error-icon icon icon-e-arrow-circle-left"></i>
-              </div>
-            {% endif %}
           </div>
         </label>
         <label class="form__input-wrapper input-group">
@@ -41,7 +35,7 @@
         <input type="hidden" name="next" value="{{ next }}" />
         <button class="button expanded button--expanded">Entrar</button>
         <p><a href="{% url 'password_reset' %}" class="section__link">Esqueceu a senha?</a></p>
-        <p>Não possui cadastro? <a href="" class="section__link--signup">Cadastre-se aqui!</a></p>
+        <p>Não possui cadastro? <a href="" class="section__link section__link--signup">Cadastre-se aqui!</a></p>
         <div class="section__block--social">
           <div class="button-group">
             <a href="{% url 'social:begin' backend='facebook' %}" class="button button--social button--facebook">

@@ -138,11 +138,21 @@
     border-bottom: 0.5rem solid #11496c;
   }
 
+  & .section__text {
+    &--signup {
+      font-weight: 500;
+    }
+  }
+
+  & .form {
+    width: 100%;
+  }
+
   & .section__link {
     color: #11496c;
+    font-weight: bold;
 
     &--signup {
-      font-weight: bold;
       color: #f8c300;
     }
   }
