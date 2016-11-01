@@ -77,7 +77,9 @@
               <p class="questions__description">Faça perguntas aos parlamentares e vote nas que você acha que a mesa deveria responder</p>
 
               <ul class="questions" id="questions">
-                {% include "includes/video_questions.html" with questions=questions %}
+                {% for question in questions %}
+                  {% include "includes/video_questions.html" with questions=questions user=user%}
+                {% endfor %}
               </ul>
 
               {% if not object.closed_date and user.is_authenticated %}

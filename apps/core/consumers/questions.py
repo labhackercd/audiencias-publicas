@@ -1,6 +1,6 @@
 from channels import Group
 from apps.core.models import Video, Question, UpDownVote
-from apps.core.utils import decrypt
+from apps.core.utils import decrypt, encrypt
 from apps.core.consumers.utils import get_video, get_data
 from django.contrib.auth.models import User
 import json
@@ -39,9 +39,15 @@ def on_receive(message, pk):
                                            question=data['question'])
         UpDownVote.objects.create(question=question, user=user, vote=True)
 
+    vote_list = []
+    for vote in question.votes.all():
+        vote_list.append(encrypt(str(vote.user.id).rjust(10)))
+
     Group(video.group_questions_name).send(
-        {'text': json.dumps({
-            "html": question.video.html_questions_body(user)})}
+        {'text': json.dumps({'id': question.id,
+                             'user': encrypt(str(user.id).rjust(10)),
+                             'voteList': vote_list,
+                             'html': question.html_question_body(user)})}
     )
 
 

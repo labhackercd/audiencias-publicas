@@ -5,7 +5,7 @@ import base64
 
 def encrypt(plaintext):
     cipher = ARC4.new(settings.SECRET_KEY)
-    return base64.b64encode(cipher.encrypt(plaintext))
+    return base64.b64encode(cipher.encrypt(plaintext)).decode('utf-8')
 
 
 def decrypt(ciphertext):

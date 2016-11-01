@@ -9,6 +9,7 @@ from django.utils import timezone
 from django_q.tasks import schedule
 from django_q.models import Schedule
 from channels import Group
+from apps.core.utils import encrypt
 import json
 
 
@@ -67,15 +68,6 @@ class Video(TimestampedMixin):
     def html_body(self):
         return render_to_string('includes/home_video.html', {'video': self})
 
-    def html_questions_body(self, user):
-        return render_to_string(
-            'includes/video_questions.html',
-            {'user': user, 'questions': sorted(
-                self.questions.all(),
-                key=lambda vote: vote.votes_count, reverse=True
-            )}
-        )
-
     def send_notification(self, deleted=False, is_closed=False):
         notification = {
             'id': self.id,
@@ -119,6 +111,14 @@ class Question(TimestampedMixin):
     @property
     def votes_count(self):
         return self.votes.filter(vote=True).count()
+
+    def html_question_body(self, user):
+        return render_to_string(
+            'includes/video_questions.html',
+            {'question': self,
+             'user': user,
+             'author': encrypt(str(self.user.id).rjust(10))}
+        )
 
     class Meta:
         verbose_name = _('question')
