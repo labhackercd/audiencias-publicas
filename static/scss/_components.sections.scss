@@ -40,7 +40,7 @@
     }
 
     &--full-bg-left {
-      @include breakpoint(medium) {
+      @include breakpoint(large) {
         position: relative;
 
         &::before {
@@ -48,7 +48,7 @@
           position: absolute;
           right: 0;
           top: 0;
-          width: 50vw;
+          width: 100vw;
           height: 100%;
           background-color: inherit;
           z-index: -1;
@@ -57,7 +57,7 @@
     }
 
     &--full-bg-right {
-      @include breakpoint(medium) {
+      @include breakpoint(large) {
         position: relative;
 
         &::before {
@@ -65,7 +65,7 @@
           position: absolute;
           left: 0;
           top: 0;
-          width: 50vw;
+          width: 100vw;
           height: 100%;
           background-color: inherit;
           z-index: -1;
