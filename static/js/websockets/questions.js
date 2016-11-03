@@ -1,12 +1,22 @@
 var questionSocket = createSocket("questions/stream/");
+var questionList = $('#questions');
 
-$('#questions').mixItUp({
+questionList.mixItUp({
   selectors: {
     target: '.questions__item'
   },
   layout: {
     display: 'flex'
   }
+});
+
+questionList.on('mixStart', function(){
+  $('.vote-block__upvote-button').attr('disabled', '').attr('style','cursor:default;');
+  console.log('carai');
+});
+questionList.on('mixEnd', function(){
+  $('.vote-block__upvote-button').removeAttr('disabled').removeAttr('style');
+  console.log('porra');
 });
 
 
@@ -42,7 +52,9 @@ questionSocket.onmessage = function(message) {
     totalVotes.removeClass('voted');
   }
 
-  $('#questions').mixItUp('sort', 'question-votes:desc question-id:asc');
+
+  questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
+
 
 };
 
