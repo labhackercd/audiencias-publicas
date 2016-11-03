@@ -103,6 +103,13 @@
     </div>
 {% endblock %}
 
+{% block extra_js %}
+
+  <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
+
+
+{% endblock extra_js %}
+
 {% if not object.closed_date %}
     {% block websockets %}
         <script>var HANDLER = '{{handler}}';</script>
@@ -110,4 +117,3 @@
         <script type="text/javascript" src="{% static 'js/websockets/questions.js' %}"></script>
     {% endblock %}
 {% endif %}
-

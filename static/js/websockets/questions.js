@@ -1,6 +1,17 @@
 var questionSocket = createSocket("questions/stream/");
 
+$('#questions').mixItUp({
+  selectors: {
+    target: '.questions__item'
+  },
+  layout: {
+    display: 'flex'
+  }
+});
+
+
 questionSocket.onmessage = function(message) {
+
   var data = JSON.parse(message.data);
   var exists = $(`[data-question-id=${data.id}]`);
 
@@ -11,7 +22,7 @@ questionSocket.onmessage = function(message) {
     questionsContainer.append(data.html);
   }
   var newElement = $(`[data-question-id=${data.id}]`);
-  newElement.on('click', upVote);
+  newElement.find('.question-vote').on('click', upVote);
   var upvoteButton = newElement.find('.vote-block__upvote-button');
   var totalVotes = newElement.find('.vote-block__total-votes');
 
@@ -30,6 +41,9 @@ questionSocket.onmessage = function(message) {
     upvoteButton.html('Votar Nesta Pergunta');
     totalVotes.removeClass('voted');
   }
+
+  $('#questions').mixItUp('sort', 'question-votes:desc question-id:asc');
+
 };
 
 $("#questionform").on("submit", function(event) {

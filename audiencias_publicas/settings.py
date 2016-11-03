@@ -159,6 +159,7 @@ BOWER_COMPONENTS_ROOT = './static'
 BOWER_INSTALLED_APPS = [
     'jquery',
     'foundation-sites',
+    'mixitup',
     'https://github.com/labhackercd/fontastic-labhacker.git',
     'https://github.com/joewalnes/reconnecting-websocket.git',
 ]
