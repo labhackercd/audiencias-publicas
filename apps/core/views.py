@@ -56,7 +56,8 @@ class VideoDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(VideoDetail, self).get_context_data(**kwargs)
-        context['handler'] = encrypt(str(self.request.user.id).rjust(10))
+        if self.request.user.is_authenticated():
+            context['handler'] = encrypt(str(self.request.user.id).rjust(10))
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)

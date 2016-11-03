@@ -57,12 +57,16 @@ $("#questionform").on("submit", function(event) {
 });
 
 function upVote() {
-  var question_id = $(this).closest('.questions__item').data('question-id');
-  questionSocket.send(JSON.stringify({
-    handler: HANDLER,
-    question: question_id,
-    is_vote: true,
-  }))
+  if (HANDLER != "") {
+    var question_id = $(this).closest('.questions__item').data('question-id');
+    questionSocket.send(JSON.stringify({
+      handler: HANDLER,
+      question: question_id,
+      is_vote: true,
+    }))
+  } else {
+    loginRedirect();
+  }
 }
 
 $(".question-vote").on('click', upVote);

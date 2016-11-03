@@ -26,14 +26,18 @@ def on_receive(message, pk):
     else:
         log.debug('Question message is ok.')
 
+    if not data['handler']:
+        return
+
     user = User.objects.get(id=decrypt(data['handler']))
     if data['is_vote']:
         question = Question.objects.get(id=data['question'])
-        vote, created = UpDownVote.objects.get_or_create(
-            user=user, question=question, vote=True
-        )
-        if not created:
-            vote.delete()
+        if question.user != user:
+            vote, created = UpDownVote.objects.get_or_create(
+                user=user, question=question, vote=True
+            )
+            if not created:
+                vote.delete()
     else:
         question = Question.objects.create(video=video, user=user,
                                            question=data['question'])
