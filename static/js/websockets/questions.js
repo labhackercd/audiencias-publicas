@@ -11,14 +11,11 @@ questionList.mixItUp({
 });
 
 questionList.on('mixStart', function(){
-  $('.vote-block__upvote-button').attr('disabled', '').attr('style','cursor:default;');
-  console.log('carai');
+  $('.vote-block__upvote-button').attr('disabled', '').attr('style','cursor:default; background-color: transparent;');
 });
 questionList.on('mixEnd', function(){
   $('.vote-block__upvote-button').removeAttr('disabled').removeAttr('style');
-  console.log('porra');
 });
-
 
 questionSocket.onmessage = function(message) {
 
@@ -52,10 +49,7 @@ questionSocket.onmessage = function(message) {
     totalVotes.removeClass('voted');
   }
 
-
   questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
-
-
 };
 
 $("#questionform").on("submit", function(event) {
