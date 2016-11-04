@@ -145,7 +145,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'static'
+STATIC_ROOT = 'public'
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -169,8 +169,6 @@ COMPRESS_PRECOMPILERS = [
 ]
 
 LIBSASS_SOURCEMAPS = 'DEBUG'
-
-COMPRESS_ROOT = './static'
 
 # Django Q configuration
 
