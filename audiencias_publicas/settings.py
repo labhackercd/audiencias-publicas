@@ -154,10 +154,10 @@ STATICFILES_FINDERS = [
     'compressor.finders.CompressorFinder',
 ]
 
-BOWER_COMPONENTS_ROOT = './static'
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
 
 BOWER_INSTALLED_APPS = [
-    'jquery',
+    'jquery#~2.2.0',
     'foundation-sites',
     'mixitup',
     'https://github.com/labhackercd/fontastic-labhacker.git',
@@ -167,6 +167,8 @@ BOWER_INSTALLED_APPS = [
 COMPRESS_PRECOMPILERS = [
     ('text/x-scss', 'django_libsass.SassCompiler')
 ]
+
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
 
 LIBSASS_SOURCEMAPS = 'DEBUG'
 
