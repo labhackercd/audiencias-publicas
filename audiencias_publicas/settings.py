@@ -143,7 +143,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = config('STATIC_URL', default='/static/')
 
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'static'))
 
@@ -193,9 +193,9 @@ Q_CLUSTER = {
 # Authentication stuffs
 
 FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default=None)
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = config('LOGIN_URL', default='/login/')
+LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL', default='/')
+LOGOUT_REDIRECT_URL = config('LOGOUT_REDIRECT_URL', default='/')
 
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', default='sessionid')
 SESSION_COOKIE_PATH = config('SESSION_COOKIE_PATH', default='/')
