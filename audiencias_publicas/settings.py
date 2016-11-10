@@ -92,6 +92,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'apps.accounts.middlewares.AudienciasRemoteUser',
 )
 
 ROOT_URLCONF = 'audiencias_publicas.urls'
@@ -201,13 +202,17 @@ SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', default='sessionid')
 SESSION_COOKIE_PATH = config('SESSION_COOKIE_PATH', default='/')
 
 # Social auth
-
-AUTHENTICATION_BACKENDS = (
-    'social.backends.google.GoogleOAuth2',
-    'social.backends.facebook.Facebook2OAuth2',
-    'rules.permissions.ObjectPermissionBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
+if config('ENABLE_REMOTE_USER', default=0, cast=bool):
+    AUTHENTICATION_BACKENDS = (
+        'apps.accounts.backends.AudienciasAuthBackend',
+    )
+else:
+    AUTHENTICATION_BACKENDS = (
+        'social.backends.google.GoogleOAuth2',
+        'social.backends.facebook.Facebook2OAuth2',
+        'rules.permissions.ObjectPermissionBackend',
+        'django.contrib.auth.backends.ModelBackend',
+    )
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 

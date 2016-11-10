@@ -3,7 +3,7 @@ from apps.core.models import Agenda, Message, Question, Video, UpDownVote
 
 
 class AgendaAdmin(admin.ModelAdmin):
-    list_display = ('commission', 'session', 'situation', 'date')
+    list_display = ('commission', 'session', 'situation', 'date', 'created')
     list_filter = ['date', 'session', 'situation']
 
 

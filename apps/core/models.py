@@ -128,7 +128,7 @@ class Question(TimestampedMixin):
         return self.question
 
 
-class Agenda(models.Model):
+class Agenda(TimestampedMixin):
     date = models.DateTimeField(null=True, blank=True)
     session = models.CharField(max_length=200, null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)

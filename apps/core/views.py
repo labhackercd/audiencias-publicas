@@ -6,6 +6,7 @@ from django.views.generic import TemplateView, DetailView
 import requests
 import json
 from datetime import datetime
+from django.shortcuts import render
 
 
 def receive_callback(request=None):
@@ -32,22 +33,19 @@ def receive_callback(request=None):
     return HttpResponse('<h1>Receive callback</h1>', status=200)
 
 
-class HomeView(TemplateView):
-    template_name = 'index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        context['closed_videos'] = Video.objects.filter(
-            closed_date__isnull=False).order_by('-published_date')[:5]
-        context['live_videos'] = Video.objects.filter(
-            closed_date__isnull=True).order_by('-published_date')
-        context['agendas'] = Agenda.objects.filter(
+def index(request):
+    return render(request, 'index.html', context=dict(
+        closed_videos=Video.objects.filter(
+            closed_date__isnull=False).order_by('-published_date')[:5],
+        live_videos=Video.objects.filter(
+            closed_date__isnull=True).order_by('-published_date'),
+        agendas=Agenda.objects.filter(
             situation__startswith='Convocada',
             session__icontains='Audiência Pública',
-            date__gte=datetime.now()).order_by('date')
-        context['no_offset_top'] = 'no-offset-top'
-        context['hidden_nav'] = 'navigation--hidden'
-        return context
+            date__gte=datetime.now()).order_by('date'),
+        no_offset_top='no-offset-top',
+        hidden_nav='navigation--hidden',
+    ))
 
 
 class VideoDetail(DetailView):
