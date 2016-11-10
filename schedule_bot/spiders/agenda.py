@@ -21,17 +21,21 @@ class AgendaSpider(scrapy.Spider):
                 session = line.xpath('td[2]/strong/text()').re('[^\t\n\r]+')[1]
                 location = line.xpath('td[2]/text()').re('[^\t\n\r]+')[0]
                 situation = line.xpath('td[3]/text()|td[3]/strong/text()').re('[^\t\n\r]+')[0]
-                str_date = line.xpath('td[1]/text()').re('[^\t\n\r]+')[0]
+                str_date = line.xpath('td[1]/text()').re('[^\t\n\r]+')[0].strip(' ')
                 dt = datetime.strptime(str_date, '%d/%m/%Y')
-                hour = line.xpath('td[1]/text()').re('[^\t\n\r]+')[1].strip(' ').split('h')[0]
-                minute = line.xpath('td[1]/text()').re('[^\t\n\r]+')[1].strip(' ').split('h')[1]
-                if hour.isdigit():
-                    hour = int(hour)
+                if 'h' in line.xpath('td[1]/text()').re('[^\t\n\r]+')[1]:
+                    hour = line.xpath('td[1]/text()').re('[^\t\n\r]+')[1].strip(' ').split('h')[0]
+                    minute = line.xpath('td[1]/text()').re('[^\t\n\r]+')[1].strip(' ').split('h')[1]
+                    if hour.isdigit():
+                        hour = int(hour)
+                    else:
+                        hour = 0
+                    if minute.isdigit():
+                        minute = int(minute)
+                    else:
+                        minute = 0
                 else:
                     hour = 0
-                if minute.isdigit():
-                    minute = int(minute)
-                else:
                     minute = 0
                 date = dt.replace(hour=hour, minute=minute)
                 item = ScheduleBotItem()
