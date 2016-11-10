@@ -1,6 +1,7 @@
 var questionSocket = createSocket("questions/stream/");
+var questionList = $('#questions');
 
-$('#questions').mixItUp({
+questionList.mixItUp({
   selectors: {
     target: '.questions__item'
   },
@@ -9,6 +10,12 @@ $('#questions').mixItUp({
   }
 });
 
+questionList.on('mixStart', function(){
+  $('.vote-block__upvote-button').attr('disabled', '').attr('style','cursor:default; background-color: transparent;');
+});
+questionList.on('mixEnd', function(){
+  $('.vote-block__upvote-button').removeAttr('disabled').removeAttr('style');
+});
 
 questionSocket.onmessage = function(message) {
 
@@ -42,8 +49,7 @@ questionSocket.onmessage = function(message) {
     totalVotes.removeClass('voted');
   }
 
-  $('#questions').mixItUp('sort', 'question-votes:desc question-id:asc');
-
+  questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
 };
 
 $("#questionform").on("submit", function(event) {

@@ -144,9 +144,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = config('STATIC_URL', default='/static/')
 
-STATIC_ROOT = 'static'
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'static'))
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -155,10 +155,10 @@ STATICFILES_FINDERS = [
     'compressor.finders.CompressorFinder',
 ]
 
-BOWER_COMPONENTS_ROOT = './static'
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
 
 BOWER_INSTALLED_APPS = [
-    'jquery',
+    'jquery#~2.2.0',
     'foundation-sites',
     'mixitup',
     'https://github.com/labhackercd/fontastic-labhacker.git',
@@ -169,9 +169,9 @@ COMPRESS_PRECOMPILERS = [
     ('text/x-scss', 'django_libsass.SassCompiler')
 ]
 
-LIBSASS_SOURCEMAPS = 'DEBUG'
+COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
 
-COMPRESS_ROOT = './static'
+LIBSASS_SOURCEMAPS = 'DEBUG'
 
 # Django Q configuration
 
@@ -194,9 +194,9 @@ Q_CLUSTER = {
 # Authentication stuffs
 
 FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default=None)
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = config('LOGIN_URL', default='/login/')
+LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL', default='/')
+LOGOUT_REDIRECT_URL = config('LOGOUT_REDIRECT_URL', default='/')
 
 SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME', default='sessionid')
 SESSION_COOKIE_PATH = config('SESSION_COOKIE_PATH', default='/')

@@ -1,5 +1,6 @@
 .questions {
   margin: 0;
+  margin-bottom: 1rem;
   list-style: none;
 
   &__title {
@@ -28,6 +29,9 @@
   &__item {
     display: flex;
     margin-bottom: 1rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   &__question-block {
