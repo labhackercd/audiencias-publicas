@@ -6,6 +6,22 @@
 
   &--questions {
     background-color: #133837;
+    color: white;
+  }
+
+  &--chat {
+    color: #404040;
+  }
+
+  &--unauthenticated  {
+    justify-content: center;
+
+    & .send-form--unauthenticated__message {
+      padding: 0.5rem;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: inherit;
+    }
   }
 
   &__text-input {
@@ -24,5 +40,9 @@
   &__button-wrapper {
     display: flex;
     align-items: center;
+  }
+
+  &__link {
+    color: #09a67c;
   }
 }
