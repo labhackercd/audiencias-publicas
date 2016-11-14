@@ -60,13 +60,13 @@
                 {% elif not object.closed_date and not user.is_authenticated %}
 
                   <div class="send-form send-form--unauthenticated send-form--chat">
-                    <span class="message send-form--unauthenticated__message"><a class="send-form__link" href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
+                    <span class="send-form--unauthenticated__message"><a class="send-form__link" href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
                   </div>
 
                 {% else %}
 
                   <div class="send-form send-form--unauthenticated send-form--chat">
-                    <span class="message send-form--unauthenticated__message">Audiência encerrada para participações.</span>
+                    <span class="send-form--unauthenticated__message">Audiência encerrada para participações.</span>
                   </div>
                 {% endif %}
               </div>
@@ -93,7 +93,7 @@
                   {% include "includes/video_questions.html" with questions=questions user=user%}
                 {% empty %}
                   <div class="questions__empty">
-                    <img src="{% static 'img/question-hand.svg' %}" class="questions__empty-icon">
+                    <img class="questions__empty-icon" src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
                     <p class="questions__empty-message">Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
                   </div>
                 {% endfor %}
@@ -113,13 +113,13 @@
               {% elif not object.closed_date and not user.is_authenticated %}
 
                 <div class="send-form send-form--unauthenticated send-form--questions">
-                  <span class="message send-form--unauthenticated__message"><a class="send-form__link" href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
+                  <span class="send-form--unauthenticated__message"><a class="send-form__link" href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
                 </div>
 
               {% else %}
 
                 <div class="send-form send-form--unauthenticated send-form--questions">
-                  <span class="message send-form--unauthenticated__message">Audiência encerrada para participações.</span>
+                  <span class="send-form--unauthenticated__message">Audiência encerrada para participações.</span>
                 </div>
               {% endif %}
 
