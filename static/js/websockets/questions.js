@@ -50,6 +50,9 @@ questionSocket.onmessage = function(message) {
   }
 
   questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
+
+  $('.questions__empty').remove();
+
 };
 
 $("#questionform").on("submit", function(event) {

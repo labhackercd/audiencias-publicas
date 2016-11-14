@@ -128,4 +128,20 @@
     margin-bottom: 0.5rem;
   }
 
+  &__empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__empty-icon {
+    margin: 2.2rem;
+  }
+
+  &__empty-message {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: hsl(158, 42%, 24%);
+  }
+
 }
