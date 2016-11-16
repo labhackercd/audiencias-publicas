@@ -3,13 +3,14 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.template.defaultfilters import slugify
-from django.contrib.contenttypes import fields
 from django.template.loader import render_to_string
 from django.utils import timezone
+from django.template.loader import render_to_string
 from django_q.tasks import schedule
 from django_q.models import Schedule
 from channels import Group
 from apps.core.utils import encrypt
+from apps.core.views import notification
 import json
 
 
@@ -171,6 +172,17 @@ def video_post_delete(sender, instance, **kwargs):
         pass
 
 
+def vote_post_save(sender, instance, **kwargs):
+    count_votes = UpDownVote.objects.filter(question=instance.question).count()
+    if count_votes == 5:
+        html = render_to_string('notifications/question_notification.html',
+                                {'question': instance.question})
+        subject = u'[Audiências] Notificação de pergunta em destaque'
+        email_list = []
+        notification(subject, html, email_list)
+
+
 models.signals.pre_save.connect(video_pre_save, sender=Video)
 models.signals.post_save.connect(video_post_save, sender=Video)
 models.signals.post_delete.connect(video_post_delete, sender=Video)
+models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
