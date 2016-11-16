@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponse
-from django.core.mail import EmailMultiAlternatives
-from apps.core.models import Video, Agenda
+from apps.core.models import Agenda, Video
 from apps.core.utils import encrypt
 from django.views.generic import DetailView
 import requests
@@ -62,10 +61,3 @@ class VideoDetail(DetailView):
                                       reverse=True)
 
         return context
-
-
-def notification(subject, html, email_list):
-    mail = EmailMultiAlternatives(subject, '', settings.EMAIL_HOST_USER,
-                                  email_list)
-    mail.attach_alternative(html, 'text/html')
-    mail.send()

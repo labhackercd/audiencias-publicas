@@ -4,13 +4,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
 from django.utils import timezone
-from django.template.loader import render_to_string
 from django_q.tasks import schedule
 from django_q.models import Schedule
 from channels import Group
 from apps.core.utils import encrypt
-from apps.core.views import notification
+# from apps.core.views import notification
 import json
 
 
@@ -145,6 +145,13 @@ class Agenda(TimestampedMixin):
             return self.session + ', ' + self.location
         else:
             return 'Agenda'
+
+
+def notification(subject, html, email_list):
+    mail = EmailMultiAlternatives(subject, '', settings.EMAIL_HOST_USER,
+                                  email_list)
+    mail.attach_alternative(html, 'text/html')
+    mail.send()
 
 
 def video_pre_save(signal, instance, sender, **kwargs):
