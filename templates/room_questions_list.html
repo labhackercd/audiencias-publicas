@@ -1,0 +1,74 @@
+{% extends "components/base.html" %}
+{% load staticfiles %}
+
+{% block navigation %}
+{% endblock navigation %}
+
+{% block main %}
+
+        <section class="section section--questions">
+
+
+          <div class="row collapse">
+
+
+            <div class="columns small-12 flex-column">
+
+              <div class="section__block">
+                <div class="questions columns small-12">
+                  <h1 class="questions__title">Perguntas</h1>
+
+                  <div class="video__info video__info--questions-room">
+                    <h2 class="info__title">
+                      <i class="info__live-icon icon icon-circle live-blink"></i>
+                      <span class="info__title-text">DIREITOS HUMANOS E MINORIAS - OUTRO EVENTO - 01/11/2016 - 15:42</span>
+                    </h2>
+                  </div>
+
+                  <ul class="questions" id="questions">
+                    {% for question in questions %}
+                      {% include "includes/room_question.html" with questions=questions %}
+                    {% empty %}
+                      <div class="questions__empty">
+                        <p class="questions__empty-message">Nenhuma pergunta foi feita ainda.</p>
+                      </div>
+                    {% endfor %}
+                  </ul>
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+        </section>
+{% endblock %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block extra_js %}
+
+  <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
+
+
+{% endblock extra_js %}
+
+{% if not object.closed_date %}
+    {% block websockets %}
+        <script>
+          var HANDLER = "{{handler|default:''}}";
+
+          function loginRedirect() {
+            var next = "{{request.path}}";
+            var login_url = "{% url 'login' %}";
+            document.location.href = `${login_url}?next=${next}`;
+          }
+        </script>
+        <script type="text/javascript" src="{% static 'js/websockets/chat.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/websockets/questions.js' %}"></script>
+    {% endblock %}
+{% endif %}

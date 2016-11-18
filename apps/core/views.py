@@ -1,8 +1,8 @@
 from django.conf import settings
 from django.http import HttpResponse
-from apps.core.models import Agenda, Video
+from apps.core.models import Agenda, Video, Question
 from apps.core.utils import encrypt
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 import requests
 import json
 from datetime import datetime
@@ -43,8 +43,6 @@ def index(request):
             situation__startswith='Convocada',
             session__icontains='Audiência Pública',
             date__gte=datetime.now()).order_by('date'),
-        no_offset_top='no-offset-top',
-        hidden_nav='navigation--hidden',
     ))
 
 
@@ -60,4 +58,15 @@ class VideoDetail(DetailView):
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
 
+        return context
+
+
+class RoomQuestionList(ListView):
+    model = Question
+    template_name = 'room_questions_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(RoomQuestionList, self).get_context_data(**kwargs)
+        context['questions'] = Question.objects.all()
+        context['no_offset_top'] = 'no-offset-top'
         return context
