@@ -1,5 +1,5 @@
 from channels import route
-from .consumers import home, chat, questions
+from .consumers import home, chat, questions, room_questions
 
 channel_routing = [
     route("websocket.connect", home.on_connect, path=r'^/$'),
@@ -18,4 +18,9 @@ channel_routing = [
           path=r'^/sala/(?P<pk>\d+)/questions/stream/$'),
     route("websocket.disconnect", questions.on_disconnect,
           path=r'^/sala/(?P<pk>\d+)/questions/stream/$'),
+
+    route("websocket.connect", room_questions.on_connect,
+          path=r'^/sala/(?P<pk>\d+)/perguntas/questions/stream/$'),
+    route("websocket.disconnect", room_questions.on_disconnect,
+          path=r'^/sala/(?P<pk>\d+)/perguntas/questions/stream/$'),
 ]

@@ -61,12 +61,16 @@ class VideoDetail(DetailView):
         return context
 
 
-class RoomQuestionList(ListView):
-    model = Question
+class RoomQuestionList(DetailView):
+    model = Video
     template_name = 'room_questions_list.html'
 
     def get_context_data(self, **kwargs):
         context = super(RoomQuestionList, self).get_context_data(**kwargs)
-        context['questions'] = Question.objects.all()
+        questions = self.object.questions.all()
         context['no_offset_top'] = 'no-offset-top'
+        context['questions'] = sorted(questions,
+                                      key=lambda vote: vote.votes_count,
+                                      reverse=True)
+
         return context

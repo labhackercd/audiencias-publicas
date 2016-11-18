@@ -89,6 +89,10 @@ class Video(TimestampedMixin):
     def group_questions_name(self):
         return "video-questions-%s" % self.id
 
+    @property
+    def group_room_questions_name(self):
+        return "video-room-questions-%s" % self.id
+
 
 class Message(TimestampedMixin):
     video = models.ForeignKey(Video, related_name='messages')
@@ -122,6 +126,19 @@ class Question(TimestampedMixin):
             {'question': self,
              'user': user,
              'author': encrypt(str(self.user.id).rjust(10))}
+        )
+
+    def html_room_question_body(self):
+        return render_to_string('includes/room_question.html',
+                                {'question': self})
+
+    def send_notification(self):
+        text = {
+            'html': self.html_room_question_body(),
+            'id': self.id,
+        }
+        Group(self.video.group_room_questions_name).send(
+            {'text': json.dumps(text)}
         )
 
     class Meta:
@@ -184,15 +201,22 @@ def video_post_delete(sender, instance, **kwargs):
 
 def vote_post_save(sender, instance, **kwargs):
     count_votes = UpDownVote.objects.filter(question=instance.question).count()
-    if count_votes == 5:
-        html = render_to_string('notifications/question_notification.html',
+    if count_votes == settings.QUESTION_MIN_UPVOTES:
+        html = render_to_string('notifications/question.html',
                                 {'question': instance.question})
         subject = u'[Audiências] Notificação de pergunta em destaque'
         email_list = []
         notification(subject, html, email_list)
+
+    instance.question.send_notification()
+
+
+def vote_post_delete(sender, instance, **kwargs):
+    instance.question.send_notification()
 
 
 models.signals.pre_save.connect(video_pre_save, sender=Video)
 models.signals.post_save.connect(video_post_save, sender=Video)
 models.signals.post_delete.connect(video_post_delete, sender=Video)
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
+models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)

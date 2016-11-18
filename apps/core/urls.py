@@ -5,10 +5,10 @@ from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
 
 urlpatterns = [
     url(r'^$', index, name='home'),
-    url(r'^sala/(?P<pk>\d+)/', VideoDetail.as_view(), name='video_room'),
-    url(r'^perguntas', RoomQuestionList.as_view(),
+    url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
+    url(r'^sala/(?P<pk>\d+)/perguntas/?$', RoomQuestionList.as_view(),
         name='questions_list'),
-    url(r'^notification/callback/', receive_callback, name='receive_callback'),
+    url(r'^notification/callback/?$', receive_callback, name='receive_callback'),
 ]
 
 urlpatterns += [

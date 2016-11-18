@@ -18,7 +18,7 @@
                 <div class="video__info video__info--questions-room">
                   <h2 class="info__title">
                     <i class="info__live-icon icon icon-circle live-blink"></i>
-                    <a class="info__title-text info__title-text--link" href="#">DIREITOS HUMANOS E MINORIAS - OUTRO EVENTO - 01/11/2016 - 15:42</a>
+                    <a class="info__title-text info__title-text--link" href="{% url 'video_room' pk=object.id %}">{{object.title}}</a>
                   </h2>
                 </div>
 
@@ -45,24 +45,11 @@
 {% endblock footer %}
 
 {% block extra_js %}
-
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
-
-
 {% endblock extra_js %}
 
 {% if not object.closed_date %}
     {% block websockets %}
-        <script>
-          var HANDLER = "{{handler|default:''}}";
-
-          function loginRedirect() {
-            var next = "{{request.path}}";
-            var login_url = "{% url 'login' %}";
-            document.location.href = `${login_url}?next=${next}`;
-          }
-        </script>
-        <script type="text/javascript" src="{% static 'js/websockets/chat.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/websockets/questions.js' %}"></script>
+        <script type="text/javascript" src="{% static 'js/websockets/room_questions.js' %}"></script>
     {% endblock %}
 {% endif %}
