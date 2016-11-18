@@ -31,12 +31,14 @@
 
     </head>
 
-    <body>
+    <body class="{{no_offset_top}}">
 
     {# Navigation #}
-    <nav class="navigation">
-      {% include "components/navigation.html" %}
-    </nav>
+    {% block navigation %}
+      <nav class="navigation">
+        {% include "components/navigation.html" %}
+      </nav>
+    {% endblock navigation %}
 
     {# Main Content #}
     <main class="main">
@@ -46,9 +48,11 @@
     </main>
 
     {# Footer #}
-    <footer class="footer">
-      {% include "components/footer.html" %}
-    </footer>
+    {% block footer %}
+      <footer class="footer">
+        {% include "components/footer.html" %}
+      </footer>
+    {% endblock footer %}
 
     {# Scripts #}
     {% block foot_js %}
