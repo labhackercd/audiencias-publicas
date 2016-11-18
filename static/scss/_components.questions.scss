@@ -108,6 +108,11 @@
         }
       }
     }
+
+    .vote-block__vote-label {
+      color: #09a67c;
+      font-weight: 700;
+    }
   }
 
   &__user-question {
@@ -142,6 +147,54 @@
     font-size: 1.5rem;
     font-weight: 600;
     color: hsl(158, 42%, 24%);
+  }
+
+}
+
+.questions--room {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: calc(100vh - 1rem);
+  margin: 0;
+
+  .questions {
+
+    &__list {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      flex: 1;
+      height: auto;
+      margin: 0 -0.5rem;
+    }
+
+    &__item {
+      flex: 0 0 auto;
+      width: 50%;
+      padding: 0 0.5rem;
+
+      &:last-child {
+        margin-bottom: 1rem;
+      }
+    }
+
+    &__vote-block {
+      background-color: #09a67c;
+
+      .vote-block__total-votes {
+        color: white;
+      }
+
+      .vote-block__vote-label {
+        color: white;
+      }
+    }
+
+    &__question-block {
+      margin-left: 0;
+    }
+
   }
 
 }

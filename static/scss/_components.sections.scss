@@ -39,6 +39,12 @@
       background-color: #082827;
     }
 
+    &--questions-room {
+      padding: 1rem;
+      padding-bottom: 0;
+      width: 100%;
+    }
+
     &--full-bg-left {
       @include breakpoint(large) {
         position: relative;

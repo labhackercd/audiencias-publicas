@@ -25,6 +25,13 @@
       margin-bottom: 0;
     }
 
+    .info__title-text {
+
+      &--link {
+        color: white;
+      }
+    }
+
     .info__live-icon {
       font-size: 0.7rem;
       color: #ff3333;
