@@ -102,7 +102,7 @@
         color: #999999;
         cursor: default;
 
-        &:hover {
+        &:hover, &:focus {
           background-color: transparent;
           border-color: #999999;
         }
