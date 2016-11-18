@@ -20,39 +20,41 @@ def on_receive(message, pk):
     video = get_video(pk)
     data = get_data(message)
 
-    if set(data.keys()) != set(('handler', 'question', 'is_vote')):
-        log.debug("Message unexpected format data")
-        return
-    else:
-        log.debug('Question message is ok.')
+    if not video.closed_date:
+        if set(data.keys()) != set(('handler', 'question', 'is_vote')):
+            log.debug("Message unexpected format data")
+            return
+        else:
+            log.debug('Question message is ok.')
 
-    if not data['handler']:
-        return
+        if not data['handler']:
+            return
 
-    user = User.objects.get(id=decrypt(data['handler']))
-    if data['is_vote']:
-        question = Question.objects.get(id=data['question'])
-        if question.user != user:
-            vote, created = UpDownVote.objects.get_or_create(
-                user=user, question=question, vote=True
-            )
-            if not created:
-                vote.delete()
-    else:
-        question = Question.objects.create(video=video, user=user,
-                                           question=data['question'])
-        UpDownVote.objects.create(question=question, user=user, vote=True)
+        user = User.objects.get(id=decrypt(data['handler']))
+        if data['is_vote']:
+            question = Question.objects.get(id=data['question'])
+            if question.user != user:
+                vote, created = UpDownVote.objects.get_or_create(
+                    user=user, question=question, vote=True
+                )
+                if not created:
+                    vote.delete()
+        else:
+            question = Question.objects.create(video=video, user=user,
+                                               question=data['question'])
+            UpDownVote.objects.create(question=question, user=user, vote=True)
 
-    vote_list = []
-    for vote in question.votes.all():
-        vote_list.append(encrypt(str(vote.user.id).rjust(10)))
+        vote_list = []
+        for vote in question.votes.all():
+            vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
-    Group(video.group_questions_name).send(
-        {'text': json.dumps({'id': question.id,
-                             'user': encrypt(str(user.id).rjust(10)),
-                             'voteList': vote_list,
-                             'html': question.html_question_body(user)})}
-    )
+        Group(video.group_questions_name).send(
+            {'text': json.dumps({'id': question.id,
+                                 'user': encrypt(str(user.id).rjust(10)),
+                                 'voteList': vote_list,
+                                 'html': question.html_question_body(user)})}
+        )
+
 
 
 def on_disconnect(message, pk):

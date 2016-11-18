@@ -21,6 +21,7 @@ questionSocket.onmessage = function(message) {
   if(message.data == 'closed'){
     $('#questionform').remove();
     $('#closedQuestionForm').removeClass('hide');
+    $('.vote-block__upvote-button').addClass('disabled').attr('disabled');
   }else{
     var data = JSON.parse(message.data);
     var exists = $(`[data-question-id=${data.id}]`);
