@@ -67,12 +67,12 @@
                     <span class="send-form--unauthenticated__message"><a class="send-form__link" href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
                   </div>
 
-                {% else %}
-
-                  <div class="send-form send-form--unauthenticated send-form--chat">
-                    <span class="send-form--unauthenticated__message">Audiência encerrada para participações.</span>
-                  </div>
                 {% endif %}
+
+                <div class="send-form send-form--unauthenticated send-form--chat {% if not object.closed_date %}hide{% endif %}" id="closedChatForm">
+                  <span class="send-form--unauthenticated__message">Audiência encerrada para participações.</span>
+                </div>
+
               </div>
 
             </div>
@@ -120,12 +120,11 @@
                   <span class="send-form--unauthenticated__message"><a class="send-form__link" href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
                 </div>
 
-              {% else %}
-
-                <div class="send-form send-form--unauthenticated send-form--questions">
-                  <span class="send-form--unauthenticated__message">Audiência encerrada para participações.</span>
-                </div>
               {% endif %}
+
+              <div class="send-form send-form--unauthenticated send-form--questions {% if not object.closed_date %}hide{% endif %}" id="closedQuestionForm">
+                <span class="send-form--unauthenticated__message">Audiência encerrada para participações.</span>
+              </div>
 
             </div>
           </div>

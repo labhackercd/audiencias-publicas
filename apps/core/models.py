@@ -76,6 +76,9 @@ class Video(TimestampedMixin):
             'deleted': deleted,
             'is_closed': is_closed
         }
+        if is_closed:
+            Group(self.group_questions_name).send({'text': 'closed'})
+            Group(self.group_chat_name).send({'text': 'closed'})
         Group('home').send({'text': json.dumps(notification)})
 
     @property
