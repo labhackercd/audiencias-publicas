@@ -242,7 +242,7 @@
 .section--questions {
   background: linear-gradient(45deg, $secondary-color 0%, $primary-color 100%);
 
-  @include breakpoint(large up) {
+  @include breakpoint(xxlarge up) {
     font-size: 125%;
   }
 
