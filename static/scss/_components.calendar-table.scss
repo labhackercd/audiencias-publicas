@@ -1,6 +1,6 @@
 .calendar-table {
   margin-bottom: 0;
-  font-size: 1.2rem;
+  font-size: 1.2em;
 
   &__body {
     border-left: 0;
@@ -9,16 +9,16 @@
   }
 
   &__column {
-    
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+
+    padding-top: 1em;
+    padding-bottom: 1em;
 
     &:first-child {
       font-weight: 600;
-      padding-left: 3rem;
+      padding-left: 3em;
     }
     &:last-child {
-      padding-right: 3rem;
+      padding-right: 3em;
     }
   }
 }

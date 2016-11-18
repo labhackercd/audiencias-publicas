@@ -30,22 +30,22 @@
       position: absolute;
       left: 0;
       top: 0;
-      width: 3rem;
+      width: 3em;
       height: 100%;
-      font-size: 1.25rem;
-      line-height: 3rem;
+      font-size: 1.25em;
+      line-height: 3em;
     }
 
     &__label {
       width: 100%;
       text-align: center;
-      padding-left: 2.15rem;
+      padding-left: 2.15em;
     }
   }
 
   &--profile {
     width: 100%;
-    margin: 0 0.5rem;
+    margin: 0 0.5em;
   }
 
   &--type-override {
@@ -58,11 +58,11 @@
     padding: 0;
     margin: 0;
   }
-  
+
   &--label-override {
     word-break: break-all;
     vertical-align: top !important;
-    margin: 0 0 1rem 0 !important;
+    margin: 0 0 1em 0 !important;
     // Damn you Foundation for making me use !important :(
   }
 
@@ -70,16 +70,16 @@
 
 .show-all {
   text-align: center;
-  padding: 1rem 0;
+  padding: 1em 0;
   border-top: 1px solid #cccccc;
 
   &--video-list {
-    margin: 0 3rem;
+    margin: 0 3em;
   }
 
   &__button {
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 0.9em;
     color: hsla(0,0%,40%,1);
     text-transform: uppercase;
 

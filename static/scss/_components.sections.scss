@@ -9,11 +9,11 @@
     align-items: center;
     flex-direction: column;
     min-height: 100%;
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
     @include breakpoint(small only) {
-      padding-bottom: 1rem;
-      padding-top: 1rem;
+      padding-bottom: 1em;
+      padding-top: 1em;
     }
 
     &--title {
@@ -21,8 +21,8 @@
     }
 
     &--hero {
-      height: calc(70vh - 4rem);
-      min-height: 22rem;
+      height: calc(70vh - 4em);
+      min-height: 22em;
     }
 
     &--video-frame {
@@ -40,7 +40,7 @@
     }
 
     &--questions-room {
-      padding: 1rem;
+      padding: 1em;
       padding-bottom: 0;
       width: 100%;
     }
@@ -106,18 +106,18 @@
 
   &__logo {
     max-width: 100%;
-    width: 12rem;
-    margin-bottom: 2rem;
+    width: 12em;
+    margin-bottom: 2em;
     @include breakpoint(small only) {
-      width: 12rem;
+      width: 12em;
     }
   }
 
   &__text {
-    font-size: 1.2rem;
+    font-size: 1.2em;
     font-weight: 700;
     @include breakpoint(small only) {
-      font-size: 1.2rem;
+      font-size: 1.2em;
     }
   }
 
@@ -127,21 +127,21 @@
 
   &__title {
     position: relative;
-    font-size: 2.5rem;
+    font-size: 2.5em;
     font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding-top: 1rem;
-    text-indent: -0.2rem;
+    margin-bottom: 1em;
+    padding-top: 1em;
+    text-indent: -0.2em;
     width: 100%;
     &::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
-      width: 30rem;
+      width: 30em;
       max-width: 90%;
-      height: 0.7rem;
+      height: 0.7em;
       @include breakpoint(small only) {
         margin: auto;
         right: 0;
@@ -150,14 +150,14 @@
 
     @include breakpoint(small only) {
       text-align: center;
-      font-size: 2.4rem;
+      font-size: 2.4em;
     }
   }
 
   &__caption {
     font-weight: 700;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
+    font-size: 1.2em;
+    margin-bottom: 1em;
   }
 }
 
@@ -165,13 +165,13 @@
   background: linear-gradient(45deg, $secondary-color 0%, $primary-color 100%);
 
   & .section__logo {
-    width: 28rem;
+    width: 28em;
   }
 
   & .section__text {
     color: white;
-    font-size: 1.6rem;
-    max-width: 30rem;
+    font-size: 1.6em;
+    max-width: 30em;
   }
 
   & .section__title {
@@ -186,7 +186,7 @@
 }
 
 .section--videos {
-  padding: 2rem 0;
+  padding: 2em 0;
   background-color: #e6e6e6;
 }
 
@@ -195,7 +195,7 @@
 
   & .section__title {
     color: #082524;
-    border-bottom: 0.5rem solid #11496c;
+    border-bottom: 0.5em solid #11496c;
   }
 
   & .section__text {
@@ -218,19 +218,19 @@
   }
 
   & .section__block {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 
     &--social {
-      padding-top: 1rem;
-      margin-top: 1rem;
+      padding-top: 1em;
+      margin-top: 1em;
       border-top: 1px solid #dddddd;
     }
 
     &--error {
       background: #ededed;
-      padding: 1rem;
-      margin-bottom: 1rem;
+      padding: 1em;
+      margin-bottom: 1em;
       ul {
         list-style-type: none;
         margin: 0;

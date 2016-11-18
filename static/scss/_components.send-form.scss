@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   background-color: #eaeaea;
-  padding: 1rem 1rem;
+  padding: 1em 1em;
 
   &--questions {
     background-color: #133837;
@@ -17,9 +17,9 @@
     justify-content: center;
 
     & .send-form--unauthenticated__message {
-      padding: 0.5rem;
+      padding: 0.5em;
       font-weight: 600;
-      font-size: 1.2rem;
+      font-size: 1.2em;
       color: inherit;
     }
   }
@@ -31,9 +31,9 @@
 
   &__button {
     margin: 0;
-    margin-left: 0.5rem;
+    margin-left: 0.5em;
     border: none;
-    padding-right: 0.5rem;
+    padding-right: 0.5em;
     background-color: #09a67c
   }
 

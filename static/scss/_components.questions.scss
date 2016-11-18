@@ -1,12 +1,12 @@
 .questions {
   margin: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 1em;
   list-style: none;
 
   &__title {
     display: flex;
     align-items: center;
-    font-size: 1.4rem;
+    font-size: 1.4em;
     color: white;
     font-weight: 700;
     text-transform: uppercase;
@@ -15,9 +15,9 @@
       content: '';
       background-color: #fbc707;
       display: flex;
-      flex: 1;height: 0.8rem;
-      margin-top: 0.1rem;
-      margin-left: 1rem;
+      flex: 1;height: 0.8em;
+      margin-top: 0.1em;
+      margin-left: 1em;
     }
   }
 
@@ -28,7 +28,7 @@
 
   &__item {
     display: flex;
-    margin-bottom: 1rem;
+    margin-bottom: 1em;
     &:last-child {
       margin-bottom: 0;
     }
@@ -36,14 +36,14 @@
 
   &__question-block {
     flex: 1;
-    margin-left: 1rem;
-    padding: 0.75rem;
+    margin-left: 1em;
+    padding: 0.75em;
     background-color: white;
   }
 
   &__vote-block {
     display: flex;
-    flex-basis: 6rem;
+    flex-basis: 6em;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -51,14 +51,14 @@
     .vote-block__upvote-link {
       color: #09a67c;
       display: inline-flex;
-      font-size: 1.6rem;
+      font-size: 1.6em;
     }
 
     .vote-block__total-votes {
       color: #09a67c;
       font-weight: 700;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
 
       &.voted {
         color: #fbc707;
@@ -71,16 +71,16 @@
 
     .vote-block__upvote-button {
       color: white;
-      font-size: 0.7rem;
+      font-size: 0.7em;
       font-weight: 400;
       text-transform: uppercase;
       display: inline-flex;
       justify-content: center;
-      min-height: 2.1rem;
+      min-height: 2.1em;
       width: 100%;
-      padding: 0.3rem;
+      padding: 0.3em;
       border: 1px solid #09a67c;
-      border-radius: 1rem;
+      border-radius: 1em;
       transition: all $swift-out 0.25s;
 
       &:hover, &:focus {
@@ -116,7 +116,7 @@
   }
 
   &__user-question {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5em;
   }
 
   &__user-name {
@@ -124,13 +124,13 @@
   }
 
   &__timestamp {
-    font-size: 0.7rem;
+    font-size: 0.7em;
     font-weight: 400;
     color: #737373;
   }
 
   &__user-info {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5em;
   }
 
   &__empty {
@@ -140,11 +140,11 @@
   }
 
   &__empty-icon {
-    margin: 2.2rem;
+    margin: 2.2em;
   }
 
   &__empty-message {
-    font-size: 1.5rem;
+    font-size: 1.5em;
     font-weight: 600;
     color: hsl(158, 42%, 24%);
   }
@@ -155,7 +155,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: calc(100vh - 1rem);
+  height: calc(100vh - 1em);
   margin: 0;
 
   .questions {
@@ -166,16 +166,16 @@
       flex-wrap: wrap;
       flex: 1;
       height: auto;
-      margin: 0 -0.5rem;
+      margin: 0 -0.5em;
     }
 
     &__item {
       flex: 0 0 auto;
       width: 50%;
-      padding: 0 0.5rem;
+      padding: 0 0.5em;
 
       &:last-child {
-        margin-bottom: 1rem;
+        margin-bottom: 1em;
       }
     }
 

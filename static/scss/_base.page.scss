@@ -7,9 +7,9 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
-  padding-top: 4rem;
+  padding-top: 4em;
   @include breakpoint(small only) {
-    padding-top: 3rem;
+    padding-top: 3em;
   }
 }
 
