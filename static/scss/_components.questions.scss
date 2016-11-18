@@ -223,6 +223,8 @@
     }
 
     &__user-question {
+      line-height: 1.4em;
+
       @include breakpoint(large up) {
         font-weight: 400;
       }
