@@ -17,7 +17,11 @@
               <div class="video__info">
                 <h1 class="info__heading">Agora na Câmara:</h1>
                 <h2 class="info__title">
-                  <i class="info__live-icon icon icon-circle live-blink"></i>
+                  {% if not object.closed_date %}
+                    <i class="info__live-icon icon icon-circle live-blink"></i>
+                  {% else %}
+
+                  {% endif %}
                   <span class="info__title-text">{{ object.title }}</span>
                 </h2>
               </div>
