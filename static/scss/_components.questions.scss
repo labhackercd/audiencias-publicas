@@ -58,19 +58,17 @@
       border-radius: 5px;
       background-color: white;
       opacity: 0;
-      z-index: -1;
       pointer-events: none;
     }
 
     &:target::before {
-
-      @keyframes highlight {
-        0% {opacity:0.9; z-index: 1}
-        99.9% {opacity:0.1; z-index: 1}
-        100% {opacity:0.1; z-index: 0;}
-      }
       animation: highlight 3.5s 1s forwards;
 
+      @keyframes highlight {
+        0% {opacity:0.9; z-index: 2}
+        99.9% {opacity:0.1; z-index: 2}
+        100% {opacity:0.1; z-index: 0;}
+      }
     }
   }
 
@@ -191,6 +189,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 
     @include breakpoint(small only) {
       flex-direction: row;
