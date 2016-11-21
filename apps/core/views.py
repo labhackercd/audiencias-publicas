@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.sites.models import Site
 from apps.core.models import Agenda, Video, Question
 from apps.core.utils import encrypt
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 import requests
 import json
 from datetime import datetime
@@ -77,3 +77,7 @@ class RoomQuestionList(DetailView):
                                       reverse=True)
 
         return context
+
+
+class QuestionDetail(TemplateView):
+    template_name = 'question.html'

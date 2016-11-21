@@ -1,0 +1,26 @@
+{% load compress %}
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    {# Title #}
+    <title>
+      {% block title %}Apoie a minha pergunta!{% endblock title%}
+    </title>
+    <meta property="og:url" content="{{request.scheme}}://{{domain}}{% url 'question_detail' %}" />
+    <meta property="og:title" content="Apoie a minha pergunta!" />
+    <meta property="og:site_name" content="Audiências Públicas" />
+    <meta property="og:description" content="Estou participando de uma Audiência Pública e preciso do seu apoio para que minha pergunta seja feita aos deputados :)" />
+    <meta property="og:image"  content="{{request.scheme}}://{{domain}}{% static 'img/logo-audiencias-full.png' %}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="300" />
+    <meta property="og:type" content="website" />
+  </head>
+
+  <body>
+  </body>
+</html>
