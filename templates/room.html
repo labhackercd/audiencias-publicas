@@ -169,7 +169,8 @@
         console.log('compartilha twitter');
       } else if ($(this).find('.icon-whatsapp').length) {
         console.log('compartilha whatsapp');
-        window.open('whatsapp://send?text=Testando&href=' + url)
+        var message = encodeURIComponent('Testando') + " - " + encodeURIComponent(url);
+        window.open('whatsapp://send?text=' + message)
       }
 
       return false;
