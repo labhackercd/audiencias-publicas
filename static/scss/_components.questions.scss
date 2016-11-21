@@ -55,6 +55,19 @@
     }
   }
 
+  &__share-block {
+    float: right;
+    & .social-list {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      li {
+        display: inline;
+        padding: 0.3em;
+      }
+    }
+  }
+
   &__vote-block {
     display: flex;
     flex-basis: 6em;
