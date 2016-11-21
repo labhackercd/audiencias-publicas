@@ -18,6 +18,6 @@
   </head>
 
   <body>
-    <script>window.location.replace("{% url 'video_room' pk=object.video.id %}");</script>
+    <script>window.location.replace("{% url 'video_room' pk=object.video.id %}#question{{object.id}}");</script>
   </body>
 </html>
