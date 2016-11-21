@@ -64,4 +64,13 @@ $('.question-share').click(function() {
               'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,' +
               'toolbar=yes,menubar=no,location=no,directories=no, status=yes');
   return false;
-})
+});
+
+//Question share action
+$('.questions__share-button').click(function(){
+  $(this).siblings('.questions__share-list').addClass('active')
+});
+
+$('.questions__share-close').click(function(){
+  $(this).parent('.questions__share-list').removeClass('active')
+});

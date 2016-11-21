@@ -11,12 +11,22 @@
       <div class="questions__timestamp"> {{question.created | date:'H:i'}}</div>
     </div>
     <p class="questions__user-question">{{question.question}}</p>
-    <div class="questions__share-block">
-      <ul class="social-list">
-        <li><a target="_blank"><i class="question-share icon icon-facebook"></i></a></li>
-        <li><a target="_blank"><i class="question-share icon icon-twitter"></i></a></li>
-        <li><a target="_blank"><i class="question-share icon icon-whatsapp"></i></a></li>
-      </ul>
-    </div>
+
+    <span class="questions__share-button" role="button" title="Compartilhar esta pergunta">
+      <i class="questions__share-icon icon icon-share-alt"></i>
+    </span>
+
+    <ul class="questions__share-list">
+      <li class="questions__share-item questions__share-item--facebook ">
+        <a class="questions__share-link" target="_blank" title="Compartilhar pelo Facebook"><i class="questions__share-icon icon icon-facebook"></i></a>
+      </li>
+      <li class="questions__share-item questions__share-item--twitter ">
+        <a class="questions__share-link" target="_blank" title="Compartilhar pelo Twitter"><i class="questions__share-icon icon icon-twitter"></i></a>
+      </li>
+      <li class="questions__share-item questions__share-item--whatsapp ">
+        <a class="questions__share-link" target="_blank" title="Compartilhar pelo Whatsapp"><i class="questions__share-icon icon icon-whatsapp"></i></a>
+      </li>
+      <span class="questions__share-close" role="button" title="Cancelar"><i class="icon icon-times"></i></span>
+    </ul>
   </div>
 </li>
