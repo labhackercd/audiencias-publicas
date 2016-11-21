@@ -6,7 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-    <meta property="og:url" content="{{request.scheme}}://{{domain}}{% url 'question_detail' %}" />
+    <meta property="og:url" content="{{request.scheme}}://{{domain}}{% url 'question_detail' pk=object.id%}" />
     <meta property="og:title" content="Apoie essa pergunta!" />
     <meta property="og:site_name" content="Audiências Públicas" />
     <meta property="og:description" content="{{object.question}}" />
@@ -18,6 +18,6 @@
   </head>
 
   <body>
-    <script>window.location.replace("{% url '' %}");</script>
+    <script>window.location.replace("{% url 'video_room' pk=object.video.id %}");</script>
   </body>
 </html>
