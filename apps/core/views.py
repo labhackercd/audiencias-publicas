@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponse
+from django.contrib.sites.models import Site
 from apps.core.models import Agenda, Video, Question
 from apps.core.utils import encrypt
 from django.views.generic import DetailView, ListView
@@ -57,6 +58,8 @@ class VideoDetail(DetailView):
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
+        context['domain'] = Site.objects.get_current().domain
+        context['domain'] += settings.FORCE_SCRIPT_NAME
 
         return context
 

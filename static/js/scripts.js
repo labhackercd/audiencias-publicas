@@ -54,3 +54,13 @@ function getCookie(name) {
   var parts = value.split("; " + name + "=");
   if (parts.length == 2) return parts.pop().split(";").shift();
 }
+
+
+$('.question-share').click(function() {
+  var pathname = window.location.pathname;
+  var url = window.location.href;
+  url = url.replace(location.hash, '');
+  console.log(url);
+  window.open('http://www.facebook.com/sharer/sharer.php?u=' + url, '_blank');
+  return false;
+})
