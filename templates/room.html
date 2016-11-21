@@ -161,11 +161,17 @@
       var questionPath = question.attr('data-question-path');
       url = url.replace(pathname, questionPath);
 
-      console.log(url);
+      if ($(this).find('.icon-facebook').length) {
+        window.open('http://www.facebook.com/sharer/sharer.php?u=' + url,'popUpWindow',
+                    'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,' +
+                    'toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+      } else if ($(this).find('.icon-twitter').length) {
+        console.log('compartilha twitter');
+      } else if ($(this).find('.icon-whatsapp').length) {
+        console.log('compartilha whatsapp');
+        window.open('whatsapp://send?text=Testando&href=' + url)
+      }
 
-      window.open('http://www.facebook.com/sharer/sharer.php?u=' + url,'popUpWindow',
-                  'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,' +
-                  'toolbar=yes,menubar=no,location=no,directories=no, status=yes');
       return false;
     })
   </script>
