@@ -55,17 +55,6 @@ function getCookie(name) {
   if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
-
-$('.question-share').click(function() {
-  var pathname = window.location.pathname;
-  var url = window.location.href;
-  url = url.replace(location.hash, '');
-  window.open('http://www.facebook.com/sharer/sharer.php?u=' + url,'popUpWindow',
-              'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,' +
-              'toolbar=yes,menubar=no,location=no,directories=no, status=yes');
-  return false;
-});
-
 //Question share action
 $('.questions__share-button').click(function(){
   $(this).siblings('.questions__share-list').addClass('active')

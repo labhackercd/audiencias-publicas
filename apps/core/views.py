@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.sites.models import Site
 from apps.core.models import Agenda, Video, Question
 from apps.core.utils import encrypt
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView
 import requests
 import json
 from datetime import datetime
@@ -79,7 +79,8 @@ class RoomQuestionList(DetailView):
         return context
 
 
-class QuestionDetail(TemplateView):
+class QuestionDetail(DetailView):
+    model = Question
     template_name = 'question.html'
 
     def get_context_data(self, **kwargs):

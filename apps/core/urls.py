@@ -6,7 +6,8 @@ from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
 
 urlpatterns = [
     url(r'^$', index, name='home'),
-    url(r'^perguntas/?$', QuestionDetail.as_view(), name='question_detail'),
+    url(r'^pergunta/(?P<pk>\d+)/?$', QuestionDetail.as_view(),
+        name='question_detail'),
     url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
     url(r'^sala/(?P<pk>\d+)/perguntas/?$', RoomQuestionList.as_view(),
         name='questions_list'),
