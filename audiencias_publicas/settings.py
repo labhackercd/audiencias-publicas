@@ -276,3 +276,7 @@ LOGGING = {
         },
     },
 }
+
+WORDS_BLACK_LIST = config('WORDS_BLACK_LIST',
+                          cast=Csv(lambda x: x.strip().strip(',').strip()),
+                          default='')

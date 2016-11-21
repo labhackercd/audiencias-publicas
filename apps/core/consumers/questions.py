@@ -3,8 +3,10 @@ from apps.core.models import Video, Question, UpDownVote
 from apps.core.utils import decrypt, encrypt
 from apps.core.consumers.utils import get_video, get_data
 from django.contrib.auth.models import User
+from django.conf import settings
 import json
 import logging
+import re
 
 log = logging.getLogger("chat")
 
@@ -40,8 +42,16 @@ def on_receive(message, pk):
                 if not created:
                     vote.delete()
         else:
+            blackList = settings.WORDS_BLACK_LIST
+            wordList = re.sub("[^\w]", " ", data['question'].lower()).split()
+            censured_words = list(set(blackList) & set(wordList))
+            query = data['question']
+
+            if censured_words:
+                for word in censured_words:
+                    query = re.sub(word, '♥', query, flags=re.IGNORECASE)
             question = Question.objects.create(video=video, user=user,
-                                               question=data['question'])
+                                               question=query)
             UpDownVote.objects.create(question=question, user=user, vote=True)
 
         vote_list = []
@@ -54,7 +64,6 @@ def on_receive(message, pk):
                                  'voteList': vote_list,
                                  'html': question.html_question_body(user)})}
         )
-
 
 
 def on_disconnect(message, pk):
