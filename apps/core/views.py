@@ -81,3 +81,10 @@ class RoomQuestionList(DetailView):
 
 class QuestionDetail(TemplateView):
     template_name = 'question.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionDetail, self).get_context_data(**kwargs)
+        context['domain'] = Site.objects.get_current().domain
+        context['domain'] += settings.FORCE_SCRIPT_NAME
+
+        return context
