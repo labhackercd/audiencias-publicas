@@ -1,5 +1,17 @@
 {% extends "components/base.html" %}
 {% load staticfiles %}
+
+{% block metadata %}
+  <meta property="og:title" content="{{object.title}}" />
+  <meta property="og:site_name" content="Audiências Públicas" />
+  <meta property="og:description" content="{{ object.description }}" />
+  <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/share-image.jpg' %}" />
+  <meta property="og:image:type" content="image/jpg" />
+  <meta property="og:image:width" content="600" />
+  <meta property="og:image:height" content="300" />
+  <meta property="og:type" content="website" />
+{% endblock metadata %}
+
 {% block main %}
 
     <div class="row collapse">
@@ -140,6 +152,31 @@
 {% block extra_js %}
 
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
+  <script>
+    $('.questions__share-link').click(function() {
+      var pathname = window.location.pathname;
+      var url = window.location.href;
+      url = url.replace(location.hash, '');
+      var question = $(this).closest('.questions__item')
+      var questionPath = question.attr('data-question-path');
+      url = url.replace(pathname, questionPath);
+      var window_opts = 'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,' +
+                        'toolbar=yes,menubar=no,location=no,directories=no, status=yes'
+
+      if ($(this).find('.icon-facebook').length) {
+        window.open('http://www.facebook.com/sharer/sharer.php?u=' + url,'popUpWindow', window_opts);
+      } else if ($(this).find('.icon-twitter').length) {
+        console.log('compartilha twitter');
+        var twitter_url = `http://twitter.com/share?text=Apoie essa pergunta!&url=${url}`;
+        window.open(twitter_url, 'popUpWindow', window_opts);
+      } else if ($(this).find('.icon-whatsapp').length) {
+        var message = encodeURIComponent('As perguntas mais votadas serão respondidas pelos deputados agora! Acesse em ') + encodeURIComponent(url);
+        window.open('whatsapp://send?text=' + message)
+      }
+
+      return false;
+    })
+  </script>
 
 
 {% endblock extra_js %}

@@ -39,6 +39,7 @@ INSTALLED_APPS = (
 
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -57,6 +58,8 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'channels',
 )
+
+SITE_ID = 1
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -194,7 +197,7 @@ Q_CLUSTER = {
 
 # Authentication stuffs
 
-FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default=None)
+FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default='')
 LOGIN_URL = config('LOGIN_URL', default='/login/')
 LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL', default='/')
 LOGOUT_REDIRECT_URL = config('LOGOUT_REDIRECT_URL', default='/')

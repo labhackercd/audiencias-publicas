@@ -7,6 +7,7 @@
     display: flex;
     align-items: center;
     font-size: 1.4em;
+    line-height: 1em;
     color: white;
     font-weight: 700;
     text-transform: uppercase;
@@ -15,8 +16,8 @@
       content: '';
       background-color: #fbc707;
       display: flex;
-      flex: 1;height: 0.8em;
-      margin-top: 0.1em;
+      flex: 1;
+      height: 0.7em;
       margin-left: 1em;
     }
 
@@ -31,14 +32,44 @@
   }
 
   &__item {
+    position: relative;
     display: flex;
     margin-bottom: 1em;
     &:last-child {
       margin-bottom: 0;
     }
-
     @include breakpoint(small only) {
       flex-direction: column-reverse;
+    }
+  }
+
+  &__anchor {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: -6em;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 5.5em;
+      left: -0.5em;
+      width: calc(100% + 1em);
+      height: calc(100% + 1em);
+      border-radius: 5px;
+      background-color: white;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &:target::before {
+      animation: highlight 3.5s 1s forwards;
+
+      @keyframes highlight {
+        0% {opacity:0.9; z-index: 2}
+        99.9% {opacity:0.1; z-index: 2}
+        100% {opacity:0.1; z-index: 0;}
+      }
     }
   }
 
@@ -55,12 +86,111 @@
     }
   }
 
+  &__share-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    cursor: pointer;
+    color: #666666;
+    @include transition-default(all);
+
+    @include breakpoint(large up) {
+      transform: translateX(100%);
+    }
+
+    &:hover {
+      color: black;
+    }
+
+    .questions__question-block:hover & {
+      transform: translateX(0);
+    }
+  }
+
+  &__share-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    background-color: white;
+    width: 100%;
+    height: 3em;
+    transform: translateY(-100%);
+    @include transition-default(transform);
+
+    &.active {
+      transform: translateY(0);
+    }
+  }
+
+  &__share-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    height: 100%;
+    @include transition-default(background-color);
+
+    &--facebook {
+      background-color: $facebook-color;
+      &:hover {
+        background-color: darken($facebook-color, 10%);
+      }
+    }
+
+    &--twitter {
+      background-color: $twitter-color;
+      &:hover {
+        background-color: darken($twitter-color, 10%);
+      }
+    }
+
+    &--whatsapp {
+      background-color: $whatsapp-color;
+      &:hover {
+        background-color: darken($whatsapp-color, 10%);
+      }
+    }
+  }
+
+  &__share-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1 1 auto;
+    height: 100%;
+    color: white;
+    font-size: 1em;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  &__share-close {
+    display: flex;
+    flex-basis: 3em;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    background-color: #8c8c8c;
+    color: white;
+    cursor: pointer;
+  }
+
   &__vote-block {
+    position: relative;
     display: flex;
     flex-basis: 6em;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 
     @include breakpoint(small only) {
       flex-direction: row;
@@ -103,11 +233,11 @@
       text-transform: uppercase;
       display: inline-flex;
       justify-content: center;
-      min-height: 2.1em;
+      min-height: 3em;
       width: 100%;
       padding: 0.3em;
       border: 1px solid #09a67c;
-      border-radius: 1em;
+      border-radius: 3em;
       transition: all $swift-out 0.25s;
 
       @include breakpoint(small only) {
@@ -240,6 +370,7 @@
       &:last-child {
         margin-bottom: 1em;
       }
+
     }
 
     &__vote-block {

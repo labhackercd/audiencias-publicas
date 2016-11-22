@@ -1,8 +1,9 @@
 from django.conf import settings
 from django.http import HttpResponse
+from django.contrib.sites.models import Site
 from apps.core.models import Agenda, Video, Question
 from apps.core.utils import encrypt
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView
 import requests
 import json
 from datetime import datetime
@@ -57,6 +58,8 @@ class VideoDetail(DetailView):
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
+        context['domain'] = Site.objects.get_current().domain
+        context['domain'] += settings.FORCE_SCRIPT_NAME
 
         return context
 
@@ -72,5 +75,17 @@ class RoomQuestionList(DetailView):
         context['questions'] = sorted(questions,
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
+
+        return context
+
+
+class QuestionDetail(DetailView):
+    model = Question
+    template_name = 'question.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(QuestionDetail, self).get_context_data(**kwargs)
+        context['domain'] = Site.objects.get_current().domain
+        context['domain'] += settings.FORCE_SCRIPT_NAME
 
         return context
