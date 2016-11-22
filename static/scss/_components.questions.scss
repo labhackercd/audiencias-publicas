@@ -19,6 +19,10 @@
       margin-top: 0.1em;
       margin-left: 1em;
     }
+
+    &:target {
+      background-color: red;
+    }
   }
 
   &__description {
@@ -32,13 +36,23 @@
     &:last-child {
       margin-bottom: 0;
     }
+
+    @include breakpoint(small only) {
+      flex-direction: column-reverse;
+    }
   }
 
   &__question-block {
+    position: relative;
     flex: 1;
     margin-left: 1em;
     padding: 0.75em;
     background-color: white;
+    overflow: hidden;
+    z-index: 1;
+    @include breakpoint(small only) {
+      margin: 0;
+    }
   }
 
   &__vote-block {
@@ -47,6 +61,12 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @include breakpoint(small only) {
+      flex-direction: row;
+      flex-basis: 2em;
+      background-color: #133837;
+    }
 
     .vote-block__upvote-link {
       color: #09a67c;
@@ -59,6 +79,13 @@
       font-weight: 700;
       font-size: 1.2em;
       margin-bottom: 0.5em;
+
+      @include breakpoint(small only) {
+        width: auto;
+        flex: 0.5 1 0%;
+        margin: 0;
+        text-align: center;
+      }
 
       &.voted {
         color: #fbc707;
@@ -83,6 +110,14 @@
       border-radius: 1em;
       transition: all $swift-out 0.25s;
 
+      @include breakpoint(small only) {
+        width: auto;
+        flex: 1 1 0%;
+        border: none;
+        border-radius: 0;
+        background-color: #09a67c;
+      }
+
       &:hover, &:focus {
         background-color: #09a67c;
         border-color: #09a67c;
@@ -91,6 +126,11 @@
 
       &.voted {
         border-color: #fbc707;
+
+        @include breakpoint(small only) {
+          background-color: #fbc707;
+          color: #133837;
+        }
 
         &:hover {
           border-color: #09a67c;
@@ -102,9 +142,19 @@
         color: #999999;
         cursor: default;
 
+        @include breakpoint(small only) {
+          background-color: #737373;
+          color: #cccccc;
+        }
+
         &:hover, &:focus {
           background-color: transparent;
           border-color: #999999;
+
+          @include breakpoint(small only) {
+            background-color: #737373;
+            color: #cccccc;
+          }
         }
       }
     }

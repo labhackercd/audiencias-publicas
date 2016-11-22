@@ -11,7 +11,7 @@ questionList.mixItUp({
 });
 
 questionList.on('mixStart', function(){
-  $('.vote-block__upvote-button').attr('disabled', '').attr('style','cursor:default; background-color: transparent;');
+  $('.vote-block__upvote-button').attr('disabled', '').attr('style','cursor:default;');
 });
 questionList.on('mixEnd', function(){
   $('.vote-block__upvote-button').removeAttr('disabled').removeAttr('style');
