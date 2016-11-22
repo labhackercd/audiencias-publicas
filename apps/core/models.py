@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils import timezone
+from datetime import date
 from django_q.tasks import schedule
 from django_q.models import Schedule
 from channels import Group

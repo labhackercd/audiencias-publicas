@@ -10,8 +10,8 @@
 
   &__column {
 
-    padding-top: 1em;
-    padding-bottom: 1em;
+    padding-top: 0.7em;
+    padding-bottom: 0.6em;
 
     &:first-child {
       font-weight: 600;
@@ -20,5 +20,44 @@
     &:last-child {
       padding-right: 3em;
     }
+  }
+
+  &__event-title {
+    font-weight: 400;
+  }
+
+  &__date-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 4em;
+  }
+
+  &__weekday {
+    font-size: 0.5em;
+    font-weight: 600;
+    background-color: #2974a3;
+    color: white;
+    padding: 0.2em;
+    width: 3.2rem;
+    text-align: center;
+    border-radius: 1em;
+  }
+
+  &__day {
+    color: #404040;
+    font-weight: 700;
+  }
+
+  &__month {
+    font-size: 0.8em;
+    font-weight: 400;
+    color: #404040;
+  }
+
+  &__hour {
+    font-size: 0.9em;
+    margin-top: 0.3em;
+    font-weight: 600;
   }
 }

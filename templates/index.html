@@ -82,8 +82,17 @@
         <tbody class="calendar-table__body">
           {% for agenda in agendas %}
           <tr class="calendar-table__row">
-            <td class="calendar-table__column">{{ agenda.date|date:"d/M - H:i" }}</td>
-            <td class="calendar-table__column">{{ agenda.commission }} | {{ agenda.location }}</td>
+            <td class="calendar-table__column">
+              <div class="calendar-table__date-wrapper">
+                <span class="calendar-table__weekday">{{ agenda.date|date:"D" }}</span>
+                <span class="calendar-table__day">{{ agenda.date|date:"d" }}</span>
+                <span class="calendar-table__month">{{ agenda.date|date:"M" }}</span>
+              </div>
+            </td>
+            <td class="calendar-table__column">
+              <div class="calendar-table__event-title">{{ agenda.commission }} | {{ agenda.location }}</div>
+              <div class="calendar-table__hour">{{ agenda.date|date:"H:i"}}h</div>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
