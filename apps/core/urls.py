@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from django.views.generic import TemplateView
-from apps.core.views import VideoDetail, RoomQuestionList, receive_callback,index
+from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
+                             receive_callback, index)
 from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
                            QuestionListAPI, VideoListAPI, VoteListAPI)
 
@@ -9,8 +9,9 @@ urlpatterns = [
     url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
     url(r'^sala/(?P<pk>\d+)/perguntas/?$', RoomQuestionList.as_view(),
         name='questions_list'),
-    url(r'^notification/callback/?$', receive_callback, name='receive_callback'),
-    url(r'^video-list/?$', TemplateView.as_view(template_name='video-list.html'), name='video_list'),
+    url(r'^notification/callback/?$', receive_callback,
+        name='receive_callback'),
+    url(r'^video-list/?$', ClosedVideos.as_view(), name='video_list'),
 ]
 
 urlpatterns += [

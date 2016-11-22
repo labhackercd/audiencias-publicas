@@ -17,7 +17,7 @@
       <div class="video-list-wrapper">
 
         <ul class="video-list video-list--closed-videos">
-          {% for video in closed_videos %}
+          {% for video in object_list %}
             {% include "includes/home_video.html" with video=video %}
           {% endfor %}
         </ul>

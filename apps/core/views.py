@@ -61,6 +61,16 @@ class VideoDetail(DetailView):
         return context
 
 
+class ClosedVideos(ListView):
+    model = Video
+    template_name = 'video-list.html'
+
+    def get_queryset(self):
+        return Video.objects.filter(
+            closed_date__isnull=False
+        ).order_by('-published_date')
+
+
 class RoomQuestionList(DetailView):
     model = Video
     template_name = 'room_questions_list.html'
