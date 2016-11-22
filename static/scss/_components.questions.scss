@@ -7,6 +7,7 @@
     display: flex;
     align-items: center;
     font-size: 1.4em;
+    line-height: 1em;
     color: white;
     font-weight: 700;
     text-transform: uppercase;
@@ -15,8 +16,8 @@
       content: '';
       background-color: #fbc707;
       display: flex;
-      flex: 1;height: 0.8em;
-      margin-top: 0.1em;
+      flex: 1;
+      height: 0.7em;
       margin-left: 1em;
     }
 
@@ -232,11 +233,11 @@
       text-transform: uppercase;
       display: inline-flex;
       justify-content: center;
-      min-height: 2.1em;
+      min-height: 3em;
       width: 100%;
       padding: 0.3em;
       border: 1px solid #09a67c;
-      border-radius: 1em;
+      border-radius: 3em;
       transition: all $swift-out 0.25s;
 
       @include breakpoint(small only) {
