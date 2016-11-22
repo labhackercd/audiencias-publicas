@@ -1,0 +1,30 @@
+{% extends "components/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Audiências Passadas{% endblock %}
+
+{% block main %}
+
+<section class="section section--videos section--closed-videos">
+  <div class="row">
+    <div class="hovering-block">
+      <div class="hovering-block__header hovering-block__header--closed-videos">
+        <span class="header__icon-wrapper">
+          <i class="header__icon header__icon--closed-videos icon icon-play"></i>
+        </span>
+        <h1 class="header__title">Veja Audiências Que Já Aconteceram</h1>
+      </div>
+      <div class="video-list-wrapper">
+
+        <ul class="video-list video-list--closed-videos">
+          {% for video in closed_videos %}
+            {% include "includes/home_video.html" with video=video %}
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock main %}
