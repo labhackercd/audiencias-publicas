@@ -96,10 +96,12 @@
                 {% for question in questions %}
                   {% include "includes/video_questions.html" with questions=questions user=user%}
                 {% empty %}
-                  <div class="questions__empty">
-                    <img class="questions__empty-icon" src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
-                    <p class="questions__empty-message">Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
-                  </div>
+                  {% if not object.closed_date %}
+                    <div class="questions__empty">
+                      <img class="questions__empty-icon" src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
+                      <p class="questions__empty-message">Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
+                    </div>
+                  {% endif %}
                 {% endfor %}
               </ul>
 
