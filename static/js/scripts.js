@@ -54,12 +54,3 @@ function getCookie(name) {
   var parts = value.split("; " + name + "=");
   if (parts.length == 2) return parts.pop().split(";").shift();
 }
-
-//Question share action
-$('.questions__share-button').click(function(){
-  $(this).siblings('.questions__share-list').addClass('active')
-});
-
-$('.questions__share-close').click(function(){
-  $(this).parent('.questions__share-list').removeClass('active')
-});

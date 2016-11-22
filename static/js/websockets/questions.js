@@ -10,6 +10,15 @@ questionList.mixItUp({
   }
 });
 
+//Question share action
+$('.questions__share-button').click(function(){
+  $(this).siblings('.questions__share-list').addClass('active')
+});
+
+$('.questions__share-close').click(function(){
+  $(this).parent('.questions__share-list').removeClass('active')
+});
+
 questionList.on('mixStart', function(){
   $('.vote-block__upvote-button').attr('disabled', '').attr('style','cursor:default;');
 });
@@ -56,6 +65,15 @@ questionSocket.onmessage = function(message) {
     questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
 
     $('.questions__empty').remove();
+
+    //Question share action
+    $('.questions__share-button').click(function(){
+      $(this).siblings('.questions__share-list').addClass('active')
+    });
+
+    $('.questions__share-close').click(function(){
+      $(this).parent('.questions__share-list').removeClass('active')
+    });
   }
 
 };
