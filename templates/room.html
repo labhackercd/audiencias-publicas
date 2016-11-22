@@ -166,7 +166,6 @@
       if ($(this).find('.icon-facebook').length) {
         window.open('http://www.facebook.com/sharer/sharer.php?u=' + url,'popUpWindow', window_opts);
       } else if ($(this).find('.icon-twitter').length) {
-        console.log('compartilha twitter');
         var twitter_url = `http://twitter.com/share?text=Apoie essa pergunta!&url=${url}`;
         window.open(twitter_url, 'popUpWindow', window_opts);
       } else if ($(this).find('.icon-whatsapp').length) {
