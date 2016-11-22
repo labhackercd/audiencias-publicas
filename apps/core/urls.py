@@ -11,7 +11,7 @@ urlpatterns = [
         name='questions_list'),
     url(r'^notification/callback/?$', receive_callback,
         name='receive_callback'),
-    url(r'^video-list/?$', ClosedVideos.as_view(), name='video_list'),
+    url(r'^fechadas/?$', ClosedVideos.as_view(), name='video_list'),
 ]
 
 urlpatterns += [
