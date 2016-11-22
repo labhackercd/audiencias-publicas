@@ -1,6 +1,6 @@
 from django.conf.urls import url
-from apps.core.views import (VideoDetail, RoomQuestionList, QuestionDetail,
-                             receive_callback, index)
+from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
+                             QuestionDetail, receive_callback, index)
 from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
                            QuestionListAPI, VideoListAPI, VoteListAPI)
 
@@ -13,6 +13,7 @@ urlpatterns = [
         name='questions_list'),
     url(r'^notification/callback/?$', receive_callback,
         name='receive_callback'),
+    url(r'^fechadas/?$', ClosedVideos.as_view(), name='video_list'),
 ]
 
 urlpatterns += [

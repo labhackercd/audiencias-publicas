@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.sites.models import Site
 from apps.core.models import Agenda, Video, Question
 from apps.core.utils import encrypt
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 import requests
 import json
 from datetime import datetime
@@ -62,6 +62,16 @@ class VideoDetail(DetailView):
         context['domain'] += settings.FORCE_SCRIPT_NAME
 
         return context
+
+
+class ClosedVideos(ListView):
+    model = Video
+    template_name = 'video-list.html'
+
+    def get_queryset(self):
+        return Video.objects.filter(
+            closed_date__isnull=False
+        ).order_by('-published_date')
 
 
 class RoomQuestionList(DetailView):
