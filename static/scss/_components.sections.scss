@@ -130,9 +130,7 @@
     font-size: 2.5em;
     font-weight: 700;
     text-transform: uppercase;
-    margin-bottom: 1em;
-    padding-top: 1em;
-    text-indent: -0.2em;
+    margin-bottom: 0.3em;
     width: 100%;
     &::before {
       content: '';
@@ -195,7 +193,7 @@
 
   & .section__title {
     color: #082524;
-    border-bottom: 0.5em solid #11496c;
+    border-bottom: 0.3em solid #11496c;
   }
 
   & .section__text {
@@ -223,7 +221,6 @@
 
     &--social {
       padding-top: 1em;
-      margin-top: 1em;
       border-top: 1px solid #dddddd;
     }
 
