@@ -93,19 +93,12 @@
     padding: 1em;
     cursor: pointer;
     color: #666666;
-    @include transition-default(all);
-
-    @include breakpoint(large up) {
-      transform: translateX(100%);
-    }
+    @include transition-default(color);
 
     &:hover {
       color: black;
     }
 
-    .questions__question-block:hover & {
-      transform: translateX(0);
-    }
   }
 
   &__share-list {
