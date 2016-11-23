@@ -115,7 +115,8 @@ class Message(TimestampedMixin):
 class Question(TimestampedMixin):
     video = models.ForeignKey(Video, related_name='questions')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    question = models.CharField(max_length=200)
+    question = models.TextField()
+    answer_time = models.CharField(max_length=200, null=True, blank=True)
 
     @property
     def votes_count(self):
