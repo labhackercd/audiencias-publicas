@@ -84,14 +84,26 @@
           <tr class="calendar-table__row">
             <td class="calendar-table__column">
               <div class="calendar-table__date-wrapper">
-                <span class="calendar-table__weekday">{{ agenda.date|date:"D" }}</span>
+                {% if agenda.is_today %}
+                  <span class="calendar-table__weekday calendar-table__weekday--today">Hoje</span>
+                {% elif agenda.is_tomorrow %}
+                  <span class="calendar-table__weekday calendar-table__weekday--tomorrow">Amanhã</span>
+                {% else %}
+                  <span class="calendar-table__weekday">{{ agenda.date|date:"D" }}</span>
+                {% endif %}
                 <span class="calendar-table__day">{{ agenda.date|date:"d" }}</span>
                 <span class="calendar-table__month">{{ agenda.date|date:"M" }}</span>
               </div>
             </td>
             <td class="calendar-table__column">
               <div class="calendar-table__event-title">{{ agenda.commission }} | {{ agenda.location }}</div>
-              <div class="calendar-table__hour">{{ agenda.date|date:"H:i"}}h</div>
+              <div class="calendar-table__hour">
+                {% if agenda.date|date:"H" == "00" %}
+                  Horário não informado
+                {% else %}
+                  {{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}
+                {% endif %}
+              </div>
             </td>
           </tr>
           {% endfor %}

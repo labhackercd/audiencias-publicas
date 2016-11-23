@@ -1,5 +1,8 @@
 var chatSocket = createSocket("chat/stream/");
 
+//Scroll to last message on page load
+$(".chat__list")[0].scrollTop = $(".chat__list")[0].scrollHeight;
+
 chatSocket.onmessage = function(message) {
   if(message.data == 'closed'){
     $('#chatform').remove();

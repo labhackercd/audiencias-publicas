@@ -6,7 +6,7 @@ from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils import timezone
-from datetime import date
+import datetime
 from django_q.tasks import schedule
 from django_q.models import Schedule
 from channels import Group
@@ -167,6 +167,17 @@ class Agenda(TimestampedMixin):
             return self.session + ', ' + self.location
         else:
             return 'Agenda'
+
+    def is_today(self):
+        if datetime.date.today() == self.date.date():
+            return True
+        return False
+
+    def is_tomorrow(self):
+        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+        if self.date.date() == tomorrow:
+            return True
+        return False
 
 
 def notification(subject, html, email_list):

@@ -38,10 +38,19 @@
     font-weight: 600;
     background-color: #2974a3;
     color: white;
-    padding: 0.2em;
-    width: 3.2rem;
+    padding: 0.3em 0;
+    min-width: 6.5em;
     text-align: center;
     border-radius: 1em;
+    text-transform: uppercase;
+
+    &--today {
+      background-color: #d75142;
+    }
+
+    &--tomorrow {
+      background-color: #eea32b;
+    }
   }
 
   &__day {
