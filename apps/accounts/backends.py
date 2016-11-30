@@ -14,10 +14,11 @@ class AudienciasAuthBackend(RemoteUserBackend):
             request.META.get('HTTP_REMOTE_USER_DATA')
         )
         user, created = UserModel.objects.get_or_create(
-            email=remote_user_data.get('email'),
+            username=remote_user
         )
 
         if created:
             user.first_name = remote_user_data['name']
+            user.email = remote_user_data['email']
 
         return user
