@@ -10,14 +10,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class VoteSerializer(serializers.ModelSerializer):
-    content_type = serializers.SerializerMethodField('get_content_type_name')
-
-    def get_content_type_name(self, obj):
-        return obj.content_type.name
-
     class Meta:
         model = UpDownVote
-        fields = ('id', 'user', 'content_type', 'vote', 'object_pk')
+        fields = ('id', 'user', 'question', 'vote')
 
 
 class AgendaSerializer(serializers.ModelSerializer):
