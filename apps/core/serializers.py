@@ -1,5 +1,12 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from apps.core.models import Agenda, Message, Question, Video, UpDownVote
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'username', 'first_name', 'last_name')
 
 
 class VoteSerializer(serializers.ModelSerializer):
