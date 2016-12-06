@@ -97,4 +97,6 @@ def api_root(request, format=None):
                              request=request, format=format),
         'votes': reverse('vote_list_api',
                          request=request, format=format),
+        'users': reverse('user_list_api',
+                         request=request, format=format),
     })
