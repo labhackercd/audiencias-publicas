@@ -75,6 +75,8 @@
 
   &__question-block {
     position: relative;
+    display: flex;
+    flex-direction: column;
     flex: 1;
     margin-left: 1em;
     padding: 0.75em;
@@ -304,6 +306,46 @@
 
   &__user-info {
     margin-bottom: 0.5em;
+  }
+
+  &__answered {
+    display: inline-flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 0.5em 1em;
+    border: 1px solid #09a67c;
+    border-radius: 2em;
+    @include transition-default(all);
+
+    &:hover {
+      background-color: #09a67c;
+      color: white;
+    }
+  }
+
+  &__answered-text {
+    font-size: 0.9em;
+  }
+
+  &__answered-time {
+    font-size: 0.9em;
+    margin: 0 0.3em;
+    color: #09a67c;
+    font-weight: 600;
+    @include transition-default(color);
+
+    .questions__answered:hover & {
+      color: white;
+    }
+  }
+
+  &__answered-icon {
+    color: #09a67c;
+    @include transition-default(color);
+
+    .questions__answered:hover & {
+      color: white;
+    }
   }
 
   &__empty {

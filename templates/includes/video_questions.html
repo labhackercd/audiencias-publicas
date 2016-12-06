@@ -14,9 +14,17 @@
     </div>
     <p class="questions__user-question">{{question.question}}</p>
 
-    <span class="questions__share-button" role="button" title="Compartilhar esta pergunta">
+    <span class="questions__share-button {% if object.closed_date %} hide{% endif %}" role="button" title="Compartilhar esta pergunta">
       <i class="questions__share-icon icon icon-share-alt"></i>
     </span>
+
+    {% if object.closed_date and question.answer_time %}
+      <a class="questions__answered" href="{% url 'video_room' question.video.id %}?t={{question.answer_time}}">
+      <span class="questions__answered-text">Respondido em</span>
+      <span class="questions__answered-time">{{question.answer_time|format_seconds}}</span>
+      <i class="questions__answered-icon icon icon-check"></i>
+      </a>
+    {% endif %}
 
     <ul class="questions__share-list">
       <li class="questions__share-item questions__share-item--facebook ">

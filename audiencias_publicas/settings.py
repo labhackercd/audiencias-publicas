@@ -197,6 +197,7 @@ Q_CLUSTER = {
 
 # Authentication stuffs
 
+URL_PREFIX = config('URL_PREFIX', default='')
 FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default='')
 LOGIN_URL = config('LOGIN_URL', default='/login/')
 LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL', default='/')

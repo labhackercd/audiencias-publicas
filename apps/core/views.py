@@ -58,6 +58,7 @@ class VideoDetail(DetailView):
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
+        context['answer_time'] = self.request.GET.get('t', None)
         context['domain'] = Site.objects.get_current().domain
         context['domain'] += settings.FORCE_SCRIPT_NAME
 
