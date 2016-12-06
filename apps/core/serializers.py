@@ -25,7 +25,8 @@ class VoteSerializer(serializers.ModelSerializer):
 class AgendaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Agenda
-        fields = ('id', 'date', 'session', 'location', 'situation', 'commission')
+        fields = ('id', 'date', 'session', 'location', 'situation',
+                  'commission', 'created', 'modified')
 
 
 class QuestionSerializer(serializers.ModelSerializer):
