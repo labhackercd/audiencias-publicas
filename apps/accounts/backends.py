@@ -17,8 +17,8 @@ class AudienciasAuthBackend(RemoteUserBackend):
             username=remote_user
         )
 
-        if created:
-            user.first_name = remote_user_data['name']
-            user.email = remote_user_data['email']
+        user.first_name = remote_user_data['name']
+        user.email = remote_user_data['email']
+        user.save()
 
         return user
