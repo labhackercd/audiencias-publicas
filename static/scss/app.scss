@@ -1,25 +1,35 @@
+// Foundation
 @import 'foundation/foundation-includes';
-@import 'settings.colors';
-@import 'settings.animation';
-@import 'settings.type';
-@import 'tools.material-shadow';
-@import 'tools.animation';
-@import 'base.page';
-@import 'base.icons';
-@import 'base.tables';
-@import 'components.flex-column';
-@import 'components.navigation';
-@import 'components.footer';
-@import 'components.sections';
-@import 'components.forms';
-@import 'components.buttons';
-@import 'components.hamburguer';
-@import 'components.hovering-block';
-@import 'components.video-list';
-@import 'components.video';
-@import 'components.calendar-table';
-@import 'components.chat';
-@import 'components.questions';
-@import 'components.send-form';
+
+// Base
+@import 'base/page';
+@import 'base/icons';
+@import 'base/tables';
+
+// Settings
+@import 'settings/colors';
+@import 'settings/animation';
+@import 'settings/type';
+
+// Tools
+@import 'tools/material-shadow';
+@import 'tools/animation';
+
+// Components
+@import 'components/flex-column';
+@import 'components/navigation';
+@import 'components/footer';
+@import 'components/sections';
+@import 'components/forms';
+@import 'components/buttons';
+@import 'components/hamburguer';
+@import 'components/hovering-block';
+@import 'components/video-list';
+@import 'components/video';
+@import 'components/calendar-table';
+@import 'components/chat';
+@import 'components/questions';
+@import 'components/send-form';
+
 @import 'overrides.olark';
 @import 'trumps.hide-show';
