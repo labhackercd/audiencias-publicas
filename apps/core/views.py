@@ -65,6 +65,24 @@ class VideoDetail(DetailView):
         return context
 
 
+class VideoDetail2(DetailView):
+    model = Video
+    template_name = 'room2.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(VideoDetail2, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated():
+            context['handler'] = encrypt(str(self.request.user.id).rjust(10))
+        context['questions'] = sorted(self.object.questions.all(),
+                                      key=lambda vote: vote.votes_count,
+                                      reverse=True)
+        context['answer_time'] = self.request.GET.get('t', None)
+        context['domain'] = Site.objects.get_current().domain
+        context['domain'] += settings.FORCE_SCRIPT_NAME
+
+        return context
+
+
 class ClosedVideos(ListView):
     model = Video
     template_name = 'video-list.html'
