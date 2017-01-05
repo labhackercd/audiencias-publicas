@@ -16,97 +16,48 @@
 {% endblock navigation %}
 
 {% block main %}
-<main class="room">
+<div class="room">
   <section class="section-left">
-    <div class="section-left__top">
-      <!-- <img class="logo" src="{% static 'img/logo-audiencias-icon.svg' %}" data-fallback="{% static 'img/logo-audiencias-icon.png' %}">
+    <div class="sidebar">
+      <div class="section-left__top">
+        <div class="logo-audiencias">
+          <img class="logo__icon" src="{% static 'img/logo-audiencias-icon.svg' %}" data-fallback="{% static 'img/logo-audiencias-icon.png' %}">
+          <img class="logo__text" src="{% static 'img/logo-audiencias-text.svg' %}" data-fallback="{% static 'img/logo-audiencias-text.png' %}">
+        </div>
 
-      <div class="authentication">
-        {% if user.is_authenticated %}
+        <div class="authentication">
+          {% if user.is_authenticated %}
           <a class="authentication__link" href="{% url 'logout' %}">
             <span class="authentication__text">Encerrar Sessão</span>
             <i class="authentication__icon icon icon-sign-out" aria-hidden="true"></i>
           </a>
-        {% else %}
+          {% else %}
           <a class="authentication__link" href="{% url 'login' %}">
             <span class="authentication__text">Fazer Login</span>
             <i class="authentication__icon icon icon-sign-in" aria-hidden="true"></i>
           </a>
-        {% endif %}
-      </div> -->
-    </div>
+          {% endif %}
+        </div>
+      </div>
 
-    <div class="section-left__bottom">
-      <!-- <a class="logo" href="http://www.camara.leg.br">
-        <img src="{% static 'img/logo-camara.svg' %}" data-fallback="{% static 'img/logo-camara.png' %}" alt="Logo da Câmara dos Deputados">
-      </a>
+      <div class="section-left__bottom">
+        <a class="logo-camara" href="http://www.camara.leg.br">
+          <img src="{% static 'img/logo-camara.svg' %}" data-fallback="{% static 'img/logo-camara.png' %}" alt="Logo da Câmara dos Deputados">
+        </a>
 
-      <a class="logo" href="http://labhackercd.net">
-        <img src="{% static 'img/logo-labhacker.svg' %}" data-fallback="{% static 'img/logo-labhacker.png' %}" alt="Logo do Labhacker">
-      </a> -->
+        <a class="logo-labhacker" href="http://labhackercd.net">
+          <img src="{% static 'img/logo-labhacker.svg' %}" data-fallback="{% static 'img/logo-labhacker.png' %}" alt="Logo do Labhacker">
+        </a>
+      </div>
     </div>
   </section>
 
   <section class="section-middle">
-    <div class="section-middle__top">
-      <!-- <div class="currently-happening">
-        <iframe class="video__embed" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
-        <h1 class="currently-happening__title">Agora na Câmara:</h1>
-        <h2 class="currently-happening__subtitle">
-          {% if not object.closed_date %}
-            <i class="subtitle__icon icon icon-circle live-blink"></i>
-          {% endif %}
-          <span class="subtitle__text">{{ object.title }}</span>
-        </h2>
-      </div> -->
-    </div>
-
-    <div class="section-middle__bottom">
-      <!-- <div class="chat">
-        <div class="chat__header">
-          <span class="header__icon"> <i class="icon icon-comments"></i></span>
-          <h1 class="header__title">Bate-Papo</h1>
-        </div>
-
-        <div class="chat__content">
-          <ul class="content__messages" id="chat">
-            {% for message in object.messages.all %}
-              {% include "includes/chat_message.html" with message=message %}
-            {% endfor %}
-          </ul>
-          <div class="content__read-more">Há novas mensagens disponíveis abaixo</div>
-        </div>
-
-        {% if not object.closed_date and user.is_authenticated %}
-        <form class="chat__new-message" id="chatform">
-          <input class="new-message__text-input" id="message" name="message" type="text" placeholder="Envie uma mensagem" autocomplete="off" required="">
-          <button class="new-message__button button" id="go">
-            <span class="button__text">Enviar</span>
-            <i class="button__icon icon icon-caret-right"></i>
-          </button>
-        </form>
-
-        {% elif not object.closed_date and not user.is_authenticated %}
-          <div class="chat__new-message--unauthenticated">
-            <span><a href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
-          </div>
-
-        {% elif object.closed_date %}
-          <div class="chat__new-message--closed" id="closedChatForm">
-            <span>Audiência encerrada para participações.</span>
-          </div>
-
-        {% endif %}
-      </div> -->
-    </div>
-  </section>
-
-  <section class="section-right">
-    <!-- <div class="questions">
+    <div class="questions">
       <h1 class="questions__title">Pergunte aos Deputados</h1>
       <p class="questions__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
 
-      <ul class="questions__content" id="questions">
+      <ul class="questions__list" id="questions">
         {% for question in questions %}
           {% include "includes/video_questions.html" with questions=questions user=user%}
         {% empty %}
@@ -139,16 +90,74 @@
         </div>
 
       {% endif %}
-    </div> -->
+    </div>
   </section>
-</main>
+
+  <section class="section-right">
+    <div class="section-right__top">
+      <div class="currently-happening">
+        <iframe class="currently-happening__video" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
+        <div class="currently-happening__title">
+          <h1 class="title__header">Agora na Câmara:</h1>
+          <h2 class="title__subheader">
+            {% if not object.closed_date %}
+              <i class="subheader__icon icon icon-circle live-blink"></i>
+            {% endif %}
+            <span class="subheader__text">{{ object.title }}</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-right__bottom">
+      <div class="chat">
+        <div class="chat__header">
+          <i class="header__icon icon icon-comments"></i>
+          <h3 class="header__title">Bate-Papo</h3>
+        </div>
+
+        <div class="chat__messages">
+          <div class="messages__wrapper">
+            <ul class="messages__list" id="chat">
+              {% for message in object.messages.all %}
+                {% include "includes/chat_message.html" with message=message %}
+              {% endfor %}
+            </ul>
+            <div class="messages__read-more">Há novas mensagens disponíveis abaixo</div>
+          </div>
+        </div>
+
+        {% if not object.closed_date and user.is_authenticated %}
+        <form class="chat__new-message" id="chatform">
+          <input class="new-message__input" id="message" name="message" type="text" placeholder="Envie uma mensagem" autocomplete="off" required="">
+          <button class="new-message__button button" id="go">
+            <span class="button__text">Enviar</span>
+            <i class="button__icon icon icon-caret-right"></i>
+          </button>
+        </form>
+
+        {% elif not object.closed_date and not user.is_authenticated %}
+          <div class="chat__new-message--unauthenticated">
+            <span><a href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
+          </div>
+
+        {% elif object.closed_date %}
+          <div class="chat__new-message--closed" id="closedChatForm">
+            <span>Audiência encerrada para participações.</span>
+          </div>
+
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>
 {% endblock %}
 
 {% block footer %}
 {% endblock footer %}
 
 {% block extra_js %}
-  <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'mixitup/dist/mixitup.min.js' %}"></script>
 {% endblock extra_js %}
 
 {% if not object.closed_date %}

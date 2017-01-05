@@ -3,7 +3,7 @@ var questionList = $('#questions');
 
 questionList.mixItUp({
   selectors: {
-    target: '.questions__item'
+    target: '.list__item'
   },
   layout: {
     display: 'flex'
@@ -11,12 +11,12 @@ questionList.mixItUp({
 });
 
 //Question share action
-$('.questions__share-button').click(function(){
-  $(this).siblings('.questions__share-list').addClass('active')
+$('.question-block__share-button').click(function(){
+  $(this).siblings('.question-block__share-list').addClass('active')
 });
 
-$('.questions__share-close').click(function(){
-  $(this).parent('.questions__share-list').removeClass('active')
+$('.share-list__close').click(function(){
+  $(this).parent('.question-block__share-list').removeClass('active')
 });
 
 questionList.on('mixStart', function(){
@@ -43,7 +43,7 @@ questionSocket.onmessage = function(message) {
     }
     var newElement = $(`[data-question-id=${data.id}]`);
     newElement.find('.question-vote').on('click', upVote);
-    newElement.find('.questions__share-link').on('click', shareClick);
+    newElement.find('.item__link').on('click', shareClick);
     var upvoteButton = newElement.find('.vote-block__upvote-button');
     var totalVotes = newElement.find('.vote-block__total-votes');
 
@@ -68,12 +68,12 @@ questionSocket.onmessage = function(message) {
     $('.questions__empty').remove();
 
     //Question share action
-    $('.questions__share-button').click(function(){
-      $(this).siblings('.questions__share-list').addClass('active')
+    $('.question-block__share-button').click(function(){
+      $(this).siblings('.question-block__share-list').addClass('active')
     });
 
-    $('.questions__share-close').click(function(){
-      $(this).parent('.questions__share-list').removeClass('active')
+    $('.share-list__close').click(function(){
+      $(this).parent('.question-block__share-list').removeClass('active')
     });
   }
 
@@ -126,7 +126,7 @@ function shareClick() {
 }
 
 $(".question-vote").on('click', upVote);
-$('.questions__share-link').on('click', shareClick);
+$('.question-block__share-list .item__link').on('click', shareClick);
 
 questionSocket.onopen = function() { console.log("Connected to question socket"); }
 questionSocket.onclose = function() { console.log("Disconnected to question socket"); }

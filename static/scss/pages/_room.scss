@@ -1,0 +1,26 @@
+.room {
+  display: flex;
+  height: 100vh;
+  max-height: 100vh;
+
+  .section-left {
+    flex-basis: 200px;
+  }
+
+  .section-middle {
+    flex: 1;
+  }
+
+  .section-right {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    max-width: 450px;
+  }
+
+  .section-right__bottom {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+}
