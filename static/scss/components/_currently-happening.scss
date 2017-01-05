@@ -1,0 +1,31 @@
+.currently-happening {
+  background-color: $secondary-color;
+  height: 100%;
+}
+
+.currently-happening__video {
+  height: 253px;
+  width: 450px;
+}
+
+.currently-happening__title {
+  color: #fff;
+  margin: 10px 10px 30px;
+  text-transform: uppercase;
+
+  .title__header {
+    font-size: 1.4em;
+    font-weight: 700;
+  }
+
+  .title__subheader {
+    font-size: 1em;
+    font-weight: 400;
+    margin-bottom: 0;
+
+    .subheader__icon {
+      color: #f33;
+      font-size: .7em;
+    }
+  }
+}
