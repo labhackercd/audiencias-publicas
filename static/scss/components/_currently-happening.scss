@@ -3,6 +3,13 @@
   height: 100%;
 }
 
+.currently-happening__video-wrapper {
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .currently-happening__video {
   height: 253px;
   width: 450px;
@@ -10,8 +17,9 @@
 
 .currently-happening__title {
   color: #fff;
-  margin: 10px 10px 30px;
+  padding: 1em 1em 2em;
   text-transform: uppercase;
+  width: 100%;
 
   .title__header {
     font-size: 1.4em;
