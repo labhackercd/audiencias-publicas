@@ -1,116 +1,64 @@
 .navigation {
+  align-items: center;
+  background-color: $primary-color;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 1px 4px rgba(0, 0, 0, .23);
+  display: flex;
+  height: 4em;
   position: fixed;
   top: 0;
-  display: flex;
-  align-items: center;
-  background: $primary-color;
-  height: 4em;
-  padding: 0 2.5em;
+  transition: transform $swift-out .3s;
   width: 100%;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23);
   z-index: 10000;
-  transition: transform $swift-out 0.3s;
-  @media screen and (max-width: 39.9375em) {
+
+  @include breakpoint(small down) {
     height: 3em;
-    padding: 0 0.5em;
   }
 
-  .logo--navigation {
-    display: flex;
-    align-items: center;
+  @include breakpoint(small down) { padding: 0 1em; }
+  @include breakpoint(medium only) { padding: 0 2em; }
+  @include breakpoint(large only) { padding: 0 2em 0 2.5em; }
+  @include breakpoint(xlarge up) { padding: 0 2em 0 5em; }
+
+  .navigation__logo {
     margin-right: auto;
-    opacity: 1;
-    @include transition-default(opacity);
   }
 
-  .logo--navigation .logo__image {
+  .logo__image--audiencias-logo {
     height: 2.5em;
 
-    @media screen and (max-width: 39.9375em) {
+    @include breakpoint(small down) {
       height: 1.8em;
     }
   }
 
-  .logo__name--audiencias .logo__image {
+  .logo__image--audiencias-text {
     height: 1.5em;
-    margin-left: 0.8em;
+    margin-left: .8em;
 
-    @media screen and (max-width: 39.9375em) {
-      height: 1.25em;
+    @include breakpoint(small down) {
+      display: none;
     }
   }
 
-  .logo--menu-list .logo__image {
-    height: 1.75em;
-  }
-
-  &--hidden {
-    transform: translateY(-100%)
-  }
-}
-
-.menu-list {
-  display: flex;
-  align-self: stretch;
-  list-style: none;
-  margin: 0;
-  @include transition-default(background-color);
-
-  &:hover, &.toggled {
-    background-color: darken(#092b2a,3%);
-
-    @media screen and (max-width: 39.9375em) {
-      background-color: transparent;
-    }
-  }
-
-  &__icon {
-    font-size: 1.4em;
-    color: white;
-  }
-
-  &__item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 4em;
+  .navigation__auth {
     @include transition-default(background-color);
-    cursor: pointer;
-
-    &:hover {
-      background-color: darken(#092b2a,3%);
-    }
-
-    @media screen and (max-width: 39.9375em) {
-      width: 100%;
-    }
-  }
-
-  &__link {
-    display: flex;
     align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
+    color: #fff;
+    display: flex;
     font-weight: 600;
-    padding: 0.75em;
-    color: white;
+    height: 100%;
+    padding: .75em;
 
     &:hover {
-      color: white;
-    }
-
-    @media screen and (max-width: 39.9375em) {
-      justify-content: flex-start;
+      background-color: darken(#092b2a, 3%);
     }
   }
 
-  &__text {
+  .auth__text {
     margin-right: 1em;
-    color: white;
   }
-}
 
-@include breakpoint(small only) {
-  padding: 2em 0;
+  .auth__icon {
+    font-size: 1.4em;
+  }
 }
