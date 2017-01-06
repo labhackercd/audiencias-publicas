@@ -36,7 +36,7 @@
   background-color: #fff;
   flex: 1;
   margin: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   .messages__wrapper {
     height: 100%;
@@ -87,7 +87,7 @@
     padding: .45em 0;
     position: absolute;
     text-align: center;
-    transform: translateY(100%);
+    transform: translateY(110%);
     width: 100%;
 
     &:hover {
@@ -101,7 +101,7 @@
   background-color: #eaeaea;
   color: #404040;
   display: flex;
-  padding: 1em 1em;
+  padding: 1em;
 
   .new-message__input {
     margin: 0;
