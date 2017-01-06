@@ -10,6 +10,10 @@
     max-height: calc(100vh - 4em);
   }
 
+  @include breakpoint(xxlarge up) {
+    font-size: 120%;
+  }
+
   .section-left {
     flex: 1;
   }

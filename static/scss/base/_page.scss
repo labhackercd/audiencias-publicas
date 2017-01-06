@@ -1,9 +1,5 @@
 html {
   height: 100%;
-
-  @include breakpoint(xxlarge up) {
-    font-size: 120%;
-  }
 }
 
 body {
