@@ -1,0 +1,127 @@
+.room-questions {
+  background: linear-gradient(45deg, $secondary-color 0%, $primary-color 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+
+  @include breakpoint(large up) {
+    height: 100vh;
+    max-height: 100vh;
+  }
+
+  @include breakpoint(small only) { font-size: 80%; }
+  @include breakpoint(medium only) { font-size: 100%; }
+  @include breakpoint(xxlarge up) { font-size: 125%; }
+}
+
+.room-questions__title {
+  align-items: center;
+  color: #fff;
+  display: flex;
+  flex-shrink: 0;
+  font-size: 1.4em;
+  font-weight: 700;
+  line-height: 1em;
+  text-transform: uppercase;
+
+  &::after {
+    background-color: #fbc707;
+    content: '';
+    display: flex;
+    flex: 1;
+    height: .7em;
+    margin-left: 1em;
+  }
+}
+
+.room-questions__video-info {
+  font-size: 1em;
+  font-weight: 400;
+  margin-bottom: 0;
+
+  .video-info__icon {
+    color: #f33;
+    font-size: .7em;
+  }
+
+  .video-info__text {
+    color: #fff;
+    text-transform: uppercase;
+  }
+}
+
+.room-questions__list {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin: 1em -.5em 0;
+
+  @include breakpoint(large up) {
+    flex-wrap: wrap;
+  }
+
+  .list__item {
+    display: flex;
+    flex: 0 0 auto;
+    margin: .5em 0;
+    padding: 0 .5em;
+
+    @include breakpoint(large up) {
+      width: 50%;
+    }
+  }
+
+  .item__vote-block {
+    align-items: center;
+    background-color: #09a67c;
+    color: #fff;
+    display: flex;
+    flex-basis: 6em;
+    flex-direction: column;
+    font-weight: 700;
+    justify-content: center;
+
+    @include breakpoint(large up) {
+      font-size: 115%;
+    }
+  }
+
+  .vote-block__total-votes {
+    font-size: 1.2em;
+  }
+
+  .item__question-block {
+    background-color: #fff;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+    padding: .75em;
+
+    @include breakpoint(medium down) {
+      margin: 0;
+    }
+  }
+
+  .question-block__info {
+    margin-bottom: .5em;
+
+    .info__username {
+      font-weight: 700;
+    }
+
+    .info__timestamp {
+      color: #737373;
+      font-size: .7em;
+      font-weight: 400;
+    }
+  }
+}
+
+.room-questions__empty {
+  color: #235744;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: 1em;
+  text-align: center;
+}

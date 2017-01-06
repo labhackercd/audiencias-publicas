@@ -5,40 +5,25 @@
 {% endblock navigation %}
 
 {% block main %}
+  <div class="room-questions">
 
-        <section class="section section--questions">
+    <h1 class="room-questions__title">Perguntas</h1>
+    <h2 class="room-questions__video-info">
+      <i class="video-info__icon icon icon-circle live-blink"></i>
+      <a class="video-info__text" href="{% url 'video_room' pk=object.id %}">{{object.title}}</a>
+    </h2>
 
+    {% if questions %}
+      <ul class="room-questions__list" id="questions">
+        {% for question in questions %}
+          {% include "includes/room_question.html" with questions=questions %}
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="room-questions__empty">Nenhuma pergunta foi feita ainda.</p>
+    {% endif %}
 
-          <div class="row expanded">
-
-            <div class="section__block section__block--questions-room">
-              <div class="questions--room">
-                <h1 class="questions__title">Perguntas</h1>
-
-                <div class="video__info video__info--questions-room">
-                  <h2 class="info__title">
-                    <i class="info__live-icon icon icon-circle live-blink"></i>
-                    <a class="info__title-text info__title-text--link" href="{% url 'video_room' pk=object.id %}">{{object.title}}</a>
-                  </h2>
-                </div>
-
-                <ul class="questions__list" id="questions">
-                  {% for question in questions %}
-                    {% include "includes/room_question.html" with questions=questions %}
-                  {% empty %}
-                    <div class="questions__empty">
-                      <p class="questions__empty-message">Nenhuma pergunta foi feita ainda.</p>
-                    </div>
-                  {% endfor %}
-                </ul>
-
-              </div>
-            </div>
-
-          </div>
-
-
-        </section>
+  </div>
 {% endblock %}
 
 {% block footer %}
@@ -49,7 +34,7 @@
 {% endblock extra_js %}
 
 {% if not object.closed_date %}
-    {% block websockets %}
-        <script type="text/javascript" src="{% static 'js/websockets/room_questions.js' %}"></script>
-    {% endblock %}
+  {% block websockets %}
+    <script type="text/javascript" src="{% static 'js/websockets/room_questions.js' %}"></script>
+  {% endblock %}
 {% endif %}
