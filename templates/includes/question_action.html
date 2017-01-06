@@ -1,6 +1,7 @@
 <span class="vote-block__total-votes {{extra_classes}}">{{total_votes}}</span>
+
 {% if object.closed_date %}
-<div class="vote-block__vote-label">{% if total_votes > 1 %}Votos{% else %}Voto{% endif %}</div>
+  <div class="vote-block__vote-label">{% if total_votes > 1 %}Votos{% else %}Voto{% endif %}</div>
 {% else %}
   <button class="vote-block__upvote-button {{extra_classes}} {{question_vote}}" {{extra_attributes}}>{{upvote_content}}</button>
 {% endif %}

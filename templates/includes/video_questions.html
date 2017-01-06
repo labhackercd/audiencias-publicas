@@ -1,7 +1,6 @@
 {% load video_utils %}
-<li class="list__item" data-question-id="{{question.id}}" data-question-author="{{author}}" data-question-votes="{{question.votes_count}}" data-question-path="{% url 'question_detail' pk=question.id %}">
+<li class="list__item" id="{{question.id}}" data-question-id="{{question.id}}" data-question-author="{{author}}" data-question-votes="{{question.votes_count}}" data-question-path="{% url 'question_detail' pk=question.id %}">
 
-  <span class="item__anchor" id="{{question.id}}"></span>
   <div class="item__vote-block">
     {% vote_action question user.username %}
   </div>
