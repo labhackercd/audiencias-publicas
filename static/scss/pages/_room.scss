@@ -1,16 +1,13 @@
 .room {
   display: flex;
-  flex-direction: column-reverse;
-  margin-top: 4em;
 
-  @media screen and (min-width: 900px) {
-    flex-direction: row;
-    height: calc(100vh - 4em);
-    max-height: calc(100vh - 4em);
+  @include breakpoint(medium down) {
+    flex-direction: column-reverse;
   }
 
-  @media screen and (max-width: 39.9375em) {
-    margin-top: 3em;
+  @include breakpoint(large up) {
+    height: calc(100vh - 4em);
+    max-height: calc(100vh - 4em);
   }
 
   .section-left {
@@ -22,9 +19,9 @@
     flex: 1;
     flex-direction: column;
 
-    @media screen and (min-width: 900px) and (max-width: 1100px) { max-width: 400px; }
-    @media screen and (min-width: 1100px) and (max-width: 1400px) { max-width: 450px; }
-    @media screen and (min-width: 1400px) { max-width: 520px; }
+    @include breakpoint(large only) { max-width: 400px; }
+    @include breakpoint(xlarge only) { max-width: 500px; }
+    @include breakpoint(xxlarge up) { max-width: 600px; }
   }
 
   .section-right__bottom {
@@ -32,7 +29,7 @@
     flex: 1;
     flex-direction: column;
 
-    @media screen and (max-width: 900px) {
+    @include breakpoint(medium down) {
       display: none;
     }
   }

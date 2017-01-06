@@ -17,9 +17,12 @@
 
 .currently-happening__title {
   color: #fff;
-  padding: 1em 1em 2em;
+  padding: 1em 2em;
   text-transform: uppercase;
   width: 100%;
+
+  @include breakpoint(small down) { padding: 1em; }
+  @include breakpoint(medium only) { padding: 1em 2em; }
 
   .title__header {
     font-size: 1.4em;
