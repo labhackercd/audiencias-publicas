@@ -110,7 +110,7 @@ class RoomQuestionList(DetailView):
 
 class QuestionDetail(DetailView):
     model = Question
-    template_name = 'question.html'
+    template_name = 'question_meta.html'
 
     def get_context_data(self, **kwargs):
         context = super(QuestionDetail, self).get_context_data(**kwargs)

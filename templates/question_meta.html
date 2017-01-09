@@ -1,0 +1,30 @@
+{% load compress %}
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="{{object.question}}" />
+    <meta property="twitter:description" content="As perguntas que receberem mais votos serão respondidas pelos deputados na Audiência Pública que está acontecendo agora. Participe!" />
+    <meta property="twitter:site" content="@edemocracia" />
+    <meta property="twitter:creator" content="@edemocracia" />
+    <meta property="twitter:image" content="{{request.scheme}}://{{domain}}{% static 'img/twitter-questions-share-image.jpg' %}" />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{object.question}}" />
+    <meta property="og:site_name" content="Audiências Públicas" />
+    <meta property="og:description" content="As perguntas que receberem mais votos serão respondidas pelos deputados na Audiência Pública que está acontecendo agora. Participe!" />
+    <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/facebook-questions-share-image.jpg' %}" />
+    <meta property="og:image:type" content="image/jpg" />
+    <meta property="og:image:width" content="560" />
+    <meta property="og:image:height" content="292" />
+    <meta property="og:type" content="website" />
+  </head>
+
+  <body>
+    <script>window.location.replace("{% url 'video_room' pk=object.video.id %}#{{object.id}}");</script>
+  </body>
+</html>
