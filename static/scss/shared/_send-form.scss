@@ -1,0 +1,47 @@
+[class^="send-form--"] {
+  align-items: center;
+  background-color: #eaeaea;
+  display: flex;
+  flex-shrink: 0;
+  padding: 1em;
+
+  @include breakpoint(medium only) {
+    padding: 1.5em 2em;
+  }
+
+  @include breakpoint(medium down) {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .send-form__input {
+    margin: 0;
+    resize: none;
+  }
+
+  .send-form__button {
+    background-color: #09a67c;
+    border: 0;
+    display: flex;
+    margin: 0 0 0 .5em;
+    padding: 1.3em .5em 1.3em 1em;
+  }
+}
+
+.send-form--unauthenticated,
+.send-form--closed {
+  justify-content: center;
+
+  span {
+    font-size: 1em;
+    font-weight: 600;
+    padding: .5em;
+  }
+
+  a {
+    color: #09a67c;
+  }
+}

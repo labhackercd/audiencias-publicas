@@ -206,20 +206,6 @@
     }
   }
 
-  .question-block__info {
-    margin-bottom: .5em;
-
-    .info__username {
-      font-weight: 700;
-    }
-
-    .info__timestamp {
-      color: #737373;
-      font-size: .7em;
-      font-weight: 400;
-    }
-  }
-
   .question-block__share-button {
     @include transition-default(color);
     color: #666;
@@ -252,59 +238,55 @@
     &.active {
       transform: translateY(0);
     }
-  }
 
-  [class^="share-list__item"] {
-    @include transition-default(background-color);
-    align-items: center;
-    display: flex;
-    flex: 1;
-    height: 100%;
-    justify-content: center;
-  }
+    [class^="share-list__item"] {
+      @include transition-default(background-color);
+      align-items: center;
+      display: flex;
+      flex: 1;
+      height: 100%;
+      justify-content: center;
 
-  .share-list__item--facebook {
-    background-color: $facebook-color;
-    &:hover { background-color: darken($facebook-color, 10%); }
-  }
+      .item__link {
+        align-items: center;
+        color: #fff;
+        display: flex;
+        flex: 1;
+        font-size: 1.4em;
+        height: 100%;
+        justify-content: center;
 
-  .share-list__item--twitter {
-    background-color: $twitter-color;
-    &:hover { background-color: darken($twitter-color, 10%); }
-  }
-
-  .share-list__item--whatsapp {
-    background-color: $whatsapp-color;
-    &:hover { background-color: darken($whatsapp-color, 10%); }
-  }
-
-  .item__link {
-    align-items: center;
-    color: #fff;
-    display: flex;
-    flex: 1;
-    font-size: 1.4em;
-    height: 100%;
-    justify-content: center;
-
-    &:hover {
-      color: #fff;
+        &:hover {
+          color: #fff;
+        }
+      }
     }
-  }
 
-  .share-list__close {
-    align-items: center;
-    background-color: #8c8c8c;
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    flex-basis: 3em;
-    height: 100%;
-    justify-content: center;
-  }
+    .share-list__item--facebook {
+      background-color: $facebook-color;
+      &:hover { background-color: darken($facebook-color, 10%); }
+    }
 
-  .question-block__text {
-    margin-bottom: .5em;
+    .share-list__item--twitter {
+      background-color: $twitter-color;
+      &:hover { background-color: darken($twitter-color, 10%); }
+    }
+
+    .share-list__item--whatsapp {
+      background-color: $whatsapp-color;
+      &:hover { background-color: darken($whatsapp-color, 10%); }
+    }
+
+    .share-list__close {
+      align-items: center;
+      background-color: #8c8c8c;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      flex-basis: 3em;
+      height: 100%;
+      justify-content: center;
+    }
   }
 
   .question-block__answered {
@@ -325,23 +307,23 @@
         color: #fff;
       }
     }
-  }
 
-  .answered__text {
-    font-size: .9em;
-  }
+    .answered__text {
+      font-size: .9em;
+    }
 
-  .answered__time {
-    @include transition-default(color);
-    color: #09a67c;
-    font-size: .9em;
-    font-weight: 600;
-    margin: 0 .3em;
-  }
+    .answered__time {
+      @include transition-default(color);
+      color: #09a67c;
+      font-size: .9em;
+      font-weight: 600;
+      margin: 0 .3em;
+    }
 
-  .answered__icon {
-    @include transition-default(color);
-    color: #09a67c;
+    .answered__icon {
+      @include transition-default(color);
+      color: #09a67c;
+    }
   }
 }
 
@@ -359,46 +341,13 @@
   }
 }
 
-[class^="questions__new-question"] {
-  align-items: center;
-  background-color: #133837;
-  color: #fff;
-  display: flex;
-  flex-shrink: 0;
-  padding: 1em;
-
-  @include breakpoint(medium only) { padding: 1.5em 2em; }
-  @include breakpoint(medium down) {
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    width: 100%;
-    z-index: 10;
+.questions {
+  .send-form--questions {
+    background-color: #133837;
   }
 
-  .new-question__input {
-    margin: 0;
-  }
-
-  .new-question__button {
-    background-color: #09a67c;
-    border: 0;
-    display: flex;
-    margin: 0 0 0 .5em;
-    padding-right: .5em;
-  }
-}
-
-[class^="questions__new-question--"] {
-  justify-content: center;
-
-  span {
-    font-size: 1em;
-    font-weight: 600;
-    padding: .5em;
-  }
-
-  a {
-    color: #09a67c;
+  .send-form--closed {
+    background-color: #133837;
+    color: #fff;
   }
 }

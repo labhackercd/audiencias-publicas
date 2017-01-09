@@ -22,7 +22,7 @@
       {% if questions %}
         <ul class="questions__list" id="questions">
           {% for question in questions %}
-            {% include "includes/video_questions.html" with questions=questions user=user%}
+            {% include "includes/video_questions.html" with questions=questions user=user %}
           {% endfor %}
         </ul>
 
@@ -35,21 +35,21 @@
       {% endif %}
 
       {% if not object.closed_date and user.is_authenticated %}
-        <form class="questions__new-question" id="questionform">
-          <input class="new-question__input" id="question" name="question" type="text" placeholder="Envie uma pergunta" autocomplete="off" required="">
-          <button class="new-question__button button">
+        <form class="send-form--questions" id="questionform">
+          <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" autocomplete="off" required=""></textarea>
+          <button class="send-form__button button">
             <span class="button__text">Enviar</span>
             <i class="button__icon icon icon-caret-right"></i>
           </button>
         </form>
 
       {% elif not object.closed_date and not user.is_authenticated %}
-        <div class="questions__new-question--unauthenticated">
-          <span><ahref="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
+        <div class="send-form--unauthenticated">
+          <span><a href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
         </div>
 
       {% elif object.closed_date %}
-        <div class="questions__new-question--closed" id="closedQuestionForm">
+        <div class="send-form--closed" id="closedQuestionForm">
           <span>Audiência encerrada para participações.</span>
         </div>
 
@@ -89,26 +89,26 @@
                 {% include "includes/chat_message.html" with message=message %}
               {% endfor %}
             </ul>
-            <div class="messages__read-more">Há novas mensagens disponíveis abaixo</div>
           </div>
+          <div class="messages__read-more">Há novas mensagens disponíveis abaixo</div>
         </div>
 
         {% if not object.closed_date and user.is_authenticated %}
-          <form class="chat__new-message" id="chatform">
-            <input class="new-message__input" id="message" name="message" type="text" placeholder="Envie uma mensagem" autocomplete="off" required="">
-            <button class="new-message__button button" id="go">
+          <form class="send-form--chat" id="chatform">
+            <textarea class="send-form__input" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required=""></textarea>
+            <button class="send-form__button button" id="go">
               <span class="button__text">Enviar</span>
               <i class="button__icon icon icon-caret-right"></i>
             </button>
           </form>
 
         {% elif not object.closed_date and not user.is_authenticated %}
-          <div class="chat__new-message--unauthenticated">
+          <div class="send-form--unauthenticated">
             <span><a href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
           </div>
 
         {% elif object.closed_date %}
-          <div class="chat__new-message--closed" id="closedChatForm">
+          <div class="send-form--closed" id="closedChatForm">
             <span>Audiência encerrada para participações.</span>
           </div>
 
