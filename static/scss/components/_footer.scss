@@ -1,44 +1,43 @@
 .footer {
-  padding: 3em 0;
   background-color: #213d4d;
-  color: white;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 3em 0;
+
   @include breakpoint(small only) {
     padding: 2em 0;
   }
 
-  &__container {
+  .footer__logos {
     align-items: center;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: .5em 0;
+    padding: 0 2.5em;
+
+    @include breakpoint(medium up) {
+      max-width: 50%;
+    }
   }
 
-  &__logos {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 0.5em 0;
-  }
-
-  &__logo-wrapper {
+  .logos__link {
     margin: 1em;
   }
 
-  &__logo.image {
+  .logos__image {
     height: 3em;
   }
 
-  &__about {
-    margin: 0.5em 0;
+  .footer__about {
+    flex: 1;
+    margin: .5em 0;
+    padding: 0 2.5em;
   }
 
-  &__text {
+  .about__text {
     margin: 0;
-  }
-
-  &__link {
-    color: $secondary-color;
-    font-weight: 400;
-    &:hover {
-      color: darken($secondary-color, 20%);
-    }
   }
 }
