@@ -28,6 +28,6 @@ urlpatterns = [
     url(r'^reset/done/$',
         auth_views.password_reset_complete,
         name='password_reset_complete'),
-    url(r'^social/', include('social.apps.django_app.urls',
+    url(r'^social/', include('social_django.urls',
         namespace=settings.SOCIAL_AUTH_URL_NAMESPACE)),
 ]
