@@ -33,6 +33,9 @@
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
 {% endblock extra_js %}
 
+{% block olark  %}
+{% endblock %}
+
 {% if not object.closed_date %}
   {% block websockets %}
     <script type="text/javascript" src="{% static 'js/websockets/room_questions.js' %}"></script>
