@@ -5,6 +5,10 @@
   flex-direction: column;
   margin: 3em 2em 3.5em;
   position: relative;
+
+  [class^="send-form--"] {
+    margin-top: -2em;
+  }
 }
 
 .chat__floating-header {
@@ -57,7 +61,7 @@
   }
 }
 
-.chat__read-more {
+[class^="chat__read-more"] {
   @include transition-default(transform);
   background-color: rgba(9, 166, 124, .85);
   bottom: 5.7em;
@@ -66,13 +70,15 @@
   font-size: .9em;
   font-weight: 600;
   padding: .45em 0;
-  position: absolute;
   text-align: center;
-  transform: translateY(110%);
   width: 100%;
   z-index: 0;
 
   &:hover {
     text-decoration: underline;
   }
+}
+
+.chat__read-more--visible {
+  transform: translateY(-100%);
 }
