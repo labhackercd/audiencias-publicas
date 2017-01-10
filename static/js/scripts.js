@@ -17,22 +17,6 @@ $(document).ready(function() {
   });
 });
 
-//Notify of more messages in chat if not scrolled down to bottom.
-$(".chat__list").scroll(function() {
-  var chat = $(".chat__list")[0];
-  var toBottomValue = chat.scrollHeight - chat.clientHeight;
-
-  if(toBottomValue <= chat.scrollTop + 1) {
-    $(".chat__read-more").addClass("chat__read-more--hidden");
-  }
-});
-
-//Scroll to bottom of chat when clicked on read more
-$(".chat__read-more").click(function() {
-  var chatBottom = $(".chat__list")[0].scrollHeight;
-  $(".chat__list").animate({ scrollTop: chatBottom }, "slow");
-});
-
 //
 var createSocket = function(path='') {
   var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
