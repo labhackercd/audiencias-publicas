@@ -1,0 +1,8 @@
+root: true
+
+env:
+  es6: true
+  jquery: true
+
+extends:
+  - airbnb-base
