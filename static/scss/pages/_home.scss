@@ -1,0 +1,36 @@
+.home {
+  .section-top {
+    background: linear-gradient(45deg, $secondary-color 0%, $primary-color 100%);
+  }
+
+  .section-bottom {
+    background-color: #e6e6e6;
+    padding: 1em 2em;
+
+    @include breakpoint(medium down) {
+      padding: 1em;
+    }
+  }
+
+  .preview--live-videos {
+    .preview__floating-header {
+      background-color: $secondary-color;
+    }
+
+    .header__icon {
+      color: #f33;
+    }
+  }
+
+  .preview--closed-videos {
+    .preview__floating-header {
+      background-color: #11496c;
+    }
+
+    .header__icon {
+      border: .2em solid;
+      border-radius: 50%;
+      padding: .4em;
+    }
+  }
+}
