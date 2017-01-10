@@ -56,52 +56,47 @@
       </div>
 
       {% if agendas %}
-        <section class="section section--videos section--calendar">
-          <div class="row">
-            <div class="hovering-block">
-              <div class="hovering-block__header hovering-block__header--calendar">
-                <span class="header__icon-wrapper">
-                  <i class="header__icon header__icon--calendar icon icon-calendar"></i>
-                </span>
-                <h1 class="header__title">Previsão de Audiências Públicas</h1>
-              </div>
-              <table class="calendar-table">
-                <tbody class="calendar-table__body">
-                  {% for agenda in agendas %}
-                  <tr class="calendar-table__row">
-                    <td class="calendar-table__column">
-                      <div class="calendar-table__date-wrapper">
-                        {% if agenda.is_today %}
-                        <span class="calendar-table__weekday calendar-table__weekday--today">Hoje</span>
-                        {% elif agenda.is_tomorrow %}
-                        <span class="calendar-table__weekday calendar-table__weekday--tomorrow">Amanhã</span>
-                        {% else %}
-                        <span class="calendar-table__weekday">{{ agenda.date|date:"D" }}</span>
-                        {% endif %}
-                        <span class="calendar-table__day">{{ agenda.date|date:"d" }}</span>
-                        <span class="calendar-table__month">{{ agenda.date|date:"M" }}</span>
-                      </div>
-                    </td>
-                    <td class="calendar-table__column">
-                      <div class="calendar-table__event-title">{{ agenda.commission }} | {{ agenda.location }}</div>
-                      <div class="calendar-table__hour">
-                        {% if agenda.date|date:"H" == "00" %}
-                        Horário não informado
-                        {% else %}
-                        {{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}
-                        {% endif %}
-                      </div>
-                    </td>
-                  </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-              <!--<div class="show-all">
-              <a href="#" class="show-all__button">Ver Tudo</a>
-            </div>-->
+        <div class="preview--calendar">
+          <div class="preview__floating-header">
+            <i class="header__icon icon icon-calendar"></i>
+            <h2 class="header__title">Previsão de Audiências Públicas</h2>
           </div>
+
+          <table class="calendar-table">
+            <tbody class="calendar-table__body">
+              {% for agenda in agendas %}
+                <tr class="calendar-table__row">
+                  <td class="calendar-table__column">
+                    <div class="calendar-table__date-wrapper">
+
+                      {% if agenda.is_today %}
+                        <span class="calendar-table__weekday calendar-table__weekday--today">Hoje</span>
+                      {% elif agenda.is_tomorrow %}
+                        <span class="calendar-table__weekday calendar-table__weekday--tomorrow">Amanhã</span>
+                      {% else %}
+                        <span class="calendar-table__weekday">{{ agenda.date|date:"D" }}</span>
+                      {% endif %}
+
+                      <span class="calendar-table__day">{{ agenda.date|date:"d" }}</span>
+                      <span class="calendar-table__month">{{ agenda.date|date:"M" }}</span>
+                    </div>
+                  </td>
+
+                  <td class="calendar-table__column">
+                    <div class="calendar-table__event-title">{{ agenda.commission }} | {{ agenda.location }}</div>
+                    <div class="calendar-table__hour">
+                      {% if agenda.date|date:"H" == "00" %}
+                        Horário não informado
+                      {% else %}
+                        {{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}
+                      {% endif %}
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
         </div>
-      </section>
       {% endif %}
     </section>
   </main>
