@@ -351,7 +351,8 @@
     background-color: #133837;
   }
 
-  .send-form--closed {
+  .send-form--closed,
+  .send-form--unauthenticated {
     background-color: #133837;
     color: #fff;
   }
