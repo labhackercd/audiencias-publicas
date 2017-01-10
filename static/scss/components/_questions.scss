@@ -4,7 +4,11 @@
   flex-direction: column;
   height: 100%;
 
-  @include breakpoint(small down) { padding: 1em; }
+  @include breakpoint(medium down) {
+    flex: 1;
+  }
+
+  @include breakpoint(small down) { padding: 1em 1em 4em; }
   @include breakpoint(medium only) { padding: 2em; }
   @include breakpoint(large only) { padding: 2.5em; }
   @include breakpoint(xlarge up) { padding: 2.5em 5em; }
@@ -116,7 +120,8 @@
       width: auto;
     }
 
-    &.voted {
+    &.voted,
+    &.voted:not(.disabled) + .vote-block__vote-label {
       color: #fbc707;
     }
 
