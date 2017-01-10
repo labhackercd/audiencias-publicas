@@ -1,49 +1,41 @@
-var chatSocket = createSocket("chat/stream/");
+/* global chatAP, HANDLER */
+const chat = chatAP(); // Using 'chatAP' module from '../chat.js'
 
-//Scroll to last message on page load
-$(".chat__list")[0].scrollTop = $(".chat__list")[0].scrollHeight;
+const chatSocket = createSocket('chat/stream/');
+const $chatForm = $('#chatform');
 
-chatSocket.onmessage = function(message) {
-  if(message.data == 'closed'){
-    $('#chatform').remove();
-    $('#closedChatForm').removeClass('hide');
-  }else{
-    var data = JSON.parse(message.data);
-    var chat = $("#chat");
+$(document).ready(() => chat.scrollToBottom());
 
+chatSocket.onmessage = (message) => {
+  if (message.data === 'closed') {
+    chat.closeForm();
+  } else {
+    const data = JSON.parse(message.data);
+    const messagesListEl = chat.elements.messagesList;
 
-    var chatList = $(".chat__list")[0];
-    var chatListHeight = chatList.clientHeight;
-    var chatListContentHeight = chatList.scrollHeight;
-    var isScrolledToBottom = chatList.scrollHeight - chatList.clientHeight <= chatList.scrollTop + 1;
-
-    chat.append(data.hmtl);
-
-    if(isScrolledToBottom) {
-      chatList.scrollTop = chatList.scrollHeight - chatList.clientHeight;
+    if (chat.isScrolledToBottom()) {
+      messagesListEl.append(data.hmtl);
+      chat.scrollToBottom();
     } else {
-      $(".chat__read-more").removeClass("chat__read-more--hidden");
+      messagesListEl.append(data.hmtl);
+      chat.toggleReadMore('show');
     }
   }
 };
 
-$("#chatform").on("submit", function() {
-  var chatBottom = $(".chat__list")[0].scrollHeight;
+$chatForm.on('submit', function sendMessage(event) {
+  const $formMessage = $(this).find('#message');
+
+  event.preventDefault();
 
   chatSocket.send(JSON.stringify({
-    handler: HANDLER,
-    message: $(this).find('input[name=message]').val(),
+    handler: HANDLER, // defined in room.html
+    message: $formMessage.val(),
   }));
-  $("#message").val('').focus();
 
-  $(".chat__list")[0].scrollTop = $(".chat__list")[0].scrollHeight;
-
-  return false;
+  $formMessage.val('').focus();
+  chat.scrollToBottom();
 });
 
-chatSocket.onopen = function() { console.log("Connected to chat socket"); }
-chatSocket.onclose = function() { console.log("Disconnected to chat socket"); }
-
-
-var chatList = $('.chat__list');
-var isScrolledToBottom = chatList.scrollHeight - chatList.clientHeight <= chatList.scrollTop + 1;
+chatSocket.onopen = () => console.log('Connected to chat socket'); // eslint-disable-line no-console
+chatSocket.onclose = () => console.log('Disconnected to chat socket'); // eslint-disable-line no-console
