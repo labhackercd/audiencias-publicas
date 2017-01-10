@@ -83,15 +83,13 @@
           </div>
 
           <div class="chat__messages">
-            <div class="messages__list-wrapper">
-              <ul class="messages__list" id="chat">
-                {% for message in object.messages.all %}
-                  {% include "includes/chat_message.html" with message=message %}
-                {% endfor %}
-              </ul>
-              <div class="messages__read-more">Há novas mensagens disponíveis abaixo</div>
-            </div>
+            <ul class="messages__list" id="chat">
+              {% for message in object.messages.all %}
+              {% include "includes/chat_message.html" with message=message %}
+              {% endfor %}
+            </ul>
           </div>
+          <div class="chat__read-more">Há novas mensagens disponíveis abaixo</div>
 
           {% if not object.closed_date and user.is_authenticated %}
             <form class="send-form--chat" id="chatform">

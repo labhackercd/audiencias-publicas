@@ -4,6 +4,7 @@
   display: flex;
   flex-shrink: 0;
   padding: 1em;
+  z-index: 1;
 
   @include breakpoint(medium only) {
     padding: 1.5em 2em;

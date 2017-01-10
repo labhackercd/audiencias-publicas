@@ -4,6 +4,7 @@
   flex: 1;
   flex-direction: column;
   margin: 3em 2em 3.5em;
+  position: relative;
 }
 
 .chat__floating-header {
@@ -23,11 +24,6 @@
   overflow-y: auto;
   padding-top: 1.5em;
   position: relative;
-
-  .messages__list-wrapper {
-    overflow: hidden;
-    position: relative;
-  }
 
   .messages__list {
     flex-direction: column;
@@ -59,23 +55,24 @@
       word-break: break-word;
     }
   }
+}
 
-  .messages__read-more {
-    @include transition-default(transform);
-    background-color: rgba(9, 166, 124, .85);
-    bottom: 0;
-    color: #fff;
-    cursor: pointer;
-    font-size: .9em;
-    font-weight: 600;
-    padding: .45em 0;
-    position: absolute;
-    text-align: center;
-    transform: translateY(110%);
-    width: 100%;
+.chat__read-more {
+  @include transition-default(transform);
+  background-color: rgba(9, 166, 124, .85);
+  bottom: 5.7em;
+  color: #fff;
+  cursor: pointer;
+  font-size: .9em;
+  font-weight: 600;
+  padding: .45em 0;
+  position: absolute;
+  text-align: center;
+  transform: translateY(110%);
+  width: 100%;
+  z-index: 0;
 
-    &:hover {
-      text-decoration: underline;
-    }
+  &:hover {
+    text-decoration: underline;
   }
 }
