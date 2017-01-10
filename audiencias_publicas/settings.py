@@ -169,8 +169,12 @@ BOWER_INSTALLED_APPS = [
     'https://github.com/joewalnes/reconnecting-websocket.git',
 ]
 
+BOWER_PATH = os.path.join(BASE_DIR, 'node_modules/.bin/bower')
+BROWSERIFY = os.path.join(BASE_DIR, 'node_modules/.bin/browserify')
+
 COMPRESS_PRECOMPILERS = [
-    ('text/x-scss', 'django_libsass.SassCompiler')
+    ('text/x-scss', 'django_libsass.SassCompiler'),
+    ('text/es6', BROWSERIFY + ' {infile} -t babelify --outfile {outfile}')
 ]
 
 COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')

@@ -80,3 +80,4 @@ local_settings.py
 bower_components/
 assets/
 CACHE/
+node_modules/
