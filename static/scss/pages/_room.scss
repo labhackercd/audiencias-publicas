@@ -2,6 +2,7 @@
   display: flex;
 
   @include breakpoint(medium down) {
+    flex: 1;
     flex-direction: column-reverse;
   }
 
@@ -16,6 +17,11 @@
 
   .section-left {
     flex: 1;
+
+    @include breakpoint(medium down) {
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .section-right {
@@ -23,12 +29,17 @@
     flex: 1;
     flex-direction: column;
 
+    @include breakpoint(medium down) {
+      flex: 0;
+    }
+
     @include breakpoint(large only) { max-width: 400px; }
     @include breakpoint(xlarge only) { max-width: 500px; }
     @include breakpoint(xxlarge up) { max-width: 600px; }
   }
 
   .section-right__bottom {
+    background-color: #d5d5d5;
     display: flex;
     flex: 1;
     flex-direction: column;

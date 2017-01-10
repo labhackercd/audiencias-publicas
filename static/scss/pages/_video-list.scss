@@ -1,7 +1,11 @@
 .video-list {
   background-color: #e6e6e6;
   flex: 1;
-  padding-top: 1em;
+  padding: 1em 2em 0;
+
+  @include breakpoint(medium down) {
+    padding: 1em 1em 0;
+  }
 
   .preview__floating-header {
     background-color: #11496c;
