@@ -13,160 +13,131 @@
 {% endblock metadata %}
 
 {% block main %}
+  <main class="room">
+    <section class="section-left">
+      <div class="questions">
+        <h1 class="questions__title">Pergunte aos Deputados</h1>
+        <p class="questions__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
 
-    <div class="row collapse">
+        {% if questions %}
+          <ul class="questions__list" id="questions">
+            {% for question in questions %}
+              {% include "includes/video_questions.html" with questions=questions user=user %}
+            {% endfor %}
+          </ul>
 
-
-      <div class="columns small-12 medium-5 flex-column">
-
-        <section class="section">
-          <div class="section__block section__block--video-frame section__block--full-bg-left columns">
-            <div class="video">
-              <div class="video__embed-wrapper flex-video widescreen">
-                <iframe class="video__embed" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
-              </div>
-              <div class="video__info">
-                <h1 class="info__heading">Agora na Câmara:</h1>
-                <h2 class="info__title">
-                  {% if not object.closed_date %}
-                    <i class="info__live-icon icon icon-circle live-blink"></i>
-                  {% else %}
-
-                  {% endif %}
-                  <span class="info__title-text">{{ object.title }}</span>
-                </h2>
-              </div>
-            </div>
+        {% elif not object.closed_date %}
+          <div class="questions__list--empty">
+            <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
+            <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
           </div>
-        </section>
 
+        {% endif %}
 
-        <section class="section">
-          <div class="section__block section__block--chat section__block--full-bg-left columns">
-            <div class="hovering-block hovering-block--chat">
-              <div class="hovering-block__header hovering-block__header--chat">
-                <span class="header__icon-wrapper">
-                  <i class="header__icon icon icon-comments"></i>
-                </span>
-                <h1 class="header__title">Bate-Papo</h1>
-              </div>
+        {% if not object.closed_date and user.is_authenticated %}
+          <form class="send-form--questions" id="questionform">
+            <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" autocomplete="off" required=""></textarea>
+            <button class="send-form__button button">
+              <span class="button__text">Enviar</span>
+              <i class="button__icon icon icon-caret-right"></i>
+            </button>
+          </form>
 
-              <div class="chat">
-
-                <div class="chat-wrapper">
-                  <ul class="chat__list" id="chat">
-                    {% for message in object.messages.all %}
-                      {% include "includes/chat_message.html" with message=message %}
-                    {% endfor %}
-                  </ul>
-                  <div class="chat__read-more chat__read-more--hidden">Há novas mensagens disponíveis abaixo</div>
-                </div>
-
-                {% if not object.closed_date and user.is_authenticated %}
-                <form class="send-form send-form--chat" id="chatform">
-                  <input class="send-form__text-input" id="message" name="message" type="text" placeholder="Envie uma mensagem" autocomplete="off" required="">
-                  <button class="send-form__button button" id="go">
-                    <div class="send-form__button-wrapper">
-                      <span class="send-form__send-text">Enviar</span> <i class="chat__send-icon icon icon-caret-right"></i>
-                    </div>
-                  </button>
-                </form>
-
-                {% elif not object.closed_date and not user.is_authenticated %}
-
-                  <div class="send-form send-form--unauthenticated send-form--chat">
-                    <span class="send-form--unauthenticated__message"><a class="send-form__link" href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
-                  </div>
-
-                {% endif %}
-
-                <div class="send-form send-form--unauthenticated send-form--chat {% if not object.closed_date %}hide{% endif %}" id="closedChatForm">
-                  <span class="send-form--unauthenticated__message">Audiência encerrada para participações.</span>
-                </div>
-
-              </div>
-
-            </div>
+        {% elif not object.closed_date and not user.is_authenticated %}
+          <div class="send-form--unauthenticated">
+            <span><a href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
           </div>
-        </section>
 
+        {% elif object.closed_date %}
+          <div class="send-form--closed" id="closedQuestionForm">
+            <span>Audiência encerrada para participações.</span>
+          </div>
 
+        {% endif %}
+      </div>
+    </section>
+
+    <section class="section-right">
+      <div class="section-right__top">
+        <div class="currently-happening">
+          <div class="currently-happening__video-wrapper">
+            <iframe class="currently-happening__video" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
+          </div>
+          <div class="currently-happening__title">
+            <h1 class="title__header">Agora na Câmara:</h1>
+            <h2 class="title__subheader">
+              {% if not object.closed_date %}
+                <i class="subheader__icon icon icon-circle live-blink"></i>
+              {% endif %}
+              <span class="subheader__text">{{ object.title }}</span>
+            </h2>
+          </div>
+        </div>
       </div>
 
+      <div class="section-right__bottom">
+        <div class="chat">
+          <div class="chat__floating-header">
+            <i class="header__icon icon icon-comments"></i>
+            <h3 class="header__title">Bate-Papo</h3>
+          </div>
 
-      <div class="columns small-12 medium-7 flex-column">
-
-
-        <section class="section">
-          <div class="section__block section__block--questions section__block--full-bg-right columns">
-            <div class="questions">
-              <h1 class="questions__title">Pergunte aos Deputados</h1>
-              <p class="questions__description">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
-
-              <ul class="questions" id="questions">
-                {% for question in questions %}
-                  {% include "includes/video_questions.html" with questions=questions user=user%}
-                {% empty %}
-                  {% if not object.closed_date %}
-                    <div class="questions__empty">
-                      <img class="questions__empty-icon" src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
-                      <p class="questions__empty-message">Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
-                    </div>
-                  {% endif %}
+          <div class="chat__messages">
+            <div class="messages__list-wrapper">
+              <ul class="messages__list" id="chat">
+                {% for message in object.messages.all %}
+                  {% include "includes/chat_message.html" with message=message %}
                 {% endfor %}
               </ul>
-
-              {% if not object.closed_date and user.is_authenticated %}
-              <form class="send-form send-form--questions" id="questionform">
-                <input class="send-form__text-input" id="question" name="question" type="text" placeholder="Envie uma pergunta" autocomplete="off" required="">
-                <button class="send-form__button button">
-                    <div class="send-form__button-wrapper">
-                      <span class="send-form__send-text">Enviar</span>
-                      <i class="chat__send-icon icon icon-caret-right"></i>
-                    </div>
-                </button>
-              </form>
-
-              {% elif not object.closed_date and not user.is_authenticated %}
-
-                <div class="send-form send-form--unauthenticated send-form--questions">
-                  <span class="send-form--unauthenticated__message"><a class="send-form__link" href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
-                </div>
-
-              {% endif %}
-
-              <div class="send-form send-form--unauthenticated send-form--questions {% if not object.closed_date %}hide{% endif %}" id="closedQuestionForm">
-                <span class="send-form--unauthenticated__message">Audiência encerrada para participações.</span>
-              </div>
-
+              <div class="messages__read-more">Há novas mensagens disponíveis abaixo</div>
             </div>
           </div>
-        </section>
 
+          {% if not object.closed_date and user.is_authenticated %}
+            <form class="send-form--chat" id="chatform">
+              <textarea class="send-form__input" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required=""></textarea>
+              <button class="send-form__button button" id="go">
+                <span class="button__text">Enviar</span>
+                <i class="button__icon icon icon-caret-right"></i>
+              </button>
+            </form>
 
+          {% elif not object.closed_date and not user.is_authenticated %}
+            <div class="send-form--unauthenticated">
+              <span><a href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
+            </div>
+
+          {% elif object.closed_date %}
+            <div class="send-form--closed" id="closedChatForm">
+              <span>Audiência encerrada para participações.</span>
+            </div>
+
+          {% endif %}
+        </div>
       </div>
-    </div>
+    </section>
+  </main>
 {% endblock %}
 
+{% block footer %}
+{% endblock footer %}
+
 {% block extra_js %}
-
-  <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
-
-
+  <script type="text/javascript" src="{% static 'mixitup/dist/mixitup.min.js' %}"></script>
 {% endblock extra_js %}
 
 {% if not object.closed_date %}
-    {% block websockets %}
-        <script>
-          var HANDLER = "{{handler|default:''}}";
+  {% block websockets %}
+    <script>
+      var HANDLER = "{{handler|default:''}}";
 
-          function loginRedirect() {
-            var next = "{{request.path}}";
-            var login_url = "{% url 'login' %}";
-            document.location.href = `${login_url}?next=${next}`;
-          }
-        </script>
-        <script type="text/javascript" src="{% static 'js/websockets/chat.js' %}"></script>
-        <script type="text/javascript" src="{% static 'js/websockets/questions.js' %}"></script>
-    {% endblock %}
+      function loginRedirect() {
+        var next = "{{request.path}}";
+        var login_url = "{% url 'login' %}";
+        document.location.href = `${login_url}?next=${next}`;
+      }
+    </script>
+    <script type="text/javascript" src="{% static 'js/websockets/chat.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/websockets/questions.js' %}"></script>
+  {% endblock %}
 {% endif %}
