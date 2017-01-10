@@ -5,8 +5,7 @@
 {% endblock navigation %}
 
 {% block main %}
-  <div class="room-questions">
-
+  <main class="room-questions">
     <h1 class="room-questions__title">Perguntas</h1>
     <h2 class="room-questions__video-info">
       <i class="video-info__icon icon icon-circle live-blink"></i>
@@ -19,11 +18,12 @@
           {% include "includes/room_question.html" with questions=questions %}
         {% endfor %}
       </ul>
+
     {% else %}
       <p class="room-questions__empty">Nenhuma pergunta foi feita ainda.</p>
+      
     {% endif %}
-
-  </div>
+  </main>
 {% endblock %}
 
 {% block footer %}
