@@ -1,0 +1,15 @@
+.video-list {
+  background-color: #e6e6e6;
+  flex: 1;
+  padding-top: 1em;
+
+  .preview__floating-header {
+    background-color: #11496c;
+  }
+
+  .header__icon {
+    border: .2em solid;
+    border-radius: 50%;
+    padding: .4em;
+  }
+}

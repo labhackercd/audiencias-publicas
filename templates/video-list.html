@@ -4,27 +4,20 @@
 {% block title %}Audiências Passadas{% endblock %}
 
 {% block main %}
-
-<section class="section section--videos section--closed-videos">
-  <div class="row">
-    <div class="hovering-block">
-      <div class="hovering-block__header hovering-block__header--closed-videos">
-        <span class="header__icon-wrapper">
-          <i class="header__icon header__icon--closed-videos icon icon-play"></i>
-        </span>
-        <h1 class="header__title">Veja Audiências Que Já Aconteceram</h1>
+  <main class="video-list">
+    <div class="preview--video-list">
+      <div class="preview__floating-header">
+        <i class="header__icon icon icon-play"></i>
+        <h2 class="header__title">Veja Audiências Que Já Aconteceram</h2>
       </div>
-      <div class="video-list-wrapper">
 
-        <ul class="video-list video-list--closed-videos">
+      <div class="preview__list-wrapper">
+        <ul class="preview__list">
           {% for video in object_list %}
             {% include "includes/home_video.html" with video=video %}
           {% endfor %}
         </ul>
-
       </div>
     </div>
-  </div>
-</section>
-
+  </main>
 {% endblock main %}
