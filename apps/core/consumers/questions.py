@@ -14,6 +14,7 @@ log = logging.getLogger("chat")
 def on_connect(message, pk):
     video = get_video(pk)
     if video is not None:
+        message.reply_channel.send({"accept": True})
         Group(video.group_questions_name).add(message.reply_channel)
         log.debug('Questions websocket connected.')
 

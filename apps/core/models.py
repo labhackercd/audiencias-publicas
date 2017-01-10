@@ -127,6 +127,7 @@ class Question(TimestampedMixin):
             'includes/video_questions.html',
             {'question': self,
              'user': user,
+             'object': self.video,
              'author': encrypt(str(self.user.id).rjust(10))}
         )
 
