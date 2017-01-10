@@ -15,26 +15,29 @@
 @import 'tools/material-shadow';
 @import 'tools/animation';
 
+// Shared
+@import 'shared/send-form';
+@import 'shared/floating-header';
+@import 'shared/question-block';
+
 // Pages
+@import 'pages/home';
 @import 'pages/room-questions-list';
 @import 'pages/room';
+@import 'pages/video-list';
 
 // Components
+@import 'components/banner';
+@import 'components/preview';
 @import 'components/flex-column';
 @import 'components/navigation';
 @import 'components/footer';
 @import 'components/sections';
 @import 'components/forms';
 @import 'components/buttons';
-@import 'components/hamburguer';
-@import 'components/hovering-block';
-@import 'components/video-list';
-@import 'components/video';
 @import 'components/calendar-table';
 @import 'components/chat';
 @import 'components/questions';
-@import 'components/send-form';
-@import 'components/sidebar';
 @import 'components/currently-happening';
 
 @import 'overrides.olark';
