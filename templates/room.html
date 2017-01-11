@@ -121,13 +121,13 @@
 {% endblock footer %}
 
 {% block extra_js %}
-  <script type="text/javascript" src="{% static 'mixitup/dist/mixitup.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
 {% endblock extra_js %}
 
 {% if not object.closed_date %}
   {% block websockets %}
     <script>
-      // var HANDLER = "{{handler|default:''}}";
+      var HANDLER = "{{handler|default:''}}";
 
       function loginRedirect() {
         var next = "{{request.path}}";
