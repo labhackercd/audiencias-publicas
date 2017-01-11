@@ -12,17 +12,15 @@
       <a class="video-info__text" href="{% url 'video_room' pk=object.id %}">{{object.title}}</a>
     </h2>
 
-    {% if questions %}
-      <ul class="room-questions__list" id="questions">
+    <ul class="room-questions__list" id="questions">
+      {% if questions %}
         {% for question in questions %}
           {% include "includes/room_question.html" with questions=questions %}
         {% endfor %}
-      </ul>
-
-    {% else %}
-      <p class="room-questions__empty">Nenhuma pergunta foi feita ainda.</p>
-      
-    {% endif %}
+      {% else %}
+        <p class="room-questions__empty">Nenhuma pergunta foi feita ainda.</p>
+      {% endif %}
+    </ul>
   </main>
 {% endblock %}
 
@@ -38,6 +36,6 @@
 
 {% if not object.closed_date %}
   {% block websockets %}
-    <script type="text/javascript" src="{% static 'js/websockets/room_questions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/room-questions-list.js' %}"></script>
   {% endblock %}
 {% endif %}
