@@ -5,6 +5,7 @@
   const elements = {
     $wrapper: $('.questions'),
     $list: $('.questions__list'),
+    $listEmpty: $('.questions__list--empty'),
     $voteBtn: $('.question-vote'),
     $shareListOpenBtn: $('.question-block__share-button'),
     $shareListCloseBtn: $('.share-list__close'),
@@ -12,6 +13,14 @@
     $form: $('#questionform'),
     $formInput: $('#question'),
   };
+
+  const vars = {
+    listScrollHeight: () => elements.$list[0].scrollHeight,
+  };
+
+  function animateToBottom() {
+    elements.$list.animate({ scrollTop: vars.listScrollHeight() }, 600);
+  }
 
   function add(message) {
     if (message.data === 'closed') {
@@ -24,8 +33,11 @@
       if (questionExists) {
         $existingQuestion.replaceWith(data.html);
       } else {
-        elements.$list.mixItUp('append', data.html);
+        elements.$list.append(data.html);
+        animateToBottom();
       }
+
+      elements.$listEmpty.remove();
 
       const $question = $(`[data-question-id=${data.id}]`);
       const $upvoteButton = $question.find('.vote-block__upvote-button');
