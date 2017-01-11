@@ -127,7 +127,7 @@
 {% if not object.closed_date %}
   {% block websockets %}
     <script>
-      var HANDLER = "{{handler|default:''}}";
+      // var HANDLER = "{{handler|default:''}}";
 
       function loginRedirect() {
         var next = "{{request.path}}";
@@ -135,9 +135,8 @@
         document.location.href = `${login_url}?next=${next}`;
       }
     </script>
+    <script type="text/javascript" src="{% static 'js/send-form.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/questions.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/websockets/chat.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/websockets/questions.js' %}"></script>
   {% endblock %}
 {% endif %}
