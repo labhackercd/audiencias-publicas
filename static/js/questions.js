@@ -24,7 +24,7 @@
       if (questionExists) {
         $existingQuestion.replaceWith(data.html);
       } else {
-        elements.$list.append(data.html);
+        elements.$list.mixItUp('append', data.html);
       }
 
       const $question = $(`[data-question-id=${data.id}]`);
@@ -49,6 +49,8 @@
         $upvoteButton.html('Votar Nesta Pergunta');
         $totalVotes.removeClass('voted');
       }
+
+      elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
     }
   }
 
@@ -56,6 +58,17 @@
     socket.onmessage = add;
     socket.onopen = () => console.log('Connected to chat socket'); // eslint-disable-line no-console
     socket.onclose = () => console.log('Disconnected to chat socket'); // eslint-disable-line no-console
+  }
+
+  function mixItUpInit() {
+    elements.$list.mixItUp({
+      selectors: {
+        target: '.list__item',
+      },
+      layout: {
+        display: 'flex',
+      },
+    });
   }
 
   const sendFormAPInit = () => sendFormAP(elements.$wrapper);
@@ -133,6 +146,7 @@
 
   (function init() {
     socketInit();
+    mixItUpInit();
     sendFormAPInit(); // defined in room.html
     bindEventsHandlers();
   }());
