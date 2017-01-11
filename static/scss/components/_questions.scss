@@ -225,7 +225,7 @@
     }
   }
 
-  .question-block__share-list {
+  [class^="question-block__share-list"] {
     @include transition-default(transform);
     align-items: center;
     background-color: #fff;
@@ -239,10 +239,6 @@
     top: 0;
     transform: translateY(-100%);
     width: 100%;
-
-    &.active {
-      transform: translateY(0);
-    }
 
     [class^="share-list__item"] {
       @include transition-default(background-color);
@@ -292,6 +288,10 @@
       height: 100%;
       justify-content: center;
     }
+  }
+
+  .question-block__share-list--active {
+    transform: translateY(0);
   }
 
   .question-block__answered {
