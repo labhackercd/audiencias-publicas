@@ -1,3 +1,6 @@
+/* global questionsAP, HANDLER */
+const questions = questionsAP(); // Using 'questionsAP' module from '../questions.js'
+
 var questionSocket = createSocket("questions/stream/");
 var questionList = $('#questions');
 
@@ -8,15 +11,6 @@ questionList.mixItUp({
   layout: {
     display: 'flex'
   }
-});
-
-//Question share action
-$('.question-block__share-button').click(function(){
-  $(this).siblings('.question-block__share-list').addClass('active')
-});
-
-$('.share-list__close').click(function(){
-  $(this).parent('.question-block__share-list').removeClass('active')
 });
 
 questionList.on('mixStart', function(){
