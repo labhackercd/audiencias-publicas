@@ -18,7 +18,7 @@ chatSocket.onmessage = (message) => {
       chat.scrollToBottom();
     } else {
       messagesListEl.append(data.hmtl);
-      chat.toggleReadMore('show');
+      chat.showReadMore();
     }
   }
 };

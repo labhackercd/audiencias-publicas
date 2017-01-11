@@ -27,22 +27,17 @@ function chatAP() { // eslint-disable-line no-unused-vars
     elements.messages.animate({ scrollTop: vars.messagesListHeight() }, 'slow');
   }
 
-  function toggleReadMore(state) {
-    switch (state) {
-      case 'show':
-        elements.readMore.removeClass('chat__read-more');
-        elements.readMore.addClass('chat__read-more--visible');
-        break;
-      case 'hide':
-        elements.readMore.removeClass('chat__read-more--visible');
-        elements.readMore.addClass('chat__read-more');
-        break;
-      default:
-        break;
-    }
+  function showReadMore() {
+    elements.readMore.removeClass('chat__read-more');
+    elements.readMore.addClass('chat__read-more--visible');
   }
 
-  function closeForm() {
+  function hideReadMore() {
+    elements.readMore.removeClass('chat__read-more--visible');
+    elements.readMore.addClass('chat__read-more');
+  }
+
+  function createClosedFormEl() {
     const closedFormEl = document.createElement('div');
     const closedFormSpanEl = document.createElement('span');
 
@@ -51,22 +46,27 @@ function chatAP() { // eslint-disable-line no-unused-vars
 
     closedFormEl.appendChild(closedFormSpanEl);
     elements.chat[0].appendChild(closedFormEl);
+  }
 
+  function closeForm() {
+    createClosedFormEl();
     elements.form.remove();
   }
 
   const events = {
-    readMoreClick: () => animateToBottom(),
-
-    readMoreScroll: () => {
-      if (isScrolledToBottom()) toggleReadMore('hide');
+    readMoreClick() {
+      animateToBottom();
     },
 
-    formInputKeyDown: (event) => {
+    readMoreScroll() {
+      if (isScrolledToBottom()) hideReadMore();
+    },
+
+    formInputKeyDown(event) {
       if (event.which === 13) event.preventDefault();
     },
 
-    formInputKeyUp: (event) => {
+    formInputKeyUp(event) {
       if (event.which === 13) elements.form.trigger('submit');
     },
   };
@@ -82,7 +82,7 @@ function chatAP() { // eslint-disable-line no-unused-vars
     elements,
     isScrolledToBottom,
     scrollToBottom,
-    toggleReadMore,
+    showReadMore,
     closeForm,
   };
 }
