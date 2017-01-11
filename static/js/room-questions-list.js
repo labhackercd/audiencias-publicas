@@ -27,8 +27,8 @@
 
   function socketInit() {
     socket.onmessage = add;
-    socket.onopen = () => console.log('Connected to chat socket'); // eslint-disable-line no-console
-    socket.onclose = () => console.log('Disconnected to chat socket'); // eslint-disable-line no-console
+    socket.onopen = () => console.log('Connected to room questions list socket'); // eslint-disable-line no-console
+    socket.onclose = () => console.log('Disconnected to room questions list socket'); // eslint-disable-line no-console
   }
 
   function mixItUpInit() {
