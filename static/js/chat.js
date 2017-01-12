@@ -48,7 +48,7 @@
 
       if (isScrolledToBottom()) {
         elements.$messagesList.append(data.hmtl);
-        scrollToBottom();
+        animateToBottom();
       } else {
         elements.$messagesList.append(data.hmtl);
         showReadMore();
