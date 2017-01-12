@@ -1,5 +1,6 @@
 /// Google swift out cubic-bezier pattern for transitions and animations
 $swift-out: cubic-bezier(.55,0,.1,1);
+$tab-transition: transform .5s ease;
 
 @keyframes blink {
   0% {opacity: 1;}
@@ -8,5 +9,5 @@ $swift-out: cubic-bezier(.55,0,.1,1);
 }
 
 .live-blink {
-  animation: blink ease-in-out 1.2s infinite both alternate; 
-} 
+  animation: blink ease-in-out 1.2s infinite both alternate;
+}

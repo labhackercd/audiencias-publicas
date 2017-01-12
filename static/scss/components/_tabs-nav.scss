@@ -13,10 +13,24 @@
   justify-content: space-around;
   list-style: none;
   margin: 0;
+  position: relative;
 
   .list__item {
     display: flex;
     flex: 1;
+  }
+
+  .list__item-marker {
+    background-color: #fbc707;
+    bottom: 0;
+    height: .3em;
+    left: 0;
+    position: absolute;
+    transition: $tab-transition;
+    width: calc(100% / 3);
+
+    &[data-tab="chat"] { transform: translateX(100%); }
+    &[data-tab="questions"] { transform: translateX(200%); }
   }
 
   .item__link {

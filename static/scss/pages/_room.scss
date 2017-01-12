@@ -1,6 +1,6 @@
 .room {
   display: flex;
-  transition: transform .5s ease;
+  transition: $tab-transition;
 
   &[data-tab="chat"] {
     transform: translateX(-100vw);
