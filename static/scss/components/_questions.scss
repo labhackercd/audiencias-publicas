@@ -23,7 +23,7 @@
   line-height: 1em;
   text-transform: uppercase;
 
-  @include breakpoint(medium down) { padding: 1em 1em 0; }
+  @include breakpoint(medium down) { padding: 16px 16px 0; }
 
   &::after {
     background-color: #fbc707;
