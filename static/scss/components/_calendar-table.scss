@@ -1,22 +1,22 @@
 .calendar-table {
-  margin-bottom: 0;
   font-size: 1.2em;
+  margin-bottom: 0;
 
   &__body {
+    border-bottom: 0;
     border-left: 0;
     border-right: 0;
-    border-bottom: 0;
   }
 
   &__column {
-
-    padding-top: 0.7em;
-    padding-bottom: 0.6em;
+    padding-bottom: .6em;
+    padding-top: .7em;
 
     &:first-child {
       font-weight: 600;
-      padding-left: 3em;
+      width: 10em;
     }
+
     &:last-child {
       padding-right: 3em;
     }
@@ -27,21 +27,22 @@
   }
 
   &__date-wrapper {
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin: 0 auto;
     width: 4em;
   }
 
   &__weekday {
-    font-size: 0.5em;
-    font-weight: 600;
     background-color: #2974a3;
-    color: white;
-    padding: 0.3em 0;
-    min-width: 6.5em;
-    text-align: center;
     border-radius: 1em;
+    color: #fff;
+    font-size: .5em;
+    font-weight: 600;
+    min-width: 6.5em;
+    padding: .3em 0;
+    text-align: center;
     text-transform: uppercase;
 
     &--today {
@@ -59,14 +60,14 @@
   }
 
   &__month {
-    font-size: 0.8em;
-    font-weight: 400;
     color: #404040;
+    font-size: .8em;
+    font-weight: 400;
   }
 
   &__hour {
-    font-size: 0.9em;
-    margin-top: 0.3em;
+    font-size: .9em;
     font-weight: 600;
+    margin-top: .3em;
   }
 }

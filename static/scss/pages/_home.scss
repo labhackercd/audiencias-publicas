@@ -33,4 +33,19 @@
       padding: .4em;
     }
   }
+
+  .preview--calendar {
+    padding: 0;
+
+    .preview__floating-header {
+      background-color: #092b2a;
+      margin: 0 1em;
+    }
+
+    .header__icon {
+      border: .2em solid;
+      border-radius: 50%;
+      padding: .4em;
+    }
+  }
 }
