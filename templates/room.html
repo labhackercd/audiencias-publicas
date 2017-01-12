@@ -13,101 +13,45 @@
 {% endblock metadata %}
 
 {% block main %}
-  <nav class="tabs-nav">
-    <ul class="tabs-nav__list">
-      <li class="list__item">
-        <a class="item__link" data-tab="video">Vídeo</a>
-      </li>
-      <li class="list__item">
-        <a class="item__link" data-tab="chat">Chat</a>
-      </li>
-      <li class="list__item">
-        <a class="item__link" data-tab="questions">Perguntas</a>
-      </li>
-      <div class="list__item-marker" data-tab="video"></div>
-    </ul>
-  </nav>
+  <main class="room-wrapper" data-tab="video">
+    <nav class="tabs-nav">
+      <ul class="tabs-nav__list">
+        <li class="list__item">
+          <a class="item__link" data-tab="video">VÍDEO</a>
+        </li>
+        <li class="list__item">
+          <a class="item__link" data-tab="chat">BATE-PAPO</a>
+        </li>
+        <li class="list__item">
+          <a class="item__link" data-tab="questions">PERGUNTAS</a>
+        </li>
+        <div class="list__item-marker" data-tab="video"></div>
+      </ul>
+    </nav>
 
-  <main class="room" data-tab="video">
-    <section class="section-left">
-      <div class="questions">
-        <h1 class="questions__title">Pergunte aos Deputados</h1>
-        <p class="questions__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
+    <div class="room">
+      <section class="section-left">
+        <div class="questions">
+          <h1 class="questions__title">Pergunte aos Deputados</h1>
+          <p class="questions__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
 
-        <ul class="questions__list" id="questions">
-          {% if questions %}
-            {% for question in questions %}
-              {% include "includes/video_questions.html" with questions=questions user=user %}
-            {% endfor %}
-          {% elif not object.closed_date %}
-            <div class="questions__list--empty">
-              <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
-              <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
-            </div>
-          {% endif %}
-        </ul>
-
-        {% if not object.closed_date and user.is_authenticated %}
-          <form class="send-form--questions" id="questionform">
-            <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" autocomplete="off" required=""></textarea>
-            <button class="send-form__button button">
-              <span class="button__text">Enviar</span>
-              <i class="button__icon icon icon-caret-right"></i>
-            </button>
-          </form>
-
-        {% elif not object.closed_date and not user.is_authenticated %}
-          <div class="send-form--unauthenticated">
-            <span><a href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
-          </div>
-
-        {% elif object.closed_date %}
-          <div class="send-form--closed">
-            <span>Audiência encerrada para participações.</span>
-          </div>
-
-        {% endif %}
-      </div>
-    </section>
-
-    <section class="section-right">
-      <div class="section-right__top">
-        <div class="currently-happening">
-          <div class="currently-happening__video-wrapper">
-            <iframe class="currently-happening__video" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
-          </div>
-          <div class="currently-happening__title">
-            <h1 class="title__header">Agora na Câmara:</h1>
-            <h2 class="title__subheader">
-              {% if not object.closed_date %}
-                <i class="subheader__icon icon icon-circle live-blink"></i>
-              {% endif %}
-              <span class="subheader__text">{{ object.title }}</span>
-            </h2>
-          </div>
-        </div>
-      </div>
-
-      <div class="section-right__bottom">
-        <div class="chat">
-          <div class="chat__floating-header">
-            <i class="header__icon icon icon-comments"></i>
-            <h3 class="header__title">Bate-Papo</h3>
-          </div>
-
-          <div class="chat__messages">
-            <ul class="messages__list" id="chat">
-              {% for message in object.messages.all %}
-              {% include "includes/chat_message.html" with message=message %}
+          <ul class="questions__list" id="questions">
+            {% if questions %}
+              {% for question in questions %}
+                {% include "includes/video_questions.html" with questions=questions user=user %}
               {% endfor %}
-            </ul>
-          </div>
-          <div class="chat__read-more">Há novas mensagens disponíveis abaixo</div>
+            {% elif not object.closed_date %}
+              <div class="questions__list--empty">
+                <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
+                <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
+              </div>
+            {% endif %}
+          </ul>
 
           {% if not object.closed_date and user.is_authenticated %}
-            <form class="send-form--chat" id="chatform">
-              <textarea class="send-form__input" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required=""></textarea>
-              <button class="send-form__button button" id="go">
+            <form class="send-form--questions" id="questionform">
+              <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" autocomplete="off" required=""></textarea>
+              <button class="send-form__button button">
                 <span class="button__text">Enviar</span>
                 <i class="button__icon icon icon-caret-right"></i>
               </button>
@@ -115,7 +59,7 @@
 
           {% elif not object.closed_date and not user.is_authenticated %}
             <div class="send-form--unauthenticated">
-              <span><a href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
+              <span><a href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
             </div>
 
           {% elif object.closed_date %}
@@ -125,8 +69,66 @@
 
           {% endif %}
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="section-right">
+        <div class="section-right__top">
+          <div class="currently-happening">
+            <div class="currently-happening__video-wrapper">
+              <iframe class="currently-happening__video" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
+            </div>
+            <div class="currently-happening__title">
+              <h1 class="title__header">Agora na Câmara:</h1>
+              <h2 class="title__subheader">
+                {% if not object.closed_date %}
+                  <i class="subheader__icon icon icon-circle live-blink"></i>
+                {% endif %}
+                <span class="subheader__text">{{ object.title }}</span>
+              </h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-right__bottom">
+          <div class="chat">
+            <div class="chat__floating-header">
+              <i class="header__icon icon icon-comments"></i>
+              <h3 class="header__title">Bate-Papo</h3>
+            </div>
+
+            <div class="chat__messages">
+              <ul class="messages__list" id="chat">
+                {% for message in object.messages.all %}
+                {% include "includes/chat_message.html" with message=message %}
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="chat__read-more">Há novas mensagens disponíveis abaixo</div>
+
+            {% if not object.closed_date and user.is_authenticated %}
+              <form class="send-form--chat" id="chatform">
+                <textarea class="send-form__input" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required=""></textarea>
+                <button class="send-form__button button" id="go">
+                  <span class="button__text">Enviar</span>
+                  <i class="button__icon icon icon-caret-right"></i>
+                </button>
+              </form>
+
+            {% elif not object.closed_date and not user.is_authenticated %}
+              <div class="send-form--unauthenticated">
+                <span><a href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
+              </div>
+
+            {% elif object.closed_date %}
+              <div class="send-form--closed">
+                <span>Audiência encerrada para participações.</span>
+              </div>
+
+            {% endif %}
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 {% endblock %}
 

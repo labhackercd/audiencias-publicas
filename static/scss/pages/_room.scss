@@ -1,39 +1,27 @@
+.room-wrapper {
+  position: fixed;
+  width: 100vw;
+}
+
 .room {
   display: flex;
   transition: $tab-transition;
 
-  &[data-tab="chat"] {
-    transform: translateX(-100vw);
-  }
-
-  &[data-tab="questions"] {
-    transform: translateX(-200vw);
-  }
-
-  @include breakpoint(small down) {
-    height: calc(100vh - 6em);
-    max-height: calc(100vh - 6em);
-  }
+  @include breakpoint(small down) { height: calc(100vh - 6em); }
+  @include breakpoint(medium only) { height: calc(100vh - 7em); }
+  @include breakpoint(large up) { height: calc(100vh - 4em); }
 
   @include breakpoint(medium down) {
     flex-direction: row-reverse;
-    overflow: hidden;
     width: 300vw;
-  }
-
-  @include breakpoint(medium only) {
-    height: calc(100vh - 7em);
-    max-height: calc(100vh - 7em);
-  }
-
-  @include breakpoint(large up) {
-    height: calc(100vh - 4em);
-    max-height: calc(100vh - 4em);
   }
 
   @include breakpoint(xxxlarge up) {
     font-size: 120%;
   }
+
+  &[data-tab="chat"] { transform: translateX(-100vw); }
+  &[data-tab="questions"] { transform: translateX(-200vw); }
 
   .section-left {
     flex: 1;

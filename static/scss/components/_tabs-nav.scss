@@ -1,6 +1,7 @@
 .tabs-nav {
   background-color: #133837;
   height: 3em;
+  width: 100vw;
 
   @include breakpoint(large up) {
     display: none;
