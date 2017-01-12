@@ -5,11 +5,11 @@
   height: 100%;
 
   @include breakpoint(medium down) {
-    flex: 1;
+    overflow-y: auto;
   }
 
-  @include breakpoint(small down) { padding: 1em 1em 4em; }
-  @include breakpoint(medium only) { padding: 2em; }
+  @include breakpoint(small down) { padding: 1em 1em 80px; }
+  @include breakpoint(medium only) { padding: 2em 2em 80px; }
   @include breakpoint(large only) { padding: 2.5em; }
   @include breakpoint(xlarge up) { padding: 2.5em 5em; }
 }
@@ -44,11 +44,11 @@
   list-style: none;
   margin: 1em 0;
   overflow-y: auto;
-  padding: 8px;
+  padding: 1em;
 
   @include breakpoint(medium down) {
     overflow-y: visible;
-    padding: 0 0 5em;
+    padding: 0;
   }
 
   @include breakpoint(xxlarge up) {
@@ -349,6 +349,10 @@
 .questions {
   .send-form--questions {
     background-color: #133837;
+
+    @include breakpoint(medium down) {
+      left: 200vw;
+    }
   }
 
   .send-form--closed,

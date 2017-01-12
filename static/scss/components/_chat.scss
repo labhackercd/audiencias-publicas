@@ -6,14 +6,18 @@
   margin: 3em 2em 3.5em;
   position: relative;
 
-  [class^="send-form--"] {
-    margin-top: -2em;
+  @include breakpoint(medium down) {
+    margin: 0 0 50px;
   }
 }
 
 .chat__floating-header {
   background-color: $secondary-color;
   margin: 0 1em;
+
+  @include breakpoint(medium down) {
+    display: none;
+  }
 
   .header__icon {
     border: .2em solid;
@@ -24,10 +28,13 @@
 
 .chat__messages {
   flex: 1;
-  margin-top: -2.7em;
   overflow-y: auto;
-  padding-top: 1.5em;
   position: relative;
+
+  @include breakpoint(large up) {
+    margin-top: -2.7em;
+    padding-top: 1.5em;
+  }
 
   .messages__list {
     flex-direction: column;
@@ -63,14 +70,15 @@
 
 [class^="chat__read-more"] {
   @include transition-default(transform);
+  align-items: center;
   background-color: rgba(9, 166, 124, .85);
-  bottom: 5.7em;
   color: #fff;
   cursor: pointer;
+  display: flex;
   font-size: .9em;
   font-weight: 600;
-  padding: .45em 0;
-  text-align: center;
+  height: 30px;
+  justify-content: center;
   width: 100%;
   z-index: 0;
 
@@ -81,4 +89,12 @@
 
 .chat__read-more--visible {
   transform: translateY(-100%);
+}
+
+.chat [class^="send-form--"] {
+  margin-top: -30px;
+
+  @include breakpoint(medium down) {
+    left: 100vw;
+  }
 }

@@ -1,9 +1,29 @@
 .room {
   display: flex;
+  transition: transform .5s ease;
+
+  &[data-tab="chat"] {
+    transform: translateX(-100vw);
+  }
+
+  &[data-tab="questions"] {
+    transform: translateX(-200vw);
+  }
+
+  @include breakpoint(small down) {
+    height: calc(100vh - 6em);
+    max-height: calc(100vh - 6em);
+  }
 
   @include breakpoint(medium down) {
-    flex: 1;
-    flex-direction: column-reverse;
+    flex-direction: row-reverse;
+    overflow: hidden;
+    width: 300vw;
+  }
+
+  @include breakpoint(medium only) {
+    height: calc(100vh - 7em);
+    max-height: calc(100vh - 7em);
   }
 
   @include breakpoint(large up) {
@@ -20,7 +40,7 @@
 
     @include breakpoint(medium down) {
       display: flex;
-      flex-direction: column;
+      width: 100vw;
     }
   }
 
@@ -30,7 +50,9 @@
     flex-direction: column;
 
     @include breakpoint(medium down) {
-      flex: 0;
+      flex: initial;
+      flex-direction: row;
+      width: 200vw;
     }
 
     @include breakpoint(large only) { max-width: 400px; }
@@ -38,14 +60,17 @@
     @include breakpoint(xxlarge up) { max-width: 600px; }
   }
 
+  .section-right__top,
+  .section-right__bottom {
+    @include breakpoint(medium down) {
+      width: 100vw;
+    }
+  }
+
   .section-right__bottom {
     background-color: #d5d5d5;
     display: flex;
     flex: 1;
     flex-direction: column;
-
-    @include breakpoint(medium down) {
-      display: none;
-    }
   }
 }

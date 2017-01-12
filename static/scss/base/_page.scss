@@ -12,4 +12,11 @@ body {
   @include breakpoint(small only) {
     padding-top: 3em;
   }
+
+  @include breakpoint(medium down) {
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    width: 100vw;
+  }
 }

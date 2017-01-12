@@ -3,18 +3,14 @@
   background-color: #eaeaea;
   display: flex;
   flex-shrink: 0;
+  height: 80px;
   padding: 1em;
   z-index: 1;
 
-  @include breakpoint(medium only) {
-    padding: 1.5em 2em;
-  }
-
   @include breakpoint(medium down) {
     bottom: 0;
-    left: 0;
     position: fixed;
-    width: 100%;
+    width: 100vw;
     z-index: 10;
   }
 

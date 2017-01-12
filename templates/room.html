@@ -13,7 +13,21 @@
 {% endblock metadata %}
 
 {% block main %}
-  <main class="room">
+  <nav class="tabs-nav">
+    <ul class="tabs-nav__list">
+      <li class="list__item">
+        <a class="item__link" data-tab="video">Vídeo</a>
+      </li>
+      <li class="list__item">
+        <a class="item__link" data-tab="chat">Chat</a>
+      </li>
+      <li class="list__item">
+        <a class="item__link" data-tab="questions">Perguntas</a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="room" data-tab="video">
     <section class="section-left">
       <div class="questions">
         <h1 class="questions__title">Pergunte aos Deputados</h1>
@@ -136,5 +150,6 @@
     <script type="text/javascript" src="{% static 'js/send-form.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/questions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/room-tabs.js' %}"></script>
   {% endblock %}
 {% endif %}
