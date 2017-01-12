@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   transition: transform $swift-out .3s;
-  width: 100%;
+  width: 100vw;
   z-index: 10000;
 
   @include breakpoint(small down) {
