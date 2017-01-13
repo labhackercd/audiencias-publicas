@@ -1,10 +1,7 @@
 /* global HANDLER */
+import sendFormModule from '../modules/send-form';
 
-import sendFormAP from './send-form';
-
-function chatAP() {
-  let socket = {};
-
+function chatComponent(socket) {
   const elements = {
     $wrapper: $('.chat'),
     $messages: $('.chat__messages'),
@@ -44,12 +41,12 @@ function chatAP() {
     elements.$readMore.addClass('chat__read-more');
   }
 
-  function addMessage(message) {
+  function evaluateSocketMessage(message) {
     const messagesListIsEmpty = elements.$messagesListEmpty.length;
     if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
     if (message.data === 'closed') {
-      sendFormAP(elements.$wrapper).closeForm();
+      sendFormModule(elements.$wrapper).closeForm();
     } else {
       const data = JSON.parse(message.data);
 
@@ -63,15 +60,7 @@ function chatAP() {
     }
   }
 
-  function socketInit() {
-    socket = createSocket('chat/stream/');
-
-    socket.onmessage = addMessage;
-    socket.onopen = () => console.log('Connected to chat socket'); // eslint-disable-line no-console
-    socket.onclose = () => console.log('Disconnected to chat socket'); // eslint-disable-line no-console
-  }
-
-  const sendFormAPInit = () => sendFormAP(elements.$wrapper);
+  const sendFormModuleInit = () => sendFormModule(elements.$wrapper);
 
   const events = {
     readMoreClick() {
@@ -104,19 +93,17 @@ function chatAP() {
   };
 
   function bindEventsHandlers() {
+    socket.onmessage = evaluateSocketMessage;
     elements.$messages.on('scroll', events.readMoreScroll);
     elements.$readMore.on('click', events.readMoreClick);
     elements.$form.on('submit', events.sendMessage);
   }
 
   (function init() {
-    socketInit();
     scrollToBottom();
-    sendFormAPInit();
+    sendFormModuleInit();
     bindEventsHandlers();
   }());
-
-  return { socket };
 }
 
-export default chatAP;
+export default chatComponent;

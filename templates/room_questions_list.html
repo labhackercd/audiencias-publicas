@@ -37,7 +37,7 @@
 {% if not object.closed_date %}
   {% block websockets %}
     {% compress js %}
-      <script type="text/es6" src="{% static 'js/room-questions-list.js' %}"></script>
+      <script type="text/es6" src="{% static 'js/pages/room-questions-list.js' %}"></script>
     {% endcompress %}
   {% endblock %}
 {% endif %}

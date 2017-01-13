@@ -1,4 +1,4 @@
-(function tabsNavAP() {
+function tabsNavComponent() {
   const elements = {
     $room: $('.room'),
     $itemMarker: $('.tabs-nav .list__item-marker'),
@@ -63,7 +63,7 @@
       if (Math.abs(touchMovedValue) < 100) return;
 
       const activeTabIndex = getTabIndex();
-      const swipeDirection = touchMoved > 0 ? 1 : -1;
+      const swipeDirection = touchMovedValue > 0 ? 1 : -1;
 
       if (activeTabIndex === 0 && swipeDirection === -1) return;
       if (activeTabIndex === vars.tabsCount && swipeDirection === 1) return;
@@ -86,4 +86,6 @@
     setTabsVars();
     bindEventsHandlers();
   }());
-}());
+}
+
+export default tabsNavComponent;

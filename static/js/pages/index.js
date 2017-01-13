@@ -1,7 +1,8 @@
 import socketModule from '../modules/socket';
 import previewVideosComponent from '../components/preview-videos';
 
-const previewVideos = previewVideosComponent();
-const socket = socketModule('home', '', previewVideos.evaluateSocketMessage);
+const previewVideosSocket = socketModule('preview videos', '');
 
-window.onbeforeunload = () => socket.close();
+previewVideosComponent(previewVideosSocket.socket);
+
+window.onbeforeunload = () => previewVideosSocket.close();

@@ -1,4 +1,4 @@
-function previewVideosComponent() {
+function previewVideosComponent(socket) {
   const elements = {
     $live: $('.preview--live-videos'),
     $liveList: $('.preview--live-videos .preview__list'),
@@ -46,7 +46,7 @@ function previewVideosComponent() {
     }
   }
 
-  return { evaluateSocketMessage };
+  socket.onmessage = evaluateSocketMessage;
 }
 
 export default previewVideosComponent;

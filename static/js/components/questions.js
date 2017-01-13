@@ -1,10 +1,7 @@
 /* global HANDLER, loginRedirect */
+import sendFormModule from '../modules/send-form';
 
-import sendFormAP from './send-form';
-
-function questionsAP() {
-  let socket = {};
-
+function questionsComponent(socket) {
   const elements = {
     $wrapper: $('.questions'),
     $list: $('.questions__list'),
@@ -48,12 +45,12 @@ function questionsAP() {
     }
   }
 
-  function add(message) {
+  function evaluateSocketMessage(message) {
     const listIsEmpty = elements.$listEmpty.length;
     if (listIsEmpty) elements.$listEmpty.remove();
 
     if (message.data === 'closed') {
-      sendFormAP(elements.wrapper).closeForm();
+      sendFormModule(elements.$wrapper).closeForm();
       return;
     }
 
@@ -71,14 +68,6 @@ function questionsAP() {
     elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
   }
 
-  function socketInit() {
-    socket = createSocket('questions/stream/');
-
-    socket.onmessage = add;
-    socket.onopen = () => console.log('Connected to questions socket'); // eslint-disable-line no-console
-    socket.onclose = () => console.log('Disconnected to questions socket'); // eslint-disable-line no-console
-  }
-
   function mixItUpInit() {
     elements.$list.mixItUp({
       selectors: {
@@ -90,7 +79,7 @@ function questionsAP() {
     });
   }
 
-  const sendFormAPInit = () => sendFormAP(elements.$wrapper);
+  const sendFormModuleInit = () => sendFormModule(elements.$wrapper);
 
   const events = {
     vote() {
@@ -158,6 +147,7 @@ function questionsAP() {
 
   const bindEventsHandlers = {
     onPageLoad() {
+      socket.onmessage = evaluateSocketMessage;
       elements.$voteBtn.on('click', events.vote);
       elements.$shareListOpenBtn.on('click', events.openShareList);
       elements.$shareListCloseBtn.on('click', events.closeShareList);
@@ -179,13 +169,10 @@ function questionsAP() {
   };
 
   (function init() {
-    socketInit();
     mixItUpInit();
-    sendFormAPInit(); // defined in room.html
+    sendFormModuleInit(); // defined in room.html
     bindEventsHandlers.onPageLoad();
   }());
-
-  return { socket };
 }
 
-export default questionsAP;
+export default questionsComponent;
