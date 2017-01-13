@@ -1,10 +1,10 @@
-import socketModule from '../modules/socket';
+import createSocket from '../helpers/create-socket';
 import questionsComponent from '../components/questions';
 import chatComponent from '../components/chat';
 import tabsNavComponent from '../components/tabs-nav';
 
-const questionsSocket = socketModule('questions', 'questions/stream/');
-const chatSocket = socketModule('chat', 'chat/stream/');
+const questionsSocket = createSocket('questions', 'questions/stream/');
+const chatSocket = createSocket('chat', 'chat/stream/');
 
 questionsComponent(questionsSocket.socket);
 chatComponent(chatSocket.socket);

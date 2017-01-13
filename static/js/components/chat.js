@@ -1,5 +1,5 @@
 /* global HANDLER */
-import sendFormModule from '../modules/send-form';
+import sendForm from '../helpers/send-form';
 
 function chatComponent(socket) {
   const elements = {
@@ -46,7 +46,7 @@ function chatComponent(socket) {
     if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
     if (message.data === 'closed') {
-      sendFormModule(elements.$wrapper).closeForm();
+      sendForm(elements.$wrapper).closeForm();
     } else {
       const data = JSON.parse(message.data);
 
@@ -60,7 +60,7 @@ function chatComponent(socket) {
     }
   }
 
-  const sendFormModuleInit = () => sendFormModule(elements.$wrapper);
+  const sendFormInit = () => sendForm(elements.$wrapper);
 
   const events = {
     readMoreClick() {
@@ -101,7 +101,7 @@ function chatComponent(socket) {
 
   (function init() {
     scrollToBottom();
-    sendFormModuleInit();
+    sendFormInit();
     bindEventsHandlers();
   }());
 }

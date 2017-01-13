@@ -1,4 +1,4 @@
-function sendFormModule($wrapper) {
+function sendForm($wrapper) {
   const elements = {
     $wrapper,
     $form: $wrapper.find('[class^="send-form--"]'),
@@ -39,4 +39,4 @@ function sendFormModule($wrapper) {
   return { closeForm };
 }
 
-export default sendFormModule;
+export default sendForm;
