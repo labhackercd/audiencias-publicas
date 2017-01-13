@@ -7,6 +7,3 @@ env:
 
 extends:
   - airbnb-base
-
-globals:
-  createSocket: true

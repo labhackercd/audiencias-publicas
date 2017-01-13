@@ -1,3 +1,5 @@
+import ReconnectingWebSocket from 'reconnectingwebsocket';
+
 function createSocket(path = '') {
   const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
   let wsPath = `${wsScheme}://${window.location.host}${window.location.pathname}`;
@@ -13,8 +15,4 @@ function createSocket(path = '') {
   return socket;
 }
 
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
+export default createSocket;
