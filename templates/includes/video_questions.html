@@ -11,7 +11,7 @@
       <div class="info__timestamp"> {{question.created | date:'H:i'}}</div>
     </div>
 
-    {% if object.closed_date %}
+    {% if not object.closed_date %}
       <span class="question-block__share-button" role="button" title="Compartilhar esta pergunta">
         <i class="share-button__icon icon icon-share-alt"></i>
       </span>

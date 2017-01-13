@@ -42,9 +42,8 @@
       const $question = $(`[data-question-id=${data.id}]`);
       const $upvoteButton = $question.find('.vote-block__upvote-button');
       const $totalVotes = $question.find('.vote-block__total-votes');
-      const $voteBtn = $question.find('.question-vote');
 
-      $voteBtn.on('click', events.vote);
+      bindEventsHandlers.onAdd($question);
 
       if (HANDLER === $question.data('question-author')) {
         $upvoteButton.addClass('voted disabled');
@@ -148,18 +147,32 @@
     },
   };
 
-  function bindEventsHandlers() {
-    elements.$voteBtn.on('click', events.vote);
-    elements.$shareListOpenBtn.on('click', events.openShareList);
-    elements.$shareListCloseBtn.on('click', events.closeShareList);
-    elements.$shareListItemLink.on('click', events.share);
-    elements.$form.on('submit', events.submit);
-  }
+  const bindEventsHandlers = {
+    onPageLoad() {
+      elements.$voteBtn.on('click', events.vote);
+      elements.$shareListOpenBtn.on('click', events.openShareList);
+      elements.$shareListCloseBtn.on('click', events.closeShareList);
+      elements.$shareListItemLink.on('click', events.share);
+      elements.$form.on('submit', events.submit);
+    },
+
+    onAdd($question) {
+      const $voteBtn = $question.find('.question-vote');
+      const $shareListOpenBtn = $question.find('.question-block__share-button');
+      const $shareListCloseBtn = $question.find('.share-list__close');
+      const $shareListItemLink = $question.find('.question-block__share-list .item__link');
+
+      $voteBtn.on('click', events.vote);
+      $shareListOpenBtn.on('click', events.openShareList);
+      $shareListCloseBtn.on('click', events.closeShareList);
+      $shareListItemLink.on('click', events.share);
+    },
+  };
 
   (function init() {
     socketInit();
     mixItUpInit();
     sendFormAPInit(); // defined in room.html
-    bindEventsHandlers();
+    bindEventsHandlers.onPageLoad();
   }());
 }());
