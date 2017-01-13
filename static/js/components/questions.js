@@ -6,7 +6,9 @@ function questionsComponent(socket) {
     $wrapper: $('.questions'),
     $list: $('.questions__list'),
     $listEmpty: $('.questions__list--empty'),
-    $voteBtn: $('.question-vote'),
+    $voteBtnEnabled: $('.question-vote'),
+    $voteBtn: $('.vote-block__upvote-button'),
+    $voteLabel: $('.vote-block__vote-label'),
     $shareListOpenBtn: $('.question-block__share-button'),
     $shareListCloseBtn: $('.share-list__close'),
     $shareListItemLink: $('.question-block__share-list .item__link'),
@@ -51,6 +53,8 @@ function questionsComponent(socket) {
 
     if (message.data === 'closed') {
       sendForm(elements.$wrapper).closeForm();
+      elements.$voteBtn.remove();
+      elements.$voteLabel.removeClass('hide');
       return;
     }
 
@@ -148,7 +152,7 @@ function questionsComponent(socket) {
   const bindEventsHandlers = {
     onPageLoad() {
       socket.onmessage = evaluateSocketMessage;
-      elements.$voteBtn.on('click', events.vote);
+      elements.$voteBtnEnabled.on('click', events.vote);
       elements.$shareListOpenBtn.on('click', events.openShareList);
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.share);
@@ -156,12 +160,12 @@ function questionsComponent(socket) {
     },
 
     onAdd($question) {
-      const $voteBtn = $question.find('.question-vote');
+      const $voteBtnEnabled = $question.find('.question-vote');
       const $shareListOpenBtn = $question.find('.question-block__share-button');
       const $shareListCloseBtn = $question.find('.share-list__close');
       const $shareListItemLink = $question.find('.question-block__share-list .item__link');
 
-      $voteBtn.on('click', events.vote);
+      $voteBtnEnabled.on('click', events.vote);
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
       $shareListItemLink.on('click', events.share);
