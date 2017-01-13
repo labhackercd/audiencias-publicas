@@ -16,53 +16,56 @@
 
   const vars = {
     listScrollHeight: () => elements.$list[0].scrollHeight,
+    wrapperScrollHeight: () => elements.$wrapper[0].scrollHeight,
   };
 
   function animateToBottom() {
     elements.$list.animate({ scrollTop: vars.listScrollHeight() }, 600);
+    elements.$wrapper.animate({ scrollTop: vars.wrapperScrollHeight() }, 600);
+  }
+
+  function updateVoteBlock($question, data) {
+    const $upvoteButton = $question.find('.vote-block__upvote-button');
+    const $totalVotes = $question.find('.vote-block__total-votes');
+
+    if (HANDLER === $question.data('question-author')) {
+      $upvoteButton.addClass('voted disabled');
+      $upvoteButton.attr('disabled', true);
+      $upvoteButton.html('Sua Pergunta');
+      $totalVotes.addClass('voted disabled');
+    } else if ($.inArray(HANDLER, data.voteList) > -1) {
+      $upvoteButton.addClass('voted');
+      $upvoteButton.html('Apoiada por você');
+      $totalVotes.addClass('voted');
+    } else {
+      $upvoteButton.removeClass('voted disabled');
+      $upvoteButton.removeAttr('disabled');
+      $upvoteButton.html('Votar Nesta Pergunta');
+      $totalVotes.removeClass('voted');
+    }
   }
 
   function add(message) {
+    const listIsEmpty = elements.$listEmpty.length;
+    if (listIsEmpty) elements.$listEmpty.remove();
+
     if (message.data === 'closed') {
       sendFormAP(elements.wrapper).closeForm();
-    } else {
-      const data = JSON.parse(message.data);
-      const $existingQuestion = $(`[data-question-id=${data.id}]`);
-      const questionExists = $existingQuestion.length;
-
-      if (questionExists) {
-        $existingQuestion.replaceWith(data.html);
-      } else {
-        elements.$list.append(data.html);
-        animateToBottom();
-      }
-
-      elements.$listEmpty.remove();
-
-      const $question = $(`[data-question-id=${data.id}]`);
-      const $upvoteButton = $question.find('.vote-block__upvote-button');
-      const $totalVotes = $question.find('.vote-block__total-votes');
-
-      bindEventsHandlers.onAdd($question);
-
-      if (HANDLER === $question.data('question-author')) {
-        $upvoteButton.addClass('voted disabled');
-        $upvoteButton.attr('disabled', true);
-        $upvoteButton.html('Sua Pergunta');
-        $totalVotes.addClass('voted disabled');
-      } else if ($.inArray(HANDLER, data.voteList) > -1) {
-        $upvoteButton.addClass('voted');
-        $upvoteButton.html('Apoiada por você');
-        $totalVotes.addClass('voted');
-      } else {
-        $upvoteButton.removeClass('voted disabled');
-        $upvoteButton.removeAttr('disabled');
-        $upvoteButton.html('Votar Nesta Pergunta');
-        $totalVotes.removeClass('voted');
-      }
-
-      elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
+      return;
     }
+
+    const data = JSON.parse(message.data);
+    const $existingQuestion = $(`[data-question-id=${data.id}]`);
+    const questionExists = $existingQuestion.length;
+
+    if (questionExists) $existingQuestion.replaceWith(data.html);
+    else elements.$list.append(data.html);
+
+    const $question = $(`[data-question-id=${data.id}]`);
+
+    bindEventsHandlers.onAdd($question);
+    updateVoteBlock($question, data);
+    elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
   }
 
   function socketInit() {
@@ -144,6 +147,7 @@
       }));
 
       elements.$formInput.val('').focus();
+      animateToBottom();
     },
   };
 
