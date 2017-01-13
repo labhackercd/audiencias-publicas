@@ -1,6 +1,9 @@
-/* global sendFormAP, HANDLER, loginRedirect */
-(function questionsAP() { // eslint-disable-line no-unused-vars
-  const socket = createSocket('questions/stream/');
+/* global HANDLER, loginRedirect */
+
+import sendFormAP from './send-form';
+
+function questionsAP() {
+  let socket = {};
 
   const elements = {
     $wrapper: $('.questions'),
@@ -69,6 +72,8 @@
   }
 
   function socketInit() {
+    socket = createSocket('questions/stream/');
+
     socket.onmessage = add;
     socket.onopen = () => console.log('Connected to questions socket'); // eslint-disable-line no-console
     socket.onclose = () => console.log('Disconnected to questions socket'); // eslint-disable-line no-console
@@ -179,4 +184,8 @@
     sendFormAPInit(); // defined in room.html
     bindEventsHandlers.onPageLoad();
   }());
-}());
+
+  return { socket };
+}
+
+export default questionsAP;

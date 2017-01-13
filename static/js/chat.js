@@ -1,6 +1,9 @@
-/* global sendFormAP HANDLER */
-(function chatAP() { // eslint-disable-line no-unused-vars
-  const socket = createSocket('chat/stream/');
+/* global HANDLER */
+
+import sendFormAP from './send-form';
+
+function chatAP() {
+  let socket = {};
 
   const elements = {
     $wrapper: $('.chat'),
@@ -61,6 +64,8 @@
   }
 
   function socketInit() {
+    socket = createSocket('chat/stream/');
+
     socket.onmessage = addMessage;
     socket.onopen = () => console.log('Connected to chat socket'); // eslint-disable-line no-console
     socket.onclose = () => console.log('Disconnected to chat socket'); // eslint-disable-line no-console
@@ -107,7 +112,11 @@
   (function init() {
     socketInit();
     scrollToBottom();
-    sendFormAPInit(); // defined in room.html
+    sendFormAPInit();
     bindEventsHandlers();
   }());
-}());
+
+  return { socket };
+}
+
+export default chatAP;

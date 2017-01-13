@@ -1,5 +1,5 @@
 (function roomQuestionsListAP() { // eslint-disable-line no-unused-vars
-  const socket = createSocket('questions/stream/');
+  let socket = {};
 
   const elements = {
     $list: $('.room-questions__list'),
@@ -26,9 +26,13 @@
   }
 
   function socketInit() {
+    socket = createSocket('questions/stream/');
+
     socket.onmessage = add;
     socket.onopen = () => console.log('Connected to room questions list socket'); // eslint-disable-line no-console
     socket.onclose = () => console.log('Disconnected to room questions list socket'); // eslint-disable-line no-console
+
+    window.onbeforeunload = () => socket.close();
   }
 
   function mixItUpInit() {

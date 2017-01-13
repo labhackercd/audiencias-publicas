@@ -1,5 +1,5 @@
 (function homeAP() { // eslint-disable-line no-unused-vars
-  const socket = createSocket();
+  let socket = {};
 
   const elements = {
     $previewLive: $('.preview--live-videos'),
@@ -48,9 +48,13 @@
   }
 
   function socketInit() {
+    socket = createSocket();
+
     socket.onmessage = add;
     socket.onopen = () => console.log('Connected to home socket'); // eslint-disable-line no-console
     socket.onclose = () => console.log('Disconnected to home socket'); // eslint-disable-line no-console
+
+    window.onbeforeunload = () => socket.close();
   }
 
   (function init() {

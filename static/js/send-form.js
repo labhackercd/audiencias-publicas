@@ -1,4 +1,4 @@
-function sendFormAP($wrapper) { // eslint-disable-line no-unused-vars
+function sendFormAP($wrapper) {
   const elements = {
     $wrapper,
     $form: $wrapper.find('[class^="send-form--"]'),
@@ -38,3 +38,5 @@ function sendFormAP($wrapper) { // eslint-disable-line no-unused-vars
 
   return { closeForm };
 }
+
+export default sendFormAP;
