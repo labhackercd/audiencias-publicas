@@ -18,7 +18,7 @@
     },
   };
 
-  function setTabs() {
+  function setTabsVars() {
     elements.$links.each(function setTab(index) {
       const dataTab = $(this).attr('data-tab');
       vars.tabs[index] = dataTab;
@@ -56,9 +56,11 @@
     touchStart: () => setTouchPositionX('start', event.touches[0].pageX),
     touchMove: () => setTouchPositionX('end', event.touches[0].pageX),
     touchEnd: () => {
-      const touchMoved = touchPosition.x.start - touchPosition.x.end;
+      const touchMoved = touchPosition.x.end !== 0;
+      if (!touchMoved) return;
 
-      if (Math.abs(touchMoved) < 100) return;
+      const touchMovedValue = touchPosition.x.start - touchPosition.x.end;
+      if (Math.abs(touchMovedValue) < 100) return;
 
       const activeTabIndex = getTabIndex();
       const swipeDirection = touchMoved > 0 ? 1 : -1;
@@ -81,7 +83,7 @@
   }
 
   (function init() {
-    setTabs();
+    setTabsVars();
     bindEventsHandlers();
   }());
 }());
