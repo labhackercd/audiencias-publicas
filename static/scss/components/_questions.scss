@@ -50,7 +50,6 @@
   padding: 1em;
 
   @include breakpoint(medium down) {
-    margin-bottom: calc(80px + 1em);
     overflow-y: visible;
     padding: 0 1em;
   }
