@@ -1,5 +1,5 @@
 {% extends "components/base.html" %}
-{% load staticfiles %}
+{% load staticfiles compress %}
 
 {% block metadata %}
   <meta property="og:title" content="{{object.title}}" />
@@ -157,9 +157,8 @@
         document.location.href = `${login_url}?next=${next}`;
       }
     </script>
-    <script type="text/javascript" src="{% static 'js/send-form.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/questions.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/room-tabs.js' %}"></script>
+    {% compress js %}
+      <script type="text/es6" src="{% static 'js/room.js' %}"></script>
+    {% endcompress %}
   {% endblock %}
 {% endif %}

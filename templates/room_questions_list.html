@@ -1,5 +1,5 @@
 {% extends "components/base.html" %}
-{% load staticfiles %}
+{% load staticfiles compress %}
 
 {% block navigation %}
 {% endblock navigation %}
@@ -36,6 +36,8 @@
 
 {% if not object.closed_date %}
   {% block websockets %}
-    <script type="text/javascript" src="{% static 'js/room-questions-list.js' %}"></script>
+    {% compress js %}
+      <script type="text/es6" src="{% static 'js/room-questions-list.js' %}"></script>
+    {% endcompress %}
   {% endblock %}
 {% endif %}

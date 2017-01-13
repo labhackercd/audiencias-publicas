@@ -1,5 +1,5 @@
 {% extends "components/base.html" %}
-{% load staticfiles %}
+{% load staticfiles compress %}
 
 {% block title %}Audiencias Públicas{% endblock %}
 
@@ -103,5 +103,7 @@
 {% endblock main %}
 
 {% block websockets %}
-  <script type="text/javascript" src="{% static 'js/home.js' %}"></script>
+  {% compress js %}
+    <script type="text/es6" src="{% static 'js/home.js' %}"></script>
+  {% endcompress %}
 {% endblock %}
