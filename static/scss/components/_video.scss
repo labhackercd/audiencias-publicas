@@ -1,21 +1,21 @@
-.currently-happening {
+.video {
   background-color: $secondary-color;
   height: 100%;
 }
 
-.currently-happening__video-wrapper {
+.video__iframe-wrapper {
   background-color: #000;
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-.currently-happening__video {
+.video__iframe {
   height: 253px;
   width: 450px;
 }
 
-.currently-happening__title {
+.video__title {
   color: #fff;
   padding: 1em 2em;
   text-transform: uppercase;

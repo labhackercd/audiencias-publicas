@@ -73,11 +73,11 @@
 
       <section class="section-right">
         <div class="section-right__top">
-          <div class="currently-happening">
-            <div class="currently-happening__video-wrapper">
-              <iframe class="currently-happening__video" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
+          <div class="video">
+            <div class="video__iframe-wrapper">
+              <iframe class="video__iframe" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
             </div>
-            <div class="currently-happening__title">
+            <div class="video__title">
               <h1 class="title__header">Agora na Câmara:</h1>
               <h2 class="title__subheader">
                 {% if not object.closed_date %}
