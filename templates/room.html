@@ -98,9 +98,16 @@
 
             <div class="chat__messages">
               <ul class="messages__list" id="chat">
-                {% for message in object.messages.all %}
-                {% include "includes/chat_message.html" with message=message %}
-                {% endfor %}
+                {% if object.messages.all %}
+                  {% for message in object.messages.all %}
+                    {% include "includes/chat_message.html" with message=message %}
+                  {% endfor %}
+                {% elif not object.closed_date %}
+                  <div class="messages__list--empty">
+                    <img src="{% static 'img/chat-bubble.svg' %}" data-fallback="{% static 'img/chat-bubble.png' %}">
+                    <p>Nenhuma mensagem foi enviada ainda. Seja o primeiro!</p>
+                  </div>
+                {% endif %}
               </ul>
             </div>
             <div class="chat__read-more">Há novas mensagens disponíveis abaixo</div>

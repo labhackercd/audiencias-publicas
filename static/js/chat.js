@@ -6,6 +6,7 @@
     $wrapper: $('.chat'),
     $messages: $('.chat__messages'),
     $messagesList: $('.messages__list'),
+    $messagesListEmpty: $('.messages__list--empty'),
     $readMore: $('.chat__read-more'),
     $form: $('#chatform'),
     $formInput: $('#message'),
@@ -41,6 +42,9 @@
   }
 
   function addMessage(message) {
+    const messagesListIsEmpty = elements.$messagesListEmpty.length;
+    if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
+
     if (message.data === 'closed') {
       sendFormAP(elements.$wrapper).closeForm();
     } else {

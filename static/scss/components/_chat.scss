@@ -66,6 +66,29 @@
       word-break: break-word;
     }
   }
+
+  .messages__list--empty {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 2em;
+
+    @include breakpoint(large down) {
+      flex-wrap: wrap;
+    }
+
+    p {
+      color: #D5D5D5;
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-left: 1em;
+
+      @include breakpoint(large down) {
+        margin: 1em 0 0;
+        text-align: center;
+      }
+    }
+  }
 }
 
 [class^="chat__read-more"] {
