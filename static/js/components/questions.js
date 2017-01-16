@@ -53,6 +53,7 @@ function questionsComponent(socket) {
 
     if (message.data === 'closed') {
       sendForm(elements.$wrapper).closeForm();
+      elements.$shareListOpenBtn.remove();
       elements.$voteBtn.remove();
       elements.$voteLabel.removeClass('hide');
       return;
