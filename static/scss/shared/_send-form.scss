@@ -19,11 +19,36 @@
     resize: none;
   }
 
-  .send-form__button {
+  .send-form__actions {
+    margin: 0 0 0 .5em;
+
+    @include breakpoint(large up) {
+      align-items: center;
+      display: flex;
+    }
+  }
+
+  .actions__character-counter {
+    color: #fff;
+    display: flex;
+    font-size: .8em;
+    font-weight: 700;
+
+    @include breakpoint(large up) {
+      align-items: center;
+      padding: 1em 1em 1em .5em;
+    }
+
+    .character-counter__max-length {
+      color: #09a67c;
+    }
+  }
+
+  .actions__button {
     background-color: #09a67c;
     border: 0;
     display: flex;
-    margin: 0 0 0 .5em;
+    margin: 0;
     padding: 1.3em .5em 1.3em 1em;
   }
 }

@@ -115,7 +115,7 @@ class Message(TimestampedMixin):
 class Question(TimestampedMixin):
     video = models.ForeignKey(Video, related_name='questions')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    question = models.TextField()
+    question = models.TextField(max_length='600')
     answer_time = models.IntegerField(null=True, blank=True)
 
     @property

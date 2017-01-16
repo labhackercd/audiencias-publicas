@@ -50,11 +50,18 @@
 
           {% if not object.closed_date and user.is_authenticated %}
             <form class="send-form--questions" id="questionform">
-              <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" autocomplete="off" required=""></textarea>
-              <button class="send-form__button button">
-                <span class="button__text">Enviar</span>
-                <i class="button__icon icon icon-caret-right"></i>
-              </button>
+              <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" maxlength="600" autocomplete="off" required=""></textarea>
+              <div class="send-form__actions">
+                <div class="actions__character-counter">
+                  <span class="character-counter__actual-length">0</span>
+                  /
+                  <span class="character-counter__max-length">600</span>
+                </div>
+                <button class="actions__button button">
+                  <span class="button__text">Enviar</span>
+                  <i class="button__icon icon icon-caret-right"></i>
+                </button>
+              </div>
             </form>
 
           {% elif not object.closed_date and not user.is_authenticated %}
@@ -115,10 +122,12 @@
             {% if not object.closed_date and user.is_authenticated %}
               <form class="send-form--chat" id="chatform">
                 <textarea class="send-form__input" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required=""></textarea>
-                <button class="send-form__button button" id="go">
-                  <span class="button__text">Enviar</span>
-                  <i class="button__icon icon icon-caret-right"></i>
-                </button>
+                <div class="send-form__actions">
+                  <button class="actions__button button" id="go">
+                    <span class="button__text">Enviar</span>
+                    <i class="button__icon icon icon-caret-right"></i>
+                  </button>
+                </div>
               </form>
 
             {% elif not object.closed_date and not user.is_authenticated %}

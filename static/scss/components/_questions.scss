@@ -364,7 +364,37 @@
     background-color: #133837;
 
     @include breakpoint(medium down) {
+      flex-direction: column;
+      height: 112px;
       left: 200vw;
+    }
+  }
+
+  .send-form__actions {
+    @include breakpoint(medium down) {
+      display: flex;
+      flex: 1;
+      margin: 0;
+      width: 100%;
+    }
+  }
+
+  .actions__character-counter {
+    @include breakpoint(medium down) {
+      align-items: center;
+      flex: .5 1 0;
+      justify-content: center;
+    }
+  }
+
+  .actions__button {
+    @include breakpoint(medium down) {
+      align-items: center;
+      background-color: #46c4fc;
+      flex: 1 1 0;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
     }
   }
 
