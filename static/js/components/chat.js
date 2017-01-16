@@ -71,14 +71,6 @@ function chatComponent(socket) {
       if (isScrolledToBottom()) hideReadMore();
     },
 
-    formInputKeyDown(event) {
-      if (event.which === 13) event.preventDefault();
-    },
-
-    formInputKeyUp(event) {
-      if (event.which === 13) elements.$form.trigger('submit');
-    },
-
     sendMessage(event) {
       event.preventDefault();
 
