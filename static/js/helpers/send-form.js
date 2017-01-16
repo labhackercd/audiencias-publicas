@@ -3,6 +3,7 @@ function sendFormHelper($wrapper) {
     $wrapper,
     $form: $wrapper.find('[class^="send-form--"]'),
     $formInput: $wrapper.find('.send-form__input'),
+    $formBtn: $wrapper.find('.actions__button'),
   };
 
   function createClosedFormEl() {
@@ -27,7 +28,7 @@ function sendFormHelper($wrapper) {
     },
 
     formInputKeyUp(event) {
-      if (event.which === 13) elements.$form.trigger('submit');
+      if (event.which === 13) elements.$formBtn.trigger('click');
     },
   };
 
