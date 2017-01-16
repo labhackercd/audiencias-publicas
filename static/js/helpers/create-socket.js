@@ -1,6 +1,6 @@
 import ReconnectingWebSocket from 'reconnectingwebsocket';
 
-function createSocket(name = 'unknown', path = '') {
+function createSocketHelper(name = 'unknown', path = '') {
   function setSocketPath() {
     const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
     let wsPath = `${wsScheme}://${window.location.host}${window.location.pathname}`;
@@ -21,4 +21,4 @@ function createSocket(name = 'unknown', path = '') {
   return { socket, close };
 }
 
-export default createSocket;
+export default createSocketHelper;

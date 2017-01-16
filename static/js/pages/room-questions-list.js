@@ -26,7 +26,7 @@
   }
 
   function socketInit() {
-    socket = createSocket('questions/stream/');
+    socket = createSocketHelper('questions/stream/');
 
     socket.onmessage = add;
     socket.onopen = () => console.log('Connected to room questions list socket'); // eslint-disable-line no-console

@@ -1,7 +1,7 @@
-import createSocket from '../helpers/create-socket';
+import createSocketHelper from '../helpers/create-socket';
 import previewVideosComponent from '../components/preview-videos';
 
-const previewVideosSocket = createSocket('preview videos', '');
+const previewVideosSocket = createSocketHelper('preview videos', '');
 
 previewVideosComponent(previewVideosSocket.socket);
 

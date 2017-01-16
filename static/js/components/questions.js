@@ -1,5 +1,5 @@
 /* global HANDLER, loginRedirect */
-import sendForm from '../helpers/send-form';
+import sendFormHelper from '../helpers/send-form';
 
 function questionsComponent(socket) {
   const elements = {
@@ -52,7 +52,7 @@ function questionsComponent(socket) {
     if (listIsEmpty) elements.$listEmpty.remove();
 
     if (message.data === 'closed') {
-      sendForm(elements.$wrapper).closeForm();
+      sendFormHelper(elements.$wrapper).closeForm();
       elements.$shareListOpenBtn.remove();
       elements.$voteBtn.remove();
       elements.$voteLabel.removeClass('hide');
@@ -84,7 +84,7 @@ function questionsComponent(socket) {
     });
   }
 
-  const sendFormInit = () => sendForm(elements.$wrapper);
+  const sendFormHelperInit = () => sendFormHelper(elements.$wrapper);
 
   const events = {
     vote() {
@@ -175,7 +175,7 @@ function questionsComponent(socket) {
 
   (function init() {
     mixItUpInit();
-    sendFormInit(); // defined in room.html
+    sendFormHelperInit(); // defined in room.html
     bindEventsHandlers.onPageLoad();
   }());
 }
