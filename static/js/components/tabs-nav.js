@@ -1,77 +1,60 @@
 function tabsNavComponent() {
   const elements = {
     $room: $('.room'),
+    $wrapper: $('.tabs-nav'),
     $itemMarker: $('.tabs-nav .list__item-marker'),
     $links: $('.tabs-nav__list .item__link'),
   };
 
-  const vars = {
-    tabs: {},
-    tabsCount: elements.$links.length,
-    activeTab: () => elements.$room.attr('data-tab'),
+  const tabs = {
+    count: elements.$links.length,
+    activeDataTabIndex: () => parseInt(elements.$room.attr('data-tab-index'), 10),
   };
 
-  const touchPosition = {
-    x: {
+  const touch = {
+    direction: 0,
+    positionX: {
       start: 0,
       end: 0,
     },
   };
 
-  function setTabsVars() {
-    elements.$links.each(function setTab(index) {
-      const dataTab = $(this).attr('data-tab');
-      vars.tabs[index] = dataTab;
-    });
-  }
-
-  function setDataTab(dataTab) {
-    elements.$itemMarker.attr('data-tab', dataTab);
-    elements.$room.attr('data-tab', dataTab);
+  function updateActiveTab(dataTabIndex) {
+    elements.$itemMarker.attr('data-tab-index', dataTabIndex);
+    elements.$room.attr('data-tab-index', dataTabIndex);
   }
 
   function setTouchPositionX(key, value) {
-    touchPosition.x[key] = value;
+    touch.positionX[key] = value;
   }
 
-  function getTabIndex() {
-    const activeTab = vars.activeTab();
-    let activeTabIndex = 0;
-
-    for (let index = 0; index < vars.tabsCount; index += 1) {
-      if (vars.tabs[index] === activeTab) {
-        activeTabIndex = index;
-      }
-    }
-
-    return activeTabIndex;
+  function resetTouchPositionX() {
+    touch.positionX.start = 0;
+    touch.positionX.end = 0;
   }
 
   const events = {
-    changeTab: (event) => {
-      const dataTab = event.target.dataset.tab;
-      setDataTab(dataTab);
-    },
+    changeTab: event => updateActiveTab(event.target.dataset.tabIndex),
 
-    touchStart: () => setTouchPositionX('start', event.touches[0].pageX),
-    touchMove: () => setTouchPositionX('end', event.touches[0].pageX),
+    touchStart: event => setTouchPositionX('start', event.touches[0].pageX),
+    touchMove: event => setTouchPositionX('end', event.touches[0].pageX),
     touchEnd: () => {
-      const touchMoved = touchPosition.x.end !== 0;
+      const touchMoved = touch.positionX.end !== 0;
       if (!touchMoved) return;
 
-      const touchMovedValue = touchPosition.x.start - touchPosition.x.end;
-      if (Math.abs(touchMovedValue) < 100) return;
+      const touchPositionXMoved = touch.positionX.start - touch.positionX.end;
+      const movedEnough = Math.abs(touchPositionXMoved) > 80;
 
-      const activeTabIndex = getTabIndex();
-      const swipeDirection = touchMovedValue > 0 ? 1 : -1;
+      if (!movedEnough) return;
 
-      if (activeTabIndex === 0 && swipeDirection === -1) return;
-      if (activeTabIndex === vars.tabsCount && swipeDirection === 1) return;
+      touch.direction = touchPositionXMoved > 0 ? 1 : -1;
 
-      const nextTabIndex = activeTabIndex + swipeDirection;
-      const nextTabDataTab = vars.tabs[nextTabIndex];
+      if (tabs.activeDataTabIndex() === 0 && touch.direction === -1) return;
+      if (tabs.activeDataTabIndex() === tabs.count && touch.direction === 1) return;
 
-      setDataTab(nextTabDataTab);
+      const newTabIndex = tabs.activeDataTabIndex() + touch.direction;
+      updateActiveTab(newTabIndex);
+      resetTouchPositionX();
     },
   };
 
@@ -83,7 +66,6 @@ function tabsNavComponent() {
   }
 
   (function init() {
-    setTabsVars();
     bindEventsHandlers();
   }());
 }

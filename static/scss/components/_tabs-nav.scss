@@ -27,11 +27,7 @@
     height: .3em;
     left: 0;
     position: absolute;
-    transition: $tab-transition;
     width: calc(100% / 3);
-
-    &[data-tab="chat"] { transform: translateX(100%); }
-    &[data-tab="questions"] { transform: translateX(200%); }
   }
 
   .item__link {
@@ -43,3 +39,14 @@
     justify-content: center;
   }
 }
+
+.room,
+.list__item-marker {
+  transition: $tab-transition;
+}
+
+.room[data-tab-index="1"] { transform: translateX(-100vw); }
+.room[data-tab-index="2"] { transform: translateX(-200vw); }
+
+.list__item-marker[data-tab-index="1"] { transform: translateX(100%); }
+.list__item-marker[data-tab-index="2"] { transform: translateX(200%); }
