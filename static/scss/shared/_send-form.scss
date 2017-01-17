@@ -47,7 +47,10 @@
   .actions__button {
     background-color: $color-primary-xlight;
     border: 0;
+    color: $color-white;
     display: flex;
+    font-size: .9em;
+    font-weight: 600;
     margin: 0;
     padding: 1.3em .5em 1.3em 1em;
   }
