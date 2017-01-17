@@ -1,6 +1,6 @@
 .navigation {
   align-items: center;
-  background-color: $primary-color;
+  background-color: $color-primary;
   box-shadow: 0 3px 6px $color-shadow-16, 0 1px 4px $color-shadow-23;
   display: flex;
   height: 4em;
@@ -50,7 +50,7 @@
     padding: .75em;
 
     &:hover {
-      background-color: darken($primary-color, 3%);
+      background-color: darken($color-primary, 3%);
     }
   }
 

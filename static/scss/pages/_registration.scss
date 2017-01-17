@@ -56,7 +56,7 @@
   text-transform: uppercase;
 
   &::after {
-    background-color: #11496c;
+    background-color: $color-secondary;
     bottom: 0;
     content: '';
     height: .2em;

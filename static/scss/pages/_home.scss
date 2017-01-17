@@ -1,6 +1,6 @@
 .home {
   .section-top {
-    background: linear-gradient(45deg, $color-secondary 0%, $color-primary 100%);
+    background: linear-gradient(45deg, $color-primary-xlight 0%, $color-primary 100%);
   }
 
   .section-bottom {
@@ -14,7 +14,7 @@
 
   .preview--live-videos {
     .preview__floating-header {
-      background-color: $color-secondary;
+      background-color: $color-primary-xlight;
     }
 
     .header__icon {
@@ -24,7 +24,7 @@
 
   .preview--closed-videos {
     .preview__floating-header {
-      background-color: #11496c;
+      background-color: $color-secondary;
     }
 
     .header__icon {

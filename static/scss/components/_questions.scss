@@ -1,5 +1,5 @@
 .questions {
-  background-color: $primary-color;
+  background-color: $color-primary;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -111,7 +111,7 @@
   }
 
   .vote-block__total-votes {
-    color: $color-primary-xlight;
+    color: $color-primary-xxlight;
     font-size: 1.2em;
     font-weight: 700;
     margin-bottom: .5em;
@@ -129,12 +129,12 @@
     }
 
     &.disabled {
-      color: $color-primary-xlight;
+      color: $color-primary-xxlight;
     }
   }
 
   .vote-block__upvote-button {
-    border: 1px solid $color-primary-xlight;
+    border: 1px solid $color-primary-xxlight;
     border-radius: 3em;
     color: $color-white;
     display: inline-flex;
@@ -148,7 +148,7 @@
     width: 100%;
 
     @include breakpoint(medium down) {
-      background-color: $color-primary-xlight;
+      background-color: $color-primary-xxlight;
       border: 0;
       border-radius: 0;
       flex: 1 1 0;
@@ -162,8 +162,8 @@
 
       &:not(.voted):hover,
       &:not(.voted):focus {
-        background-color: $color-primary-xlight;
-        border-color: $color-primary-xlight;
+        background-color: $color-primary-xxlight;
+        border-color: $color-primary-xxlight;
       }
 
       &.voted {
@@ -182,19 +182,19 @@
     }
 
     &.disabled {
-      border-color: #999;
-      color: #999;
+      border-color: $color-gray-60;
+      color: $color-gray-60;
       cursor: default;
 
       @include breakpoint(medium down) {
         background-color: $color-gray-45;
-        color: #cccccc;
+        color: $color-gray-80;
       }
     }
   }
 
   .vote-block__vote-label {
-    color: $color-primary-xlight;
+    color: $color-primary-xxlight;
     font-weight: 700;
   }
 
@@ -216,7 +216,7 @@
 
   .question-block__share-button {
     @include transition-default(color);
-    color: #666;
+    color: $color-gray-40;
     cursor: pointer;
     padding: 1em;
     position: absolute;
@@ -224,7 +224,7 @@
     top: 0;
 
     &:hover {
-      color: #000;
+      color: $color-black;
     }
   }
 
@@ -283,7 +283,7 @@
 
     .share-list__close {
       align-items: center;
-      background-color: #8c8c8c;
+      background-color: $color-gray-55;
       color: $color-white;
       cursor: pointer;
       display: flex;
@@ -299,7 +299,7 @@
 
   .question-block__answered {
     @include transition-default(all);
-    border: 1px solid $color-primary-xlight;
+    border: 1px solid $color-primary-xxlight;
     border-radius: 2em;
     display: inline-flex;
     justify-content: center;
@@ -307,7 +307,7 @@
     padding: .5em 1em;
 
     &:hover {
-      background-color: $color-primary-xlight;
+      background-color: $color-primary-xxlight;
       color: $color-white;
 
       .answered__icon,
@@ -322,7 +322,7 @@
 
     .answered__time {
       @include transition-default(color);
-      color: $color-primary-xlight;
+      color: $color-primary-xxlight;
       font-size: .9em;
       font-weight: 600;
       margin: 0 .3em;
@@ -330,7 +330,7 @@
 
     .answered__icon {
       @include transition-default(color);
-      color: $color-primary-xlight;
+      color: $color-primary-xxlight;
     }
   }
 }
@@ -390,7 +390,7 @@
   .actions__button {
     @include breakpoint(medium down) {
       align-items: center;
-      background-color: #46c4fc;
+      background-color: $color-accent-secondary;
       flex: 1 1 0;
       justify-content: center;
       margin: 0;

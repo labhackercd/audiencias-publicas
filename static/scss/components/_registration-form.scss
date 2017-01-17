@@ -34,7 +34,7 @@
     width: 100%;
 
     &:hover {
-      background-color: darken($primary-color, 1%);
+      background-color: darken($color-primary, 1%);
     }
   }
 
@@ -55,7 +55,7 @@
     }
 
     a {
-      color: #11496c;
+      color: $color-secondary;
       font-weight: 700;
     }
   }

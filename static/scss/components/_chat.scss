@@ -12,7 +12,7 @@
 }
 
 .chat__floating-header {
-  background-color: $secondary-color;
+  background-color: $color-primary-xlight;
   margin: 0 1em;
 
   @include breakpoint(medium down) {
@@ -94,7 +94,7 @@
 [class^="chat__read-more"] {
   @include transition-default(transform);
   align-items: center;
-  background-color: rgba($color-primary-xlight, .85);
+  background-color: rgba($color-primary-xxlight, .85);
   color: $color-white;
   cursor: pointer;
   display: flex;
