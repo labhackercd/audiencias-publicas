@@ -21,6 +21,7 @@
 
 // Pages
 @import 'pages/home';
+@import 'pages/registration';
 @import 'pages/room-questions-list';
 @import 'pages/room';
 @import 'pages/video-list';
@@ -31,13 +32,11 @@
 @import 'components/preview';
 @import 'components/navigation';
 @import 'components/footer';
-@import 'components/sections';
-@import 'components/forms';
-@import 'components/buttons';
 @import 'components/calendar-table';
 @import 'components/chat';
 @import 'components/questions';
 @import 'components/video';
+@import 'components/registration-form';
 
 @import 'overrides.olark';
 @import 'trumps.hide-show';

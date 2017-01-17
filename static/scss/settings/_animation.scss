@@ -1,6 +1,8 @@
 /// Google swift out cubic-bezier pattern for transitions and animations
 $swift-out: cubic-bezier(.55, 0, .1, 1);
+
 $tab-transition: transform .2s linear;
+$hover-transition: background-color .3s $swift-out, color .3s $swift-out;
 
 @keyframes blink {
   0% {opacity: 1;}
