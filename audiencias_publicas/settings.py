@@ -54,6 +54,7 @@ INSTALLED_APPS = (
 
     'djangobower',
     'compressor',
+    'compressor_toolkit',
     'django_q',
     'social_django',
     'channels',
@@ -172,8 +173,12 @@ BOWER_INSTALLED_APPS = [
 BOWER_PATH = os.path.join(BASE_DIR, 'node_modules/.bin/bower')
 BROWSERIFY = os.path.join(BASE_DIR, 'node_modules/.bin/browserify')
 
+COMPRESS_NODE_MODULES = os.path.join(BASE_DIR, 'node_modules')
+COMPRESS_NODE_SASS_BIN = os.path.join(BASE_DIR, 'node_modules/.bin/node-sass')
+COMPRESS_POSTCSS_BIN = os.path.join(BASE_DIR, 'node_modules/.bin/postcss')
+
 COMPRESS_PRECOMPILERS = [
-    ('text/x-scss', 'django_libsass.SassCompiler'),
+    ('text/x-scss', 'compressor_toolkit.precompilers.SCSSCompiler'),
     ('text/es6', BROWSERIFY + ' {infile} -t babelify --outfile {outfile}')
 ]
 
