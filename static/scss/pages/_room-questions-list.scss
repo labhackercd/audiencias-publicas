@@ -17,7 +17,7 @@
 
 .room-questions__title {
   align-items: center;
-  color: #fff;
+  color: $color-white;
   display: flex;
   flex-shrink: 0;
   font-size: 1.4em;
@@ -26,7 +26,7 @@
   text-transform: uppercase;
 
   &::after {
-    background-color: #fbc707;
+    background-color: $color-accent;
     content: '';
     display: flex;
     flex: 1;
@@ -41,12 +41,12 @@
   margin-bottom: 0;
 
   .video-info__icon {
-    color: #f33;
+    color: $color-live-blink;
     font-size: .7em;
   }
 
   .video-info__text {
-    color: #fff;
+    color: $color-white;
     text-transform: uppercase;
   }
 }
@@ -74,8 +74,8 @@
 
   .item__vote-block {
     align-items: center;
-    background-color: #09a67c;
-    color: #fff;
+    background-color: $color-primary-xlight;
+    color: $color-white;
     display: flex;
     flex-basis: 6em;
     flex-direction: column;
@@ -92,7 +92,7 @@
   }
 
   .item__question-block {
-    background-color: #fff;
+    background-color: $color-white;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -106,7 +106,7 @@
 }
 
 .room-questions__empty {
-  color: #235744;
+  color: $color-secondary;
   font-size: 1.5em;
   font-weight: 600;
   margin-top: 1em;

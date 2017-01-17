@@ -1,6 +1,6 @@
 [class^="preview--"] {
-  background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+  background-color: $color-white;
+  box-shadow: 0 1px 2px $color-shadow-1;
   margin: 2em auto;
   max-width: 75em;
   padding: 0 1em;
@@ -36,7 +36,7 @@
   }
 
   .video__thumbnail {
-    background: #525252;
+    background: $color-gray-32;
     height: 116px;
     width: 208px;
   }
@@ -51,7 +51,7 @@
     }
 
     .title__link {
-      color: #3798c8;
+      color: $color-link;
 
       &:hover {
         text-decoration: underline;
@@ -61,7 +61,7 @@
 }
 
 .preview__show-all {
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid $color-gray-80;
   display: block;
   margin: 0 1em;
   padding: 1em 3em;

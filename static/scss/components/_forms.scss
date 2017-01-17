@@ -1,20 +1,21 @@
 .form {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 2em;
   justify-content: center;
+  margin-bottom: 2em;
 
   &__input-container {
-    position: relative;
     overflow: hidden;
+    position: relative;
     width: 100%;
   }
 
   &__input-wrapper {
-    margin: 0em 0.5em 1em;
+    margin: 0 .5em 1em;
 
     &--medium {
       max-width: 17em;
+
       @include breakpoint(small only) {
         max-width: initial;
       }
@@ -26,6 +27,7 @@
 
     &--small {
       max-width: 14em;
+
       @include breakpoint(small only) {
         max-width: initial;
       }
@@ -33,6 +35,7 @@
 
     &--micro {
       max-width: 10em;
+
       @include breakpoint(small only) {
         max-width: initial;
       }
@@ -45,7 +48,6 @@
 
   &__input {
     width: inherit;
-
     @include transition-default(all);
 
     &--date {
@@ -53,7 +55,7 @@
     }
 
     &:invalid {
-      color: #a9a9a9;
+      color: $color-gray-66;
     }
 
     &:focus {
@@ -67,38 +69,38 @@
   }
 
   &__error {
-    position: absolute;
-    display: flex;
-    visibility: hidden;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    top: 0;
-    left: 0;
-    height: 100%;
-    margin: 0;
-    padding: 0 0.5em;
     background-color: scale-color($alert-color, $lightness: 20%);
-    color: white;
-    transform: translate(0,-100%);
+    color: $color-white;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    left: 0;
+    margin: 0;
+    padding: 0 .5em;
+    position: absolute;
+    top: 0;
+    transform: translate(0, -100%);
+    visibility: hidden;
+    width: 100%;
 
     &.is-visible {
+      @include transition-default(transform);
       display: flex !important;
       visibility: visible;
       transform: translateY(0);
-      @include transition-default(transform);
     }
 
     .form__input-wrapper:hover &.is-visible {
-      transform: translate(-100%,0);
+      transform: translate(-100%, 0);
     }
     .form__input:focus ~ &.is-visible {
-      transform: translate(-100%,0);
+      transform: translate(-100%, 0);
     }
   }
 
   &__error-message {
-    font-size: 0.62em;
+    font-size: .62em;
   }
 
   &__error-icon {
@@ -107,7 +109,7 @@
 
 
   &__select-option {
-    color: #0a0a0a;
+    color: $color-gray-3;
   }
 
   &__form-wrapper {
@@ -116,23 +118,23 @@
 
 
     &.inactive {
+      opacity: .1;
       order: 1;
-      opacity: 0.1;
       transform: translateX(120%);
-      transition: transform 0s 0s $swift-out, opacity 0.5s 0s ease;
+      transition: transform 0s 0s $swift-out, opacity .5s 0s ease;
     }
 
     &.active {
-      order: 0;
       opacity: 1;
+      order: 0;
       transform: translateX(0);
-      transition: transform 0.5s 0.2s $swift-out, opacity 0.5s 0.4s ease;
+      transition: transform .5s .2s $swift-out, opacity .5s .4s ease;
     }
 
     &.transition {
-      opacity: 0.1;
+      opacity: .1;
       transform: translateX(-120%);
-      transition: transform 0.5s 0s $swift-out, opacity 0.5s 0s ease;
+      transition: transform .5s 0s $swift-out, opacity .5s 0s ease;
     }
 
   }

@@ -4,7 +4,7 @@
 <g id="Canvas" transform="translate(187 523)" figma:type="canvas">
 <g id="chat-bubble" style="mix-blend-mode:normal;" figma:type="frame">
 <g id="Ellipse" style="mix-blend-mode:normal;" figma:type="ellipse">
-<use xlink:href="#path0_fill" transform="translate(-186.022 -523)" fill="#D5D5D5" style="mix-blend-mode:normal;"/>
+<use xlink:href="#path0_fill" transform="translate(-186.022 -523)" fill="#d6d6d6" style="mix-blend-mode:normal;"/>
 </g>
 <g id="chat" style="mix-blend-mode:normal;" figma:type="frame">
 <g id="Group" style="mix-blend-mode:normal;" figma:type="frame">

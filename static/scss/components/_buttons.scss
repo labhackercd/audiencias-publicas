@@ -2,89 +2,92 @@
   font-weight: 600;
 
   &--facebook {
-    background-color: $facebook-color;
+    background-color: $color-facebook;
 
-    &:hover, & > .button--social__icon {
-      background-color: darken($facebook-color, 5%);
+    &:hover,
+    & > .button--social__icon {
+      background-color: darken($color-facebook, 5%);
     }
   }
 
   &--google-plus {
-    background-color: $google-color;
+    background-color: $color-google;
 
-    &:hover, & > .button--social__icon {
-      background-color: darken($google-color, 5%);
+    &:hover,
+    & > .button--social__icon {
+      background-color: darken($color-google, 5%);
     }
   }
 
   &--social {
-    position: relative;
     border: 0;
+    position: relative;
 
-    & > &__icon, & > &__label {
+    & > &__icon,
+    & > &__label {
       display: inline-block;
       vertical-align: middle;
     }
 
     & > &__icon {
-      position: absolute;
+      font-size: 1.2em;
+      height: 100%;
       left: 0;
+      line-height: 2.8em;
+      position: absolute;
       top: 0;
       width: 2.5em;
-      height: 100%;
-      font-size: 1.2em;
-      line-height: 2.8em;
     }
 
     &__label {
-      width: 100%;
-      text-align: center;
       padding-left: 2.8em;
+      text-align: center;
+      width: 100%;
     }
   }
 
   &--profile {
+    margin: 0 .5em;
     width: 100%;
-    margin: 0 0.5em;
   }
 
   &--type-override {
-    width: 0.1px;
-    height: 0.1px;
+    height: .1px;
+    margin: 0;
     opacity: 0;
     overflow: hidden;
-    position: absolute;
-    z-index: -1;
     padding: 0;
-    margin: 0;
+    position: absolute;
+    width: .1px;
+    z-index: -1;
   }
 
   &--label-override {
-    word-break: break-all;
-    vertical-align: top !important;
     margin: 0 0 1em 0 !important;
+    vertical-align: top !important;
+    word-break: break-all;
     // Damn you Foundation for making me use !important :(
   }
 
 }
 
 .show-all {
-  text-align: center;
+  border-top: 1px solid $color-gray-80;
   padding: 1em 0;
-  border-top: 1px solid #cccccc;
+  text-align: center;
 
   &--video-list {
     margin: 0 3em;
   }
 
   &__button {
+    color: $color-gray-40;
+    font-size: .9em;
     font-weight: 600;
-    font-size: 0.9em;
-    color: hsla(0,0%,40%,1);
     text-transform: uppercase;
 
     &:hover {
-      color: black;
+      color: $color-black;
     }
   }
 }

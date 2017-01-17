@@ -4,7 +4,7 @@
 }
 
 .video__iframe-wrapper {
-  background-color: #000;
+  background-color: $color-black;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -16,7 +16,7 @@
 }
 
 .video__title {
-  color: #fff;
+  color: $color-white;
   padding: 1em 2em;
   text-transform: uppercase;
   width: 100%;
@@ -35,7 +35,7 @@
     margin-bottom: 0;
 
     .subheader__icon {
-      color: #f33;
+      color: $color-live-blink;
       font-size: .7em;
     }
   }

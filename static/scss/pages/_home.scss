@@ -1,10 +1,10 @@
 .home {
   .section-top {
-    background: linear-gradient(45deg, $secondary-color 0%, $primary-color 100%);
+    background: linear-gradient(45deg, $color-secondary 0%, $color-primary 100%);
   }
 
   .section-bottom {
-    background-color: #e6e6e6;
+    background-color: $color-gray-90;
     padding: 1em 2em;
 
     @include breakpoint(medium down) {
@@ -14,11 +14,11 @@
 
   .preview--live-videos {
     .preview__floating-header {
-      background-color: $secondary-color;
+      background-color: $color-secondary;
     }
 
     .header__icon {
-      color: #f33;
+      color: $color-live-blink;
     }
   }
 
@@ -38,7 +38,7 @@
     padding: 0;
 
     .preview__floating-header {
-      background-color: #092b2a;
+      background-color: $color-primary;
       margin: 0 1em;
     }
 

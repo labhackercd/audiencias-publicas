@@ -15,7 +15,7 @@
 
 .questions__title {
   align-items: center;
-  color: #fff;
+  color: $color-white;
   display: flex;
   flex-shrink: 0;
   font-size: 1.4em;
@@ -26,7 +26,7 @@
   @include breakpoint(medium down) { padding: 16px 16px 0; }
 
   &::after {
-    background-color: #fbc707;
+    background-color: $color-accent;
     content: '';
     display: flex;
     flex: 1;
@@ -36,7 +36,7 @@
 }
 
 .questions__text {
-  color: #fff;
+  color: $color-white;
   flex-shrink: 0;
   font-weight: 400;
 
@@ -71,7 +71,7 @@
     }
 
     &::before {
-      background-color: #fff;
+      background-color: $color-white;
       border-radius: 5px;
       content: '';
       height: calc(100% + 1em);
@@ -104,14 +104,14 @@
     z-index: 1;
 
     @include breakpoint(medium down) {
-      background-color: #133837;
+      background-color: $color-primary-light;
       flex-basis: 2em;
       flex-direction: row;
     }
   }
 
   .vote-block__total-votes {
-    color: #09a67c;
+    color: $color-primary-xlight;
     font-size: 1.2em;
     font-weight: 700;
     margin-bottom: .5em;
@@ -125,18 +125,18 @@
 
     &.voted,
     &.voted:not(.disabled) + .vote-block__vote-label {
-      color: #fbc707;
+      color: $color-accent;
     }
 
     &.disabled {
-      color: #09a67c;
+      color: $color-primary-xlight;
     }
   }
 
   .vote-block__upvote-button {
-    border: 1px solid #09a67c;
+    border: 1px solid $color-primary-xlight;
     border-radius: 3em;
-    color: #fff;
+    color: $color-white;
     display: inline-flex;
     font-size: .7em;
     font-weight: 400;
@@ -148,7 +148,7 @@
     width: 100%;
 
     @include breakpoint(medium down) {
-      background-color: #09a67c;
+      background-color: $color-primary-xlight;
       border: 0;
       border-radius: 0;
       flex: 1 1 0;
@@ -162,21 +162,21 @@
 
       &:not(.voted):hover,
       &:not(.voted):focus {
-        background-color: #09a67c;
-        border-color: #09a67c;
+        background-color: $color-primary-xlight;
+        border-color: $color-primary-xlight;
       }
 
       &.voted {
-        border-color: #fbc707;
+        border-color: $color-accent;
 
         @include breakpoint(medium down) {
-          background-color: #fbc707;
-          color: #133837;
+          background-color: $color-accent;
+          color: $color-primary-light;
         }
 
         &:hover {
-          background-color: #fbc707;
-          color: #133837;
+          background-color: $color-accent;
+          color: $color-primary-light;
         }
       }
     }
@@ -187,19 +187,19 @@
       cursor: default;
 
       @include breakpoint(medium down) {
-        background-color: #737373;
+        background-color: $color-gray-45;
         color: #cccccc;
       }
     }
   }
 
   .vote-block__vote-label {
-    color: #09a67c;
+    color: $color-primary-xlight;
     font-weight: 700;
   }
 
   .item__question-block {
-    background-color: #fff;
+    background-color: $color-white;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -231,7 +231,7 @@
   [class^="question-block__share-list"] {
     @include transition-default(transform);
     align-items: center;
-    background-color: #fff;
+    background-color: $color-white;
     display: flex;
     height: 3em;
     justify-content: space-around;
@@ -253,7 +253,7 @@
 
       .item__link {
         align-items: center;
-        color: #fff;
+        color: $color-white;
         display: flex;
         flex: 1;
         font-size: 1.4em;
@@ -261,30 +261,30 @@
         justify-content: center;
 
         &:hover {
-          color: #fff;
+          color: $color-white;
         }
       }
     }
 
     .share-list__item--facebook {
-      background-color: $facebook-color;
-      &:hover { background-color: darken($facebook-color, 10%); }
+      background-color: $color-facebook;
+      &:hover { background-color: darken($color-facebook, 10%); }
     }
 
     .share-list__item--twitter {
-      background-color: $twitter-color;
-      &:hover { background-color: darken($twitter-color, 10%); }
+      background-color: $color-twitter;
+      &:hover { background-color: darken($color-twitter, 10%); }
     }
 
     .share-list__item--whatsapp {
-      background-color: $whatsapp-color;
-      &:hover { background-color: darken($whatsapp-color, 10%); }
+      background-color: $color-whatsapp;
+      &:hover { background-color: darken($color-whatsapp, 10%); }
     }
 
     .share-list__close {
       align-items: center;
       background-color: #8c8c8c;
-      color: #fff;
+      color: $color-white;
       cursor: pointer;
       display: flex;
       flex-basis: 3em;
@@ -299,7 +299,7 @@
 
   .question-block__answered {
     @include transition-default(all);
-    border: 1px solid #09a67c;
+    border: 1px solid $color-primary-xlight;
     border-radius: 2em;
     display: inline-flex;
     justify-content: center;
@@ -307,12 +307,12 @@
     padding: .5em 1em;
 
     &:hover {
-      background-color: #09a67c;
-      color: #fff;
+      background-color: $color-primary-xlight;
+      color: $color-white;
 
       .answered__icon,
       .answered__time {
-        color: #fff;
+        color: $color-white;
       }
     }
 
@@ -322,7 +322,7 @@
 
     .answered__time {
       @include transition-default(color);
-      color: #09a67c;
+      color: $color-primary-xlight;
       font-size: .9em;
       font-weight: 600;
       margin: 0 .3em;
@@ -330,7 +330,7 @@
 
     .answered__icon {
       @include transition-default(color);
-      color: #09a67c;
+      color: $color-primary-xlight;
     }
   }
 }
@@ -361,7 +361,7 @@
 
 .questions {
   .send-form--questions {
-    background-color: #133837;
+    background-color: $color-primary-light;
 
     @include breakpoint(medium down) {
       flex-direction: column;
@@ -400,7 +400,7 @@
 
   .send-form--closed,
   .send-form--unauthenticated {
-    background-color: #133837;
-    color: #fff;
+    background-color: $color-primary-light;
+    color: $color-white;
   }
 }

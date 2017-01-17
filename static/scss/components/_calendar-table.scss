@@ -35,9 +35,9 @@
   }
 
   &__weekday {
-    background-color: #2974a3;
+    background-color: $color-calendar-weekday-default;
     border-radius: 1em;
-    color: #fff;
+    color: $color-white;
     font-size: .5em;
     font-weight: 600;
     min-width: 6.5em;
@@ -46,21 +46,21 @@
     text-transform: uppercase;
 
     &--today {
-      background-color: #d75142;
+      background-color: $color-calendar-weekday-today;
     }
 
     &--tomorrow {
-      background-color: #eea32b;
+      background-color: $color-calendar-weekday-tomorrow;
     }
   }
 
   &__day {
-    color: #404040;
+    color: $color-gray-25;
     font-weight: 700;
   }
 
   &__month {
-    color: #404040;
+    color: $color-gray-25;
     font-size: .8em;
     font-weight: 400;
   }

@@ -1,5 +1,5 @@
 .tabs-nav {
-  background-color: #133837;
+  background-color: $color-primary-light;
   height: 3em;
   width: 100vw;
 
@@ -22,7 +22,7 @@
   }
 
   .list__item-marker {
-    background-color: #fbc707;
+    background-color: $color-accent;
     bottom: 0;
     height: .3em;
     left: 0;
@@ -32,7 +32,7 @@
 
   .item__link {
     align-items: center;
-    color: #fff;
+    color: $color-white;
     display: flex;
     flex: 1;
     font-weight: 600;

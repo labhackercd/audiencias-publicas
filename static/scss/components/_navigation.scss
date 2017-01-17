@@ -1,7 +1,7 @@
 .navigation {
   align-items: center;
   background-color: $primary-color;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 1px 4px rgba(0, 0, 0, .23);
+  box-shadow: 0 3px 6px $color-shadow-16, 0 1px 4px $color-shadow-23;
   display: flex;
   height: 4em;
   position: fixed;
@@ -43,14 +43,14 @@
   .navigation__auth {
     @include transition-default(background-color);
     align-items: center;
-    color: #fff;
+    color: $color-white;
     display: flex;
     font-weight: 600;
     height: 100%;
     padding: .75em;
 
     &:hover {
-      background-color: darken(#092b2a, 3%);
+      background-color: darken($primary-color, 3%);
     }
   }
 

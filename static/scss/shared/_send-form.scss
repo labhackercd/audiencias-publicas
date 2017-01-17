@@ -1,6 +1,6 @@
 [class^="send-form--"] {
   align-items: center;
-  background-color: #eaeaea;
+  background-color: $color-gray-92;
   display: flex;
   flex-shrink: 0;
   height: 80px;
@@ -29,7 +29,7 @@
   }
 
   .actions__character-counter {
-    color: #fff;
+    color: $color-white;
     display: flex;
     font-size: .8em;
     font-weight: 700;
@@ -40,12 +40,12 @@
     }
 
     .character-counter__max-length {
-      color: #09a67c;
+      color: $color-primary-xlight;
     }
   }
 
   .actions__button {
-    background-color: #09a67c;
+    background-color: $color-primary-xlight;
     border: 0;
     display: flex;
     margin: 0;
@@ -64,6 +64,6 @@
   }
 
   a {
-    color: #09a67c;
+    color: $color-primary-xlight;
   }
 }

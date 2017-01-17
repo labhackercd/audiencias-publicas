@@ -1,5 +1,5 @@
 .chat {
-  background-color: #fff;
+  background-color: $color-white;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -48,7 +48,7 @@
     padding: .5em 1em;
 
     &:nth-child(odd) {
-      background-color: #fafafa;
+      background-color: $color-gray-98;
     }
 
     .item__username {
@@ -60,7 +60,7 @@
     }
 
     .item__timestamp {
-      color: #737373;
+      color: $color-gray-45;
       font-size: .7em;
       font-weight: 400;
       word-break: break-word;
@@ -78,7 +78,7 @@
     }
 
     p {
-      color: #D5D5D5;
+      color: $color-gray-84;
       font-size: 1.5em;
       font-weight: 600;
       margin-left: 1em;
@@ -94,8 +94,8 @@
 [class^="chat__read-more"] {
   @include transition-default(transform);
   align-items: center;
-  background-color: rgba(9, 166, 124, .85);
-  color: #fff;
+  background-color: rgba($color-primary-xlight, .85);
+  color: $color-white;
   cursor: pointer;
   display: flex;
   font-size: .9em;
