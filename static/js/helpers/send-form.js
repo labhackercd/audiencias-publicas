@@ -22,6 +22,11 @@ function sendFormHelper($wrapper) {
     elements.$form.remove();
   }
 
+  function formIsBlank() {
+    const isBlank = elements.$formInput.val() ? 0 : 1;
+    return isBlank;
+  }
+
   const events = {
     formInputKeyDown(event) {
       if (event.which === 13) event.preventDefault();
@@ -37,7 +42,10 @@ function sendFormHelper($wrapper) {
     elements.$formInput.on('keyup', events.formInputKeyUp);
   }());
 
-  return { closeForm };
+  return {
+    close: closeForm,
+    isBlank: formIsBlank,
+  };
 }
 
 export default sendFormHelper;

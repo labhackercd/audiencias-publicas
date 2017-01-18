@@ -21,6 +21,8 @@ function questionsComponent(socket) {
     wrapperScrollHeight: () => elements.$wrapper[0].scrollHeight,
   };
 
+  let sendForm = {};
+
   function animateToBottom() {
     elements.$list.animate({ scrollTop: vars.listScrollHeight() }, 600);
     elements.$wrapper.animate({ scrollTop: vars.wrapperScrollHeight() }, 600);
@@ -52,7 +54,7 @@ function questionsComponent(socket) {
     if (listIsEmpty) elements.$listEmpty.remove();
 
     if (message.data === 'closed') {
-      sendFormHelper(elements.$wrapper).closeForm();
+      sendForm.close();
       elements.$shareListOpenBtn.remove();
       elements.$voteBtn.remove();
       elements.$voteLabel.removeClass('hide');
@@ -84,7 +86,9 @@ function questionsComponent(socket) {
     });
   }
 
-  const sendFormHelperInit = () => sendFormHelper(elements.$wrapper);
+  function sendFormHelperInit() {
+    sendForm = sendFormHelper(elements.$wrapper);
+  }
 
   const events = {
     vote() {
@@ -136,8 +140,10 @@ function questionsComponent(socket) {
       }
     },
 
-    submit(event) {
+    sendQuestion(event) {
       event.preventDefault();
+
+      if (sendForm.isBlank()) return false;
 
       socket.send(JSON.stringify({
         handler: HANDLER,
@@ -147,6 +153,8 @@ function questionsComponent(socket) {
 
       elements.$formInput.val('').focus();
       animateToBottom();
+
+      return true;
     },
   };
 
@@ -157,7 +165,7 @@ function questionsComponent(socket) {
       elements.$shareListOpenBtn.on('click', events.openShareList);
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.share);
-      elements.$form.on('submit', events.submit);
+      elements.$form.on('submit', events.sendQuestion);
     },
 
     onAdd($question) {

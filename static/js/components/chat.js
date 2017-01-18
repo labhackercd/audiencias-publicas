@@ -19,6 +19,8 @@ function chatComponent(socket) {
     messagesListHeight: () => elements.$messagesList[0].offsetHeight,
   };
 
+  let sendForm = {};
+
   function isScrolledToBottom() {
     return vars.messagesScrollTop() === (vars.messagesScrollHeight() - vars.messagesHeight());
   }
@@ -46,7 +48,7 @@ function chatComponent(socket) {
     if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
     if (message.data === 'closed') {
-      sendFormHelper(elements.$wrapper).closeForm();
+      sendForm.close();
     } else {
       const data = JSON.parse(message.data);
 
@@ -60,7 +62,9 @@ function chatComponent(socket) {
     }
   }
 
-  const sendFormHelperInit = () => sendFormHelper(elements.$wrapper);
+  function sendFormHelperInit() {
+    sendForm = sendFormHelper(elements.$wrapper);
+  }
 
   const events = {
     readMoreClick() {
@@ -74,6 +78,8 @@ function chatComponent(socket) {
     sendMessage(event) {
       event.preventDefault();
 
+      if (sendForm.isBlank()) return false;
+
       socket.send(JSON.stringify({
         handler: HANDLER, // defined in room.html
         message: elements.$formInput.val(),
@@ -81,6 +87,8 @@ function chatComponent(socket) {
 
       elements.$formInput.val('').focus();
       scrollToBottom();
+
+      return true;
     },
   };
 
