@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 
   @include breakpoint(medium down) {
     overflow-y: auto;
@@ -373,6 +374,30 @@
       text-align: center;
     }
   }
+}
+
+[class^="questions__read-more"] {
+  @include transition-default(transform);
+  align-items: center;
+  background-color: rgba($color-primary-xxlight, .85);
+  bottom: calc(2.5em + 50px);
+  color: $color-white;
+  cursor: pointer;
+  display: flex;
+  font-weight: 600;
+  height: 30px;
+  justify-content: center;
+  position: absolute;
+  width: calc(100% - 10em);
+  z-index: 1;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.questions__read-more--visible {
+  transform: translateY(-100%);
 }
 
 .questions {

@@ -12,12 +12,15 @@ function questionsComponent(socket) {
     $shareListOpenBtn: $('.question-block__share-button'),
     $shareListCloseBtn: $('.share-list__close'),
     $shareListItemLink: $('.question-block__share-list .item__link'),
+    $readMore: $('.questions__read-more'),
     $form: $('#questionform'),
     $formInput: $('#question'),
   };
 
   const vars = {
+    listHeight: () => elements.$list[0].offsetHeight,
     listScrollHeight: () => elements.$list[0].scrollHeight,
+    listScrollTop: () => elements.$list[0].scrollTop,
     wrapperScrollHeight: () => elements.$wrapper[0].scrollHeight,
   };
 
@@ -26,6 +29,20 @@ function questionsComponent(socket) {
   function animateToBottom() {
     elements.$list.animate({ scrollTop: vars.listScrollHeight() }, 600);
     elements.$wrapper.animate({ scrollTop: vars.wrapperScrollHeight() }, 600);
+  }
+
+  function isScrolledToBottom() {
+    return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
+  }
+
+  function showReadMore() {
+    elements.$readMore.removeClass('questions__read-more');
+    elements.$readMore.addClass('questions__read-more--visible');
+  }
+
+  function hideReadMore() {
+    elements.$readMore.removeClass('questions__read-more--visible');
+    elements.$readMore.addClass('questions__read-more');
   }
 
   function updateVoteBlock($question, data) {
@@ -65,8 +82,17 @@ function questionsComponent(socket) {
     const $existingQuestion = $(`[data-question-id=${data.id}]`);
     const questionExists = $existingQuestion.length;
 
-    if (questionExists) $existingQuestion.replaceWith(data.html);
-    else elements.$list.append(data.html);
+    if (questionExists) {
+      $existingQuestion.replaceWith(data.html);
+    } else {
+      elements.$list.append(data.html);
+
+      if (isScrolledToBottom()) {
+        animateToBottom();
+      } else {
+        showReadMore();
+      }
+    }
 
     const $question = $(`[data-question-id=${data.id}]`);
 
@@ -91,6 +117,14 @@ function questionsComponent(socket) {
   }
 
   const events = {
+    readMoreClick() {
+      animateToBottom();
+    },
+
+    readMoreScroll() {
+      if (isScrolledToBottom()) hideReadMore();
+    },
+
     vote() {
       if (HANDLER === '') {
         loginRedirect(); // defined in room.html
@@ -166,6 +200,8 @@ function questionsComponent(socket) {
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.share);
       elements.$form.on('submit', events.sendQuestion);
+      elements.$list.on('scroll', events.readMoreScroll);
+      elements.$readMore.on('click', events.readMoreClick);
     },
 
     onAdd($question) {
