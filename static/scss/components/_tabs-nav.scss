@@ -45,8 +45,10 @@
   transition: $tab-transition;
 }
 
-.room[data-tab-index="1"] { transform: translateX(-100vw); }
-.room[data-tab-index="2"] { transform: translateX(-200vw); }
+@include breakpoint(medium down) {
+  .room[data-tab-index="1"] { transform: translateX(-100vw); }
+  .room[data-tab-index="2"] { transform: translateX(-200vw); }
 
-.list__item-marker[data-tab-index="1"] { transform: translateX(100%); }
-.list__item-marker[data-tab-index="2"] { transform: translateX(200%); }
+  .list__item-marker[data-tab-index="1"] { transform: translateX(100%); }
+  .list__item-marker[data-tab-index="2"] { transform: translateX(200%); }
+}
