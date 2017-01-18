@@ -8,40 +8,43 @@
     overflow-y: auto;
   }
 
-  @include breakpoint(medium down) { padding: 0; }
-  @include breakpoint(large only) { padding: 2.5em; }
+  @include breakpoint(large down) { padding: 0; }
   @include breakpoint(xlarge up) { padding: 2.5em 5em; }
 }
 
-.questions__title {
-  align-items: center;
-  color: $color-white;
-  display: flex;
-  flex-shrink: 0;
-  font-size: 1.4em;
-  font-weight: 700;
-  line-height: 1em;
-  text-transform: uppercase;
+.questions__header {
+  @include breakpoint(large down) {
+    padding: 1em;
+  }
 
-  @include breakpoint(medium down) { padding: 16px 16px 0; }
-
-  &::after {
-    background-color: $color-accent;
-    content: '';
+  .header__title {
+    align-items: center;
+    color: $color-white;
     display: flex;
-    flex: 1;
-    height: .7em;
-    margin-left: 1em;
+    flex-shrink: 0;
+    font-size: 1.4em;
+    font-weight: 700;
+    line-height: 1em;
+    text-transform: uppercase;
+
+    &::after {
+      background-color: $color-accent;
+      content: '';
+      display: flex;
+      flex: 1;
+      height: .7em;
+      margin-left: 1em;
+    }
+  }
+
+  .header__text {
+    color: $color-white;
+    flex-shrink: 0;
+    font-weight: 400;
+    margin: 0;
   }
 }
 
-.questions__text {
-  color: $color-white;
-  flex-shrink: 0;
-  font-weight: 400;
-
-  @include breakpoint(medium down) { padding: 0 1em; }
-}
 
 .questions__list {
   list-style: none;
@@ -51,6 +54,9 @@
 
   @include breakpoint(medium down) {
     overflow-y: visible;
+  }
+
+  @include breakpoint(large down) {
     padding: 0 1em;
   }
 
@@ -402,6 +408,9 @@
   .send-form--unauthenticated {
     background-color: $color-primary-light;
     color: $color-white;
-    height: 112px;
+
+    @include breakpoint(medium down) {
+      height: 112px;
+    }
   }
 }
