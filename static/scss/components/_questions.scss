@@ -8,7 +8,16 @@
     overflow-y: auto;
   }
 
-  @include breakpoint(large down) { padding: 0; }
+  @include breakpoint(large down) {
+    flex: 1;
+    height: auto;
+    padding: 0;
+  }
+
+  @include breakpoint(large only) {
+    overflow-y: hidden;
+  }
+
   @include breakpoint(xlarge up) { padding: 2.5em 5em; }
 }
 
@@ -49,15 +58,18 @@
 .questions__list {
   list-style: none;
   margin: 1em 0;
-  overflow-y: auto;
   padding: 1em;
-
-  @include breakpoint(medium down) {
-    overflow-y: visible;
-  }
 
   @include breakpoint(large down) {
     padding: 0 1em;
+  }
+
+  @include breakpoint(large only) {
+    padding-bottom: 80px;
+  }
+
+  @include breakpoint(large up) {
+    overflow-y: auto;
   }
 
   @include breakpoint(xxlarge up) {
@@ -364,6 +376,15 @@
 }
 
 .questions {
+  [class^="send-form--"] {
+    @include breakpoint(large only) {
+      bottom: 0;
+      position: fixed;
+      width: calc(100vw - 330px);
+      z-index: 10;
+    }
+  }
+
   .send-form--questions {
     background-color: $color-primary-light;
 
@@ -371,6 +392,16 @@
       flex-direction: column;
       height: 112px;
       left: 200vw;
+    }
+  }
+
+  .send-form--closed,
+  .send-form--unauthenticated {
+    background-color: $color-primary-light;
+    color: $color-white;
+
+    @include breakpoint(medium down) {
+      height: 112px;
     }
   }
 
@@ -393,22 +424,15 @@
 
   .actions__button {
     @include breakpoint(medium down) {
-      align-items: center;
       background-color: $color-accent-secondary;
+      display: block;
       flex: 1 1 0;
-      justify-content: center;
       margin: 0;
       padding: 0;
     }
   }
 
-  .send-form--closed,
-  .send-form--unauthenticated {
-    background-color: $color-primary-light;
-    color: $color-white;
-
-    @include breakpoint(medium down) {
-      height: 112px;
-    }
+  .button__icon {
+    vertical-align: middle;
   }
 }

@@ -1,14 +1,17 @@
-.room-wrapper {
+.room-body {
+  left: 0;
   position: fixed;
   width: 100vw;
-}
-
-.room {
-  display: flex;
 
   @include breakpoint(small down) { height: calc(100vh - 6em); }
   @include breakpoint(medium only) { height: calc(100vh - 7em); }
   @include breakpoint(large up) { height: calc(100vh - 4em); }
+}
+
+.room {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
 
   @include breakpoint(medium down) {
     flex-direction: row-reverse;
@@ -27,6 +30,10 @@
       margin-bottom: 112px;
       width: 100vw;
     }
+
+    @include breakpoint(large only) {
+      display: flex;
+    }
   }
 
   .section-right {
@@ -40,7 +47,7 @@
       width: 200vw;
     }
 
-    @include breakpoint(large only) { max-width: 400px; }
+    @include breakpoint(large only) { max-width: 330px; }
     @include breakpoint(xlarge only) { max-width: 500px; }
     @include breakpoint(xxlarge up) { max-width: 600px; }
   }
@@ -49,6 +56,13 @@
   .section-right__bottom {
     @include breakpoint(medium down) {
       width: 100vw;
+    }
+  }
+
+  .section-right__top {
+    @include breakpoint(medium down) {
+      display: flex;
+      flex: 1;
     }
   }
 

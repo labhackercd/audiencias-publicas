@@ -7,7 +7,7 @@
   position: relative;
 
   @include breakpoint(medium down) {
-    margin: 0 0 50px;
+    margin: 0 0 80px;
   }
 
   @include breakpoint(large only) {
@@ -41,7 +41,6 @@
   }
 
   .messages__list {
-    flex-direction: column;
     list-style: none;
     margin-bottom: 0;
     margin-left: 0;
@@ -106,6 +105,7 @@
   font-weight: 600;
   height: 30px;
   justify-content: center;
+  margin-bottom: -30px;
   width: 100%;
   z-index: 0;
 
@@ -116,12 +116,4 @@
 
 .chat__read-more--visible {
   transform: translateY(-100%);
-}
-
-.chat [class^="send-form--"] {
-  margin-top: -30px;
-
-  @include breakpoint(medium down) {
-    left: 100vw;
-  }
 }

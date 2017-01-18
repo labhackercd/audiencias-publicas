@@ -6,7 +6,7 @@
   <html>
     <head>
       <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
       {% block metadata %}
       {% endblock metadata %}
@@ -33,8 +33,11 @@
       {% endcompress %}
 
     </head>
-
+    {% if 'sala' in request.path  %}
+    <body class="room-body">
+    {% else %}
     <body class="{{no_offset_top}}">
+    {% endif %}
 
     {# Navigation #}
     {% block navigation %}

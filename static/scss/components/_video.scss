@@ -1,17 +1,43 @@
 .video {
   background-color: $color-primary-xlight;
-  height: 100%;
+
+  @include breakpoint(medium down) {
+    flex: 1;
+    overflow-y: auto;
+  }
 
   .video__iframe-wrapper {
     background-color: $color-black;
     display: flex;
     justify-content: center;
     width: 100%;
+
+    @include breakpoint(medium down) {
+      height: 0;
+      padding-bottom: 56.25%;
+      padding-top: 25px;
+      position: relative;
+    }
   }
 
   .video__iframe {
-    height: 253px;
-    width: 450px;
+    @include breakpoint(medium down) {
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    @include breakpoint(large only) {
+      height: 186px;
+      width: 330px;
+    }
+
+    @include breakpoint(xlarge up) {
+      height: 253px;
+      width: 450px;
+    }
   }
 
   .video__title {
