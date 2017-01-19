@@ -14,3 +14,14 @@ body {
     min-height: calc(100% - 3em);
   }
 }
+
+table {
+  @include breakpoint(small only) {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+i {
+  display: inline-flex;
+}

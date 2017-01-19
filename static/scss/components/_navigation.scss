@@ -41,13 +41,13 @@
   }
 
   .navigation__auth {
-    @include transition-default(background-color);
     align-items: center;
     color: $color-white;
     display: flex;
     font-weight: 600;
     height: 100%;
     padding: .75em;
+    transition: $hover-transition;
 
     &:hover {
       background-color: darken($color-primary, 3%);

@@ -1,23 +1,18 @@
 // Foundation
 @import 'foundation/foundation-includes';
 
+// Ambience
+@import 'ambience/animation';
+@import 'ambience/colors';
+@import 'ambience/fonts';
+
 // Base
-@import 'base/page';
-@import 'base/icons';
-@import 'base/tables';
-
-// Settings
-@import 'settings/colors';
-@import 'settings/animation';
-@import 'settings/type';
-
-// Tools
-@import 'tools/animation';
+@import 'base/globals';
 
 // Shared
-@import 'shared/send-form';
 @import 'shared/floating-header';
 @import 'shared/question-block';
+@import 'shared/send-form';
 
 // Pages
 @import 'pages/home';
@@ -28,15 +23,15 @@
 
 // Components
 @import 'components/banner';
-@import 'components/tabs-nav';
-@import 'components/preview';
-@import 'components/navigation';
-@import 'components/footer';
 @import 'components/calendar-table';
 @import 'components/chat';
+@import 'components/footer';
+@import 'components/navigation';
+@import 'components/preview';
 @import 'components/questions';
-@import 'components/video';
 @import 'components/registration-form';
+@import 'components/tabs-nav';
+@import 'components/video';
 
-@import 'overrides.olark';
-@import 'trumps.hide-show';
+// Overrides
+@import 'overrides/olark';

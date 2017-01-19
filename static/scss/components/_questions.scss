@@ -262,13 +262,13 @@
   }
 
   .question-block__share-button {
-    @include transition-default(color);
     color: $color-gray-40;
     cursor: pointer;
     padding: 1em;
     position: absolute;
     right: 0;
     top: 0;
+    transition: $hover-transition;
 
     &:hover {
       color: $color-black;
@@ -276,7 +276,6 @@
   }
 
   [class^="question-block__share-list"] {
-    @include transition-default(transform);
     align-items: center;
     background-color: $color-white;
     display: flex;
@@ -288,15 +287,16 @@
     position: absolute;
     top: 0;
     transform: translateY(-100%);
+    transition: $translate-transition;
     width: 100%;
 
     [class^="share-list__item"] {
-      @include transition-default(background-color);
       align-items: center;
       display: flex;
       flex: 1;
       height: 100%;
       justify-content: center;
+      transition: $hover-transition;
 
       .item__link {
         align-items: center;
@@ -345,13 +345,13 @@
   }
 
   .question-block__answered {
-    @include transition-default(all);
     border: 1px solid $color-primary-xxlight;
     border-radius: 2em;
     display: inline-flex;
     justify-content: center;
     margin: 0 auto;
     padding: .5em 1em;
+    transition: $hover-transition;
 
     &:hover {
       background-color: $color-primary-xxlight;
@@ -368,16 +368,16 @@
     }
 
     .answered__time {
-      @include transition-default(color);
       color: $color-primary-xxlight;
       font-size: .9em;
       font-weight: 600;
       margin: 0 .3em;
+      transition: $hover-transition;
     }
 
     .answered__icon {
-      @include transition-default(color);
       color: $color-primary-xxlight;
+      transition: $hover-transition;
     }
   }
 }
@@ -407,7 +407,6 @@
 }
 
 [class^="questions__read-more"] {
-  @include transition-default(transform);
   align-items: center;
   background-color: rgba($color-primary-xxlight, .85);
   color: $color-white;
@@ -417,6 +416,7 @@
   height: 30px;
   justify-content: center;
   position: absolute;
+  transition: $translate-transition;
   z-index: 1;
 
   @include breakpoint(medium down) {

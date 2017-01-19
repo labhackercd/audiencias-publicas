@@ -33,7 +33,10 @@
       {% endcompress %}
 
     </head>
-    {% if 'sala' in request.path  %}
+
+    {% if 'perguntas' in request.path  %}
+    <body class="room-questions-body">
+    {% elif 'sala' in request.path  %}
     <body class="room-body">
     {% else %}
     <body class="{{no_offset_top}}">
