@@ -36,8 +36,15 @@ function tabsNavComponent() {
   const events = {
     changeTab: event => updateActiveTab(event.target.dataset.tabIndex),
 
-    touchStart: event => setTouchPositionX('start', event.touches[0].pageX),
-    touchMove: event => setTouchPositionX('end', event.touches[0].pageX),
+    touchStart: (event) => {
+      resetTouchPositionX();
+      setTouchPositionX('start', event.touches[0].clientX);
+    },
+
+    touchMove: (event) => {
+      setTouchPositionX('end', event.touches[0].clientX);
+    },
+
     touchEnd: () => {
       const touchMoved = touch.positionX.end !== 0;
       if (!touchMoved) return;
@@ -50,11 +57,10 @@ function tabsNavComponent() {
       touch.direction = touchPositionXMoved > 0 ? 1 : -1;
 
       if (tabs.activeDataTabIndex() === 0 && touch.direction === -1) return;
-      if (tabs.activeDataTabIndex() === tabs.count && touch.direction === 1) return;
+      if (tabs.activeDataTabIndex() === (tabs.count - 1) && touch.direction === 1) return;
 
       const newTabIndex = tabs.activeDataTabIndex() + touch.direction;
       updateActiveTab(newTabIndex);
-      resetTouchPositionX();
     },
   };
 
