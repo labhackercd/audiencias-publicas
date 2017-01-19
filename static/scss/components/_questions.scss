@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  position: relative;
 
   @include breakpoint(medium down) {
     overflow-y: auto;
@@ -17,6 +16,10 @@
 
   @include breakpoint(large only) {
     overflow-y: hidden;
+  }
+
+  @include breakpoint(large up) {
+    position: relative;
   }
 
   @include breakpoint(xlarge up) { padding: 2.5em 5em; }
@@ -380,7 +383,6 @@
   @include transition-default(transform);
   align-items: center;
   background-color: rgba($color-primary-xxlight, .85);
-  bottom: calc(2.5em + 50px);
   color: $color-white;
   cursor: pointer;
   display: flex;
@@ -388,8 +390,22 @@
   height: 30px;
   justify-content: center;
   position: absolute;
-  width: calc(100% - 10em);
   z-index: 1;
+
+  @include breakpoint(medium down) {
+    bottom: -30px;
+    width: 100vw
+  }
+
+  @include breakpoint(large only) {
+    bottom: 50px;
+    width: 100%;
+  }
+
+  @include breakpoint(xlarge up) {
+    bottom: calc(2.5em + 50px);
+    width: calc(100% - 10em);
+  }
 
   &:hover {
     text-decoration: underline;

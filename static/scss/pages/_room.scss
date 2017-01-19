@@ -28,6 +28,7 @@
     @include breakpoint(medium down) {
       display: flex;
       margin-bottom: 112px;
+      position: relative;
       width: 100vw;
     }
 

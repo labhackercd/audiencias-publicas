@@ -21,18 +21,39 @@ function questionsComponent(socket) {
     listHeight: () => elements.$list[0].offsetHeight,
     listScrollHeight: () => elements.$list[0].scrollHeight,
     listScrollTop: () => elements.$list[0].scrollTop,
+    wrapperHeight: () => elements.$wrapper[0].offsetHeight,
     wrapperScrollHeight: () => elements.$wrapper[0].scrollHeight,
+    wrapperScrollTop: () => elements.$wrapper[0].scrollTop,
   };
 
   let sendForm = {};
+  let isCurrentUserQuestion = false;
 
   function animateToBottom() {
-    elements.$list.animate({ scrollTop: vars.listScrollHeight() }, 600);
-    elements.$wrapper.animate({ scrollTop: vars.wrapperScrollHeight() }, 600);
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      elements.$list.animate({
+        scrollTop: vars.listScrollHeight(),
+      }, 600, () => {
+        isCurrentUserQuestion = false;
+      });
+    } else {
+      elements.$wrapper.animate({
+        scrollTop: vars.wrapperScrollHeight(),
+      }, 600, () => {
+        isCurrentUserQuestion = false;
+      });
+    }
+  }
+
+  function scrollToBottom() {
+    elements.$messages[0].scrollTop = vars.messagesListHeight();
   }
 
   function isScrolledToBottom() {
-    return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
+    if (window.matchMedia('(min-width: 1024px)').matches) {
+      return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
+    }
+    return vars.wrapperScrollTop() === (vars.wrapperScrollHeight() - vars.wrapperHeight());
   }
 
   function showReadMore() {
@@ -87,9 +108,7 @@ function questionsComponent(socket) {
     } else {
       elements.$list.append(data.html);
 
-      if (isScrolledToBottom()) {
-        animateToBottom();
-      } else {
+      if (!isScrolledToBottom() && !isCurrentUserQuestion) {
         showReadMore();
       }
     }
@@ -179,6 +198,8 @@ function questionsComponent(socket) {
 
       if (sendForm.isBlank()) return false;
 
+      isCurrentUserQuestion = true;
+
       socket.send(JSON.stringify({
         handler: HANDLER,
         question: elements.$formInput.val(),
@@ -201,6 +222,7 @@ function questionsComponent(socket) {
       elements.$shareListItemLink.on('click', events.share);
       elements.$form.on('submit', events.sendQuestion);
       elements.$list.on('scroll', events.readMoreScroll);
+      elements.$wrapper.on('scroll', events.readMoreScroll);
       elements.$readMore.on('click', events.readMoreClick);
     },
 
