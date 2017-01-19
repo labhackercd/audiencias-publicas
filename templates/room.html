@@ -30,53 +30,52 @@
 
 <main class="room" data-tab-index="0">
   <section class="section-left">
-    <div class="questions">
-      <div class="questions__header">
-        <h1 class="header__title">Pergunte aos Deputados</h1>
-        <p class="header__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
-      </div>
+    <div class="questions-wrapper">
+      <div class="questions">
+        <div class="questions__header">
+          <h1 class="header__title">Pergunte aos Deputados</h1>
+          <p class="header__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
+        </div>
 
-      <ul class="questions__list" id="questions">
-        {% if questions %}
-          {% for question in questions %}
-            {% include "includes/video_questions.html" with questions=questions user=user %}
-          {% endfor %}
-        {% elif not object.closed_date %}
-          <div class="questions__list--empty">
-            <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
-            <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
+        <ul class="questions__list" id="questions">
+          {% if questions %}
+            {% for question in questions %}
+              {% include "includes/video_questions.html" with questions=questions user=user %}
+            {% endfor %}
+          {% elif not object.closed_date %}
+            <div class="questions__list--empty">
+              <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
+              <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
+            </div>
+          {% endif %}
+        </ul>
+        <div class="questions__read-more"></div>
+
+        {% if not object.closed_date and user.is_authenticated %}
+          <form class="send-form--questions" id="questionform">
+            <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" maxlength="600" autocomplete="off" required=""></textarea>
+            <div class="send-form__actions">
+              <div class="actions__character-counter">
+                <span class="character-counter__actual-length">0</span>
+                /
+                <span class="character-counter__max-length">600</span>
+              </div>
+              <button class="actions__button">
+                <span class="button__text">Enviar</span>
+                <i class="button__icon icon icon-caret-right"></i>
+              </button>
+            </div>
+          </form>
+        {% elif not object.closed_date and not user.is_authenticated %}
+          <div class="send-form--unauthenticated">
+            <span><a href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
+          </div>
+        {% elif object.closed_date %}
+          <div class="send-form--closed">
+            <span>Audiência encerrada para participações.</span>
           </div>
         {% endif %}
-      </ul>
-      <div class="questions__read-more"></div>
-
-      {% if not object.closed_date and user.is_authenticated %}
-        <form class="send-form--questions" id="questionform">
-          <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" maxlength="600" autocomplete="off" required=""></textarea>
-          <div class="send-form__actions">
-            <div class="actions__character-counter">
-              <span class="character-counter__actual-length">0</span>
-              /
-              <span class="character-counter__max-length">600</span>
-            </div>
-            <button class="actions__button">
-              <span class="button__text">Enviar</span>
-              <i class="button__icon icon icon-caret-right"></i>
-            </button>
-          </div>
-        </form>
-
-      {% elif not object.closed_date and not user.is_authenticated %}
-        <div class="send-form--unauthenticated">
-          <span><a href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
-        </div>
-
-      {% elif object.closed_date %}
-        <div class="send-form--closed">
-          <span>Audiência encerrada para participações.</span>
-        </div>
-
-      {% endif %}
+      </div>
     </div>
   </section>
 

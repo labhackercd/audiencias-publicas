@@ -117,3 +117,9 @@
 .chat__read-more--visible {
   transform: translateY(-100%);
 }
+
+.chat [class^="send-form--"] {
+  @include breakpoint(medium down) {
+    transform: translateY(100%);
+  }
+}

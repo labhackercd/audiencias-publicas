@@ -1,17 +1,20 @@
 [class^="send-form--"] {
-  align-items: center;
   background-color: $color-gray-92;
   display: flex;
   flex-shrink: 0;
-  height: 80px;
   padding: 1em;
   z-index: 1;
 
   @include breakpoint(medium down) {
     bottom: 0;
-    position: fixed;
+    position: absolute;
     width: 100vw;
     z-index: 10;
+  }
+
+  @include breakpoint(large down) {
+    align-items: center;
+    height: 80px;
   }
 
   .send-form__input {
@@ -20,11 +23,17 @@
   }
 
   .send-form__actions {
-    height: 100%;
     margin: 0 0 0 .5em;
 
-    @include breakpoint(large up) {
+    @include breakpoint(large down) {
+      height: 100%;
+    }
+
+    @include breakpoint(large only) {
       align-items: center;
+    }
+
+    @include breakpoint(large up) {
       display: flex;
     }
   }
