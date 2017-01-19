@@ -115,7 +115,7 @@ function questionsComponent(socket) {
     } else {
       elements.$list.append(data.html);
 
-      if (!isCurrentUserQuestion) {
+      if (!isScrolledToBottom() && !isCurrentUserQuestion) {
         newQuestionsCount += 1;
         showReadMore();
       }
