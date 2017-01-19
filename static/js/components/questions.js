@@ -46,10 +46,6 @@ function questionsComponent(socket) {
     }
   }
 
-  function scrollToBottom() {
-    elements.$messages[0].scrollTop = vars.messagesListHeight();
-  }
-
   function isScrolledToBottom() {
     if (window.matchMedia('(min-width: 1024px)').matches) {
       return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
