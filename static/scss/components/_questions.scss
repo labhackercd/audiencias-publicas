@@ -416,7 +416,7 @@
   }
 
   @include breakpoint(xlarge up) {
-    bottom: calc(2.5em + 50px);
+    bottom: calc(7.5em - 30px);
     width: calc(100% - 10em);
   }
 

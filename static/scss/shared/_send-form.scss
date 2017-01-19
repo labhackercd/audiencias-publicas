@@ -17,9 +17,18 @@
     height: 80px;
   }
 
+  @include breakpoint(xlarge up) {
+    height: 5em;
+  }
+
   .send-form__input {
     margin: 0;
     resize: none;
+
+    @include breakpoint(xlarge up) {
+      font-size: 1em;
+      height: 3em;
+    }
   }
 
   .send-form__actions {
