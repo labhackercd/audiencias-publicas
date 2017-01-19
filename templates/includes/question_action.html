@@ -1,10 +1,12 @@
-<span class="vote-block__total-votes {{extra_classes}}">{{total_votes}}</span>
-
 {% if object.closed_date %}
-  <div class="vote-block__vote-label">
+  <span class="vote-block__total-votes closed {{extra_classes}}">{{total_votes}}</span>
+
+  <div class="vote-block__vote-label closed">
     {% if total_votes > 1 %}Votos{% else %}Voto{% endif %}
   </div>
 {% else %}
+  <span class="vote-block__total-votes {{extra_classes}}">{{total_votes}}</span>
+
   <div class="vote-block__vote-label hide">
     {% if total_votes > 1 %}Votos{% else %}Voto{% endif %}
   </div>

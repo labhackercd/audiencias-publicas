@@ -147,15 +147,29 @@
 
   .vote-block__total-votes {
     color: $color-primary-xxlight;
-    font-size: 1.2em;
     font-weight: 700;
     margin-bottom: .5em;
 
     @include breakpoint(medium down) {
-      flex: .5 1 0;
       margin: 0;
       text-align: center;
       width: auto;
+    }
+
+    @include breakpoint(large up) {
+      font-size: 1.2em;
+    }
+
+    &.closed {
+      @include breakpoint(medium down) {
+        margin-right: .5em;
+      }
+    }
+
+    &:not(.closed) {
+      @include breakpoint(medium down) {
+        flex: .5 1 0;
+      }
     }
 
     &.voted,
