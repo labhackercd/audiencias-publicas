@@ -17,6 +17,10 @@ function tabsNavComponent() {
       start: 0,
       end: 0,
     },
+    positionY: {
+      start: 0,
+      end: 0,
+    },
   };
 
   function updateActiveTab(dataTabIndex) {
@@ -24,25 +28,29 @@ function tabsNavComponent() {
     elements.$room.attr('data-tab-index', dataTabIndex);
   }
 
-  function setTouchPositionX(key, value) {
-    touch.positionX[key] = value;
+  function setTouchPosition(key, touchEvent) {
+    touch.positionX[key] = touchEvent.clientX;
+    touch.positionY[key] = touchEvent.clientY;
   }
 
-  function resetTouchPositionX() {
+  function resetTouchPosition() {
     touch.positionX.start = 0;
     touch.positionX.end = 0;
+
+    touch.positionY.start = 0;
+    touch.positionY.end = 0;
   }
 
   const events = {
     changeTab: event => updateActiveTab(event.target.dataset.tabIndex),
 
     touchStart: (event) => {
-      resetTouchPositionX();
-      setTouchPositionX('start', event.touches[0].clientX);
+      resetTouchPosition();
+      setTouchPosition('start', event.touches[0]);
     },
 
     touchMove: (event) => {
-      setTouchPositionX('end', event.touches[0].clientX);
+      setTouchPosition('end', event.touches[0]);
     },
 
     touchEnd: () => {
@@ -50,9 +58,12 @@ function tabsNavComponent() {
       if (!touchMoved) return;
 
       const touchPositionXMoved = touch.positionX.start - touch.positionX.end;
-      const movedEnough = Math.abs(touchPositionXMoved) > 80;
+      const xMovedEnough = Math.abs(touchPositionXMoved) > 80;
 
-      if (!movedEnough) return;
+      const touchPositionYMoved = touch.positionY.end - touch.positionY.start;
+      const yMovedTooMuch = Math.abs(touchPositionYMoved) > 50;
+
+      if (!xMovedEnough || yMovedTooMuch) return;
 
       touch.direction = touchPositionXMoved > 0 ? 1 : -1;
 
