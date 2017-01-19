@@ -9,7 +9,7 @@
   margin: 0.5em 0 0!important;
 }
 
-#habla_beta_container_do_not_rely_on_div_classes_or_names {
+#olark-wrapper {
   z-index: 999 !important;
 
   @include breakpoint(large down) {
