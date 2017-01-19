@@ -26,8 +26,9 @@ function questionsComponent(socket) {
     wrapperScrollTop: () => elements.$wrapper[0].scrollTop,
   };
 
-  let sendForm = {};
   let isCurrentUserQuestion = false;
+  let newQuestionsCount = 0;
+  let sendForm = {};
 
   function animateToBottom() {
     if (window.matchMedia('(min-width: 1024px)').matches) {
@@ -57,6 +58,12 @@ function questionsComponent(socket) {
   }
 
   function showReadMore() {
+    if (newQuestionsCount === 1) {
+      elements.$readMore.html('Há 1 nova pergunta disponível abaixo');
+    } else {
+      elements.$readMore.html(`Há ${newQuestionsCount} novas perguntas disponíveis abaixo`);
+    }
+
     elements.$readMore.removeClass('questions__read-more');
     elements.$readMore.addClass('questions__read-more--visible');
   }
@@ -108,7 +115,8 @@ function questionsComponent(socket) {
     } else {
       elements.$list.append(data.html);
 
-      if (!isScrolledToBottom() && !isCurrentUserQuestion) {
+      if (!isCurrentUserQuestion) {
+        newQuestionsCount += 1;
         showReadMore();
       }
     }
@@ -140,8 +148,11 @@ function questionsComponent(socket) {
       animateToBottom();
     },
 
-    readMoreScroll() {
-      if (isScrolledToBottom()) hideReadMore();
+    questionsScroll() {
+      if (isScrolledToBottom()) {
+        newQuestionsCount = 0;
+        hideReadMore();
+      }
     },
 
     vote() {
@@ -221,8 +232,8 @@ function questionsComponent(socket) {
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.share);
       elements.$form.on('submit', events.sendQuestion);
-      elements.$list.on('scroll', events.readMoreScroll);
-      elements.$wrapper.on('scroll', events.readMoreScroll);
+      elements.$list.on('scroll', events.questionsScroll);
+      elements.$wrapper.on('scroll', events.questionsScroll);
       elements.$readMore.on('click', events.readMoreClick);
     },
 

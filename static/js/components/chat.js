@@ -71,7 +71,7 @@ function chatComponent(socket) {
       animateToBottom();
     },
 
-    readMoreScroll() {
+    messagesScroll() {
       if (isScrolledToBottom()) hideReadMore();
     },
 
@@ -94,7 +94,7 @@ function chatComponent(socket) {
 
   function bindEventsHandlers() {
     socket.onmessage = evaluateSocketMessage;
-    elements.$messages.on('scroll', events.readMoreScroll);
+    elements.$messages.on('scroll', events.messagesScroll);
     elements.$readMore.on('click', events.readMoreClick);
     elements.$form.on('submit', events.sendMessage);
   }
