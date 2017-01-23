@@ -1,18 +1,19 @@
-#habla_topbar_div.hbl_pal_title_bg {
-  background-color: #235643 !important;
-}
-
-.hbl_panel #habla_offline_submit_input.hbl_pal_offline_submit_bg {
-  background-color: $color-primary-xxlight !important;
-  padding: 0.8em 0;
-  width: 100% !important;
-  margin: 0.5em 0 0!important;
-}
-
-#habla_beta_container_do_not_rely_on_div_classes_or_names {
+#olark-wrapper button.olark-launch-button {
+  height: 32px !important;
   z-index: 999 !important;
 
   @include breakpoint(large down) {
-    display: none;
+    display: none !important;
+  }
+
+  & > svg {
+    width: 20px !important;
+    height: 32px !important;
+  }
+
+  & > .olark-button-text {
+    line-height: 30px !important;
+    overflow: visible !important;
+    font-size: 13px !important;
   }
 }
