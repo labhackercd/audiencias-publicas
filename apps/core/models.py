@@ -55,6 +55,8 @@ class Video(TimestampedMixin):
     published_date = models.DateTimeField(auto_now=True)
     closed_date = models.DateTimeField(null=True, blank=True)
     slug = models.SlugField(max_length=200, blank=True)
+    online_users = models.IntegerField(default=0)
+    max_online_users = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = _('video')
