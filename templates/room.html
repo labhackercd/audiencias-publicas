@@ -163,7 +163,7 @@
       function loginRedirect() {
         var next = "{{request.path}}";
         var login_url = "{% url 'login' %}";
-        document.location.href = `${login_url}?next=${next}`;
+        document.location.href = login_url + '?next=' + next;
       }
     </script>
     {% compress js %}
