@@ -86,7 +86,10 @@
           <iframe class="video__iframe" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
         </div>
         <div class="video__title">
-          <h1 class="title__header">Agora na Câmara:</h1>
+          <h1 class="title__header">
+            Agora na Câmara:
+            <span><strong id="online-users"></strong> assistindo</span>
+          </h1>
           <h2 class="title__subheader">
             {% if not object.closed_date %}
               <i class="subheader__icon icon icon-circle live-blink"></i>
@@ -165,6 +168,8 @@
         var login_url = "{% url 'login' %}";
         document.location.href = login_url + '?next=' + next;
       }
+
+      var videoApiUrl = "{% url 'video_detail_api' pk=object.id %}";
     </script>
     {% compress js %}
       <script type="text/es6" src="{% static 'js/pages/room.js' %}"></script>

@@ -50,8 +50,22 @@
     @include breakpoint(medium only) { padding: 1em 2em; }
 
     .title__header {
-      font-size: 1.4em;
+      align-items: center;
+      display: flex;
+      font-size: 1em;
       font-weight: 700;
+      justify-content: space-between;
+
+      span {
+        float: right;
+        font-size: .8em;
+        font-weight: 400;
+        text-transform: lowercase;
+      }
+
+      strong {
+        color: $color-primary-xxlight;
+      }
     }
 
     .title__subheader {
