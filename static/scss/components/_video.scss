@@ -1,0 +1,82 @@
+.video {
+  background-color: $color-primary-xlight;
+
+  @include breakpoint(medium down) {
+    flex: 1;
+    overflow-y: auto;
+  }
+
+  .video__iframe-wrapper {
+    background-color: $color-black;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    @include breakpoint(medium down) {
+      height: 0;
+      padding-bottom: 56.25%;
+      padding-top: 25px;
+      position: relative;
+    }
+  }
+
+  .video__iframe {
+    @include breakpoint(medium down) {
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    @include breakpoint(large only) {
+      height: 186px;
+      width: 330px;
+    }
+
+    @include breakpoint(xlarge up) {
+      height: 253px;
+      width: 450px;
+    }
+  }
+
+  .video__title {
+    color: $color-white;
+    padding: 1em 2em;
+    text-transform: uppercase;
+    width: 100%;
+
+    @include breakpoint(small down) { padding: 1em; }
+    @include breakpoint(medium only) { padding: 1em 2em; }
+
+    .title__header {
+      align-items: center;
+      display: flex;
+      font-size: 1em;
+      font-weight: 700;
+      justify-content: space-between;
+
+      span {
+        float: right;
+        font-size: .8em;
+        font-weight: 400;
+        text-transform: lowercase;
+      }
+
+      strong {
+        color: $color-primary-xxlight;
+      }
+    }
+
+    .title__subheader {
+      font-size: 1em;
+      font-weight: 400;
+      margin-bottom: 0;
+
+      .subheader__icon {
+        color: $color-live-blink;
+        font-size: .7em;
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+.home {
+  .section-top {
+    background: linear-gradient(45deg, $color-primary-xlight 0%, $color-primary 100%);
+  }
+
+  .section-bottom {
+    background-color: $color-gray-90;
+    padding: 1em 2em;
+
+    @include breakpoint(medium down) {
+      padding: 1em;
+    }
+  }
+
+  .preview--live-videos {
+    .preview__floating-header {
+      background-color: $color-primary-xlight;
+    }
+
+    .header__icon {
+      color: $color-live-blink;
+    }
+  }
+
+  .preview--closed-videos {
+    .preview__floating-header {
+      background-color: $color-secondary;
+    }
+
+    .header__icon {
+      border: .2em solid;
+      border-radius: 50%;
+      padding: .4em;
+    }
+  }
+
+  .preview--calendar {
+    padding: 0;
+
+    .preview__floating-header {
+      background-color: $color-primary;
+      margin: 0 1em;
+    }
+
+    .header__icon {
+      border: .2em solid;
+      border-radius: 50%;
+      padding: .4em;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.question-block__info {
+  margin-bottom: .5em;
+
+  .info__username {
+    font-weight: 700;
+  }
+
+  .info__timestamp {
+    color: $color-gray-45;
+    font-size: .7em;
+    font-weight: 400;
+  }
+}
+
+.question-block__text {
+  margin-bottom: .5em;
+}

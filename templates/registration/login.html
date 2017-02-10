@@ -1,54 +1,70 @@
 {% extends "components/base.html" %}
 
 {% block main %}
-<section class="section section--auth">
-  <div class="row align-center">
-    <div class="section__block section__block--title columns small-12 medium-7 large-5">
-      <div class="section__content">
-        <h1 class="section__title">Login</h1>
-      </div>
-    </div>
+<main class="registration--login">
+  {% if form.errors %}
+  <div class="registration-error callout alert" data-closable>
+    <h5>{{form.non_field_errors}}</h5>
+    <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+      <span aria-hidden="true">&times;</span>
+    </button>
   </div>
-  <div class="row align-center">
-    <div class="section__block columns small-12 medium-7 large-5">
-      {% if form.errors %}
-        <div class="section__block section__block--error">
-          {{form.non_field_errors}}
-        </div>
-      {% endif %}
-      <form action="{% url 'login' %}" method="POST" class="form">
-        {% csrf_token %}
-        <label class="form__input-wrapper input-group">
-          <i class="form__icon icon icon-user input-group-label" aria-hidden="true"></i>
-          <span class="show-for-sr">Nome de usuário</span>
-          <div class="form__input-container">
-            <input type="text" class="form__input input input-group-field" name="username" placeholder="Nome de usuário" required>
-          </div>
-        </label>
-        <label class="form__input-wrapper input-group">
-          <i class="form__icon icon icon-lock input-group-label" aria-hidden="true"></i>
-          <span class="show-for-sr">Senha</span>
-          <div class="form__input-container">
-            <input type="password" class="form__input input input-group-field" name="password" placeholder="Senha" required>
-          </div>
-        </label>
-        <input type="hidden" name="next" value="{{ next }}" />
-        <button class="button expanded button--expanded">Entrar</button>
-        <p><a href="{% url 'password_reset' %}" class="section__link">Esqueceu a senha?</a></p>
-        <p>Não possui cadastro? <a href="{% url 'signup' %}" class="section__link section__link--signup">Cadastre-se aqui!</a></p>
-        <div class="section__block--social">
-          <div class="button-group">
-            <a href="{% url 'social:begin' backend='facebook' %}" class="button button--social button--facebook">
-              <span class="button--social__icon"><i class="icon icon-facebook"></i></span><span class="button--social__label">Entrar com Facebook</span>
-            </a>
-            <a href="{% url 'social:begin' backend='google-oauth2' %}" class="button button--social button--google-plus">
-              <span class="button--social__icon"><i class="icon icon-google-plus"></i></span><span class="button--social__label">Entrar com Google</span>
-            </a>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
 
+  <script>
+    setTimeout(function() { $('.registration-error .close-button').click(); }, 10000);
+  </script>
+  {% endif %}
+
+  <div class="registration-wrapper">
+    <h1 class="registration__title">Login</h1>
+
+    <form class="registration__form" action="{% url 'login' %}" method="POST" class="form">
+      {% csrf_token %}
+
+      <div class="form__fieldset">
+        <label class="fieldset__label">
+          <i class="icon icon-user"></i>
+        </label>
+        <input class="fieldset__input" type="text" name="username" placeholder="Nome de usuário" required>
+      </div>
+
+      <div class="form__fieldset">
+        <label class="fieldset__label">
+          <i class="icon icon-lock"></i>
+        </label>
+        <input class="fieldset__input" type="password" name="password" placeholder="Senha" required>
+      </div>
+
+      <input type="hidden" name="next" value="{{ next }}" />
+
+      <button class="form__btn">Entrar</button>
+
+      <div class="form__links">
+        <span class="links__item">
+          <a href="{% url 'password_reset' %}">Esqueceu a senha?</a>
+        </span>
+        <span class="links__item">
+          <span>Não possui cadastro? </span>
+          <a href="{% url 'signup' %}">Cadastre-se aqui!</a>
+        </span>
+      </div>
+
+      <div class="form__social">
+        <a class="social__btn--facebook" href="{% url 'social:begin' backend='facebook' %}">
+          <span class="btn__icon">
+            <i class="icon icon-facebook"></i>
+          </span>
+          <span class="btn__label">Entrar com Facebook</span>
+        </a>
+
+        <a class="social__btn--google" href="{% url 'social:begin' backend='google-oauth2' %}">
+          <span class="btn__icon">
+            <i class="icon icon-google-plus"></i>
+          </span>
+          <span class="btn__label">Entrar com Google</span>
+        </a>
+      </div>
+    </form>
+  </div>
+</main>
 {% endblock %}

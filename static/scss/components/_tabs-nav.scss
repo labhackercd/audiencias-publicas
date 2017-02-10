@@ -1,0 +1,54 @@
+.tabs-nav {
+  background-color: $color-primary-light;
+  height: 3em;
+  width: 100vw;
+
+  @include breakpoint(large up) {
+    display: none;
+  }
+}
+
+.tabs-nav__list {
+  display: flex;
+  height: 100%;
+  justify-content: space-around;
+  list-style: none;
+  margin: 0;
+  position: relative;
+
+  .list__item {
+    display: flex;
+    flex: 1;
+  }
+
+  .list__item-marker {
+    background-color: $color-accent;
+    bottom: 0;
+    height: .3em;
+    left: 0;
+    position: absolute;
+    width: calc(100% / 3);
+  }
+
+  .item__link {
+    align-items: center;
+    color: $color-white;
+    display: flex;
+    flex: 1;
+    font-weight: 600;
+    justify-content: center;
+  }
+}
+
+.room,
+.list__item-marker {
+  transition: $tab-transition;
+}
+
+@include breakpoint(medium down) {
+  .room[data-tab-index="1"] { transform: translateX(-100vw); }
+  .room[data-tab-index="2"] { transform: translateX(-200vw); }
+
+  .list__item-marker[data-tab-index="1"] { transform: translateX(100%); }
+  .list__item-marker[data-tab-index="2"] { transform: translateX(200%); }
+}

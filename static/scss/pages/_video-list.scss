@@ -1,0 +1,19 @@
+.video-list {
+  background-color: $color-gray-90;
+  flex: 1;
+  padding: 1em 2em 0;
+
+  @include breakpoint(medium down) {
+    padding: 1em 1em 0;
+  }
+
+  .preview__floating-header {
+    background-color: $color-secondary;
+  }
+
+  .header__icon {
+    border: .2em solid;
+    border-radius: 50%;
+    padding: .4em;
+  }
+}

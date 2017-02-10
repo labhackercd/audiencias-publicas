@@ -1,14 +1,16 @@
 {% load video_utils %}
-<li class="questions__item" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}">
-  <div class="questions__vote-block">
+<li class="list__item" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}">
+  <div class="item__vote-block">
     <span class="vote-block__total-votes">{{question.votes_count}}</span>
     <span class="vote-block__vote-label">Votos</span>
   </div>
 
-  <div class="questions__question-block">
-    <div class="questions__user-info"> <span class="questions__user-name">{{question.user}}</span>
-      <div class="questions__timestamp"> {{question.created | date:'H:i'}}</div>
+  <div class="item__question-block">
+    <div class="question-block__info">
+      <span class="info__username">{{question.user}}</span>
+      <div class="info__timestamp"> {{question.created | date:'H:i'}}</div>
     </div>
-    <p class="questions__user-question">{{question.question}}</p>
+
+    <p class="question-block__user-question">{{question.question}}</p>
   </div>
 </li>

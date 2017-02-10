@@ -1,0 +1,74 @@
+[class^="registration--"] {
+  align-items: center;
+  background: $color-gray-96;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 2.5em 0;
+
+  @include breakpoint(medium down) {
+    padding: 1em 1em 2em;
+  }
+}
+
+.registration-error {
+  border: 0;
+  left: 0;
+  position: absolute;
+  top: 4em;
+  width: 100%;
+  z-index: 10;
+
+  @include breakpoint(small down) {
+    top: 3em;
+  }
+
+  .close-button:hover {
+    color: $color-white;
+  }
+
+  h5,
+  li {
+    color: $color-white;
+    margin: 0;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+}
+
+.registration-wrapper {
+  @include breakpoint(medium up) {
+    max-width: 30em;
+    min-width: 20em;
+  }
+}
+
+
+.registration__title {
+  color: $color-primary;
+  font-size: 2.5em;
+  font-weight: 700;
+  margin: 0;
+  padding-bottom: .2em;
+  position: relative;
+  text-transform: uppercase;
+
+  &::after {
+    background-color: $color-secondary;
+    bottom: 0;
+    content: '';
+    height: .2em;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.registration__text {
+  font-size: 1em;
+  font-weight: 500;
+  margin: 1em 0 0;
+}

@@ -1,0 +1,64 @@
+.navigation {
+  align-items: center;
+  background-color: $color-primary;
+  box-shadow: 0 3px 6px $color-shadow-16, 0 1px 4px $color-shadow-23;
+  display: flex;
+  height: 4em;
+  position: fixed;
+  top: 0;
+  transition: transform $swift-out .3s;
+  width: 100vw;
+  z-index: 10000;
+
+  @include breakpoint(small down) {
+    height: 3em;
+  }
+
+  @include breakpoint(small down) { padding: 0 1em; }
+  @include breakpoint(medium only) { padding: 0 2em; }
+  @include breakpoint(large only) { padding: 0 2em 0 2.5em; }
+  @include breakpoint(xlarge up) { padding: 0 2em 0 5em; }
+
+  .navigation__logo {
+    margin-right: auto;
+  }
+
+  .logo__image--audiencias-logo {
+    height: 2.5em;
+
+    @include breakpoint(small down) {
+      height: 1.8em;
+    }
+  }
+
+  .logo__image--audiencias-text {
+    height: 1.5em;
+    margin-left: .8em;
+
+    @include breakpoint(small down) {
+      display: none;
+    }
+  }
+
+  .navigation__auth {
+    align-items: center;
+    color: $color-white;
+    display: flex;
+    font-weight: 600;
+    height: 100%;
+    padding: .75em;
+    transition: $hover-transition;
+
+    &:hover {
+      background-color: darken($color-primary, 3%);
+    }
+  }
+
+  .auth__text {
+    margin-right: 1em;
+  }
+
+  .auth__icon {
+    font-size: 1.4em;
+  }
+}

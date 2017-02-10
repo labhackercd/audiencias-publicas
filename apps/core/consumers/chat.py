@@ -15,6 +15,10 @@ def on_connect(message, pk):
     video = get_video(pk)
     if video is not None:
         message.reply_channel.send({"accept": True})
+        video.online_users += 1
+        if video.online_users > video.max_online_users:
+            video.max_online_users = video.online_users
+        video.save()
         Group(video.group_chat_name).add(message.reply_channel)
         log.debug('Chat websocket connected.')
 
@@ -49,6 +53,8 @@ def on_receive(message, pk):
 def on_disconnect(message, pk):
     try:
         video = Video.objects.get(pk=pk)
+        video.online_users -= 1
+        video.save()
         Group(video.group_chat_name).discard(message.reply_channel)
         log.debug('Chat websocket disconnected.')
     except (KeyError, Video.DoesNotExist):

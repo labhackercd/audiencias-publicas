@@ -1,0 +1,43 @@
+.footer {
+  background-color: $color-footer;
+  color: $color-white;
+  display: flex;
+  justify-content: center;
+  padding: 3em 0;
+
+  @include breakpoint(small only) {
+    padding: 2em 0;
+  }
+
+  .footer__logos {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: .5em 0;
+    padding: 0 2.5em;
+
+    @include breakpoint(medium up) {
+      max-width: 50%;
+    }
+  }
+
+  .logos__link {
+    margin: 1em;
+  }
+
+  .logos__image {
+    height: 3em;
+  }
+
+  .footer__about {
+    flex: 1;
+    margin: .5em 0;
+    padding: 0 2.5em;
+  }
+
+  .about__text {
+    margin: 0;
+  }
+}

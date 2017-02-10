@@ -1,42 +1,54 @@
 {% load video_utils %}
-<li class="questions__item" data-question-id="{{question.id}}" data-question-author="{{author}}" data-question-votes="{{question.votes_count}}" data-question-path="{% url 'question_detail' pk=question.id %}">
+<li class="list__item" id="{{question.id}}" data-question-id="{{question.id}}" data-question-author="{{author}}" data-question-votes="{{question.votes_count}}" data-question-path="{% url 'question_detail' pk=question.id %}">
 
-  <span class="questions__anchor" id="{{question.id}}"></span>
-  <div class="questions__vote-block">
+  <div class="item__vote-block">
     {% vote_action question user.username %}
   </div>
 
-  <div class="questions__question-block">
-    <div class="questions__user-info">
-      <span class="questions__user-name">{{question.user}}
-    </span>
-      <div class="questions__timestamp"> {{question.created | date:'H:i'}}</div>
+  <div class="item__question-block">
+    <div class="question-block__info">
+      <span class="info__username">{{question.user}}</span>
+      <div class="info__timestamp"> {{question.created | date:'H:i'}}</div>
     </div>
-    <p class="questions__user-question">{{question.question}}</p>
 
-    <span class="questions__share-button {% if object.closed_date %} hide{% endif %}" role="button" title="Compartilhar esta pergunta">
-      <i class="questions__share-icon icon icon-share-alt"></i>
-    </span>
-
-    {% if object.closed_date and question.answer_time %}
-      <a class="questions__answered" href="{% url 'video_room' question.video.id %}?t={{question.answer_time}}">
-      <span class="questions__answered-text">Respondido em</span>
-      <span class="questions__answered-time">{{question.answer_time|format_seconds}}</span>
-      <i class="questions__answered-icon icon icon-check"></i>
-      </a>
+    {% if not object.closed_date %}
+      <span class="question-block__share-button" role="button" title="Compartilhar esta pergunta">
+        <i class="share-button__icon icon icon-share-alt"></i>
+      </span>
     {% endif %}
 
-    <ul class="questions__share-list">
-      <li class="questions__share-item questions__share-item--facebook ">
-        <a class="questions__share-link" target="_blank" title="Compartilhar pelo Facebook"><i class="questions__share-icon icon icon-facebook"></i></a>
+    <ul class="question-block__share-list">
+      <li class="share-list__item--facebook ">
+        <a class="item__link" data-social="facebook" target="_blank" title="Compartilhar pelo Facebook">
+          <i class="item__icon icon icon-facebook"></i>
+        </a>
       </li>
-      <li class="questions__share-item questions__share-item--twitter ">
-        <a class="questions__share-link" target="_blank" title="Compartilhar pelo Twitter"><i class="questions__share-icon icon icon-twitter"></i></a>
+
+      <li class="share-list__item--twitter ">
+        <a class="item__link" data-social="twitter" target="_blank" title="Compartilhar pelo Twitter">
+          <i class="item__icon icon icon-twitter"></i>
+        </a>
       </li>
-      <li class="questions__share-item questions__share-item--whatsapp ">
-        <a class="questions__share-link" target="_blank" title="Compartilhar pelo Whatsapp"><i class="questions__share-icon icon icon-whatsapp"></i></a>
+
+      <li class="share-list__item--whatsapp ">
+        <a class="item__link" data-social="whatsapp" target="_blank" title="Compartilhar pelo Whatsapp">
+          <i class="item__icon icon icon-whatsapp"></i>
+        </a>
       </li>
-      <span class="questions__share-close" role="button" title="Cancelar"><i class="icon icon-times"></i></span>
+
+      <span class="share-list__close" role="button" title="Cancelar">
+        <i class="icon icon-times"></i>
+      </span>
     </ul>
+
+    <p class="question-block__text">{{question.question}}</p>
+
+    {% if object.closed_date and question.answer_time %}
+      <a class="question-block__answered" href="{% url 'video_room' question.video.id %}?t={{question.answer_time}}">
+        <span class="answered__text">Respondido em</span>
+        <span class="answered__time">{{question.answer_time|format_seconds}}</span>
+        <i class="answered__icon icon icon-check"></i>
+      </a>
+    {% endif %}
   </div>
 </li>

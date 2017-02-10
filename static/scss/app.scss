@@ -1,25 +1,37 @@
+// Foundation
 @import 'foundation/foundation-includes';
-@import 'settings.colors';
-@import 'settings.animation';
-@import 'settings.type';
-@import 'tools.material-shadow';
-@import 'tools.animation';
-@import 'base.page';
-@import 'base.icons';
-@import 'base.tables';
-@import 'components.flex-column';
-@import 'components.navigation';
-@import 'components.footer';
-@import 'components.sections';
-@import 'components.forms';
-@import 'components.buttons';
-@import 'components.hamburguer';
-@import 'components.hovering-block';
-@import 'components.video-list';
-@import 'components.video';
-@import 'components.calendar-table';
-@import 'components.chat';
-@import 'components.questions';
-@import 'components.send-form';
-@import 'overrides.olark';
-@import 'trumps.hide-show';
+
+// Ambience
+@import 'ambience/animation';
+@import 'ambience/colors';
+@import 'ambience/fonts';
+
+// Base
+@import 'base/globals';
+
+// Shared
+@import 'shared/floating-header';
+@import 'shared/question-block';
+@import 'shared/send-form';
+
+// Pages
+@import 'pages/home';
+@import 'pages/registration';
+@import 'pages/room-questions-list';
+@import 'pages/room';
+@import 'pages/video-list';
+
+// Components
+@import 'components/banner';
+@import 'components/calendar-table';
+@import 'components/chat';
+@import 'components/footer';
+@import 'components/navigation';
+@import 'components/preview';
+@import 'components/questions';
+@import 'components/registration-form';
+@import 'components/tabs-nav';
+@import 'components/video';
+
+// Overrides
+@import 'overrides/olark';

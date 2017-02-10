@@ -1,0 +1,54 @@
+.sidebar {
+  background-color: $color-primary;
+  box-shadow: 0 3px 6px $color-shadow-16, 0 1px 4px $color-shadow-23;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  position: relative;
+
+  .logo-audiencias {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+
+    .logo__icon {
+      height: 27px;
+      width: 27px;
+    }
+
+    .logo__text {
+      height: 27px;
+      width: 80%;
+    }
+  }
+
+
+  .authentication__link {
+    align-items: center;
+    color: $color-white;
+    display: flex;
+    font-weight: 600;
+    height: 100%;
+    justify-content: center;
+    padding: .75em;
+    transition: $hover-transition;
+    width: 100%;
+
+    &:hover,
+    &.toggled {
+      background-color: darken($color-primary, 3%);
+    }
+  }
+
+  .authentication__icon {
+    font-size: 1.4em;
+    margin-left: .5em;
+  }
+
+  .logo-camara,
+  .logo-labhacker {
+    display: flex;
+    margin: 10px 20px;
+  }
+}

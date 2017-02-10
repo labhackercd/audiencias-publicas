@@ -1,0 +1,118 @@
+.room-questions-body {
+  margin-top: 0;
+}
+
+.room-questions {
+  background: linear-gradient(45deg, $color-primary-xlight 0%, $color-primary 100%);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1em;
+
+  @include breakpoint(large up) {
+    height: 100vh;
+    max-height: 100vh;
+  }
+
+  @include breakpoint(small only) { font-size: 80%; }
+  @include breakpoint(medium only) { font-size: 100%; }
+  @include breakpoint(xxlarge up) { font-size: 125%; }
+}
+
+.room-questions__title {
+  align-items: center;
+  color: $color-white;
+  display: flex;
+  flex-shrink: 0;
+  font-size: 1.4em;
+  font-weight: 700;
+  line-height: 1em;
+  text-transform: uppercase;
+
+  &::after {
+    background-color: $color-accent;
+    content: '';
+    display: flex;
+    flex: 1;
+    height: .7em;
+    margin-left: 1em;
+  }
+}
+
+.room-questions__video-info {
+  font-size: 1em;
+  font-weight: 400;
+  margin-bottom: 0;
+
+  .video-info__icon {
+    color: $color-live-blink;
+    font-size: .7em;
+  }
+
+  .video-info__text {
+    color: $color-white;
+    text-transform: uppercase;
+  }
+}
+
+.room-questions__list {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  margin: 1em -.5em 0;
+
+  @include breakpoint(large up) {
+    flex-wrap: wrap;
+  }
+
+  .list__item {
+    display: flex;
+    flex: 0 0 auto;
+    margin: .5em 0;
+    padding: 0 .5em;
+
+    @include breakpoint(large up) {
+      width: 50%;
+    }
+  }
+
+  .item__vote-block {
+    align-items: center;
+    background-color: $color-primary-xxlight;
+    color: $color-white;
+    display: flex;
+    flex-basis: 6em;
+    flex-direction: column;
+    font-weight: 700;
+    justify-content: center;
+
+    @include breakpoint(large up) {
+      font-size: 115%;
+    }
+  }
+
+  .vote-block__total-votes {
+    font-size: 1.2em;
+  }
+
+  .item__question-block {
+    background-color: $color-white;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+    padding: .75em;
+
+    @include breakpoint(medium down) {
+      margin: 0;
+    }
+  }
+}
+
+.room-questions__empty {
+  color: $color-primary-xlight;
+  font-size: 1.5em;
+  font-weight: 600;
+  margin-top: 1em;
+  text-align: center;
+}

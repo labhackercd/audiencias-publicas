@@ -1,0 +1,113 @@
+.registration__form {
+  margin-top: 1em;
+
+  .form__fieldset {
+    display: flex;
+
+    + .form__fieldset {
+      margin-top: 1em;
+    }
+  }
+
+  .fieldset__label {
+    align-items: center;
+    background-color: $color-gray-90;
+    border: 1px solid $color-gray-80;
+    border-right: 0;
+    display: flex;
+    padding: 0 1em;
+  }
+
+  .fieldset__input {
+    flex: 1;
+    margin: 0;
+  }
+
+  .form__btn {
+    background-color: $color-primary-light;
+    color: $color-white;
+    cursor: pointer;
+    display: block;
+    margin-top: 1em;
+    padding: .85em 1em;
+    transition: $hover-transition;
+    width: 100%;
+
+    &:hover {
+      background-color: darken($color-primary, 1%);
+    }
+  }
+
+  .form__links {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+  }
+
+  .links__item {
+    + .links__item {
+      margin-top: .5em;
+    }
+
+    span {
+      cursor: default;
+    }
+
+    a {
+      color: $color-secondary;
+      font-weight: 700;
+    }
+  }
+
+  .form__social {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+  }
+
+  [class^="social__btn--"] {
+    color: $color-white;
+    display: flex;
+    transition: $hover-transition;
+
+    + [class^="social__btn--"] {
+      margin-top: 1em;
+    }
+
+    .btn__icon {
+      align-items: center;
+      display: flex;
+    }
+
+    .icon {
+      padding: 0 1em;
+    }
+
+    .btn__label {
+      font-size: .9em;
+      font-weight: 600;
+      padding: .85em 1em;
+      text-align: center;
+      width: 100%;
+    }
+  }
+
+  .social__btn--facebook {
+    background-color: $color-facebook;
+
+    &:hover,
+    .btn__icon {
+      background-color: darken($color-facebook, 5%);
+    }
+  }
+
+  .social__btn--google {
+    background-color: $color-google;
+
+    &:hover,
+    .btn__icon {
+      background-color: darken($color-google, 5%);
+    }
+  }
+}

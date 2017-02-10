@@ -1,0 +1,125 @@
+.chat {
+  background-color: $color-white;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 3em 2em 3.5em;
+  position: relative;
+
+  @include breakpoint(medium down) {
+    margin: 0 0 80px;
+  }
+
+  @include breakpoint(large only) {
+    margin: 0;
+  }
+}
+
+.chat__floating-header {
+  background-color: $color-primary-xlight;
+  margin: 0 1em;
+
+  @include breakpoint(large down) {
+    display: none;
+  }
+
+  .header__icon {
+    border: .2em solid;
+    border-radius: 50%;
+    padding: .4em;
+  }
+}
+
+.chat__messages {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+
+  @include breakpoint(xlarge up) {
+    margin-top: -2.7em;
+    padding-top: 1.5em;
+  }
+
+  .messages__list {
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: 0;
+    word-break: break-word;
+  }
+
+  .list__item {
+    padding: .5em 1em;
+
+    &:nth-child(odd) {
+      background-color: $color-gray-98;
+    }
+
+    .item__username {
+      font-weight: 700;
+    }
+
+    .item__colon {
+      margin-left: -.2em;
+    }
+
+    .item__timestamp {
+      color: $color-gray-45;
+      font-size: .7em;
+      font-weight: 400;
+      word-break: break-word;
+    }
+  }
+
+  .messages__list--empty {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 2em;
+
+    @include breakpoint(large down) {
+      flex-wrap: wrap;
+    }
+
+    p {
+      color: $color-gray-84;
+      font-size: 1.5em;
+      font-weight: 600;
+      margin-left: 1em;
+
+      @include breakpoint(large down) {
+        margin: 1em 0 0;
+        text-align: center;
+      }
+    }
+  }
+}
+
+[class^="chat__read-more"] {
+  align-items: center;
+  background-color: rgba($color-primary-xxlight, .85);
+  color: $color-white;
+  cursor: pointer;
+  display: flex;
+  font-size: .9em;
+  font-weight: 600;
+  height: 30px;
+  justify-content: center;
+  margin-bottom: -30px;
+  transition: $translate-transition;
+  width: 100%;
+  z-index: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.chat__read-more--visible {
+  transform: translateY(-100%);
+}
+
+.chat [class^="send-form--"] {
+  @include breakpoint(medium down) {
+    transform: translateY(100%);
+  }
+}

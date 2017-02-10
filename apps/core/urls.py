@@ -3,7 +3,7 @@ from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              QuestionDetail, receive_callback, index)
 from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
                            QuestionListAPI, VideoListAPI, VoteListAPI,
-                           UserListAPI)
+                           UserListAPI, VideoAPI)
 
 
 urlpatterns = [
@@ -25,6 +25,8 @@ urlpatterns += [
     url(r'^api/question/$', QuestionListAPI.as_view(),
         name='question_list_api'),
     url(r'^api/video/$', VideoListAPI.as_view(), name='video_list_api'),
+    url(r'^api/video/(?P<pk>\d+)$', VideoAPI.as_view(),
+        name='video_detail_api'),
     url(r'^api/vote/$', VoteListAPI.as_view(), name='vote_list_api'),
     url(r'^api/user/$', UserListAPI.as_view(), name='user_list_api'),
 ]

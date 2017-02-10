@@ -1,0 +1,34 @@
+{
+  "name": "audiencias-publicas",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/labhackercd/audiencias-publicas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/labhackercd/audiencias-publicas/issues"
+  },
+  "homepage": "https://github.com/labhackercd/audiencias-publicas#readme",
+  "devDependencies": {
+    "autoprefixer": "^6.6.1",
+    "babel-preset-es2015": "^6.18.0",
+    "babelify": "^7.3.0",
+    "bower": "^1.8.0",
+    "browserify": "^13.3.0",
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "node-sass": "^4.3.0",
+    "postcss": "^5.2.10",
+    "postcss-cli": "^2.6.0"
+  },
+  "dependencies": {
+    "reconnectingwebsocket": "^1.0.0"
+  }
+}

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework import generics, filters, permissions
+from rest_framework import generics, filters, permissions, mixins
 from datetime import datetime
 from apps.core.models import Agenda, Message, Question, Video, UpDownVote
 from apps.core.serializers import (AgendaSerializer, QuestionSerializer,
@@ -82,6 +82,18 @@ class VideoListAPI(generics.ListAPIView):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('videoId', 'title', 'description', 'slug')
     ordering_fields = ('published_date', 'closed_date')
+
+
+class VideoAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def get_serializer_class(self):
+        return VideoSerializer
+
+    def get_object(self):
+        return Video.objects.get(pk=self.kwargs['pk'])
 
 
 @api_view(['GET'])

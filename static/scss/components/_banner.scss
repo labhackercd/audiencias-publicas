@@ -1,0 +1,22 @@
+.banner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: calc(70vh - 4em);
+  justify-content: center;
+  min-height: 22em;
+  padding: 2.5em;
+  text-align: center;
+}
+
+.banner__logo {
+  margin-bottom: 2em;
+  width: 28em;
+}
+
+.banner__text {
+  color: $color-white;
+  font-size: 1.6em;
+  font-weight: 700;
+  max-width: 20em;
+}

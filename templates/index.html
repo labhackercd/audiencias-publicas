@@ -1,123 +1,109 @@
 {% extends "components/base.html" %}
-{% load staticfiles %}
+{% load staticfiles compress %}
 
 {% block title %}Audiencias Públicas{% endblock %}
 
 {% block main %}
-
-  <section class="section section--home">
-    <div class="row expanded">
-      <div class="section__info section__block section__block--hero columns small-12">
-        <img class="section__logo" src="{% static 'img/logo-audiencias-full.svg' %}" data-fallback="{% static 'img/logo-audiencias-full.png' %}">
-        <p class="section__text">
-          Acompanhe ao vivo e participe enviando perguntas aos deputados!
-        </p>
+  <main class="home">
+    <section class="section-top">
+      <div class="banner">
+        <img class="banner__logo" src="{% static 'img/logo-audiencias-full.svg' %}" data-fallback="{% static 'img/logo-audiencias-full.png' %}">
+        <p class="banner__text">Acompanhe ao vivo e participe enviando perguntas aos deputados!</p>
       </div>
-    </div>
-  </section>
+    </section>
 
-{% if live_videos %}
-<section class="section section--videos section--live-videos">
-{% else %}
-<section class="section section--videos section--live-videos hide">
-{% endif %}
-  <div class="row">
-    <div class="hovering-block">
-      <div class="hovering-block__header hovering-block__header--live">
-        <span class="header__icon-wrapper header__icon-wrapper--live">
-          <i class="header__icon header__icon--live icon icon-circle live-blink"></i>
-        </span>
-        <h1 class="header__title">Ao Vivo</h1>
+    <section class="section-bottom">
+      {% if live_videos %}
+        <div class="preview--live-videos">
+      {% else %}
+        <div class="preview--live-videos hide">
+      {% endif %}
+        <div class="preview__floating-header">
+          <i class="header__icon icon icon-circle live-blink"></i>
+          <h2 class="header__title">Ao Vivo</h2>
+        </div>
+
+        <div class="preview__list-wrapper">
+          <ul class="preview__list">
+            {% for video in live_videos %}
+              {% include "includes/home_video.html" with video=video %}
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-      <div class="video-list-wrapper">
-        <ul class="video-list video-list--live">
-          {% for video in live_videos %}
+
+      {% if closed_videos %}
+        <div class="preview--closed-videos">
+      {% else %}
+        <div class="preview--closed-videos hide">
+      {% endif %}
+        <div class="preview__floating-header">
+          <i class="header__icon icon icon-play"></i>
+          <h2 class="header__title">Veja Audiências Que Já Aconteceram</h2>
+        </div>
+
+        <div class="preview__list-wrapper">
+          <ul class="preview__list">
+            {% for video in closed_videos %}
             {% include "includes/home_video.html" with video=video %}
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+            {% endfor %}
+          </ul>
+        </div>
 
-{% if closed_videos %}
-<section class="section section--videos section--closed-videos">
-{% else %}
-<section class="section section--videos section--closed-videos hide">
-{% endif %}
-  <div class="row">
-    <div class="hovering-block">
-      <div class="hovering-block__header hovering-block__header--closed-videos">
-        <span class="header__icon-wrapper">
-          <i class="header__icon header__icon--closed-videos icon icon-play"></i>
-        </span>
-        <h1 class="header__title">Veja Audiências Que Já Aconteceram</h1>
+        <div class="preview__show-all">
+          <a href="{% url 'video_list' %}" class="show-all__button">Ver Tudo</a>
+        </div>
       </div>
-      <div class="video-list-wrapper">
 
-        <ul class="video-list video-list--closed-videos">
-          {% for video in closed_videos %}
-            {% include "includes/home_video.html" with video=video %}
-          {% endfor %}
-        </ul>
+      {% if agendas %}
+        <div class="preview--calendar">
+          <div class="preview__floating-header">
+            <i class="header__icon icon icon-calendar"></i>
+            <h2 class="header__title">Previsão de Audiências Públicas</h2>
+          </div>
 
-      </div>
-    <div class="show-all show-all--video-list">
-      <a href="{% url 'video_list' %}" class="show-all__button">Ver Tudo</a>
-    </div>
-    </div>
-  </div>
-</section>
-{% if agendas %}
-<section class="section section--videos section--calendar">
-  <div class="row">
-    <div class="hovering-block">
-      <div class="hovering-block__header hovering-block__header--calendar">
-        <span class="header__icon-wrapper">
-          <i class="header__icon header__icon--calendar icon icon-calendar"></i>
-        </span>
-        <h1 class="header__title">Previsão de Audiências Públicas</h1>
-      </div>
-      <table class="calendar-table">
-        <tbody class="calendar-table__body">
-          {% for agenda in agendas %}
-          <tr class="calendar-table__row">
-            <td class="calendar-table__column">
-              <div class="calendar-table__date-wrapper">
-                {% if agenda.is_today %}
-                  <span class="calendar-table__weekday calendar-table__weekday--today">Hoje</span>
-                {% elif agenda.is_tomorrow %}
-                  <span class="calendar-table__weekday calendar-table__weekday--tomorrow">Amanhã</span>
-                {% else %}
-                  <span class="calendar-table__weekday">{{ agenda.date|date:"D" }}</span>
-                {% endif %}
-                <span class="calendar-table__day">{{ agenda.date|date:"d" }}</span>
-                <span class="calendar-table__month">{{ agenda.date|date:"M" }}</span>
-              </div>
-            </td>
-            <td class="calendar-table__column">
-              <div class="calendar-table__event-title">{{ agenda.commission }} | {{ agenda.location }}</div>
-              <div class="calendar-table__hour">
-                {% if agenda.date|date:"H" == "00" %}
-                  Horário não informado
-                {% else %}
-                  {{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}
-                {% endif %}
-              </div>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <!--<div class="show-all">
-        <a href="#" class="show-all__button">Ver Tudo</a>
-      </div>-->
-    </div>
-  </div>
-</section>
-{% endif %}
+          <table class="calendar-table">
+            <tbody class="calendar-table__body">
+              {% for agenda in agendas %}
+                <tr class="calendar-table__row">
+                  <td class="calendar-table__column">
+                    <div class="calendar-table__date-wrapper">
+
+                      {% if agenda.is_today %}
+                        <span class="calendar-table__weekday calendar-table__weekday--today">Hoje</span>
+                      {% elif agenda.is_tomorrow %}
+                        <span class="calendar-table__weekday calendar-table__weekday--tomorrow">Amanhã</span>
+                      {% else %}
+                        <span class="calendar-table__weekday">{{ agenda.date|date:"D" }}</span>
+                      {% endif %}
+
+                      <span class="calendar-table__day">{{ agenda.date|date:"d" }}</span>
+                      <span class="calendar-table__month">{{ agenda.date|date:"M" }}</span>
+                    </div>
+                  </td>
+
+                  <td class="calendar-table__column">
+                    <div class="calendar-table__event-title">{{ agenda.commission }} | {{ agenda.location }}</div>
+                    <div class="calendar-table__hour">
+                      {% if agenda.date|date:"H" == "00" %}
+                        Horário não informado
+                      {% else %}
+                        {{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}
+                      {% endif %}
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </section>
+  </main>
 {% endblock main %}
 
 {% block websockets %}
-  <script type="text/javascript" src="{% static 'js/websockets/home.js' %}"></script>
+  {% compress js %}
+    <script type="text/es6" src="{% static 'js/pages/index.js' %}"></script>
+  {% endcompress %}
 {% endblock %}

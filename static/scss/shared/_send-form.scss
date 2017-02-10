@@ -1,0 +1,93 @@
+[class^="send-form--"] {
+  background-color: $color-gray-92;
+  display: flex;
+  flex-shrink: 0;
+  padding: 1em;
+  z-index: 1;
+
+  @include breakpoint(medium down) {
+    bottom: 0;
+    position: absolute;
+    width: 100vw;
+    z-index: 10;
+  }
+
+  @include breakpoint(large down) {
+    align-items: center;
+    height: 80px;
+  }
+
+  @include breakpoint(xlarge up) {
+    height: 5em;
+  }
+
+  .send-form__input {
+    margin: 0;
+    resize: none;
+
+    @include breakpoint(xlarge up) {
+      font-size: 1em;
+      height: 3em;
+    }
+  }
+
+  .send-form__actions {
+    margin: 0 0 0 .5em;
+
+    @include breakpoint(large down) {
+      height: 100%;
+    }
+
+    @include breakpoint(large only) {
+      align-items: center;
+    }
+
+    @include breakpoint(large up) {
+      display: flex;
+    }
+  }
+
+  .actions__character-counter {
+    color: $color-white;
+    display: flex;
+    font-size: .8em;
+    font-weight: 700;
+
+    @include breakpoint(large up) {
+      align-items: center;
+      padding: 0 1em 0 .5em;
+    }
+
+    .character-counter__max-length {
+      color: $color-primary-xxlight;
+    }
+  }
+
+  .actions__button {
+    background-color: $color-primary-xxlight;
+    border: 0;
+    color: $color-white;
+    display: flex;
+    font-size: .9em;
+    font-weight: 600;
+    height: 100%;
+    margin: 0;
+    padding: 0 .5em 0 1em;
+  }
+}
+
+.send-form--unauthenticated,
+.send-form--closed {
+  align-items: center;
+  justify-content: center;
+
+  span {
+    font-size: 1em;
+    font-weight: 600;
+    padding: .5em;
+  }
+
+  a {
+    color: $color-primary-xxlight;
+  }
+}

@@ -55,6 +55,8 @@ class Video(TimestampedMixin):
     published_date = models.DateTimeField(auto_now=True)
     closed_date = models.DateTimeField(null=True, blank=True)
     slug = models.SlugField(max_length=200, blank=True)
+    online_users = models.IntegerField(default=0)
+    max_online_users = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = _('video')
@@ -115,7 +117,7 @@ class Message(TimestampedMixin):
 class Question(TimestampedMixin):
     video = models.ForeignKey(Video, related_name='questions')
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    question = models.TextField()
+    question = models.TextField(max_length='600')
     answer_time = models.IntegerField(null=True, blank=True)
 
     @property

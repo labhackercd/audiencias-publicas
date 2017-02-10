@@ -1,0 +1,27 @@
+html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4em;
+  min-height: calc(100% - 4em);
+
+  @include breakpoint(small only) {
+    margin-top: 3em;
+    min-height: calc(100% - 3em);
+  }
+}
+
+table {
+  @include breakpoint(small only) {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+i {
+  display: inline-flex;
+}

@@ -54,6 +54,7 @@ INSTALLED_APPS = (
 
     'djangobower',
     'compressor',
+    'compressor_toolkit',
     'django_q',
     'social_django',
     'channels',
@@ -164,13 +165,21 @@ BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
 BOWER_INSTALLED_APPS = [
     'jquery#~2.2.0',
     'foundation-sites',
-    'mixitup',
+    'mixitup#~2.1.11',
     'https://github.com/labhackercd/fontastic-labhacker.git',
     'https://github.com/joewalnes/reconnecting-websocket.git',
 ]
 
+BOWER_PATH = os.path.join(BASE_DIR, 'node_modules/.bin/bower')
+BROWSERIFY = os.path.join(BASE_DIR, 'node_modules/.bin/browserify')
+
+COMPRESS_NODE_MODULES = os.path.join(BASE_DIR, 'node_modules')
+COMPRESS_NODE_SASS_BIN = os.path.join(BASE_DIR, 'node_modules/.bin/node-sass')
+COMPRESS_POSTCSS_BIN = os.path.join(BASE_DIR, 'node_modules/.bin/postcss')
+
 COMPRESS_PRECOMPILERS = [
-    ('text/x-scss', 'django_libsass.SassCompiler')
+    ('text/x-scss', 'compressor_toolkit.precompilers.SCSSCompiler'),
+    ('text/es6', BROWSERIFY + ' {infile} -t babelify --outfile {outfile}')
 ]
 
 COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')

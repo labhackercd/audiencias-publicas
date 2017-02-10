@@ -1,0 +1,24 @@
+[class*="__floating-header"] {
+  align-items: center;
+  box-shadow: 0 1.5px 4px $color-shadow-24, 0 1.5px 6px $color-shadow-12;
+  color: $color-white;
+  display: flex;
+  padding: .4em 1.4em;
+  transform: translateY(-50%);
+  z-index: 100;
+
+  .header__title {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin: 0 0 0 .5em;
+    text-transform: uppercase;
+
+    @include breakpoint(small down) {
+      font-size: .9em;
+    }
+  }
+
+  .header__icon {
+    font-size: .9em;
+  }
+}

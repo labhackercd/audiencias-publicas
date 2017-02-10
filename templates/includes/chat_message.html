@@ -1,6 +1,6 @@
-<li class="chat__item chat__item--self" data-message-id="{{message.id}}">
-  <span class="chat__user-name">{{message.user}}</span>
-  <span class="chat__colon">: </span>
-  <span class="chat__message">{{message.message}}</span>
-  <span class="chat__timestamp">{{message.created | date:'H:i'}}</span>
+<li class="list__item" data-message-id="{{message.id}}">
+  <span class="item__username">{{message.user}}</span>
+  <span class="item__colon">: </span>
+  <span class="item__text">{{message.message}}</span>
+  <span class="item__timestamp">{{message.created | date:'H:i'}}</span>
 </li>
