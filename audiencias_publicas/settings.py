@@ -164,7 +164,7 @@ BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'static')
 
 BOWER_INSTALLED_APPS = [
     'jquery#~2.2.0',
-    'foundation-sites',
+    'foundation-sites#~6.2.4',
     'mixitup#~2.1.11',
     'https://github.com/labhackercd/fontastic-labhacker.git',
     'https://github.com/joewalnes/reconnecting-websocket.git',
