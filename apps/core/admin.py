@@ -9,13 +9,22 @@ class RoomAdmin(admin.ModelAdmin):
         'agenda__date', 'agenda__created')
 
     def get_comission(self, obj):
-        return obj.agenda.commission
+        if obj.agenda:
+            return obj.agenda.commission
+        else:
+            return 'Sala não agendada'
 
     def get_session(self, obj):
+        if obj.agenda:
             return obj.agenda.session
+        else:
+            return 'Sala não agendada'
 
     def get_situation(self, obj):
-        return obj.agenda.situation
+        if obj.agenda:
+            return obj.agenda.situation
+        else:
+            return 'Sala não agendada'
 
     get_comission.short_description = 'Commission'
     get_session.short_description = 'Session'
