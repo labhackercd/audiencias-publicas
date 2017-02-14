@@ -60,6 +60,7 @@ def index(request):
         closed_videos=Room.objects.filter(
             video__closed_date__isnull=False).order_by('-video__published_date')[:5],
         live_videos=Room.objects.filter(
+            video__isnull=False,
             video__closed_date__isnull=True).order_by('-video__published_date'),
         agendas=Agenda.objects.filter(
             situation__startswith='Convocada',
