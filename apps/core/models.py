@@ -32,17 +32,34 @@ class TimestampedMixin(models.Model):
         return super(TimestampedMixin, self).save(*args, **kwargs)
 
 
-class UpDownVote(TimestampedMixin):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
-    question = models.ForeignKey('Question', related_name='votes')
-    vote = models.BooleanField(default=False, choices=((True, _('Up Vote')),
-                               (False, _('Down Vote'))))
+class Agenda(TimestampedMixin):
+    date = models.DateTimeField(null=True, blank=True)
+    session = models.CharField(max_length=200, null=True, blank=True)
+    location = models.CharField(max_length=200, null=True, blank=True)
+    situation = models.CharField(max_length=200, null=True, blank=True)
+    commission = models.CharField(max_length=200, null=True, blank=True)
+    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
 
     class Meta:
-        unique_together = ('user', 'question')
+        verbose_name = _('agenda')
+        verbose_name_plural = _('agendas')
 
     def __str__(self):
-        return self.user.get_full_name() or self.user.username
+        if self.session and self.location:
+            return self.session + ', ' + self.location
+        else:
+            return 'Agenda'
+
+    def is_today(self):
+        if datetime.date.today() == self.date.date():
+            return True
+        return False
+
+    def is_tomorrow(self):
+        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+        if self.date.date() == tomorrow:
+            return True
+        return False
 
 
 class Video(TimestampedMixin):
@@ -55,8 +72,6 @@ class Video(TimestampedMixin):
     published_date = models.DateTimeField(auto_now=True)
     closed_date = models.DateTimeField(null=True, blank=True)
     slug = models.SlugField(max_length=200, blank=True)
-    online_users = models.IntegerField(default=0)
-    max_online_users = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = _('video')
@@ -64,6 +79,26 @@ class Video(TimestampedMixin):
 
     def __str__(self):
         return self.videoId
+
+
+class Room(TimestampedMixin):
+    agenda = models.OneToOneField('Agenda', related_name='room', null=True,
+                                  blank=True, on_delete=models.SET_NULL)
+    video = models.OneToOneField('Video', related_name='room', null=True,
+                                 blank=True, on_delete=models.SET_NULL)
+    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
+    online_users = models.IntegerField(default=0)
+    max_online_users = models.IntegerField(default=0)
+
+    class Meta:
+        verbose_name = _('room')
+        verbose_name_plural = _('rooms')
+
+    def __str__(self):
+        if self.cod_reunion:
+            return self.cod_reunion
+        else:
+            return 'room'
 
     @models.permalink
     def get_absolute_url(self):
@@ -97,8 +132,21 @@ class Video(TimestampedMixin):
         return "video-room-questions-%s" % self.id
 
 
+class UpDownVote(TimestampedMixin):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
+    question = models.ForeignKey('Question', related_name='votes')
+    vote = models.BooleanField(default=False, choices=((True, _('Up Vote')),
+                               (False, _('Down Vote'))))
+
+    class Meta:
+        unique_together = ('user', 'question')
+
+    def __str__(self):
+        return self.user.get_full_name() or self.user.username
+
+
 class Message(TimestampedMixin):
-    video = models.ForeignKey(Video, related_name='messages')
+    room = models.ForeignKey(Room, related_name='messages', null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     message = models.TextField()
 
@@ -115,7 +163,7 @@ class Message(TimestampedMixin):
 
 
 class Question(TimestampedMixin):
-    video = models.ForeignKey(Video, related_name='questions')
+    room = models.ForeignKey(Room, related_name='questions', null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     question = models.TextField(max_length='600')
     answer_time = models.IntegerField(null=True, blank=True)
@@ -129,7 +177,7 @@ class Question(TimestampedMixin):
             'includes/video_questions.html',
             {'question': self,
              'user': user,
-             'object': self.video,
+             'object': self.room,
              'author': encrypt(str(self.user.id).rjust(10))}
         )
 
@@ -142,7 +190,7 @@ class Question(TimestampedMixin):
             'html': self.html_room_question_body(),
             'id': self.id,
         }
-        Group(self.video.group_room_questions_name).send(
+        Group(self.room.group_room_questions_name).send(
             {'text': json.dumps(text)}
         )
 
@@ -154,33 +202,16 @@ class Question(TimestampedMixin):
         return self.question
 
 
-class Agenda(TimestampedMixin):
-    date = models.DateTimeField(null=True, blank=True)
-    session = models.CharField(max_length=200, null=True, blank=True)
-    location = models.CharField(max_length=200, null=True, blank=True)
-    situation = models.CharField(max_length=200, null=True, blank=True)
-    commission = models.CharField(max_length=200, null=True, blank=True)
+class Tag(TimestampedMixin):
+    text = models.CharField(max_length=200)
+    video = models.ForeignKey(Video, related_name='tags', null=True)
 
     class Meta:
-        verbose_name = _('agenda')
-        verbose_name_plural = _('agendas')
+        verbose_name = _('tag')
+        verbose_name_plural = _('tags')
 
     def __str__(self):
-        if self.session and self.location:
-            return self.session + ', ' + self.location
-        else:
-            return 'Agenda'
-
-    def is_today(self):
-        if datetime.date.today() == self.date.date():
-            return True
-        return False
-
-    def is_tomorrow(self):
-        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
-        if self.date.date() == tomorrow:
-            return True
-        return False
+        return self.video
 
 
 def notification(subject, html, email_list):
@@ -188,6 +219,12 @@ def notification(subject, html, email_list):
                                   email_list)
     mail.attach_alternative(html, 'text/html')
     mail.send()
+
+
+def agenda_post_save(sender, instance, created, **kwargs):
+    room = Room.objects.get_or_create(cod_reunion=instance.cod_reunion)[0]
+    room.agenda = instance
+    room.save()
 
 
 def video_pre_save(signal, instance, sender, **kwargs):
@@ -204,11 +241,11 @@ def video_post_save(sender, instance, created, **kwargs):
     if instance.closed_date is not None:
         is_closed = True
 
-    instance.send_notification(is_closed=is_closed)
+    # instance.room.send_notification(is_closed=is_closed)
 
 
 def video_post_delete(sender, instance, **kwargs):
-    instance.send_notification(deleted=True)
+    # instance.room.send_notification(deleted=True)
     try:
         Schedule.objects.get(name=instance.videoId).delete()
     except Schedule.DoesNotExist:
@@ -231,6 +268,7 @@ def vote_post_delete(sender, instance, **kwargs):
     instance.question.send_notification()
 
 
+models.signals.post_save.connect(agenda_post_save, sender=Agenda)
 models.signals.pre_save.connect(video_pre_save, sender=Video)
 models.signals.post_save.connect(video_post_save, sender=Video)
 models.signals.post_delete.connect(video_post_delete, sender=Video)
