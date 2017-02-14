@@ -1,18 +1,18 @@
-from apps.core.models import Video
+from apps.core.models import Room
 import json
 import logging
 
 log = logging.getLogger("chat")
 
 
-def get_video(pk):
+def get_room(pk):
     try:
-        return Video.objects.get(pk=pk)
+        return Room.objects.get(pk=pk)
     except ValueError:
         log.debug('Invalid path.')
         return
-    except Video.DoesNotExist:
-        log.debug('Video does not exists.')
+    except Room.DoesNotExist:
+        log.debug('Room does not exists.')
         return
 
 
