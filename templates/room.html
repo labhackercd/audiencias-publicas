@@ -81,6 +81,7 @@
 
   <section class="section-right">
     <div class="section-right__top">
+      {% if object.video %}
       <div class="video">
         <div class="video__iframe-wrapper">
           <iframe class="video__iframe" src="https://www.youtube.com/embed/{{ object.video.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
@@ -98,6 +99,11 @@
           </h2>
         </div>
       </div>
+      {% elif object.agenda %}
+        <div class="questions__list--empty">
+          <p>O vídeo desta audiência está previsto para {{object.agenda.date}}.</p>
+        </div>
+      {% endif %}
     </div>
 
     <div class="section-right__bottom">
@@ -158,7 +164,7 @@
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
 {% endblock extra_js %}
 
-{% if not object.closed_date %}
+{% if not object.video.closed_date %}
   {% block websockets %}
     <script>
       var HANDLER = "{{handler|default:''}}";
