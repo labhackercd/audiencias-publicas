@@ -1,5 +1,25 @@
 from django.contrib import admin
-from apps.core.models import Agenda, Message, Question, Video, UpDownVote
+from apps.core.models import Agenda, Message, Question, Video, UpDownVote, Room
+
+
+class RoomAdmin(admin.ModelAdmin):
+    list_display = ('get_comission', 'get_session', 'get_situation')
+    search_fields = (
+        'agenda__commission', 'agenda__session', 'agenda__situation',
+        'agenda__date', 'agenda__created')
+
+    def get_comission(self, obj):
+        return obj.agenda.commission
+
+    def get_session(self, obj):
+            return obj.agenda.session
+
+    def get_situation(self, obj):
+        return obj.agenda.situation
+
+    get_comission.short_description = 'Commission'
+    get_session.short_description = 'Session'
+    get_situation.short_description = 'Situation'
 
 
 class AgendaAdmin(admin.ModelAdmin):
@@ -8,20 +28,21 @@ class AgendaAdmin(admin.ModelAdmin):
 
 
 class MessageAdmin(admin.ModelAdmin):
-    list_display = ('user', 'video', 'message', 'created')
-    list_filter = ['user', 'video', 'created']
+    list_display = ('user', 'room', 'message', 'created')
+    list_filter = ['user', 'room', 'created']
     search_fields = ['message']
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'video', 'question', 'created')
-    list_filter = ['user', 'video', 'created']
+    list_display = ('user', 'room', 'question', 'created')
+    list_filter = ['user', 'room', 'created']
     search_fields = ['question']
 
 
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ('title', 'published_date', 'closed_date', 'created')
-    list_filter = ['created', 'closed_date']
+    list_display = (
+        'title', 'published_date', 'closed_date', 'created', 'room')
+    list_filter = ['created', 'closed_date', 'room']
     search_fields = ['title', 'description', 'videoId']
 
 
@@ -30,6 +51,7 @@ class UpDownVoteAdmin(admin.ModelAdmin):
     list_filter = ['user', 'question', 'created']
 
 
+admin.site.register(Room, RoomAdmin)
 admin.site.register(Agenda, AgendaAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Question, QuestionAdmin)
