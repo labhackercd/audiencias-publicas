@@ -2,9 +2,9 @@
 {% load staticfiles compress %}
 
 {% block metadata %}
-  <meta property="og:title" content="{{object.title}}" />
+  <meta property="og:title" content="{{object.video.title}}" />
   <meta property="og:site_name" content="Audiências Públicas" />
-  <meta property="og:description" content="{{ object.description }}" />
+  <meta property="og:description" content="{{ object.video.description }}" />
   <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/share-image.jpg' %}" />
   <meta property="og:image:type" content="image/jpg" />
   <meta property="og:image:width" content="600" />
@@ -42,7 +42,7 @@
             {% for question in questions %}
               {% include "includes/video_questions.html" with questions=questions user=user %}
             {% endfor %}
-          {% elif not object.closed_date %}
+          {% elif not object.video.closed_date %}
             <div class="questions__list--empty">
               <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
               <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
@@ -51,7 +51,7 @@
         </ul>
         <div class="questions__read-more"></div>
 
-        {% if not object.closed_date and user.is_authenticated %}
+        {% if not object.video.closed_date and user.is_authenticated %}
           <form class="send-form--questions" id="questionform">
             <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" maxlength="600" autocomplete="off" required=""></textarea>
             <div class="send-form__actions">
@@ -66,11 +66,11 @@
               </button>
             </div>
           </form>
-        {% elif not object.closed_date and not user.is_authenticated %}
+        {% elif not object.video.closed_date and not user.is_authenticated %}
           <div class="send-form--unauthenticated">
             <span><a href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
           </div>
-        {% elif object.closed_date %}
+        {% elif object.video.closed_date %}
           <div class="send-form--closed">
             <span>Audiência encerrada para participações.</span>
           </div>
@@ -83,7 +83,7 @@
     <div class="section-right__top">
       <div class="video">
         <div class="video__iframe-wrapper">
-          <iframe class="video__iframe" src="https://www.youtube.com/embed/{{ object.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
+          <iframe class="video__iframe" src="https://www.youtube.com/embed/{{ object.video.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
         </div>
         <div class="video__title">
           <h1 class="title__header">
@@ -91,10 +91,10 @@
             <span><strong id="online-users"></strong> assistindo</span>
           </h1>
           <h2 class="title__subheader">
-            {% if not object.closed_date %}
+            {% if not object.video.closed_date %}
               <i class="subheader__icon icon icon-circle live-blink"></i>
             {% endif %}
-            <span class="subheader__text">{{ object.title }}</span>
+            <span class="subheader__text">{{ object.video.title }}</span>
           </h2>
         </div>
       </div>
@@ -123,7 +123,7 @@
         </div>
         <div class="chat__read-more">Há novas mensagens disponíveis abaixo</div>
 
-        {% if not object.closed_date and user.is_authenticated %}
+        {% if not object.video.closed_date and user.is_authenticated %}
           <form class="send-form--chat" id="chatform">
             <textarea class="send-form__input" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required></textarea>
             <div class="send-form__actions">
@@ -134,12 +134,12 @@
             </div>
           </form>
 
-        {% elif not object.closed_date and not user.is_authenticated %}
+        {% elif not object.video.closed_date and not user.is_authenticated %}
           <div class="send-form--unauthenticated">
             <span><a href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
           </div>
 
-        {% elif object.closed_date %}
+        {% elif object.video.closed_date %}
           <div class="send-form--closed">
             <span>Audiência encerrada para participações.</span>
           </div>

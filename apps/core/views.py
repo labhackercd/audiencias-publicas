@@ -93,7 +93,7 @@ class ClosedVideos(ListView):
     def get_queryset(self):
         return Room.objects.filter(
             video__closed_date__isnull=False
-        ).order_by('-published_date')
+        ).order_by('-video__published_date')
 
 
 class RoomQuestionList(DetailView):
