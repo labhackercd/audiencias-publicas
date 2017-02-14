@@ -14,7 +14,7 @@ log = logging.getLogger("chat")
 def on_connect(message, pk):
     room = get_room(pk)
     if room is not None:
-        message.reply_channel.send({"accept": True})
+        message.reply_channel.send({"text": json.dumps({"accept": True})})
         room.online_users += 1
         if room.online_users > room.max_online_users:
             room.max_online_users = room.online_users

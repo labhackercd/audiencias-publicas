@@ -14,7 +14,7 @@ log = logging.getLogger("chat")
 def on_connect(message, pk):
     room = get_room(pk)
     if room is not None:
-        message.reply_channel.send({"accept": True})
+        message.reply_channel.send({"text": json.dumps({"accept": True})})
         Group(room.group_questions_name).add(message.reply_channel)
         log.debug('Questions websocket connected.')
 
@@ -23,7 +23,7 @@ def on_receive(message, pk):
     room = get_room(pk)
     data = get_data(message)
 
-    if not room.video.closed_date:
+    if not room.video or not room.video.closed_date:
         if set(data.keys()) != set(('handler', 'question', 'is_vote')):
             log.debug("Message unexpected format data")
             return

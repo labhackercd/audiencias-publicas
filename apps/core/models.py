@@ -228,8 +228,7 @@ def agenda_post_save(sender, instance, created, **kwargs):
 
 
 def video_pre_save(signal, instance, sender, **kwargs):
-    if not instance.slug:
-        instance.slug = slugify(instance.title)
+    instance.slug = slugify(instance.title)
 
 
 def video_post_save(sender, instance, created, **kwargs):
@@ -240,12 +239,13 @@ def video_post_save(sender, instance, created, **kwargs):
 
     if instance.closed_date is not None:
         is_closed = True
+    if hasattr(instance, 'room'):
+        instance.room.send_notification(is_closed=is_closed)
 
-    # instance.room.send_notification(is_closed=is_closed)
 
-
-def video_post_delete(sender, instance, **kwargs):
-    # instance.room.send_notification(deleted=True)
+def video_pre_delete(sender, instance, **kwargs):
+    if hasattr(instance, 'room'):
+        instance.room.send_notification(deleted=True)
     try:
         Schedule.objects.get(name=instance.videoId).delete()
     except Schedule.DoesNotExist:
@@ -271,6 +271,6 @@ def vote_post_delete(sender, instance, **kwargs):
 models.signals.post_save.connect(agenda_post_save, sender=Agenda)
 models.signals.pre_save.connect(video_pre_save, sender=Video)
 models.signals.post_save.connect(video_post_save, sender=Video)
-models.signals.post_delete.connect(video_post_delete, sender=Video)
+models.signals.pre_delete.connect(video_pre_delete, sender=Video)
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
