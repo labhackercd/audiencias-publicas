@@ -169,7 +169,7 @@
         document.location.href = login_url + '?next=' + next;
       }
 
-      var videoApiUrl = "{% url 'video_detail_api' pk=object.id %}";
+      var roomApiUrl = "{% url 'room_detail_api' pk=object.id %}";
     </script>
     {% compress js %}
       <script type="text/es6" src="{% static 'js/pages/room.js' %}"></script>

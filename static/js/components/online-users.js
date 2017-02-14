@@ -7,7 +7,7 @@ function onlineUsersComponent() {
   }
 
   function get() {
-    $.get(videoApiUrl, (data) => {
+    $.get(roomApiUrl, (data) => {
       update(data.online_users);
     });
   }
