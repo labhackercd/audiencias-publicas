@@ -6,10 +6,11 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import generics, filters, permissions, mixins
 from datetime import datetime
-from apps.core.models import Agenda, Message, Question, Video, UpDownVote
+from apps.core.models import Agenda, Message, Question, Video, UpDownVote, Room
 from apps.core.serializers import (AgendaSerializer, QuestionSerializer,
                                    MessageSerializer, VideoSerializer,
-                                   VoteSerializer, UserSerializer)
+                                   VoteSerializer, UserSerializer,
+                                   RoomSerializer)
 
 
 class TokenPermission(permissions.BasePermission):
@@ -59,9 +60,9 @@ class MessageListAPI(generics.ListAPIView):
         filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'video')
+    filter_fields = ('user', 'room')
     search_fields = ('message',)
-    ordering_fields = ('timestamp', 'user', 'video')
+    ordering_fields = ('timestamp', 'user', 'room')
 
 
 class QuestionListAPI(generics.ListAPIView):
@@ -71,7 +72,7 @@ class QuestionListAPI(generics.ListAPIView):
         filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'video')
+    filter_fields = ('user', 'room')
     search_fields = ('question',)
     ordering_fields = ('up_votes', 'down_votes', 'timestamp')
 
@@ -94,6 +95,18 @@ class VideoAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
 
     def get_object(self):
         return Video.objects.get(pk=self.kwargs['pk'])
+
+
+class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def get_serializer_class(self):
+        return RoomSerializer
+
+    def get_object(self):
+        return Room.objects.get(pk=self.kwargs['pk'])
 
 
 @api_view(['GET'])
