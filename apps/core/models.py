@@ -222,9 +222,13 @@ def notification(subject, html, email_list):
 
 
 def agenda_post_save(sender, instance, created, **kwargs):
-    room = Room.objects.get_or_create(cod_reunion=instance.cod_reunion)[0]
-    room.agenda = instance
-    room.save()
+    if 'Audiência' in instance.session:
+        if 'Convocada' in instance.situation or \
+           'Andamento' in instance.situation:
+            room = Room.objects.get_or_create(
+                cod_reunion=instance.cod_reunion)[0]
+            room.agenda = instance
+            room.save()
 
 
 def video_pre_save(signal, instance, sender, **kwargs):
