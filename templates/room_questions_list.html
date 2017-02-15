@@ -9,7 +9,7 @@
     <h1 class="room-questions__title">Perguntas</h1>
     <h2 class="room-questions__video-info">
       <i class="video-info__icon icon icon-circle live-blink"></i>
-      <a class="video-info__text" href="{% url 'video_room' pk=object.id %}">{{object.title}}</a>
+      <a class="video-info__text" href="{% url 'video_room' cod_reunion=object.cod_reunion %}">{{object.title}}</a>
     </h2>
 
     <ul class="room-questions__list" id="questions">

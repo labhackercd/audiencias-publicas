@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView
 import requests
 import json
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 
 def associate_videos(video):
@@ -86,6 +86,9 @@ class VideoDetail(DetailView):
 
         return context
 
+    def get_object(self):
+        return get_object_or_404(Room, cod_reunion=self.kwargs['cod_reunion'])
+
 
 class ClosedVideos(ListView):
     model = Room
@@ -110,6 +113,9 @@ class RoomQuestionList(DetailView):
                                       reverse=True)
 
         return context
+
+    def get_object(self):
+        return get_object_or_404(Room, cod_reunion=self.kwargs['cod_reunion'])
 
 
 class QuestionDetail(DetailView):

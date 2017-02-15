@@ -86,7 +86,7 @@ class Room(TimestampedMixin):
                                   blank=True, on_delete=models.SET_NULL)
     video = models.OneToOneField('Video', related_name='room', null=True,
                                  blank=True, on_delete=models.SET_NULL)
-    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
+    cod_reunion = models.CharField(max_length=200, unique=True)
     online_users = models.IntegerField(default=0)
     max_online_users = models.IntegerField(default=0)
 
@@ -102,7 +102,7 @@ class Room(TimestampedMixin):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('video_room', [self.pk])
+        return ('video_room', [self.cod_reunion])
 
     def html_body(self):
         return render_to_string('includes/home_video.html', {'video': self})
