@@ -14,7 +14,6 @@ log = logging.getLogger("chat")
 def on_connect(message, pk):
     room = get_room(pk)
     if room is not None:
-        message.reply_channel.send({"text": json.dumps({"accept": True})})
         Group(room.group_questions_name).add(message.reply_channel)
         log.debug('Questions websocket connected.')
 
