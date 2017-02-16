@@ -58,11 +58,14 @@ def receive_callback(request=None):
 def index(request):
     return render(request, 'index.html', context=dict(
         closed_videos=Room.objects.filter(
-            video__closed_date__isnull=False).order_by('-video__published_date')[:5],
+            video__closed_date__isnull=False,
+            is_visible=True).order_by('-video__published_date')[:5],
         live_videos=Room.objects.filter(
             video__isnull=False,
-            video__closed_date__isnull=True).order_by('-video__published_date'),
+            video__closed_date__isnull=True,
+            is_visible=True).order_by('-video__published_date'),
         agendas=Agenda.objects.filter(
+            room__is_visible=True,
             situation__startswith='Convocada',
             session__icontains='Audiência Pública',
             date__gte=datetime.now()).order_by('date'),
@@ -87,7 +90,8 @@ class VideoDetail(DetailView):
         return context
 
     def get_object(self):
-        return get_object_or_404(Room, cod_reunion=self.kwargs['cod_reunion'])
+        return get_object_or_404(Room, is_visible=True,
+                                 cod_reunion=self.kwargs['cod_reunion'])
 
 
 class ClosedVideos(ListView):
@@ -96,6 +100,7 @@ class ClosedVideos(ListView):
 
     def get_queryset(self):
         return Room.objects.filter(
+            is_visible=True,
             video__closed_date__isnull=False
         ).order_by('-video__published_date')
 
@@ -115,7 +120,8 @@ class RoomQuestionList(DetailView):
         return context
 
     def get_object(self):
-        return get_object_or_404(Room, cod_reunion=self.kwargs['cod_reunion'])
+        return get_object_or_404(Room, is_visible=True,
+                                 cod_reunion=self.kwargs['cod_reunion'])
 
 
 class QuestionDetail(DetailView):

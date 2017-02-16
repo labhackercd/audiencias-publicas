@@ -3,7 +3,8 @@ from apps.core.models import Agenda, Message, Question, Video, UpDownVote, Room
 
 
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('get_comission', 'get_session', 'get_situation')
+    list_display = ('get_comission', 'get_session', 'get_situation', 'is_visible')
+    list_filter = ['is_visible']
     search_fields = (
         'agenda__commission', 'agenda__session', 'agenda__situation',
         'agenda__date', 'agenda__created')

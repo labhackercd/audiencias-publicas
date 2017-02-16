@@ -89,6 +89,7 @@ class Room(TimestampedMixin):
     cod_reunion = models.CharField(max_length=200, unique=True)
     online_users = models.IntegerField(default=0)
     max_online_users = models.IntegerField(default=0)
+    is_visible = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _('room')
