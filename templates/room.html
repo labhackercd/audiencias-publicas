@@ -82,26 +82,27 @@
   <section class="section-right">
     <div class="section-right__top">
       {% if object.video %}
-      <div class="video">
-        <div class="video__iframe-wrapper">
-          <iframe class="video__iframe" src="https://www.youtube.com/embed/{{ object.video.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
+        <div class="video">
+          <div class="video__iframe-wrapper">
+            <iframe class="video__iframe" src="https://www.youtube.com/embed/{{ object.video.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
+          </div>
+          <div class="video__title">
+            <h1 class="title__header">
+              Agora na Câmara:
+              <span><strong id="online-users"></strong> assistindo</span>
+            </h1>
+            <h2 class="title__subheader">
+              {% if not object.video.closed_date %}
+                <i class="subheader__icon icon icon-circle live-blink"></i>
+              {% endif %}
+              <span class="subheader__text">{{ object.agenda.commission }}</span>
+            </h2>
+          </div>
         </div>
-        <div class="video__title">
-          <h1 class="title__header">
-            Agora na Câmara:
-            <span><strong id="online-users"></strong> assistindo</span>
-          </h1>
-          <h2 class="title__subheader">
-            {% if not object.video.closed_date %}
-              <i class="subheader__icon icon icon-circle live-blink"></i>
-            {% endif %}
-            <span class="subheader__text">{{ object.agenda.commission }}</span>
-          </h2>
-        </div>
-      </div>
       {% elif object.agenda %}
         <div class="video--empty">
-          <p>O vídeo desta audiência está previsto para {{object.agenda.date}}.</p>
+          <img class="video--empty__icon" src="{% static 'img/calendar-book.svg' %}" data-fallback="{% static 'img/calendar-book.png' %}">
+          <p class="video--empty__message">O vídeo desta audiência está previsto para <span class="video--empty__date">{{object.agenda.date}}</span>.</p>
         </div>
       {% endif %}
     </div>
