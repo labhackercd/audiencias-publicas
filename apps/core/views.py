@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView
 import requests
 import json
 from datetime import datetime
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 
 def associate_videos(video):
@@ -67,7 +67,6 @@ def index(request):
         agendas=Agenda.objects.filter(
             room__is_visible=True,
             situation__startswith='Convocada',
-            session__icontains='Audiência Pública',
             date__gte=datetime.now()).order_by('date'),
     ))
 
