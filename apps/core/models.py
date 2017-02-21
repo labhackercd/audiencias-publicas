@@ -103,7 +103,7 @@ class Room(TimestampedMixin):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('video_room', [self.cod_reunion])
+        return ('video_room', [self.pk])
 
     def html_body(self):
         return render_to_string('includes/home_video.html', {'video': self})
