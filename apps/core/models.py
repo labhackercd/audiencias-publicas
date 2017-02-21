@@ -86,7 +86,7 @@ class Room(TimestampedMixin):
                                   blank=True, on_delete=models.SET_NULL)
     video = models.OneToOneField('Video', related_name='room', null=True,
                                  blank=True, on_delete=models.SET_NULL)
-    cod_reunion = models.CharField(max_length=200, unique=True)
+    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
     online_users = models.IntegerField(default=0)
     max_online_users = models.IntegerField(default=0)
     is_visible = models.BooleanField(default=False)

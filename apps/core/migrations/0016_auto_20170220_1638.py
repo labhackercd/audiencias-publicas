@@ -14,7 +14,6 @@ def migrate_to_room(apps, schema_editor):
 
     for video in Video.objects.all():
         room = Room()
-        room.cod_reunion = video.id
         room.video = video
         room.save()
         for question in Question.objects.filter(video=video):
@@ -38,7 +37,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='created')),
                 ('modified', models.DateTimeField(auto_now=True, verbose_name='modified')),
-                ('cod_reunion', models.CharField(max_length=200, unique=True)),
+                ('cod_reunion', models.CharField(blank=True, max_length=200, null=True)),
                 ('online_users', models.IntegerField(default=0)),
                 ('max_online_users', models.IntegerField(default=0)),
                 ('is_visible', models.BooleanField(default=False)),

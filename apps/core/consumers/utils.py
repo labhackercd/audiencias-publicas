@@ -7,7 +7,7 @@ log = logging.getLogger("chat")
 
 def get_room(pk):
     try:
-        return Room.objects.get(cod_reunion=pk, is_visible=True)
+        return Room.objects.get(pk=pk, is_visible=True)
     except ValueError:
         log.debug('Invalid path.')
         return

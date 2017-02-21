@@ -89,10 +89,6 @@ class VideoDetail(DetailView):
 
         return context
 
-    def get_object(self):
-        return get_object_or_404(Room, is_visible=True,
-                                 cod_reunion=self.kwargs['cod_reunion'])
-
 
 class ClosedVideos(ListView):
     model = Room
@@ -118,10 +114,6 @@ class RoomQuestionList(DetailView):
                                       reverse=True)
 
         return context
-
-    def get_object(self):
-        return get_object_or_404(Room, is_visible=True,
-                                 cod_reunion=self.kwargs['cod_reunion'])
 
 
 class QuestionDetail(DetailView):
