@@ -3,11 +3,12 @@ from apps.core.models import Agenda, Message, Question, Video, UpDownVote, Room
 
 
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('get_comission', 'get_session', 'get_situation', 'is_visible')
-    list_filter = ['is_visible']
+    list_display = (
+        'get_comission', 'get_session', 'get_situation', 'is_visible')
+    list_filter = ['is_visible', 'agenda__situation', 'agenda__session']
     search_fields = (
         'agenda__commission', 'agenda__session', 'agenda__situation',
-        'agenda__date', 'agenda__created')
+        'agenda__date', 'agenda__created', 'video__title', 'video__videoId')
 
     def get_comission(self, obj):
         if obj.agenda:
@@ -27,9 +28,9 @@ class RoomAdmin(admin.ModelAdmin):
         else:
             return 'Sala não agendada'
 
-    get_comission.short_description = 'Commission'
-    get_session.short_description = 'Session'
-    get_situation.short_description = 'Situation'
+    get_comission.short_description = 'Comissão'
+    get_session.short_description = 'Sessão'
+    get_situation.short_description = 'Situação'
 
 
 class AgendaAdmin(admin.ModelAdmin):
@@ -52,7 +53,7 @@ class QuestionAdmin(admin.ModelAdmin):
 class VideoAdmin(admin.ModelAdmin):
     list_display = (
         'title', 'published_date', 'closed_date', 'created', 'room')
-    list_filter = ['created', 'closed_date', 'room']
+    list_filter = ['created', 'closed_date']
     search_fields = ['title', 'description', 'videoId']
 
 

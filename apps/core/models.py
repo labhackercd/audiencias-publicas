@@ -96,10 +96,12 @@ class Room(TimestampedMixin):
         verbose_name_plural = _('rooms')
 
     def __str__(self):
-        if self.cod_reunion:
+        if self.agenda:
+            return self.agenda.__str__()
+        elif self.cod_reunion:
             return self.cod_reunion
         else:
-            return 'room'
+            return 'sem agenda'
 
     @models.permalink
     def get_absolute_url(self):
