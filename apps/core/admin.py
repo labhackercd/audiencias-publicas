@@ -35,6 +35,7 @@ class RoomAdmin(admin.ModelAdmin):
         else:
             return 'Sala não agendada'
 
+    get_video.short_description = 'Vídeo'
     get_comission.short_description = 'Comissão'
     get_session.short_description = 'Sessão'
     get_situation.short_description = 'Situação'
