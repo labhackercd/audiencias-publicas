@@ -72,4 +72,4 @@ class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = ('id', 'agenda', 'video', 'cod_reunion', 'online_users',
-                  'max_online_users', 'created', 'modified')
+                  'max_online_users', 'created', 'modified', 'is_visible')
