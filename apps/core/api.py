@@ -42,7 +42,7 @@ class VoteListAPI(generics.ListAPIView):
 
 
 class AgendaListAPI(generics.ListAPIView):
-    queryset = Agenda.objects.exclude(date__lt=datetime.now()).order_by('-date')
+    queryset = Agenda.objects.all().order_by('-date')
     serializer_class = AgendaSerializer
     filter_backends = (
         filters.DjangoFilterBackend,
