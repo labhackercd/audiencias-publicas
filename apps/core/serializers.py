@@ -65,12 +65,11 @@ class VideoSerializer(serializers.ModelSerializer):
         model = Video
         fields = ('id', 'videoId', 'thumb_default', 'thumb_medium',
                   'thumb_high', 'title', 'description', 'published_date',
-                  'closed_date', 'slug', 'created', 'modified', 'online_users',
-                  'max_online_users')
+                  'closed_date', 'slug', 'created', 'modified')
 
 
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
         fields = ('id', 'agenda', 'video', 'cod_reunion', 'online_users',
-                  'max_online_users')
+                  'max_online_users', 'created', 'modified')

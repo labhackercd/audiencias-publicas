@@ -36,8 +36,8 @@ class VoteListAPI(generics.ListAPIView):
         filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'content_type', 'vote')
-    search_fields = ('user', 'content_type', 'vote', 'object_pk')
+    filter_fields = ('user', 'vote')
+    search_fields = ('user', 'vote', 'object_pk')
     ordering_fields = ('user', 'vote')
 
 
