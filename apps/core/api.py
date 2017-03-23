@@ -85,6 +85,13 @@ class VideoListAPI(generics.ListAPIView):
     ordering_fields = ('published_date', 'closed_date')
 
 
+class RoomListAPI(generics.ListAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    search_fields = ('cod_reunion')
+
+
 class VideoAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
 
     def get(self, request, *args, **kwargs):
@@ -112,6 +119,8 @@ class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
+        'rooms': reverse('room_list_api',
+                         request=request, format=format),
         'agendas': reverse('agenda_list_api',
                            request=request, format=format),
         'videos': reverse('video_list_api',
