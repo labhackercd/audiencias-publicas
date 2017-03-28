@@ -108,7 +108,7 @@ class Room(TimestampedMixin):
         return ('video_room', [self.pk])
 
     def html_body(self):
-        return render_to_string('includes/home_video.html', {'video': self})
+        return render_to_string('includes/home_video.html', {'room': self})
 
     def send_notification(self, deleted=False, is_closed=False):
         notification = {

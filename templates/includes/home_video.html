@@ -1,10 +1,12 @@
 {% load video_utils %}
 
-<li class="list__video" data-video-id="{{room.id}}">
-  <a class="video__link" href="{{room.get_absolute_url}}">
-    <img class="video__thumbnail" src="{{room.video.thumb_medium}}">
-  </a>
-  <h2 class="video__title">
-    <a class="title__link" href="{{room.get_absolute_url}}">{{room.agenda.commission|simplify}}</a>
-  </h2>
-</li>
+{% if room.is_visible %}
+  <li class="list__video" data-video-id="{{room.id}}">
+    <a class="video__link" href="{{room.get_absolute_url}}">
+      <img class="video__thumbnail" src="{{room.video.thumb_medium}}">
+    </a>
+    <h2 class="video__title">
+      <a class="title__link" href="{{room.get_absolute_url}}">{{room.agenda.commission|simplify}}</a>
+    </h2>
+  </li>
+{% endif %}
