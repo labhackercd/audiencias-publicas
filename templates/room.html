@@ -68,7 +68,7 @@
           </form>
         {% elif not object.video.closed_date and not user.is_authenticated %}
           <div class="send-form--unauthenticated">
-            <span><a href="{% url 'login' %}">Faça Login</a> para enviar uma pergunta!</span>
+            <span><a href="https://edemocracia.camara.leg.br/home?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
           </div>
         {% elif object.video.closed_date %}
           <div class="send-form--closed">
@@ -143,7 +143,7 @@
 
         {% elif not object.video.closed_date and not user.is_authenticated %}
           <div class="send-form--unauthenticated">
-            <span><a href="{% url 'login' %}">Faça Login</a> para participar no chat!</span>
+            <span><a href="https://edemocracia.camara.leg.br/home?next={{ request.path }}">Faça Login</a> para participar no chat!</span>
           </div>
 
         {% elif object.video.closed_date %}
@@ -172,7 +172,7 @@
 
       function loginRedirect() {
         var next = "{{request.path}}";
-        var login_url = "{% url 'login' %}";
+        var login_url = "https://edemocracia.camara.leg.br/home";
         document.location.href = login_url + '?next=' + next;
       }
 
