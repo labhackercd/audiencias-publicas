@@ -3,7 +3,6 @@ import scrapy
 from schedule_bot.items import ScheduleBotItem
 from scrapy.selector import Selector
 from datetime import datetime
-from apps.core.models import Agenda
 
 
 class AgendaSpider(scrapy.Spider):
@@ -14,13 +13,15 @@ class AgendaSpider(scrapy.Spider):
     )
 
     def parse(self, response):
-        Agenda.objects.all().delete()
         for sessionbox in Selector(response=response).xpath('//div[@class="sessionBox"]'):
             for line in sessionbox.xpath('table/tbody[1]/tr'):
                 commission = sessionbox.xpath('h4/text()').re('[^\t\n\r]+')[0]
                 session = line.xpath('td[2]/strong/text()').re('[^\t\n\r]+')[1]
                 location = line.xpath('td[2]/text()').re('[^\t\n\r]+')[0]
                 situation = line.xpath('td[3]/text()|td[3]/strong/text()').re('[^\t\n\r]+')[0]
+                cod_reunion = line.xpath(
+                    'td[2]/div[@class="popupBox rightPositioned"]/ul/li[1]/a/@href')[0].extract().split(
+                    'codReuniao=')[1]
                 str_date = line.xpath('td[1]/text()').re('[^\t\n\r]+')[0].strip(' ')
                 dt = datetime.strptime(str_date, '%d/%m/%Y')
                 if 'h' in line.xpath('td[1]/text()').re('[^\t\n\r]+')[1]:
@@ -39,6 +40,8 @@ class AgendaSpider(scrapy.Spider):
                     minute = 0
                 date = dt.replace(hour=hour, minute=minute)
                 item = ScheduleBotItem()
+                if cod_reunion:
+                    item['cod_reunion'] = cod_reunion
                 if date:
                     item['date'] = date
                 if commission:

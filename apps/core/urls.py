@@ -1,9 +1,10 @@
 from django.conf.urls import url
 from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
-                             QuestionDetail, receive_callback, index)
+                             VideoReunionDetail, QuestionDetail,
+                             receive_callback, index)
 from apps.core.api import (api_root, AgendaListAPI, MessageListAPI,
                            QuestionListAPI, VideoListAPI, VoteListAPI,
-                           UserListAPI, VideoAPI)
+                           UserListAPI, VideoAPI, RoomAPI, RoomListAPI)
 
 
 urlpatterns = [
@@ -11,6 +12,8 @@ urlpatterns = [
     url(r'^pergunta/(?P<pk>\d+)/?$', QuestionDetail.as_view(),
         name='question_detail'),
     url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
+    url(r'^sala/reuniao/(?P<cod_reunion>\d+)/?$', VideoReunionDetail.as_view(),
+        name='video_reunion_room'),
     url(r'^sala/(?P<pk>\d+)/perguntas/?$', RoomQuestionList.as_view(),
         name='questions_list'),
     url(r'^notification/callback/?$', receive_callback,
@@ -27,6 +30,9 @@ urlpatterns += [
     url(r'^api/video/$', VideoListAPI.as_view(), name='video_list_api'),
     url(r'^api/video/(?P<pk>\d+)$', VideoAPI.as_view(),
         name='video_detail_api'),
+    url(r'^api/room/$', RoomListAPI.as_view(), name='room_list_api'),
+    url(r'^api/room/(?P<pk>\d+)$', RoomAPI.as_view(),
+        name='room_detail_api'),
     url(r'^api/vote/$', VoteListAPI.as_view(), name='vote_list_api'),
     url(r'^api/user/$', UserListAPI.as_view(), name='user_list_api'),
 ]

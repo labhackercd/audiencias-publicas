@@ -80,3 +80,41 @@
     }
   }
 }
+
+.video--empty {
+  align-items: center;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding: 2em;
+
+  @include breakpoint(medium down) {
+    height: 100%;
+    flex-wrap: wrap;
+  }
+
+  @include breakpoint(large only) {
+    height: 186px;
+  }
+
+  @include breakpoint(xlarge up) {
+    height: 253px;
+  }
+
+  .video--empty__message {
+    font-size: 1.5em;
+    font-weight: 400;
+  }
+
+  .video--empty__icon {
+    @include breakpoint(large only) {
+      display: none;
+    }
+
+    @include breakpoint(large up) {
+      margin: 0em 1.5em 0em 2em;
+    }
+
+  }
+}

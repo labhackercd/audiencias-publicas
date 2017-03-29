@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.conf import settings
 from rest_framework import serializers
-from apps.core.models import Agenda, Message, Question, Video, UpDownVote
+from apps.core.models import Agenda, Message, Question, Video, UpDownVote, Room
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -50,14 +50,14 @@ class QuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('id', 'video', 'user', 'question',
+        fields = ('id', 'room', 'user', 'question',
                   'created', 'modified', 'votes')
 
 
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ('id', 'video', 'user', 'message', 'created', 'modified')
+        fields = ('id', 'room', 'user', 'message', 'created', 'modified')
 
 
 class VideoSerializer(serializers.ModelSerializer):
@@ -65,5 +65,11 @@ class VideoSerializer(serializers.ModelSerializer):
         model = Video
         fields = ('id', 'videoId', 'thumb_default', 'thumb_medium',
                   'thumb_high', 'title', 'description', 'published_date',
-                  'closed_date', 'slug', 'created', 'modified', 'online_users',
-                  'max_online_users')
+                  'closed_date', 'slug', 'created', 'modified')
+
+
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Room
+        fields = ('id', 'agenda', 'video', 'cod_reunion', 'online_users',
+                  'max_online_users', 'created', 'modified', 'is_visible')

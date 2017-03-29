@@ -1,26 +1,22 @@
 from channels import Group
-from apps.core.models import Video, Question, UpDownVote
-from apps.core.utils import decrypt, encrypt
-from apps.core.consumers.utils import get_video, get_data
-from django.contrib.auth.models import User
-import json
+from apps.core.models import Room
+from apps.core.consumers.utils import get_room
 import logging
 
 log = logging.getLogger("chat")
 
 
 def on_connect(message, pk):
-    video = get_video(pk)
-    if video is not None:
-        message.reply_channel.send({"accept": True})
-        Group(video.group_room_questions_name).add(message.reply_channel)
+    room = get_room(pk)
+    if room is not None:
+        Group(room.group_room_questions_name).add(message.reply_channel)
         log.debug('Questions websocket connected.')
 
 
 def on_disconnect(message, pk):
     try:
-        video = Video.objects.get(pk=pk)
-        Group(video.group_room_questions_name).discard(message.reply_channel)
+        room = Room.objects.get(pk=pk)
+        Group(room.group_room_questions_name).discard(message.reply_channel)
         log.debug('Questions websocket disconnected.')
-    except (KeyError, Video.DoesNotExist):
+    except (KeyError, Room.DoesNotExist):
         pass

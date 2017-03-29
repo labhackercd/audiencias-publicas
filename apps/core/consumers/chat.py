@@ -2,9 +2,9 @@ import json
 import logging
 import re
 from channels import Group
-from apps.core.models import Video, Message
+from apps.core.models import Room, Message
 from apps.core.utils import decrypt
-from apps.core.consumers.utils import get_video, get_data
+from apps.core.consumers.utils import get_room, get_data
 from django.contrib.auth.models import User
 from django.conf import settings
 
@@ -12,19 +12,18 @@ log = logging.getLogger("chat")
 
 
 def on_connect(message, pk):
-    video = get_video(pk)
-    if video is not None:
-        message.reply_channel.send({"accept": True})
-        video.online_users += 1
-        if video.online_users > video.max_online_users:
-            video.max_online_users = video.online_users
-        video.save()
-        Group(video.group_chat_name).add(message.reply_channel)
+    room = get_room(pk)
+    if room is not None:
+        room.online_users += 1
+        if room.online_users > room.max_online_users:
+            room.max_online_users = room.online_users
+        room.save()
+        Group(room.group_chat_name).add(message.reply_channel)
         log.debug('Chat websocket connected.')
 
 
 def on_receive(message, pk):
-    video = get_video(pk)
+    room = get_room(pk)
     data = get_data(message)
 
     if set(data.keys()) != set(('handler', 'message')):
@@ -43,19 +42,19 @@ def on_receive(message, pk):
             message = re.sub(word, '♥', message, flags=re.IGNORECASE)
 
     user = User.objects.get(id=decrypt(data['handler']))
-    message = Message.objects.create(video=video, user=user,
+    message = Message.objects.create(room=room, user=user,
                                      message=message)
-    Group(video.group_chat_name).send(
+    Group(room.group_chat_name).send(
         {'text': json.dumps({"hmtl": message.html_body()})}
     )
 
 
 def on_disconnect(message, pk):
     try:
-        video = Video.objects.get(pk=pk)
-        video.online_users -= 1
-        video.save()
-        Group(video.group_chat_name).discard(message.reply_channel)
+        room = Room.objects.get(pk=pk)
+        room.online_users -= 1
+        room.save()
+        Group(room.group_chat_name).discard(message.reply_channel)
         log.debug('Chat websocket disconnected.')
-    except (KeyError, Video.DoesNotExist):
+    except (KeyError, Room.DoesNotExist):
         pass

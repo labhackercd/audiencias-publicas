@@ -25,8 +25,8 @@
 
         <div class="preview__list-wrapper">
           <ul class="preview__list">
-            {% for video in live_videos %}
-              {% include "includes/home_video.html" with video=video %}
+            {% for room in live_videos %}
+              {% include "includes/home_video.html" with room=room %}
             {% endfor %}
           </ul>
         </div>
@@ -44,8 +44,8 @@
 
         <div class="preview__list-wrapper">
           <ul class="preview__list">
-            {% for video in closed_videos %}
-            {% include "includes/home_video.html" with video=video %}
+            {% for room in closed_videos %}
+            {% include "includes/home_video.html" with room=room %}
             {% endfor %}
           </ul>
         </div>
@@ -91,6 +91,9 @@
                         {{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}
                       {% endif %}
                     </div>
+                  </td>
+                  <td class="calendar-table__column">
+                    <div class="calendar-table__event-title"><a href="{{agenda.room.get_absolute_url}}">Ir para a sala &gt;</a></div>
                   </td>
                 </tr>
               {% endfor %}

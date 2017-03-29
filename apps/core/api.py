@@ -6,10 +6,11 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import generics, filters, permissions, mixins
 from datetime import datetime
-from apps.core.models import Agenda, Message, Question, Video, UpDownVote
+from apps.core.models import Agenda, Message, Question, Video, UpDownVote, Room
 from apps.core.serializers import (AgendaSerializer, QuestionSerializer,
                                    MessageSerializer, VideoSerializer,
-                                   VoteSerializer, UserSerializer)
+                                   VoteSerializer, UserSerializer,
+                                   RoomSerializer)
 
 
 class TokenPermission(permissions.BasePermission):
@@ -35,13 +36,13 @@ class VoteListAPI(generics.ListAPIView):
         filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'content_type', 'vote')
-    search_fields = ('user', 'content_type', 'vote', 'object_pk')
+    filter_fields = ('user', 'vote')
+    search_fields = ('user', 'vote', 'object_pk')
     ordering_fields = ('user', 'vote')
 
 
 class AgendaListAPI(generics.ListAPIView):
-    queryset = Agenda.objects.exclude(date__lt=datetime.now()).order_by('-date')
+    queryset = Agenda.objects.all().order_by('-date')
     serializer_class = AgendaSerializer
     filter_backends = (
         filters.DjangoFilterBackend,
@@ -59,9 +60,9 @@ class MessageListAPI(generics.ListAPIView):
         filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'video')
+    filter_fields = ('user', 'room')
     search_fields = ('message',)
-    ordering_fields = ('timestamp', 'user', 'video')
+    ordering_fields = ('timestamp', 'user', 'room')
 
 
 class QuestionListAPI(generics.ListAPIView):
@@ -71,7 +72,7 @@ class QuestionListAPI(generics.ListAPIView):
         filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'video')
+    filter_fields = ('user', 'room')
     search_fields = ('question',)
     ordering_fields = ('up_votes', 'down_votes', 'timestamp')
 
@@ -82,6 +83,13 @@ class VideoListAPI(generics.ListAPIView):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('videoId', 'title', 'description', 'slug')
     ordering_fields = ('published_date', 'closed_date')
+
+
+class RoomListAPI(generics.ListAPIView):
+    queryset = Room.objects.all()
+    serializer_class = RoomSerializer
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    search_fields = ('cod_reunion')
 
 
 class VideoAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
@@ -96,9 +104,23 @@ class VideoAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
         return Video.objects.get(pk=self.kwargs['pk'])
 
 
+class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def get_serializer_class(self):
+        return RoomSerializer
+
+    def get_object(self):
+        return Room.objects.get(pk=self.kwargs['pk'])
+
+
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
+        'rooms': reverse('room_list_api',
+                         request=request, format=format),
         'agendas': reverse('agenda_list_api',
                            request=request, format=format),
         'videos': reverse('video_list_api',
