@@ -249,9 +249,9 @@ def video_post_save(sender, instance, created, **kwargs):
 
 def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
-
-    if instance.video.closed_date is not None:
-        is_closed = True
+    if instance.video:
+        if instance.video.closed_date is not None:
+            is_closed = True
 
     instance.send_notification(is_closed=is_closed)
 
