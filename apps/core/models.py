@@ -247,6 +247,15 @@ def video_post_save(sender, instance, created, **kwargs):
         instance.room.send_notification(is_closed=is_closed)
 
 
+def room_post_save(sender, instance, created, **kwargs):
+    is_closed = False
+
+    if instance.video.closed_date is not None:
+        is_closed = True
+
+    instance.send_notification(is_closed=is_closed)
+
+
 def video_pre_delete(sender, instance, **kwargs):
     if hasattr(instance, 'room'):
         instance.room.send_notification(deleted=True)
@@ -278,3 +287,4 @@ models.signals.post_save.connect(video_post_save, sender=Video)
 models.signals.pre_delete.connect(video_pre_delete, sender=Video)
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
+models.signals.post_save.connect(room_post_save, sender=Room)
