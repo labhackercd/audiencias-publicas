@@ -1,6 +1,6 @@
 {% load video_utils %}
 
-{% if room.is_visible %}
+{% if room.is_visible and room.video %}
   <li class="list__video" data-video-id="{{room.id}}">
     <a class="video__link" href="{{room.get_absolute_url}}">
       <img class="video__thumbnail" src="{{room.video.thumb_medium}}">
