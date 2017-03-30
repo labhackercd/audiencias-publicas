@@ -12,6 +12,9 @@ log = logging.getLogger("chat")
 
 
 def on_connect(message, pk):
+    message.reply_channel.send({
+        'accept': True
+    })
     room = get_room(pk)
     if room is not None:
         room.online_users += 1
