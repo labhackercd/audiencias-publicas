@@ -42,7 +42,7 @@
             {% for question in questions %}
               {% include "includes/video_questions.html" with questions=questions user=user %}
             {% endfor %}
-          {% elif not object.video.closed_date %}
+          {% elif object.youtube_status != 2 %}
             <div class="questions__list--empty">
               <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
               <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
@@ -51,7 +51,7 @@
         </ul>
         <div class="questions__read-more"></div>
 
-        {% if not object.video.closed_date and user.is_authenticated %}
+        {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="send-form--questions" id="questionform">
             <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" maxlength="600" autocomplete="off" required=""></textarea>
             <div class="send-form__actions">
@@ -66,11 +66,11 @@
               </button>
             </div>
           </form>
-        {% elif not object.video.closed_date and not user.is_authenticated %}
+        {% elif object.youtube_status != 2 and not user.is_authenticated %}
           <div class="send-form--unauthenticated">
             <span><a href="https://edemocracia.camara.leg.br/home?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
           </div>
-        {% elif object.video.closed_date %}
+        {% elif object.youtube_status == 2 %}
           <div class="send-form--closed">
             <span>Audiência encerrada para participações.</span>
           </div>
@@ -81,10 +81,10 @@
 
   <section class="section-right">
     <div class="section-right__top">
-      {% if object.video %}
+      {% if object.youtube_id %}
         <div class="video">
           <div class="video__iframe-wrapper">
-            <iframe class="video__iframe" src="https://www.youtube.com/embed/{{ object.video.videoId }}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
+            <iframe class="video__iframe" src="https://www.youtube.com/embed/{{object.youtube_id}}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
           </div>
           <div class="video__title">
             <h1 class="title__header">
@@ -92,17 +92,17 @@
               <span><strong id="online-users"></strong> assistindo</span>
             </h1>
             <h2 class="title__subheader">
-              {% if not object.video.closed_date %}
+              {% if object.youtube_status != 2 %}
                 <i class="subheader__icon icon icon-circle live-blink"></i>
               {% endif %}
-              <span class="subheader__text">{{ object.agenda.commission }}</span>
+              <span class="subheader__text">{{ object.legislative_body_alias }}</span>
             </h2>
           </div>
         </div>
-      {% elif object.agenda %}
+      {% else %}
         <div class="video--empty">
           <img class="video--empty__icon" src="{% static 'img/calendar-book.svg' %}" data-fallback="{% static 'img/calendar-book.png' %}">
-          <p class="video--empty__message">O vídeo desta audiência está previsto para <span class="video--empty__date">{{object.agenda.date}}</span>.</p>
+          <p class="video--empty__message">O vídeo desta audiência está previsto para <span class="video--empty__date">{{object.date}}</span>.</p>
         </div>
       {% endif %}
     </div>
@@ -120,7 +120,7 @@
               {% for message in object.messages.all %}
                 {% include "includes/chat_message.html" with message=message %}
               {% endfor %}
-            {% elif not object.closed_date %}
+            {% elif object.youtube_status != 2 %}
               <div class="messages__list--empty">
                 <img src="{% static 'img/chat-bubble.svg' %}" data-fallback="{% static 'img/chat-bubble.png' %}">
                 <p>Nenhuma mensagem foi enviada ainda. Seja o primeiro!</p>
@@ -130,7 +130,7 @@
         </div>
         <div class="chat__read-more">Há novas mensagens disponíveis abaixo</div>
 
-        {% if not object.video.closed_date and user.is_authenticated %}
+        {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="send-form--chat" id="chatform">
             <textarea class="send-form__input" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required></textarea>
             <div class="send-form__actions">
@@ -141,12 +141,12 @@
             </div>
           </form>
 
-        {% elif not object.video.closed_date and not user.is_authenticated %}
+        {% elif nobject.youtube_status != 2 and not user.is_authenticated %}
           <div class="send-form--unauthenticated">
             <span><a href="https://edemocracia.camara.leg.br/home?next={{ request.path }}">Faça Login</a> para participar no chat!</span>
           </div>
 
-        {% elif object.video.closed_date %}
+        {% elif object.youtube_status == 2 %}
           <div class="send-form--closed">
             <span>Audiência encerrada para participações.</span>
           </div>
@@ -165,7 +165,7 @@
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
 {% endblock extra_js %}
 
-{% if not object.video.closed_date %}
+{% if object.youtube_status != 2 %}
   {% block websockets %}
     <script>
       var HANDLER = "{{handler|default:''}}";

@@ -83,7 +83,7 @@
                   </td>
 
                   <td class="calendar-table__column">
-                    <div class="calendar-table__event-title">{{ agenda.commission }} | {{ agenda.location }}</div>
+                    <div class="calendar-table__event-title">{{ agenda.legislative_body_alias }} | {{ agenda.location }}</div>
                     <div class="calendar-table__hour">
                       {% if agenda.date|date:"H" == "00" %}
                         Horário não informado
@@ -93,7 +93,7 @@
                     </div>
                   </td>
                   <td class="calendar-table__column">
-                    <div class="calendar-table__event-title"><a href="{{agenda.room.get_absolute_url}}">Ir para a sala &gt;</a></div>
+                    <div class="calendar-table__event-title"><a href="{{agenda.get_absolute_url}}">Ir para a sala &gt;</a></div>
                   </td>
                 </tr>
               {% endfor %}
