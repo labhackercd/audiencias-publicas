@@ -8,6 +8,7 @@ from django.views.generic import DetailView, ListView
 import requests
 import json
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from django.shortcuts import render
 
 
@@ -53,6 +54,39 @@ def receive_callback(request=None):
         video.thumb_high = item['snippet']['thumbnails']['high']['url']
         video.save()
         associate_videos(video)
+    return HttpResponse('<h1>Receive callback</h1>', status=200)
+
+
+def receive_camara_callback(request=None):
+    initial_date = datetime.today()
+    final_date = datetime.today() + relativedelta(months=3)
+    params = {'dataInicial': initial_date.strftime('%d/%m/%Y'),
+              'dataFinal': final_date.strftime('%d/%m/%Y'),
+              'codComissao': '0',
+              'bolEdemocracia': '0'}
+    response = requests.get(
+        'https://secod.camara.gov.br/ws-pauta/evento/interativo',
+        params=params, verify=False)
+    data = json.loads(response.text)
+    for item in data:
+        room, created = Room.objects.get_or_create(
+            cod_reunion=item['codReuniao'])
+        room.title_reunion = item['txtTituloReuniao']
+        room.legislative_body_initials = item['txtSiglaOrgao']
+        room.legislative_body_alias = item['txtApelido']
+        room.legislative_body = item['txtNomeOrgao']
+        room.subcommission = item['txtNomeSubcomissao']
+        room.reunion_status = item['codEstadoReuniao']
+        room.reunion_type = item['txtTipoReuniao']
+        room.reunion_object = item['txtObjeto']
+        room.location = item['txtLocal']
+        room.legislative_body_type = item['codTipoOrgao']
+        room.is_live = item['bolTransmissaoEmAndamento']
+        room.youtube_id = item['idYoutube']
+        room.is_visible = item['bolHabilitarEventoInterativo']
+        date = datetime.strptime(item['datReuniaoString'], '%d/%m/%Y %H:%M:%S')
+        room.date = date
+        room.save()
     return HttpResponse('<h1>Receive callback</h1>', status=200)
 
 
