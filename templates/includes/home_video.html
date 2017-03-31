@@ -1,12 +1,12 @@
 {% load video_utils %}
 
-{% if room.is_visible and room.video %}
+{% if room.is_visible and room.youtube_id %}
   <li class="list__video" data-video-id="{{room.id}}">
     <a class="video__link" href="{{room.get_absolute_url}}">
-      <img class="video__thumbnail" src="{{room.video.thumb_medium}}">
+      <img class="video__thumbnail" src="https://i.ytimg.com/vi/{{room.youtube_id}}/mqdefault_live.jpg">
     </a>
     <h2 class="video__title">
-      <a class="title__link" href="{{room.get_absolute_url}}">{{room.agenda.commission|simplify}}</a>
+      <a class="title__link" href="{{room.get_absolute_url}}">{{room.legislative_body_alias|simplify}}</a>
     </h2>
   </li>
 {% endif %}
