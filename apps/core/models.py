@@ -82,11 +82,48 @@ class Video(TimestampedMixin):
 
 
 class Room(TimestampedMixin):
+    STATUS_CHOICES = (
+        (1, 'Não Confirmada'),
+        (2, 'Convocada'),
+        (3, 'Em Andamento'),
+        (4, 'Encerrada'),
+        (5, 'Cancelada'),
+        (6, 'Suspensa'),
+        (7, 'Encerrada (Termo)'),
+        (8, 'Encerrada (Final)'),
+        (9, 'Encerrada(Comunicado)')
+    )
+    TYPE_CHOICES = (
+        (1, 'Comissão Diretora'),
+        (2, 'Comissão Permanente'),
+        (3, 'Comissão Especial'),
+        (4, 'Comissão Parlamentar de Inquérito'),
+        (5, 'Comissão Externa'),
+        (6, 'Comissão Mista Permanente'),
+        (11, 'Conselho')
+    )
     agenda = models.OneToOneField('Agenda', related_name='room', null=True,
                                   blank=True, on_delete=models.SET_NULL)
     video = models.OneToOneField('Video', related_name='room', null=True,
                                  blank=True, on_delete=models.SET_NULL)
-    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
+    cod_reunion = models.IntegerField(null=True, blank=True)
+    title_reunion = models.CharField(max_length=200, null=True, blank=True)
+    legislative_body_initials = models.CharField(max_length=200, null=True,
+                                                 blank=True)
+    legislative_body_alias = models.CharField(max_length=200, null=True,
+                                              blank=True)
+    legislative_body = models.CharField(max_length=200, null=True, blank=True)
+    subcommission = models.CharField(max_length=200, null=True, blank=True)
+    reunion_status = models.IntegerField(max_length=20, choices=STATUS_CHOICES,
+                                         default=1)
+    reunion_type = models.CharField(max_length=200, null=True, blank=True)
+    reunion_object = models.TextField(null=True, blank=True)
+    location = models.CharField(max_length=200, null=True, blank=True)
+    legislative_body_type = models.IntegerField(max_length=20,
+                                                choices=TYPE_CHOICES,
+                                                default=1)
+    is_live = models.BooleanField(default=False)
+    youtube_id = models.CharField(max_length=200, null=True, blank=True)
     online_users = models.IntegerField(default=0)
     max_online_users = models.IntegerField(default=0)
     is_visible = models.BooleanField(default=False)
