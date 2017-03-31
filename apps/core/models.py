@@ -112,7 +112,7 @@ class Room(TimestampedMixin):
                                                  blank=True)
     legislative_body_alias = models.CharField(max_length=200, null=True,
                                               blank=True)
-    legislative_body = models.CharField(max_length=200, null=True, blank=True)
+    legislative_body = models.TextField(null=True, blank=True)
     subcommission = models.CharField(max_length=200, null=True, blank=True)
     reunion_status = models.IntegerField(max_length=20, choices=STATUS_CHOICES,
                                          default=1)
@@ -124,6 +124,7 @@ class Room(TimestampedMixin):
                                                 default=1)
     is_live = models.BooleanField(default=False)
     youtube_id = models.CharField(max_length=200, null=True, blank=True)
+    date = models.DateTimeField(null=True, blank=True)
     online_users = models.IntegerField(default=0)
     max_online_users = models.IntegerField(default=0)
     is_visible = models.BooleanField(default=False)
@@ -133,12 +134,12 @@ class Room(TimestampedMixin):
         verbose_name_plural = _('rooms')
 
     def __str__(self):
-        if self.agenda:
-            return self.agenda.__str__()
-        elif self.cod_reunion:
-            return self.cod_reunion
+        if self.legislative_body_alias:
+            return self.legislative_body_alias
+        elif self.title_reunion:
+            return self.title_reunion
         else:
-            return 'sem agenda'
+            return 'object'
 
     @models.permalink
     def get_absolute_url(self):
