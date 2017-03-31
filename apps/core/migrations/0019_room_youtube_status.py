@@ -15,6 +15,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='room',
             name='youtube_status',
-            field=models.IntegerField(choices=[(0, 'Sem transmissão'), (1, 'Em andamento'), (2, 'Transmissão encerrada')], default=1, max_length=20),
+            field=models.IntegerField(choices=[(0, 'Sem transmissão'), (1, 'Em andamento'), (2, 'Transmissão encerrada')], default=0, max_length=20),
         ),
     ]

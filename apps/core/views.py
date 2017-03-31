@@ -84,6 +84,7 @@ def receive_camara_callback(request=None):
         room.is_live = item['bolTransmissaoEmAndamento']
         room.youtube_id = item['idYoutube']
         room.is_visible = item['bolHabilitarEventoInterativo']
+        room.youtube_status = item['codEstadoTransmissaoYoutube']
         date = datetime.strptime(item['datReuniaoString'], '%d/%m/%Y %H:%M:%S')
         room.date = date
         room.save()
@@ -93,15 +94,14 @@ def receive_camara_callback(request=None):
 def index(request):
     return render(request, 'index.html', context=dict(
         closed_videos=Room.objects.filter(
-            video__closed_date__isnull=False,
-            is_visible=True).order_by('-video__published_date')[:5],
+            youtube_status=2,
+            is_visible=True).order_by('-date')[:5],
         live_videos=Room.objects.filter(
-            video__isnull=False,
-            video__closed_date__isnull=True,
-            is_visible=True).order_by('-video__published_date'),
-        agendas=Agenda.objects.filter(
-            room__is_visible=True,
-            situation__startswith='Convocada',
+            youtube_status=1,
+            is_visible=True).order_by('-date'),
+        agendas=Room.objects.filter(
+            is_visible=True,
+            reunion_status=2,
             date__gte=datetime.now()).order_by('date'),
     ))
 
@@ -163,8 +163,8 @@ class ClosedVideos(ListView):
     def get_queryset(self):
         return Room.objects.filter(
             is_visible=True,
-            video__closed_date__isnull=False
-        ).order_by('-video__published_date')
+            youtube_status=2,
+        ).order_by('-date')
 
 
 class RoomQuestionList(DetailView):

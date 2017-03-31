@@ -130,7 +130,7 @@ class Room(TimestampedMixin):
     is_live = models.BooleanField(default=False)
     youtube_status = models.IntegerField(max_length=20,
                                          choices=YOUTUBE_STATUS_CHOICES,
-                                         default=1)
+                                         default=0)
     youtube_id = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(null=True, blank=True)
     online_users = models.IntegerField(default=0)
