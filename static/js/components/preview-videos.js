@@ -37,12 +37,18 @@ function previewVideosComponent(socket) {
       }
 
       elements.$closedList.prepend(data.html);
-    } else {
+    } else if(!videoExists && !data.is_closed) {
       if (elements.$liveList.children().length === 0) {
         elements.$live.removeClass('hide');
       }
 
       elements.$liveList.prepend(data.html);
+    } else if(!videoExists && data.is_closed) {
+      if (elements.$closedList.children().length === 0) {
+        elements.$closed.removeClass('hide');
+      }
+
+      elements.$closedList.prepend(data.html);
     }
   }
 
