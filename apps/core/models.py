@@ -306,11 +306,14 @@ def video_post_save(sender, instance, created, **kwargs):
 
 def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
-    if instance.video:
-        if instance.video.closed_date is not None:
-            is_closed = True
-
+    if instance.youtube_status == 2:
+        is_closed = True
     instance.send_notification(is_closed=is_closed)
+
+
+def room_pre_delete(sender, instance, **kwargs):
+    if hasattr(instance, 'room'):
+        instance.send_notification(deleted=True)
 
 
 def video_pre_delete(sender, instance, **kwargs):

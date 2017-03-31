@@ -25,7 +25,7 @@ def on_receive(message, pk):
     room = get_room(pk)
     data = get_data(message)
 
-    if not room.video or not room.video.closed_date:
+    if room.youtube_status != 2:
         if set(data.keys()) != set(('handler', 'question', 'is_vote')):
             log.debug("Message unexpected format data")
             return
