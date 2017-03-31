@@ -102,6 +102,11 @@ class Room(TimestampedMixin):
         (6, 'Comissão Mista Permanente'),
         (11, 'Conselho')
     )
+    YOUTUBE_STATUS_CHOICES = (
+        (0, 'Sem transmissão'),
+        (1, 'Em andamento'),
+        (2, 'Transmissão encerrada')
+    )
     agenda = models.OneToOneField('Agenda', related_name='room', null=True,
                                   blank=True, on_delete=models.SET_NULL)
     video = models.OneToOneField('Video', related_name='room', null=True,
@@ -123,6 +128,9 @@ class Room(TimestampedMixin):
                                                 choices=TYPE_CHOICES,
                                                 default=1)
     is_live = models.BooleanField(default=False)
+    youtube_status = models.IntegerField(max_length=20,
+                                         choices=YOUTUBE_STATUS_CHOICES,
+                                         default=1)
     youtube_id = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(null=True, blank=True)
     online_users = models.IntegerField(default=0)
@@ -140,6 +148,17 @@ class Room(TimestampedMixin):
             return self.title_reunion
         else:
             return 'object'
+
+    def is_today(self):
+        if datetime.date.today() == self.date.date():
+            return True
+        return False
+
+    def is_tomorrow(self):
+        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
+        if self.date.date() == tomorrow:
+            return True
+        return False
 
     @models.permalink
     def get_absolute_url(self):
