@@ -5,10 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import generics, filters, permissions, mixins
-from datetime import datetime
-from apps.core.models import Agenda, Message, Question, Video, UpDownVote, Room
-from apps.core.serializers import (AgendaSerializer, QuestionSerializer,
-                                   MessageSerializer, VideoSerializer,
+from apps.core.models import Message, Question, UpDownVote, Room
+from apps.core.serializers import (QuestionSerializer, MessageSerializer,
                                    VoteSerializer, UserSerializer,
                                    RoomSerializer)
 
@@ -41,18 +39,6 @@ class VoteListAPI(generics.ListAPIView):
     ordering_fields = ('user', 'vote')
 
 
-class AgendaListAPI(generics.ListAPIView):
-    queryset = Agenda.objects.all().order_by('-date')
-    serializer_class = AgendaSerializer
-    filter_backends = (
-        filters.DjangoFilterBackend,
-        filters.SearchFilter,
-        filters.OrderingFilter)
-    filter_fields = ('session', 'location', 'situation', 'commission')
-    search_fields = ('session', 'location', 'situation', 'commission')
-    ordering_fields = ('date', 'commission')
-
-
 class MessageListAPI(generics.ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
@@ -77,31 +63,11 @@ class QuestionListAPI(generics.ListAPIView):
     ordering_fields = ('up_votes', 'down_votes', 'timestamp')
 
 
-class VideoListAPI(generics.ListAPIView):
-    queryset = Video.objects.all()
-    serializer_class = VideoSerializer
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
-    search_fields = ('videoId', 'title', 'description', 'slug')
-    ordering_fields = ('published_date', 'closed_date')
-
-
 class RoomListAPI(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('cod_reunion')
-
-
-class VideoAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def get_serializer_class(self):
-        return VideoSerializer
-
-    def get_object(self):
-        return Video.objects.get(pk=self.kwargs['pk'])
 
 
 class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
@@ -121,10 +87,6 @@ def api_root(request, format=None):
     return Response({
         'rooms': reverse('room_list_api',
                          request=request, format=format),
-        'agendas': reverse('agenda_list_api',
-                           request=request, format=format),
-        'videos': reverse('video_list_api',
-                          request=request, format=format),
         'messages': reverse('message_list_api',
                             request=request, format=format),
         'questions': reverse('question_list_api',

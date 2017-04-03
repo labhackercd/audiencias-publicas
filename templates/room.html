@@ -2,9 +2,9 @@
 {% load staticfiles compress %}
 
 {% block metadata %}
-  <meta property="og:title" content="{{object.agenda.commision}}" />
+  <meta property="og:title" content="{{object.legislative_body_alias}}" />
   <meta property="og:site_name" content="Audiências Públicas" />
-  <meta property="og:description" content="{{ object.agenda.session }}" />
+  <meta property="og:description" content="{{ object.reunion_object }}" />
   <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/share-image.jpg' %}" />
   <meta property="og:image:type" content="image/jpg" />
   <meta property="og:image:width" content="600" />

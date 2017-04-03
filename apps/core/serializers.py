@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.conf import settings
 from rest_framework import serializers
-from apps.core.models import Agenda, Message, Question, Video, UpDownVote, Room
+from apps.core.models import Message, Question, UpDownVote, Room
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,13 +20,6 @@ class VoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = UpDownVote
         fields = ('id', 'user', 'question', 'vote')
-
-
-class AgendaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Agenda
-        fields = ('id', 'date', 'session', 'location', 'situation',
-                  'commission', 'created', 'modified')
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -60,16 +53,8 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = ('id', 'room', 'user', 'message', 'created', 'modified')
 
 
-class VideoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Video
-        fields = ('id', 'videoId', 'thumb_default', 'thumb_medium',
-                  'thumb_high', 'title', 'description', 'published_date',
-                  'closed_date', 'slug', 'created', 'modified')
-
-
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ('id', 'agenda', 'video', 'cod_reunion', 'online_users',
+        fields = ('id', 'cod_reunion', 'online_users',
                   'max_online_users', 'created', 'modified', 'is_visible')
