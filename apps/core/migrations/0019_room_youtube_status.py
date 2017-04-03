@@ -5,6 +5,21 @@ from __future__ import unicode_literals
 from django.db import migrations, models
 
 
+def migrate_to_new_room(apps, schema_editor):
+    Room = apps.get_model("core", "Room")
+
+    for room in Room.objects.filter(video__isnull=False, agenda__isnull=False):
+        room.youtube_id = room.video.videoId
+        room.date = room.agenda.date
+        room.cod_reunion = room.agenda.cod_reunion
+        room.location = room.agenda.location
+        room.legislative_body_alias = room.agenda.commission
+        room.youtube_status = 2
+        room.video = None
+        room.agenda = None
+        room.save()
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -16,5 +31,8 @@ class Migration(migrations.Migration):
             model_name='room',
             name='youtube_status',
             field=models.IntegerField(choices=[(0, 'Sem transmissão'), (1, 'Em andamento'), (2, 'Transmissão encerrada')], default=0, max_length=20),
+        ),
+        migrations.RunPython(
+            migrate_to_new_room
         ),
     ]
