@@ -18,7 +18,7 @@ def receive_camara_callback(request=None):
     params = {'dataInicial': initial_date.strftime('%d/%m/%Y'),
               'dataFinal': final_date.strftime('%d/%m/%Y'),
               'codComissao': '0',
-              'bolEdemocracia': '0'}
+              'bolEdemocracia': '1'}
     response = requests.get(
         'https://secod.camara.gov.br/ws-pauta/evento/interativo',
         params=params, verify=False)
