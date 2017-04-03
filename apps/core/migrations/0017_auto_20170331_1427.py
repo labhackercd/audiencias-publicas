@@ -75,6 +75,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='room',
             name='cod_reunion',
-            field=models.IntegerField(blank=True, null=True),
+            field=models.CharField(blank=True, max_length=200, null=True),
         ),
     ]
