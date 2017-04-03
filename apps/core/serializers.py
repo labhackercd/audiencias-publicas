@@ -56,5 +56,6 @@ class MessageSerializer(serializers.ModelSerializer):
 class RoomSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
-        fields = ('id', 'cod_reunion', 'online_users',
+        fields = ('id', 'cod_reunion', 'online_users', 'youtube_id',
+                  'legislative_body_alias', 'youtube_status',
                   'max_online_users', 'created', 'modified', 'is_visible')
