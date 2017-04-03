@@ -2,6 +2,8 @@ from django.contrib.auth.middleware import RemoteUserMiddleware
 from django.contrib.auth import get_user_model
 from django.contrib import auth
 from django.core.exceptions import ImproperlyConfigured
+from apps.accounts.models import UserProfile
+import json
 
 User = get_user_model()
 
@@ -37,5 +39,16 @@ class AudienciasRemoteUser(RemoteUserMiddleware):
         if user:
             # User is valid.  Set request.user and persist user in the session
             # by logging the user in.
+            user_data = json.loads(request.META['HTTP_REMOTE_USER_DATA'])
+            user.first_name = user_data['name']
+            if user.profile:
+                profile = UserProfile()
+                user.profile = profile
+            else:
+                profile = user.profile
+            profile.avatar_url = user_data['avatar']
+            profile.save()
+            user.save()
+
             request.user = user
             auth.login(request, user)
