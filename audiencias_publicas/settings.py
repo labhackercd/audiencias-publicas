@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'djangobower',
     'compressor',
     'compressor_toolkit',
+    'django_q', # not used, but don't remove
     'channels',
 )
 

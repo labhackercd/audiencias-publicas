@@ -63,17 +63,14 @@ class Room(TimestampedMixin):
                                               blank=True)
     legislative_body = models.TextField(null=True, blank=True)
     subcommission = models.CharField(max_length=200, null=True, blank=True)
-    reunion_status = models.IntegerField(max_length=20, choices=STATUS_CHOICES,
-                                         default=1)
+    reunion_status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     reunion_type = models.CharField(max_length=200, null=True, blank=True)
     reunion_object = models.TextField(null=True, blank=True)
     location = models.CharField(max_length=200, null=True, blank=True)
-    legislative_body_type = models.IntegerField(max_length=20,
-                                                choices=TYPE_CHOICES,
+    legislative_body_type = models.IntegerField(choices=TYPE_CHOICES,
                                                 default=1)
     is_live = models.BooleanField(default=False)
-    youtube_status = models.IntegerField(max_length=20,
-                                         choices=YOUTUBE_STATUS_CHOICES,
+    youtube_status = models.IntegerField(choices=YOUTUBE_STATUS_CHOICES,
                                          default=0)
     youtube_id = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateTimeField(null=True, blank=True)
