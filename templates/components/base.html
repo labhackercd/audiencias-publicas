@@ -46,6 +46,7 @@
     {# Navigation #}
     {% block navigation %}
       {% include "components/navigation.html" %}
+      {% include "components/edem-navigation.html" %}
     {% endblock navigation %}
 
     {# Main Content #}
@@ -63,6 +64,7 @@
       <script type="text/javascript" src="{% static 'foundation-sites/dist/js/foundation.min.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/foundation.js' %}"></script>
       <script type="text/javascript" src="{% static 'js/svg-support.js' %}"></script>
+      <script type="text/javascript" src="{% static 'js/edem-navigation.js' %}"></script>
     {% endblock foot_js %}
 
     {% block olark  %}
