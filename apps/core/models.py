@@ -2,13 +2,10 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
-from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 from django.utils import timezone
 import datetime
-from django_q.tasks import schedule
-from django_q.models import Schedule
 from channels import Group
 from apps.core.utils import encrypt
 # from apps.core.views import notification
@@ -30,55 +27,6 @@ class TimestampedMixin(models.Model):
             self.created = timezone.now()
         self.modified = timezone.now()
         return super(TimestampedMixin, self).save(*args, **kwargs)
-
-
-class Agenda(TimestampedMixin):
-    date = models.DateTimeField(null=True, blank=True)
-    session = models.CharField(max_length=200, null=True, blank=True)
-    location = models.CharField(max_length=200, null=True, blank=True)
-    situation = models.CharField(max_length=200, null=True, blank=True)
-    commission = models.CharField(max_length=200, null=True, blank=True)
-    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
-
-    class Meta:
-        verbose_name = _('agenda')
-        verbose_name_plural = _('agendas')
-
-    def __str__(self):
-        if self.session and self.location:
-            return self.session + ', ' + self.location
-        else:
-            return 'Agenda'
-
-    def is_today(self):
-        if datetime.date.today() == self.date.date():
-            return True
-        return False
-
-    def is_tomorrow(self):
-        tomorrow = datetime.date.today() + datetime.timedelta(days=1)
-        if self.date.date() == tomorrow:
-            return True
-        return False
-
-
-class Video(TimestampedMixin):
-    videoId = models.CharField(max_length=200, unique=True)
-    thumb_default = models.URLField(null=True, blank=True)
-    thumb_medium = models.URLField(null=True, blank=True)
-    thumb_high = models.URLField(null=True, blank=True)
-    title = models.CharField(max_length=200, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    published_date = models.DateTimeField(auto_now=True)
-    closed_date = models.DateTimeField(null=True, blank=True)
-    slug = models.SlugField(max_length=200, blank=True)
-
-    class Meta:
-        verbose_name = _('video')
-        verbose_name_plural = _('videos')
-
-    def __str__(self):
-        return self.videoId
 
 
 class Room(TimestampedMixin):
@@ -107,11 +55,7 @@ class Room(TimestampedMixin):
         (1, 'Em andamento'),
         (2, 'Transmissão encerrada')
     )
-    agenda = models.OneToOneField('Agenda', related_name='room', null=True,
-                                  blank=True, on_delete=models.SET_NULL)
-    video = models.OneToOneField('Video', related_name='room', null=True,
-                                 blank=True, on_delete=models.SET_NULL)
-    cod_reunion = models.IntegerField(null=True, blank=True)
+    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
     title_reunion = models.CharField(max_length=200, null=True, blank=True)
     legislative_body_initials = models.CharField(max_length=200, null=True,
                                                  blank=True)
@@ -262,46 +206,11 @@ class Question(TimestampedMixin):
         return self.question
 
 
-class Tag(TimestampedMixin):
-    text = models.CharField(max_length=200)
-    video = models.ForeignKey(Video, related_name='tags', null=True)
-
-    class Meta:
-        verbose_name = _('tag')
-        verbose_name_plural = _('tags')
-
-    def __str__(self):
-        return self.video
-
-
 def notification(subject, html, email_list):
     mail = EmailMultiAlternatives(subject, '', settings.EMAIL_HOST_USER,
                                   email_list)
     mail.attach_alternative(html, 'text/html')
     mail.send()
-
-
-def agenda_post_save(sender, instance, created, **kwargs):
-    if 'Convocada' in instance.situation or 'Andamento' in instance.situation:
-        room = Room.objects.get_or_create(cod_reunion=instance.cod_reunion)[0]
-        room.agenda = instance
-        room.save()
-
-
-def video_pre_save(signal, instance, sender, **kwargs):
-    instance.slug = slugify(instance.title)
-
-
-def video_post_save(sender, instance, created, **kwargs):
-    is_closed = False
-    if created:
-        schedule('apps.core.tasks.close_room', instance.videoId,
-                 name=instance.videoId, schedule_type='I')
-
-    if instance.closed_date is not None:
-        is_closed = True
-    if hasattr(instance, 'room'):
-        instance.room.send_notification(is_closed=is_closed)
 
 
 def room_post_save(sender, instance, created, **kwargs):
@@ -314,15 +223,6 @@ def room_post_save(sender, instance, created, **kwargs):
 def room_pre_delete(sender, instance, **kwargs):
     if hasattr(instance, 'room'):
         instance.send_notification(deleted=True)
-
-
-def video_pre_delete(sender, instance, **kwargs):
-    if hasattr(instance, 'room'):
-        instance.room.send_notification(deleted=True)
-    try:
-        Schedule.objects.get(name=instance.videoId).delete()
-    except Schedule.DoesNotExist:
-        pass
 
 
 def vote_post_save(sender, instance, **kwargs):
@@ -341,10 +241,6 @@ def vote_post_delete(sender, instance, **kwargs):
     instance.question.send_notification()
 
 
-models.signals.post_save.connect(agenda_post_save, sender=Agenda)
-models.signals.pre_save.connect(video_pre_save, sender=Video)
-models.signals.post_save.connect(video_post_save, sender=Video)
-models.signals.pre_delete.connect(video_pre_delete, sender=Video)
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
 models.signals.post_save.connect(room_post_save, sender=Room)

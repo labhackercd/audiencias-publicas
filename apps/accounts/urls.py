@@ -1,7 +1,6 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
 from audiencias_publicas.decorators import anonymous_required
 from apps.accounts import views
 
@@ -28,6 +27,4 @@ urlpatterns = [
     url(r'^reset/done/$',
         auth_views.password_reset_complete,
         name='password_reset_complete'),
-    url(r'^social/', include('social_django.urls',
-        namespace=settings.SOCIAL_AUTH_URL_NAMESPACE)),
 ]
