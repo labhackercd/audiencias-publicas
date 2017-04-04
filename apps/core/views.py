@@ -20,7 +20,7 @@ def receive_camara_callback(request=None):
               'codComissao': '0',
               'bolEdemocracia': '1'}
     response = requests.get(
-        'https://secod.camara.gov.br/ws-pauta/evento/interativo',
+        'https://infoleg.camara.leg.br/ws-pauta/evento/interativo',
         params=params, verify=False)
     data = json.loads(response.text)
     for item in data:
