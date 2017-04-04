@@ -41,7 +41,7 @@ class AudienciasRemoteUser(RemoteUserMiddleware):
             # by logging the user in.
             user_data = json.loads(request.META['HTTP_REMOTE_USER_DATA'])
             user.first_name = user_data['name']
-            if not getattr(user, 'profile'):
+            if not hasattr(user, 'profile'):
                 profile = UserProfile()
                 user.profile = profile
             else:
