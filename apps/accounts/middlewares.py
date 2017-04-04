@@ -43,7 +43,7 @@ class AudienciasRemoteUser(RemoteUserMiddleware):
             user.first_name = user_data['name']
             if not hasattr(user, 'profile'):
                 profile = UserProfile()
-                user.profile = profile
+                profile.user = user
             else:
                 profile = user.profile
             profile.avatar_url = user_data['avatar']
