@@ -87,22 +87,30 @@
             <iframe class="video__iframe" src="https://www.youtube.com/embed/{{object.youtube_id}}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
           </div>
           <div class="video__title">
+            {% if object.youtube_status == 1 %}
             <h1 class="title__header">
               Agora na Câmara:
               <span><strong id="online-users"></strong> assistindo</span>
             </h1>
+            {% else %}
+            <h1 class="title__header">
+              Transmissão Encerrada:
+              <span><strong>{{object.max_online_users}}</strong> vizualizações</span>
+            </h1>
+            {% endif %}
             <h2 class="title__subheader">
               {% if object.youtube_status != 2 %}
                 <i class="subheader__icon icon icon-circle live-blink"></i>
               {% endif %}
               <span class="subheader__text">{{ object.legislative_body_alias }}</span>
+              <p>{{object.date}} - {{object.location}}</p>
             </h2>
           </div>
         </div>
       {% else %}
         <div class="video--empty">
           <img class="video--empty__icon" src="{% static 'img/calendar-book.svg' %}" data-fallback="{% static 'img/calendar-book.png' %}">
-          <p class="video--empty__message">O vídeo desta audiência está previsto para <span class="video--empty__date">{{object.date}}</span>.</p>
+          <p class="video--empty__message">O vídeo desta audiência {{ object.legislative_body_alias }} está previsto para <span class="video--empty__date">{{object.date}}</span>.</p>
         </div>
       {% endif %}
     </div>
