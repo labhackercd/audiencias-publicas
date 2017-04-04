@@ -40,3 +40,9 @@ $(document).click(function(e) {
         .removeClass('toggled');
     }
 });
+
+$('.c-hamburger')
+  .click(function() {
+    $(this).toggleClass('toggled');
+    $('.navigation-wrapper').toggleClass('toggled');
+});
