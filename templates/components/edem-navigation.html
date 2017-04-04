@@ -57,8 +57,8 @@
     {% if user.is_authenticated %}
 
       <ul class="menu-list menu-list--dropdown menu-list--profile" title="Perfil de Usuário">
-        {% if user.profile.avatar %}
-        <div class="user-profile" style="background-image: url('{{ user.profile.avatar }}')">
+        {% if user..avatar_url %}
+        <div class="user-profile" style="background-image: url('{{ user.profile.avatar_url }}')">
         </div>
         {% else %}
         <div class="user-profile">
