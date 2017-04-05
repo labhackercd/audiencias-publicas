@@ -58,7 +58,7 @@ def index(request):
         agendas=Room.objects.filter(
             is_visible=True,
             reunion_status=2,
-            date__gte=datetime.now()).order_by('date'),
+            youtube_id__isnull=True).order_by('date'),
     ))
 
 
