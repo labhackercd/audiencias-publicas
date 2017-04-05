@@ -3,7 +3,9 @@ function onlineUsersComponent() {
   const onlineUsersEl = document.getElementById('online-users');
 
   function update(usersCount) {
-    onlineUsersEl.innerHTML = usersCount;
+    if (onlineUsersEl) {
+      onlineUsersEl.innerHTML = usersCount;
+    }
   }
 
   function get() {
