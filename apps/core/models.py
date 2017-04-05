@@ -154,6 +154,7 @@ class Message(TimestampedMixin):
     class Meta:
         verbose_name = _('message')
         verbose_name_plural = _('messages')
+        ordering = ['created']
 
     def __str__(self):
         return self.message
