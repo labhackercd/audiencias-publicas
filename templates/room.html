@@ -70,10 +70,6 @@
           <div class="send-form--unauthenticated">
             <span><a href="https://edemocracia.camara.leg.br/home?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
           </div>
-        {% elif object.youtube_status == 2 %}
-          <div class="send-form--closed">
-            <span>Audiência encerrada para participações.</span>
-          </div>
         {% endif %}
       </div>
     </div>
@@ -153,12 +149,6 @@
           <div class="send-form--unauthenticated">
             <span><a href="https://edemocracia.camara.leg.br/home?next={{ request.path }}">Faça Login</a> para participar no chat!</span>
           </div>
-
-        {% elif object.youtube_status == 2 %}
-          <div class="send-form--closed">
-            <span>Audiência encerrada para participações.</span>
-          </div>
-
         {% endif %}
       </div>
     </div>

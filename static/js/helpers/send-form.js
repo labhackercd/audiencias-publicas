@@ -7,14 +7,18 @@ function sendFormHelper($wrapper) {
   };
 
   function createClosedFormEl() {
-    const closedFormEl = document.createElement('div');
-    const closedFormSpanEl = document.createElement('span');
+    const closedForms = document.querySelectorAll('.send-form--closed');
 
-    closedFormEl.className = 'send-form--closed';
-    closedFormSpanEl.innerHTML = 'Audiência encerrada para participações.';
+    if (closedForms.length < 2) {
+      const closedFormEl = document.createElement('div');
+      const closedFormSpanEl = document.createElement('span');
 
-    closedFormEl.appendChild(closedFormSpanEl);
-    elements.$wrapper[0].appendChild(closedFormEl);
+      closedFormEl.className = 'send-form--closed';
+      closedFormSpanEl.innerHTML = 'Audiência encerrada para participações.';
+
+      closedFormEl.appendChild(closedFormSpanEl);
+      elements.$wrapper[0].appendChild(closedFormEl);
+    }
   }
 
   function closeForm() {
