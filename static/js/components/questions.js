@@ -85,6 +85,7 @@ function questionsComponent(socket) {
     } else {
       $upvoteButton.removeClass('voted disabled');
       $upvoteButton.removeAttr('disabled');
+      $upvoteButton.addClass('question-vote');
       $upvoteButton.html('Votar Nesta Pergunta');
       $totalVotes.removeClass('voted');
     }
@@ -119,8 +120,8 @@ function questionsComponent(socket) {
 
     const $question = $(`[data-question-id=${data.id}]`);
 
-    bindEventsHandlers.onAdd($question);
     updateVoteBlock($question, data);
+    bindEventsHandlers.onAdd($question);
     elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
   }
 
