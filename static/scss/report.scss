@@ -1,0 +1,151 @@
+@import 'ambience/colors';
+
+
+@page {
+  margin: 1.5cm;
+}
+
+html {
+  font-family: "Open Sans";
+  line-height: 1.3;
+}
+
+.report {
+  @media screen {
+    margin: 2em 20em;
+  }
+
+  .report__header {
+    display: flex;
+
+    .header__logo {
+      width: 7em;
+      height: 7em;
+      @media print {
+        width: 4em;
+        height: 4em;
+      }
+    }
+
+    .header__info {
+      margin-left: 2em;
+      width: 100%;
+      .info__title {
+        border-bottom: 0.7px solid $color-gray-96;
+        margin-bottom: 0;
+        @media print {
+          font-size: 1em;
+        }
+      }
+      .info__date {
+        margin: 0;
+        color: $color-gray-60;
+        text-transform: uppercase;
+        font-size: 0.7em;
+      }
+    }
+  }
+
+  .report__summary {
+    display: flex;
+    justify-content: space-around;
+    margin: 3em 0;
+
+    @media print {
+      margin: 2em 0;
+    }
+
+    .room__stats {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex: 1 1 auto;
+      max-width: 15em;
+
+      .stats__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 5px solid;
+        border-radius: 50%;
+        padding: 0.5em;
+        font-size: 3em;
+        @media print {
+          font-size: 2em
+        }
+      }
+
+      .stats__number {
+        margin: 0;
+        font-size: 1.5em;
+        font-weight: 700;
+        margin-top: 0.7em;
+        @media print {
+          font-size: 1em
+        }
+      }
+
+      .stats__text {
+        margin: 0;
+        font-weight: 600;
+        font-size: 1.2em;
+        text-align: center;
+        @media print {
+          font-size: 1em
+        }
+      }
+    }
+  }
+
+  [class^="report__section"] {
+    .section__title {
+      @media print {
+        font-size: 1.2em;
+      }
+    }
+
+    .section__question-list {
+      list-style-type: none;
+      padding: 0;
+
+      .question-list__item {
+        display: flex;
+        margin-bottom: 1em;
+        .item__votes {
+          background: $color-gray-96;
+          padding: 1em;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          .votes__number {
+            font-size: 1.2em;
+            font-weight: 700;
+          }
+          .votes__text {
+            font-size: 0.9em;
+            font-weight: 600;
+          }
+        }
+        .item__question {
+          background: $color-gray-98;
+          padding: 0 1em;
+          width: 100%;
+          .question__author {
+            top: 0;
+            margin: 0;
+            margin-top: 0.5em;
+            font-size: 0.7em;
+            .author__username {
+              font-weight: 700;
+            }
+          }
+          .question__text {
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+}
