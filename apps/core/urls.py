@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
-                             VideoReunionDetail, QuestionDetail, index)
+                             VideoReunionDetail, QuestionDetail, index,
+                             RoomReportView)
 from apps.core.api import (api_root, MessageListAPI, QuestionListAPI,
                            VoteListAPI, UserListAPI, RoomAPI, RoomListAPI)
 
@@ -10,6 +11,8 @@ urlpatterns = [
     url(r'^pergunta/(?P<pk>\d+)/?$', QuestionDetail.as_view(),
         name='question_detail'),
     url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
+    url(r'^sala/(?P<pk>\d+)/relatorio/?$', RoomReportView.as_view(),
+        name='room_report'),
     url(r'^sala/reuniao/(?P<cod_reunion>\d+)/?$', VideoReunionDetail.as_view(),
         name='video_reunion_room'),
     url(r'^sala/(?P<pk>\d+)/perguntas/?$', RoomQuestionList.as_view(),

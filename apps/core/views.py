@@ -80,6 +80,19 @@ class VideoDetail(DetailView):
         return context
 
 
+class RoomReportView(DetailView):
+    model = Room
+    template_name = 'room_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(RoomReportView, self).get_context_data(**kwargs)
+        context['questions'] = sorted(self.object.questions.all(),
+                                      key=lambda vote: vote.votes_count,
+                                      reverse=True)
+        context['messages'] = self.object.messages.all()
+        return context
+
+
 class VideoReunionDetail(DetailView):
     model = Room
     template_name = 'room.html'
