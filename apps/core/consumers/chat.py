@@ -35,21 +35,20 @@ def on_receive(message, pk):
     else:
         log.debug('Chat message is ok.')
 
-    blackList = settings.WORDS_BLACK_LIST
-    wordList = re.sub("[^\w]", " ", data['message'].lower()).split()
-    censured_words = list(set(blackList) & set(wordList))
+    black_list = settings.WORDS_BLACK_LIST
     message = data['message']
 
-    if censured_words:
-        for word in censured_words:
-            message = re.sub(word, '♥', message, flags=re.IGNORECASE)
+    if message.strip():
+        for word in black_list:
+            pattern = re.compile(word, re.IGNORECASE)
+            message = pattern.sub('♥', message)
 
-    user = User.objects.get(id=decrypt(data['handler']))
-    message = Message.objects.create(room=room, user=user,
-                                     message=message)
-    Group(room.group_chat_name).send(
-        {'text': json.dumps({"hmtl": message.html_body()})}
-    )
+        user = User.objects.get(id=decrypt(data['handler']))
+        message = Message.objects.create(room=room, user=user,
+                                         message=message)
+        Group(room.group_chat_name).send(
+            {'text': json.dumps({"hmtl": message.html_body()})}
+        )
 
 
 def on_disconnect(message, pk):
