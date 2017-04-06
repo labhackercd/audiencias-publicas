@@ -23,7 +23,8 @@ function sendFormHelper($wrapper) {
   }
 
   function formIsBlank() {
-    const isBlank = elements.$formInput.val() ? 0 : 1;
+    const text = elements.$formInput.val();
+    const isBlank = text.trim() ? 0 : 1;
     return isBlank;
   }
 
