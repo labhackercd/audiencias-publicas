@@ -10,6 +10,16 @@ html {
   line-height: 1.3;
 }
 
+body {
+  background-color: $color-white;
+  color: $color-gray-40;
+  @media print {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    color: $color-black;
+  }
+}
+
 .report {
   @media screen {
     margin: 2em 20em;
@@ -113,7 +123,7 @@ html {
         display: flex;
         margin-bottom: 1em;
         .item__votes {
-          background: $color-gray-96;
+          background-color: $color-gray-96;
           padding: 1em;
           display: flex;
           flex-direction: column;
@@ -129,7 +139,7 @@ html {
           }
         }
         .item__question {
-          background: $color-gray-98;
+          background-color: $color-gray-98;
           padding: 0 1em;
           width: 100%;
           .question__author {
@@ -143,6 +153,40 @@ html {
           }
           .question__text {
             font-style: italic;
+          }
+          .question__answer {
+            font-size: 0.7em;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+    .section__chat-list {
+      list-style-type: none;
+      padding: 0;
+      .chat-list__item {
+        display: flex;
+        &:nth-child(even) {
+          background-color: black;
+        }
+        .item__message-time {
+          display: flex;
+          padding: 1em;
+          min-width: 3em;
+          flex-direction: column;
+          justify-content: center;
+          background-color: rgba($color-gray-96, .97);
+        }
+        .item__chat-message {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          padding: 0.5em 1em;
+          background-color: rgba($color-gray-98, .97);
+          .chat-message__author {
+            top: 0;
+            font-size: 0.7em;
+            font-weight: 700;
           }
         }
       }

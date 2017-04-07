@@ -1,4 +1,4 @@
-{% load staticfiles compress %}
+{% load staticfiles compress video_utils %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,10 +50,27 @@
             <div class="item__question">
               <p class="question__author">Enviada por <span class="author__username">{{question.user}}</span>, às {{question.created|time:"H:i"}}</p>
               <p class="question__text">{{question.question}}</p>
+              {% if question.answer_time %}
+                <p class="question__answer">Respondida em {{question.answer_time|format_seconds}}</p>
+              {% endif %}
             </div>
           </li>
         {% endfor %}
+      </ul>
+    </div>
 
+    <div class="report__section--chat">
+      <h1 class="section__title">Chat</h1>
+      <ul class="section__chat-list">
+        {% for message in messages %}
+          <li class="chat-list__item">
+            <span class="item__message-time">{{message.created|time:"H:i"}}</span>
+            <div class="item__chat-message">
+              <span class="chat-message__author">{{message.user}}:</span>
+              <span class="chat-message__text">{{message.message}}</span>
+            </div>
+          </li>
+        {% endfor %}
       </ul>
     </div>
   </div>
