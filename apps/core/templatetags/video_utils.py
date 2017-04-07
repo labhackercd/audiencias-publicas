@@ -2,7 +2,8 @@ from django import template
 from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
-import math
+from django.contrib.auth.models import Group
+import datetime
 import re
 
 
@@ -43,6 +44,14 @@ def vote_action(context, question, user):
 
 @register.filter()
 def format_seconds(s):
-    mins = math.floor(s / 60)
-    secs = math.floor(s - (mins * 60))
-    return "%dm%02ds" % (mins, secs)
+    if s:
+        return str(datetime.timedelta(seconds=s))
+
+
+@register.filter()
+def belongs_to_group(user, group_name):
+    try:
+        group = Group.objects.get(name=group_name)
+        return group in user.groups.all()
+    except Group.DoesNotExist:
+        return False
