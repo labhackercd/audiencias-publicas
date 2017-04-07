@@ -89,7 +89,7 @@ class RoomReportView(DetailView):
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
-        context['messages'] = self.object.messages.all()
+        context['messages'] = self.object.messages.all().order_by('-created')
         return context
 
 
