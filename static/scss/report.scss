@@ -92,7 +92,7 @@ body {
         font-weight: 700;
         margin-top: 0.7em;
         @media print {
-          font-size: 1em
+          font-size: 0.8em
         }
       }
 
@@ -102,7 +102,7 @@ body {
         font-size: 1.2em;
         text-align: center;
         @media print {
-          font-size: 1em
+          font-size: 0.8em
         }
       }
     }
@@ -111,7 +111,7 @@ body {
   [class^="report__section"] {
     .section__title {
       @media print {
-        font-size: 1.2em;
+        font-size: 1em;
       }
     }
 
@@ -132,10 +132,16 @@ body {
           .votes__number {
             font-size: 1.2em;
             font-weight: 700;
+            @media print {
+              font-size: 0.9em;
+            }
           }
           .votes__text {
-            font-size: 0.9em;
+            font-size: 0.7em;
             font-weight: 600;
+            @media print {
+              font-size: 0.5em;
+            }
           }
         }
         .item__question {
@@ -150,13 +156,22 @@ body {
             .author__username {
               font-weight: 700;
             }
+            @media print {
+              font-size: 0.5em;
+            }
           }
           .question__text {
             font-style: italic;
+            @media print {
+              font-size: 0.7em;
+            }
           }
           .question__answer {
             font-size: 0.7em;
             font-weight: 700;
+            @media print {
+              font-size: 0.5em;
+            }
           }
         }
       }
@@ -176,6 +191,9 @@ body {
           flex-direction: column;
           justify-content: center;
           background-color: rgba($color-gray-96, .97);
+          @media print {
+            font-size: 0.7em;
+          }
         }
         .item__chat-message {
           width: 100%;
@@ -183,10 +201,18 @@ body {
           flex-direction: column;
           padding: 0.5em 1em;
           background-color: rgba($color-gray-98, .97);
+
+          @media print {
+            font-size: 0.7em;
+          }
+
           .chat-message__author {
             top: 0;
             font-size: 0.7em;
             font-weight: 700;
+            @media print {
+              font-size: 0.5em;
+            }
           }
         }
       }
