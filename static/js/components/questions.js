@@ -244,6 +244,11 @@ function questionsComponent(socket) {
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
       $shareListItemLink.on('click', events.share);
+      $('.answered_time__input').inputmask("99:99:99", {
+        placeholder: "0",
+        numericInput: true,
+        showMaskOnHover: false,
+      });
     },
   };
 
