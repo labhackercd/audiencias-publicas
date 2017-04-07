@@ -50,5 +50,13 @@
         <i class="answered__icon icon icon-check"></i>
       </a>
     {% endif %}
+
+    {% if user|belongs_to_group:question.room.legislative_body_initials %}
+      <form class="question-block__answered-form" method="POST" action="{% url 'set_question_answer' question_id=question.pk %}">
+        {% csrf_token %}
+        <span class="answered_time__label">Insira o tempo da resposta:</span>
+        <input class="answered_time__input" name="answered_time" id="answered_time" type="text" placeholder="hh:mm:ss" value="{{question.answer_time|format_seconds}}" >
+      </form>
+    {% endif %}
   </div>
 </li>
