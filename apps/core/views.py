@@ -1,11 +1,34 @@
 from django.conf import settings
-from django.http import Http404
+from django.http import (Http404, HttpResponseForbidden,
+                         HttpResponseBadRequest)
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from apps.core.models import Question, Room
 from apps.core.utils import encrypt
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
+from django.shortcuts import redirect
+import datetime
+
+
+def set_answer_time(request, question_id):
+    if request.user.is_authenticated() and request.method == 'POST':
+        answer_time = request.POST.get('answered_time')
+        if answer_time:
+            time = datetime.strptime(answer_time, '%H:%M:%S')
+            seconds = time.second
+            seconds += time.minute * 60
+            seconds += time.hour * 3600
+
+            question = Question.objects.get(pk=question_id)
+            print(seconds)
+            question.answer_time = seconds
+            question.save()
+            return redirect('video_room', pk=question.room.pk)
+        else:
+            return HttpResponseBadRequest('Invalid date format.')
+    else:
+        return HttpResponseForbidden()
 
 
 def index(request):
