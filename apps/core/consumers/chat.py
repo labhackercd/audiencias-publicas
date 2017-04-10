@@ -36,12 +36,15 @@ def on_receive(message, pk):
         log.debug('Chat message is ok.')
 
     black_list = settings.WORDS_BLACK_LIST
+    word_list = re.sub("[^\w]", " ", data['message'].lower()).split()
+    censured_words = list(set(black_list) & set(word_list))
+
     message = data['message']
 
     if message.strip():
-        for word in black_list:
-            pattern = re.compile(word, re.IGNORECASE)
-            message = pattern.sub('♥', message)
+        if censured_words:
+            for word in censured_words:
+                message = re.sub(word, '♥', message, flags=re.IGNORECASE)
 
         user = User.objects.get(id=decrypt(data['handler']))
         message = Message.objects.create(room=room, user=user,
