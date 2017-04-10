@@ -8,7 +8,7 @@ from apps.core.utils import encrypt
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 from django.shortcuts import redirect
-import datetime
+from datetime import datetime
 
 
 def set_answer_time(request, question_id):
@@ -21,7 +21,6 @@ def set_answer_time(request, question_id):
             seconds += time.hour * 3600
 
             question = Question.objects.get(pk=question_id)
-            print(seconds)
             question.answer_time = seconds
             question.save()
             return redirect('video_room', pk=question.room.pk)
