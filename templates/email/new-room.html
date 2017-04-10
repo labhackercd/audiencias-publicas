@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+         <div>
+            <p>Nova sala foi adicionada no Audiências Interativas!</p>
+            <p>Sala: {{ room.title_reunion }} - {{ room.legislative_body_alias }} | Local: {{ room.location }} | Data: {{ room.date|date:"d/m/Y" }}</p>
+            <a href="https://{{ domain }}{{ room.get_absolute_url }}">Acesse clicando aqui</a>
+        </div>
+    </body>
+</html>

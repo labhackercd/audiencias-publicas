@@ -4,6 +4,10 @@ from dateutil.relativedelta import relativedelta
 from apps.core.models import Room
 import requests
 import json
+from django.contrib.sites.models import Site
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.conf import settings
 
 
 class Command(BaseCommand):
@@ -40,3 +44,15 @@ class Command(BaseCommand):
                                          '%d/%m/%Y %H:%M:%S')
                 room.date = date
                 room.save()
+                if created:
+                    domain = Site.objects.get_current().domain
+                    if settings.FORCE_SCRIPT_NAME:
+                        domain += settings.FORCE_SCRIPT_NAME
+                    html = render_to_string('email/new-room.html',
+                                            {'domain': domain, 'room': room})
+                    subject = u'[Audiências Interativas] Nova sala criada'
+                    mail = EmailMultiAlternatives(subject, '',
+                                                  settings.EMAIL_HOST_USER,
+                                                  [settings.EMAIL_HOST_USER])
+                    mail.attach_alternative(html, 'text/html')
+                    mail.send()
