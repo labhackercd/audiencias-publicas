@@ -84,6 +84,7 @@ YOUTUBE_API_KEY = config('YOUTUBE_API_KEY')
 YOUTUBE_CHANNEL_ID = config('YOUTUBE_CHANNEL_ID')
 YOUTUBE_SEARCH_QUERY = config('YOUTUBE_SEARCH_QUERY', default='')
 QUESTION_MIN_UPVOTES = config('QUESTION_MIN_UPVOTES', default=3, cast=int)
+GOOGLE_ANALYTICS_ID = config('GOOGLE_ANALYTICS_ID', default='')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -114,6 +115,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'apps.core.processors.analytics',
             ],
         },
     },
