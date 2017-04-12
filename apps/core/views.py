@@ -9,6 +9,7 @@ from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 from django.shortcuts import redirect
 from datetime import datetime
+from django.db.models import Q
 
 
 def set_answer_time(request, question_id):
@@ -38,10 +39,13 @@ def index(request):
         live_videos=Room.objects.filter(
             youtube_status=1,
             is_visible=True).order_by('-date'),
-        agendas=Room.objects.filter(
+        agendas=Room.objects.filter(Q(
             is_visible=True,
             reunion_status=2,
-            youtube_id__isnull=True).order_by('date'),
+            youtube_id='') | Q(
+            is_visible=True,
+            reunion_status=2,
+            youtube_id__isnull=True)).order_by('date'),
     ))
 
 
