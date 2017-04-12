@@ -12,9 +12,9 @@ from django.conf import settings
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        initial_date = datetime.today()
+        today = datetime.today()
         final_date = datetime.today() + relativedelta(months=3)
-        params = {'dataInicial': initial_date.strftime('%d/%m/%Y'),
+        params = {'dataInicial': today.strftime('%d/%m/%Y'),
                   'dataFinal': final_date.strftime('%d/%m/%Y'),
                   'codComissao': '0',
                   'bolEdemocracia': '1'}
@@ -22,6 +22,7 @@ class Command(BaseCommand):
             'https://infoleg.camara.leg.br/ws-pauta/evento/interativo',
             params=params, verify=False)
         data = json.loads(response.text)
+        allowed_rooms = []
         for item in data:
             if item['codReuniao'] == item['codReuniaoPrincipal']:
                 room, created = Room.objects.get_or_create(
@@ -56,3 +57,7 @@ class Command(BaseCommand):
                                                   [settings.EMAIL_HOST_USER])
                     mail.attach_alternative(html, 'text/html')
                     mail.send()
+                allowed_rooms.append(item['codReuniao'])
+        rooms_without_interaction = Room.objects.filter(
+            date__gte=today).exclude(cod_reunion__in=allowed_rooms)
+        rooms_without_interaction.update(is_visible=False)
