@@ -38,6 +38,7 @@ class Command(BaseCommand):
                 room.location = item['txtLocal']
                 room.legislative_body_type = item['codTipoOrgao']
                 room.is_live = item['bolTransmissaoEmAndamento']
+                room.is_joint = item['bolReuniaoConjunta']
                 room.youtube_id = item['idYoutube']
                 room.is_visible = item['bolHabilitarEventoInterativo']
                 room.youtube_status = item['codEstadoTransmissaoYoutube']

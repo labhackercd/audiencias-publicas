@@ -68,6 +68,7 @@ class Room(TimestampedMixin):
     location = models.CharField(max_length=200, null=True, blank=True)
     legislative_body_type = models.IntegerField(choices=TYPE_CHOICES,
                                                 default=1)
+    is_joint = models.BooleanField(default=False)
     is_live = models.BooleanField(default=False)
     youtube_status = models.IntegerField(choices=YOUTUBE_STATUS_CHOICES,
                                          default=0)

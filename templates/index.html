@@ -83,7 +83,7 @@
                   </td>
 
                   <td class="calendar-table__column">
-                    <div class="calendar-table__event-title">{{ agenda.legislative_body_alias }} | {{ agenda.location }}</div>
+                    <div class="calendar-table__event-title">{% if agenda.is_joint %}{{ agenda.title_reunion }}{% else %}{{ agenda.reunion_type }} - {{ agenda.legislative_body_alias }}{% endif %} | {{ agenda.location }}</div>
                     <div class="calendar-table__hour">
                       {% if agenda.date|date:"H" == "00" %}
                         Horário não informado

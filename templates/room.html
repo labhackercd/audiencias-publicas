@@ -102,7 +102,7 @@
               {% if object.youtube_status != 2 %}
                 <i class="subheader__icon icon icon-circle live-blink"></i>
               {% endif %}
-              <span class="subheader__text">{{ object.legislative_body_alias }}</span>
+              <span class="subheader__text">{% if object.is_joint %}{{ object.title_reunion }}{% else %}{{ object.reunion_type }} - {{ object.legislative_body_alias }}{% endif %}</span>
               <p>{{object.date}} - {{object.location}}</p>
             </h2>
           </div>
@@ -110,7 +110,7 @@
       {% else %}
         <div class="video--empty">
           <img class="video--empty__icon" src="{% static 'img/calendar-book.svg' %}" data-fallback="{% static 'img/calendar-book.png' %}">
-          <p class="video--empty__message">O vídeo da audiência {{ object.legislative_body_alias }} está previsto para <span class="video--empty__date">{{object.date}}</span>.</p>
+          <p class="video--empty__message">O vídeo {% if object.is_joint %}{{ object.title_reunion }}{% else %}{{ object.reunion_type }} - {{ object.legislative_body_alias }}{% endif %} está previsto para <span class="video--empty__date">{{object.date}}</span>.</p>
         </div>
       {% endif %}
     </div>
