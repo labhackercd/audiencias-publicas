@@ -6,7 +6,7 @@
       <img class="video__thumbnail" src="https://i.ytimg.com/vi/{{room.youtube_id}}/mqdefault_live.jpg">
     </a>
     <h2 class="video__title">
-      <a class="title__link" href="{{room.get_absolute_url}}">{% if room.is_joint %}{{ room.title_reunion|simplify }}{% else %}{{ room.reunion_type|simplify }} - {{ room.legislative_body_alias|simplify }}{% endif %}</a>
+      <a class="title__link" href="{{room.get_absolute_url}}">{% if room.is_joint %}{{ room.title_reunion }}{% elif room.reunion_type %}{{ room.reunion_type }} - {{ room.legislative_body_alias }}{% else %}{{ room.legislative_body_alias }}{% endif %}</a>
     </h2>
   </li>
 {% endif %}
