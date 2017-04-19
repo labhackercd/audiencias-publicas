@@ -48,8 +48,6 @@ class Command(BaseCommand):
                 room.save()
                 if created:
                     domain = Site.objects.get_current().domain
-                    if settings.FORCE_SCRIPT_NAME:
-                        domain += settings.FORCE_SCRIPT_NAME
                     html = render_to_string('email/new-room.html',
                                             {'domain': domain, 'room': room})
                     subject = u'[Audiências Interativas] Nova sala criada'
