@@ -53,9 +53,11 @@ class Command(BaseCommand):
                     html = render_to_string('email/new-room.html',
                                             {'domain': domain, 'room': room})
                     subject = u'[Audiências Interativas] Nova sala criada'
-                    mail = EmailMultiAlternatives(subject, '',
-                                                  settings.EMAIL_HOST_USER,
-                                                  [settings.EMAIL_HOST_USER])
+                    mail = EmailMultiAlternatives(
+                        subject, '',
+                        settings.EMAIL_HOST_USER,
+                        settings.NOTIFICATION_EMAIL_LIST
+                    )
                     mail.attach_alternative(html, 'text/html')
                     mail.send()
                 allowed_rooms.append(item['codReuniao'])

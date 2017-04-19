@@ -252,3 +252,9 @@ LOGGING = {
 WORDS_BLACK_LIST = config('WORDS_BLACK_LIST',
                           cast=Csv(lambda x: x.strip().strip(',').strip()),
                           default='')
+
+NOTIFICATION_EMAIL_LIST = config(
+    'NOTIFICATION_EMAIL_LIST',
+    cast=Csv(lambda x: x.strip().strip(',').strip()),
+    default=''
+)
