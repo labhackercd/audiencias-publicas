@@ -18,6 +18,7 @@ def on_connect(message, pk):
     room = get_room(pk)
     if room is not None:
         room.online_users += 1
+        room.views += 1
         if room.online_users > room.max_online_users:
             room.max_online_users = room.online_users
         room.save()

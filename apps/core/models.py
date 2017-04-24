@@ -76,6 +76,7 @@ class Room(TimestampedMixin):
     date = models.DateTimeField(null=True, blank=True)
     online_users = models.IntegerField(default=0)
     max_online_users = models.IntegerField(default=0)
+    views = models.IntegerField(default=0)
     is_visible = models.BooleanField(default=False)
 
     class Meta:
