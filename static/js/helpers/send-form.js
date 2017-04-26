@@ -12,9 +12,11 @@ function sendFormHelper($wrapper) {
 
     closedFormEl.className = 'send-form--closed';
     closedFormSpanEl.innerHTML = 'Audiência encerrada para participações.';
-
     closedFormEl.appendChild(closedFormSpanEl);
-    elements.$wrapper[0].appendChild(closedFormEl);
+
+    if(!elements.$wrapper[0].querySelector(".send-form--closed")){
+      elements.$wrapper[0].appendChild(closedFormEl);
+    }
   }
 
   function closeForm() {
