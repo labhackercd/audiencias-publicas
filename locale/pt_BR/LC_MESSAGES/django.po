@@ -1,0 +1,161 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-08 13:36-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: apps/core/models.py:15
+msgid "created"
+msgstr "criado"
+
+#: apps/core/models.py:17
+msgid "modified"
+msgstr "modificado"
+
+#: apps/core/models.py:57
+msgid "code reunion"
+msgstr "código reunião"
+
+#: apps/core/models.py:59
+msgid "title reunion"
+msgstr "título reunião"
+
+#: apps/core/models.py:61
+msgid "legislative body initials"
+msgstr "sigla órgão"
+
+#: apps/core/models.py:64
+msgid "legislative body alias"
+msgstr "apelido órgão"
+
+#: apps/core/models.py:67
+msgid "legislative body"
+msgstr "nome órgão"
+
+#: apps/core/models.py:69
+msgid "subcomission"
+msgstr "subcomissão"
+
+#: apps/core/models.py:71
+msgid "reunion status"
+msgstr "estado reunião"
+
+#: apps/core/models.py:73
+msgid "reunion type"
+msgstr "tipo reunião"
+
+#: apps/core/models.py:75
+msgid "reunion object"
+msgstr "objeto reunião"
+
+#: apps/core/models.py:77
+msgid "location"
+msgstr "local"
+
+#: apps/core/models.py:79
+msgid "legislative body type"
+msgstr "tipo órgão"
+
+#: apps/core/models.py:82
+msgid "is joint"
+msgstr "reunião conjunta"
+
+#: apps/core/models.py:83
+msgid "is live"
+msgstr "ao vivo"
+
+#: apps/core/models.py:84
+msgid "youtube status"
+msgstr "estado youtube"
+
+#: apps/core/models.py:87
+msgid "youtube id"
+msgstr "id youtube"
+
+#: apps/core/models.py:89
+msgid "date"
+msgstr "data"
+
+#: apps/core/models.py:90
+msgid "online users"
+msgstr "usuários online"
+
+#: apps/core/models.py:91
+msgid "max online users"
+msgstr "máximo de usuários online simultâneo"
+
+#: apps/core/models.py:92
+msgid "views"
+msgstr "visualizações"
+
+#: apps/core/models.py:93
+msgid "is visible"
+msgstr "visível"
+
+#: apps/core/models.py:96 apps/core/models.py:105 apps/core/models.py:168
+#: apps/core/models.py:188
+msgid "room"
+msgstr "sala"
+
+#: apps/core/models.py:97
+msgid "rooms"
+msgstr "salas"
+
+#: apps/core/models.py:150 apps/core/models.py:170 apps/core/models.py:189
+msgid "user"
+msgstr "usuário"
+
+#: apps/core/models.py:152 apps/core/models.py:190 apps/core/models.py:220
+msgid "question"
+msgstr "questão"
+
+#: apps/core/models.py:153 apps/core/models.py:158
+msgid "vote"
+msgstr "voto"
+
+#: apps/core/models.py:154
+msgid "Up Vote"
+msgstr "voto positivo"
+
+#: apps/core/models.py:155
+msgid "Down Vote"
+msgstr "voto negativo"
+
+#: apps/core/models.py:159
+msgid "votes"
+msgstr "votos"
+
+#: apps/core/models.py:171 apps/core/models.py:174
+msgid "message"
+msgstr "mensagem"
+
+#: apps/core/models.py:175
+msgid "messages"
+msgstr "mensagens"
+
+#: apps/core/models.py:191
+msgid "answer time"
+msgstr "tempo da resposta"
+
+#: apps/core/models.py:221
+msgid "questions"
+msgstr "questões"
+
+#: apps/core/views.py:110
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr "Nenhum %(verbose_name)s encontrado correspondente à sua consulta"
