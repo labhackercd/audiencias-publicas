@@ -136,6 +136,15 @@ DATABASES = dict(default=config(
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
+LANGUAGES = (
+    ('en', 'English'),
+    ('pt-br', 'Brazilian Portuguese'),
+)
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
 LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'America/Sao_Paulo'

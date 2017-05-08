@@ -54,30 +54,43 @@ class Room(TimestampedMixin):
         (1, 'Em andamento'),
         (2, 'Transmissão encerrada')
     )
-    cod_reunion = models.CharField(max_length=200, null=True, blank=True)
-    title_reunion = models.CharField(max_length=200, null=True, blank=True)
-    legislative_body_initials = models.CharField(max_length=200, null=True,
+    cod_reunion = models.CharField(_('code reunion'), max_length=200,
+                                   null=True, blank=True)
+    title_reunion = models.CharField(_('title reunion'), max_length=200,
+                                     null=True, blank=True)
+    legislative_body_initials = models.CharField(_('legislative body initials'),
+                                                 max_length=200, null=True,
                                                  blank=True)
-    legislative_body_alias = models.CharField(max_length=200, null=True,
+    legislative_body_alias = models.CharField(_('legislative body alias'),
+                                              max_length=200, null=True,
                                               blank=True)
-    legislative_body = models.TextField(null=True, blank=True)
-    subcommission = models.CharField(max_length=200, null=True, blank=True)
-    reunion_status = models.IntegerField(choices=STATUS_CHOICES, default=1)
-    reunion_type = models.CharField(max_length=200, null=True, blank=True)
-    reunion_object = models.TextField(null=True, blank=True)
-    location = models.CharField(max_length=200, null=True, blank=True)
-    legislative_body_type = models.IntegerField(choices=TYPE_CHOICES,
+    legislative_body = models.TextField(_('legislative body'), null=True,
+                                        blank=True)
+    subcommission = models.CharField(_('subcomission'), max_length=200,
+                                     null=True, blank=True)
+    reunion_status = models.IntegerField(_('reunion status'),
+                                         choices=STATUS_CHOICES, default=1)
+    reunion_type = models.CharField(_('reunion type'), max_length=200,
+                                    null=True, blank=True)
+    reunion_object = models.TextField(_('reunion object'), null=True,
+                                      blank=True)
+    location = models.CharField(_('location'), max_length=200, null=True,
+                                blank=True)
+    legislative_body_type = models.IntegerField(_('legislative body type'),
+                                                choices=TYPE_CHOICES,
                                                 default=1)
-    is_joint = models.BooleanField(default=False)
-    is_live = models.BooleanField(default=False)
-    youtube_status = models.IntegerField(choices=YOUTUBE_STATUS_CHOICES,
+    is_joint = models.BooleanField(_('is joint'), default=False)
+    is_live = models.BooleanField(_('is live'), default=False)
+    youtube_status = models.IntegerField(_('youtube status'),
+                                         choices=YOUTUBE_STATUS_CHOICES,
                                          default=0)
-    youtube_id = models.CharField(max_length=200, null=True, blank=True)
-    date = models.DateTimeField(null=True, blank=True)
-    online_users = models.IntegerField(default=0)
-    max_online_users = models.IntegerField(default=0)
-    views = models.IntegerField(default=0)
-    is_visible = models.BooleanField(default=False)
+    youtube_id = models.CharField(_('youtube id'), max_length=200, null=True,
+                                  blank=True)
+    date = models.DateTimeField(_('date'), null=True, blank=True)
+    online_users = models.IntegerField(_('online users'), default=0)
+    max_online_users = models.IntegerField(_('max online users'), default=0)
+    views = models.IntegerField(_('views'), default=0)
+    is_visible = models.BooleanField(_('is visible'), default=False)
 
     class Meta:
         verbose_name = _('room')
@@ -89,7 +102,7 @@ class Room(TimestampedMixin):
         elif self.title_reunion:
             return self.title_reunion
         else:
-            return 'object'
+            return _('room')
 
     def is_today(self):
         if datetime.date.today() == self.date.date():
@@ -135,11 +148,15 @@ class Room(TimestampedMixin):
 
 class UpDownVote(TimestampedMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
-    question = models.ForeignKey('Question', related_name='votes')
-    vote = models.BooleanField(default=False, choices=((True, _('Up Vote')),
+    question = models.ForeignKey('Question', related_name='votes',
+                                 verbose_name=_('question'))
+    vote = models.BooleanField(_('vote'), default=False,
+                               choices=((True, _('Up Vote')),
                                (False, _('Down Vote'))))
 
     class Meta:
+        verbose_name = _('vote')
+        verbose_name_plural = _('votes')
         unique_together = ('user', 'question')
 
     def __str__(self):
@@ -147,9 +164,11 @@ class UpDownVote(TimestampedMixin):
 
 
 class Message(TimestampedMixin):
-    room = models.ForeignKey(Room, related_name='messages', null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    message = models.TextField()
+    room = models.ForeignKey(Room, related_name='messages', null=True,
+                             verbose_name=_('room'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             verbose_name=_('user'))
+    message = models.TextField(_('message'))
 
     class Meta:
         verbose_name = _('message')
@@ -165,10 +184,11 @@ class Message(TimestampedMixin):
 
 
 class Question(TimestampedMixin):
-    room = models.ForeignKey(Room, related_name='questions', null=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    question = models.TextField(max_length='600')
-    answer_time = models.IntegerField(null=True, blank=True)
+    room = models.ForeignKey(Room, related_name='questions', null=True,
+                             verbose_name=_('room'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
+    question = models.TextField(_('question'), max_length='600')
+    answer_time = models.IntegerField(_('answer time'), null=True, blank=True)
 
     @property
     def votes_count(self):
