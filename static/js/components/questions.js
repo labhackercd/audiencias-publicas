@@ -247,7 +247,7 @@ function questionsComponent(socket) {
         }
       });
 
-      $.post(`${prefixUrl}/pergunta/${questionId}/respondida/`, {
+      $.post(`${urlPrefix}/pergunta/${questionId}/respondida/`, {
         answered: event.target.checked
       })
     }
