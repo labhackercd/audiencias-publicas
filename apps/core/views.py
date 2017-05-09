@@ -5,11 +5,14 @@ from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from apps.core.models import Question, Room
 from apps.core.utils import encrypt
+from apps.core.templatetags.video_utils import belongs_to_group
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
 from django.shortcuts import redirect
 from datetime import datetime
 from django.db.models import Q
+from channels import Group
+import json
 
 
 def set_answer_time(request, question_id):
@@ -27,6 +30,40 @@ def set_answer_time(request, question_id):
             return redirect('video_room', pk=question.room.pk)
         else:
             return HttpResponseBadRequest('Invalid date format.')
+    else:
+        return HttpResponseForbidden()
+
+
+def set_answered(request, question_id):
+    if request.user.is_authenticated() and request.method == 'POST':
+        answered = request.POST.get('answered')
+        question = Question.objects.get(pk=question_id)
+        group_name = question.room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            if answered == 'true':
+                question.answered = True
+            else:
+                question.answered = False
+
+            question.save()
+            vote_list = []
+            for vote in question.votes.all():
+                vote_list.append(encrypt(str(vote.user.id).rjust(10)))
+
+            html = question.html_question_body(request.user, False)
+            text = {
+                'html': html,
+                'id': question.id,
+                'voteList': vote_list,
+                'answered': question.answered,
+                'groupName': group_name,
+            }
+            Group(question.room.group_questions_name).send(
+                {'text': json.dumps(text)}
+            )
+            return redirect('video_room', pk=question.room.pk)
+        else:
+            return HttpResponseForbidden()
     else:
         return HttpResponseForbidden()
 
@@ -57,13 +94,14 @@ class VideoDetail(DetailView):
         context = super(VideoDetail, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated():
             context['handler'] = encrypt(str(self.request.user.id).rjust(10))
+            context['groups'] = list(self.request.user.groups.all()
+                                     .values_list('name', flat=True))
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
         context['answer_time'] = self.request.GET.get('t', None)
         context['domain'] = Site.objects.get_current().domain
         context['domain'] += settings.FORCE_SCRIPT_NAME
-
         return context
 
 

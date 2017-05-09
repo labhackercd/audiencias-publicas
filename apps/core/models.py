@@ -189,6 +189,7 @@ class Question(TimestampedMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
     question = models.TextField(_('question'), max_length='600')
     answer_time = models.IntegerField(_('answer time'), null=True, blank=True)
+    answered = models.BooleanField(_('answered'), default=False)
 
     @property
     def votes_count(self):

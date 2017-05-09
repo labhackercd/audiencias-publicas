@@ -1,5 +1,6 @@
 /* global HANDLER, loginRedirect */
 import sendFormHelper from '../helpers/send-form';
+import { getCookie } from '../helpers/cookies';
 
 function questionsComponent(socket) {
   const elements = {
@@ -15,6 +16,7 @@ function questionsComponent(socket) {
     $readMore: $('.questions__read-more'),
     $form: $('#questionform'),
     $formInput: $('#question'),
+    $answeredCheckbox: $('.js-answered-checkbox'),
   };
 
   const vars = {
@@ -73,14 +75,22 @@ function questionsComponent(socket) {
     const $upvoteButton = $question.find('.vote-block__upvote-button');
     const $totalVotes = $question.find('.vote-block__total-votes');
 
-    if (HANDLER === $question.data('question-author')) {
+    if (data.answered) {
+      $upvoteButton.addClass('voted disabled');
+      $upvoteButton.attr('disabled', true);
+      $upvoteButton.html('Pergunta Respondida');
+      $totalVotes.addClass('voted disabled');
+    } else if (HANDLER === $question.data('question-author')) {
       $upvoteButton.addClass('voted disabled');
       $upvoteButton.attr('disabled', true);
       $upvoteButton.html('Sua Pergunta');
       $totalVotes.addClass('voted disabled');
     } else if ($.inArray(HANDLER, data.voteList) > -1) {
-      $upvoteButton.addClass('voted');
+      $upvoteButton.addClass('voted question-vote');
+      $upvoteButton.removeAttr('disabled');
       $upvoteButton.html('Apoiada por você');
+      $upvoteButton.removeClass('disabled');
+      $totalVotes.removeClass('disabled');
       $totalVotes.addClass('voted');
     } else {
       $upvoteButton.removeClass('voted disabled');
@@ -119,6 +129,13 @@ function questionsComponent(socket) {
     }
 
     const $question = $(`[data-question-id=${data.id}]`);
+    const $answeredForm = $question.find('.js-answered-form');
+
+    if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
+      $answeredForm.removeClass('hide');
+    } else {
+      $answeredForm.addClass('hide');
+    }
 
     updateVoteBlock($question, data);
     bindEventsHandlers.onAdd($question);
@@ -219,7 +236,23 @@ function questionsComponent(socket) {
 
       return true;
     },
+
+    sendAnsweredForm(event) {
+      const questionId = $(event.target).closest('[data-question-id]')[0].dataset.questionId;
+      const csrftoken = getCookie('csrftoken');
+
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      });
+
+      $.post(`/pergunta/${questionId}/respondida/`, {
+        answered: event.target.checked
+      })
+    }
   };
+
 
   const bindEventsHandlers = {
     onPageLoad() {
@@ -232,6 +265,7 @@ function questionsComponent(socket) {
       elements.$list.on('scroll', events.questionsScroll);
       elements.$wrapper.on('scroll', events.questionsScroll);
       elements.$readMore.on('click', events.readMoreClick);
+      elements.$answeredCheckbox.on('change', events.sendAnsweredForm);
     },
 
     onAdd($question) {
@@ -239,11 +273,13 @@ function questionsComponent(socket) {
       const $shareListOpenBtn = $question.find('.question-block__share-button');
       const $shareListCloseBtn = $question.find('.share-list__close');
       const $shareListItemLink = $question.find('.question-block__share-list .item__link');
+      const $answeredCheckbox = $question.find('.js-answered-checkbox');
 
       $voteBtnEnabled.on('click', events.vote);
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
       $shareListItemLink.on('click', events.share);
+      $answeredCheckbox.on('change', events.sendAnsweredForm);
       $('.answered_time__input').inputmask("99:99:99", {
         placeholder: "0",
         numericInput: true,
