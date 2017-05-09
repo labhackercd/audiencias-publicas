@@ -50,7 +50,7 @@ def set_answered(request, question_id):
             for vote in question.votes.all():
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
-            html = question.html_question_body(request.user, False)
+            html = question.html_question_body(request.user)
             text = {
                 'html': html,
                 'id': question.id,
