@@ -102,6 +102,7 @@ class VideoDetail(DetailView):
         context['answer_time'] = self.request.GET.get('t', None)
         context['domain'] = Site.objects.get_current().domain
         context['domain'] += settings.FORCE_SCRIPT_NAME
+        context['url_prefix'] = settings.FORCE_SCRIPT_NAME
         return context
 
 

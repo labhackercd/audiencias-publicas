@@ -183,6 +183,8 @@
         {% endfor %}
       ]
 
+      var urlPrefix = "{{url_prefix|default_if_none:''}}";
+
       {% if object.youtube_status == 2 %}
       var closedRoom = true;
       {% else %}
