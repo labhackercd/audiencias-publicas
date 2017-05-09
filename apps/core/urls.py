@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              VideoReunionDetail, QuestionDetail, index,
-                             RoomReportView, set_answer_time)
+                             RoomReportView, set_answer_time, set_answered)
 from apps.core.api import (api_root, MessageListAPI, QuestionListAPI,
                            VoteListAPI, UserListAPI, RoomAPI, RoomListAPI)
 
@@ -12,6 +12,8 @@ urlpatterns = [
         name='question_detail'),
     url(r'^pergunta/(?P<question_id>\d+)/definir_resposta/?$', set_answer_time,
         name='set_question_answer'),
+    url(r'^pergunta/(?P<question_id>\d+)/respondida/?$', set_answered,
+        name='set_question_answered'),
     url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
     url(r'^sala/(?P<pk>\d+)/relatorio/?$', RoomReportView.as_view(),
         name='room_report'),

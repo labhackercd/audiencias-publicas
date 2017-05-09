@@ -26,6 +26,13 @@ def vote_action(context, question, user):
             'extra_attributes': 'disabled',
             'object': context['object'],
             'upvote_content': 'Sua Pergunta'})
+    elif question.answered:
+        html = render_to_string('includes/question_action.html', {
+            'extra_classes': 'voted disabled',
+            'total_votes': question.votes_count,
+            'extra_attributes': 'disabled',
+            'object': context['object'],
+            'upvote_content': 'Pergunta Respondida'})
     elif question.votes.filter(user__username=user).count() > 0:
         html = render_to_string('includes/question_action.html', {
             'extra_classes': 'voted',

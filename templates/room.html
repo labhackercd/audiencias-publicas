@@ -177,6 +177,11 @@
   {% block websockets %}
     <script>
       var HANDLER = "{{handler|default:''}}";
+      var HANDLER_GROUPS = [
+        {% for group in groups %}
+          "{{group}}",
+        {% endfor %}
+      ]
 
       {% if object.youtube_status == 2 %}
       var closedRoom = true;

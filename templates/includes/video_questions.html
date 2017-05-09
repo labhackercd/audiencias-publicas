@@ -51,12 +51,21 @@
       </a>
     {% endif %}
 
-    {% if user|belongs_to_group:question.room.legislative_body_initials %}
+    {% if user|belongs_to_group:question.room.legislative_body_initials and object.youtube_status == 2 %}
       <form class="question-block__answered-form" method="POST" action="{% url 'set_question_answer' question_id=question.pk %}">
         {% csrf_token %}
         <span class="answered_time__label">Insira o tempo da resposta:</span>
         <input class="answered_time__input" name="answered_time" id="answered_time" type="text" placeholder="hh:mm:ss" value="{{question.answer_time|format_seconds}}" >
       </form>
+    {% endif %}
+
+    {% if object.youtube_status == 1 %}
+      {% with user|belongs_to_group:question.room.legislative_body_initials as hide %}
+        <form class="question-block__answered-form js-answered-form {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_answered' question_id=question.pk %}">
+          <input class="answered_time__checkbox js-answered-checkbox" name="answered" type="checkbox" {% if question.answered %}checked{% endif %}>
+          <span class="answered_time__label">Pergunta respondida</span>
+        </form>
+      {% endwith %}
     {% endif %}
   </div>
 </li>

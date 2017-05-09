@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand
+from django.contrib.auth.models import Group
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from apps.core.models import Room
@@ -46,6 +47,9 @@ class Command(BaseCommand):
                                          '%d/%m/%Y %H:%M:%S')
                 room.date = date
                 room.save()
+                Group.objects.get_or_create(
+                    name=room.legislative_body_initials
+                )
                 if created:
                     domain = Site.objects.get_current().domain
                     html = render_to_string('email/new-room.html',

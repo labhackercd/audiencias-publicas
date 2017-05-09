@@ -62,10 +62,14 @@ def on_receive(message, pk):
             vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
         Group(room.group_questions_name).send(
-            {'text': json.dumps({'id': question.id,
-                                 'user': encrypt(str(user.id).rjust(10)),
-                                 'voteList': vote_list,
-                                 'html': question.html_question_body(user)})}
+            {'text': json.dumps({
+                'id': question.id,
+                'user': encrypt(str(user.id).rjust(10)),
+                'groupName': question.room.legislative_body_initials,
+                'voteList': vote_list,
+                'answered': question.answered,
+                'html': question.html_question_body(user)
+            })}
         )
 
 
