@@ -58,7 +58,6 @@ def set_answered(request, question_id):
                 'answered': question.answered,
                 'groupName': group_name,
             }
-            print(text)
             Group(question.room.group_questions_name).send(
                 {'text': json.dumps(text)}
             )
