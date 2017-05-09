@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-08 13:36-0300\n"
+"POT-Creation-Date: 2017-05-09 12:44-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,7 +119,7 @@ msgstr "salas"
 msgid "user"
 msgstr "usuário"
 
-#: apps/core/models.py:152 apps/core/models.py:190 apps/core/models.py:220
+#: apps/core/models.py:152 apps/core/models.py:190 apps/core/models.py:221
 msgid "question"
 msgstr "questão"
 
@@ -151,11 +151,15 @@ msgstr "mensagens"
 msgid "answer time"
 msgstr "tempo da resposta"
 
-#: apps/core/models.py:221
+#: apps/core/models.py:192
+msgid "answered"
+msgstr "respondida"
+
+#: apps/core/models.py:222
 msgid "questions"
 msgstr "questões"
 
-#: apps/core/views.py:110
+#: apps/core/views.py:149
 #, python-format
 msgid "No %(verbose_name)s found matching the query"
 msgstr "Nenhum %(verbose_name)s encontrado correspondente à sua consulta"
