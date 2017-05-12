@@ -30,6 +30,12 @@
 
 <main class="room" data-tab-index="0">
   <section class="section-left">
+    <div class="header-wrapper">
+      <a class="header__logo" href="{% url 'home' %}">
+        <img class="logo__image--audiencias-logo" src="{% static 'img/logo-audiencias-icon.svg' %}" data-fallback="{% static 'img/logo-audiencias-icon.png' %}">
+        <img class="logo__image--audiencias-text" src="{% static 'img/logo-audiencias-text.svg' %}" data-fallback="{% static 'img/logo-audiencias-text.png' %}">
+      </a>
+    </div>
     <div class="questions-wrapper">
       <div class="questions">
         <div class="questions__header">
