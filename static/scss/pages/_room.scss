@@ -5,6 +5,9 @@
   @include breakpoint(small down) { height: calc(100vh - 6em); }
   @include breakpoint(medium only) { height: calc(100vh - 7em); }
   @include breakpoint(large up) { height: calc(100vh - 4em); }
+  .navigation {
+    display: none;
+  }
 }
 
 .room {
@@ -17,13 +20,13 @@
     width: 300vw;
   }
 
-  @include breakpoint(xxxlarge up) {
-    font-size: 120%;
-  }
-
   .section-left {
     display: flex;
     flex: 1;
+
+    @include breakpoint(large up) {
+      flex: 0 1 500px;
+    }
 
     @include breakpoint(medium down) {
       width: 100vw;
@@ -33,17 +36,11 @@
   .section-right {
     display: flex;
     flex: 1;
-    flex-direction: column;
 
     @include breakpoint(medium down) {
       flex: initial;
-      flex-direction: row;
       width: 200vw;
     }
-
-    @include breakpoint(large only) { max-width: 330px; }
-    @include breakpoint(xlarge only) { max-width: 500px; }
-    @include breakpoint(xxlarge up) { max-width: 600px; }
   }
 
   .section-right__top,
@@ -54,10 +51,8 @@
   }
 
   .section-right__top {
-    @include breakpoint(medium down) {
-      display: flex;
-      flex: 1;
-    }
+    display: flex;
+    flex: 1;
   }
 
   .section-right__bottom {
@@ -65,5 +60,11 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+
+    @include breakpoint(large up) {
+      width: 340px;
+      max-width: 340px;
+      flex: 0 0 340px;
+    }
   }
 }

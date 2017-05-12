@@ -28,16 +28,10 @@
   @include breakpoint(large up) {
     position: relative;
   }
-
-  @include breakpoint(xlarge up) {
-    padding: 2.5em 5em;
-  }
 }
 
 .questions__header {
-  @include breakpoint(large down) {
-    padding: 1em;
-  }
+  padding: 1em;
 
   .header__title {
     align-items: center;
@@ -71,26 +65,11 @@
 .questions__list {
   list-style: none;
   margin: 1em 0;
-  padding: 1em;
-
-  @include breakpoint(large down) {
-    padding: 0 1em;
-  }
-
-  @include breakpoint(large only) {
-    padding-bottom: 80px;
-  }
+  padding: 0 1em;
 
   @include breakpoint(large up) {
     overflow-y: auto;
-  }
-
-  @include breakpoint(xlarge up) {
     height: 100%;
-  }
-
-  @include breakpoint(xxlarge up) {
-    padding: 10px;
   }
 
   .list__item {
@@ -453,14 +432,9 @@
     width: 100vw
   }
 
-  @include breakpoint(large only) {
+  @include breakpoint(large up) {
     bottom: 50px;
     width: 100%;
-  }
-
-  @include breakpoint(xlarge up) {
-    bottom: calc(7.5em - 30px);
-    width: calc(100% - 10em);
   }
 
   &:hover {
@@ -477,13 +451,6 @@
     @include breakpoint(medium down) {
       flex-direction: column;
       height: 112px;
-    }
-
-    @include breakpoint(large only) {
-      bottom: 0;
-      position: fixed;
-      width: calc(100vw - 330px);
-      z-index: 10;
     }
   }
 

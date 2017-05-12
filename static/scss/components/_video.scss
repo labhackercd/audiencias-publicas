@@ -1,10 +1,7 @@
 .video {
   background-color: $color-primary-xlight;
-
-  @include breakpoint(medium down) {
-    flex: 1;
-    overflow-y: auto;
-  }
+  flex: 1;
+  overflow-y: auto;
 
   .video__iframe-wrapper {
     background-color: $color-black;
