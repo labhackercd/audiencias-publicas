@@ -1,8 +1,9 @@
 #olark-wrapper button.olark-launch-button {
   height: 32px !important;
   z-index: 999 !important;
+  right: 350px !important;
 
-  @include breakpoint(large down) {
+  @include breakpoint(medium down) {
     display: none !important;
   }
 
@@ -16,4 +17,8 @@
     overflow: visible !important;
     font-size: 13px !important;
   }
+}
+
+#olark-wrapper div#olark-container {
+  right: 350px !important;
 }
