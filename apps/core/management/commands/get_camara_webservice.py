@@ -20,7 +20,7 @@ class Command(BaseCommand):
                   'codComissao': '0',
                   'bolEdemocracia': '1'}
         response = requests.get(
-            'https://infoleg.camara.leg.br/ws-pauta/evento/interativo',
+            settings.WEBSERVICE_URL,
             params=params, verify=False)
         data = json.loads(response.text)
         allowed_rooms = []
