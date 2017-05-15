@@ -80,11 +80,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-YOUTUBE_API_KEY = config('YOUTUBE_API_KEY')
-YOUTUBE_CHANNEL_ID = config('YOUTUBE_CHANNEL_ID')
-YOUTUBE_SEARCH_QUERY = config('YOUTUBE_SEARCH_QUERY', default='')
 QUESTION_MIN_UPVOTES = config('QUESTION_MIN_UPVOTES', default=3, cast=int)
 GOOGLE_ANALYTICS_ID = config('GOOGLE_ANALYTICS_ID', default='')
+OLARK_ID = config('OLARK_ID', default='')
+WEBSERVICE_URL = config('WEBSERVICE_URL', default='')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

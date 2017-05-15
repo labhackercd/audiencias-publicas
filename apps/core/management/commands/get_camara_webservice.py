@@ -20,7 +20,7 @@ class Command(BaseCommand):
                   'codComissao': '0',
                   'bolEdemocracia': '1'}
         response = requests.get(
-            'https://infoleg.camara.leg.br/ws-pauta/evento/interativo',
+            settings.WEBSERVICE_URL,
             params=params, verify=False)
         data = json.loads(response.text)
         allowed_rooms = []
@@ -32,13 +32,10 @@ class Command(BaseCommand):
                 room.legislative_body_initials = item['txtSiglaOrgao']
                 room.legislative_body_alias = item['txtApelido']
                 room.legislative_body = item['txtNomeOrgao']
-                room.subcommission = item['txtNomeSubcomissao']
                 room.reunion_status = item['codEstadoReuniao']
                 room.reunion_type = item['txtTipoReuniao']
                 room.reunion_object = item['txtObjeto']
                 room.location = item['txtLocal']
-                room.legislative_body_type = item['codTipoOrgao']
-                room.is_live = item['bolTransmissaoEmAndamento']
                 room.is_joint = item['bolReuniaoConjunta']
                 room.youtube_id = item['idYoutube']
                 room.is_visible = item['bolHabilitarEventoInterativo']
