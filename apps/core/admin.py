@@ -7,11 +7,10 @@ class RoomAdmin(admin.ModelAdmin):
         'title_reunion', 'legislative_body_alias', 'youtube_id',
         'date', 'is_visible')
     list_filter = [
-        'reunion_status', 'legislative_body_type', 'is_live', 'date']
+        'reunion_status', 'date']
     search_fields = (
         'title_reunion', 'legislative_body_initials', 'legislative_body_alias',
-        'legislative_body', 'subcommission', 'location', 'cod_reunion',
-        'reunion_object')
+        'legislative_body', 'location', 'cod_reunion', 'reunion_object')
 
 
 class MessageAdmin(admin.ModelAdmin):

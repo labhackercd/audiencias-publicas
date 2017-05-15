@@ -40,15 +40,6 @@ class Room(TimestampedMixin):
         (8, 'Encerrada (Final)'),
         (9, 'Encerrada(Comunicado)')
     )
-    TYPE_CHOICES = (
-        (1, 'Comissão Diretora'),
-        (2, 'Comissão Permanente'),
-        (3, 'Comissão Especial'),
-        (4, 'Comissão Parlamentar de Inquérito'),
-        (5, 'Comissão Externa'),
-        (6, 'Comissão Mista Permanente'),
-        (11, 'Conselho')
-    )
     YOUTUBE_STATUS_CHOICES = (
         (0, 'Sem transmissão'),
         (1, 'Em andamento'),
@@ -66,8 +57,6 @@ class Room(TimestampedMixin):
                                               blank=True)
     legislative_body = models.TextField(_('legislative body'), null=True,
                                         blank=True)
-    subcommission = models.CharField(_('subcomission'), max_length=200,
-                                     null=True, blank=True)
     reunion_status = models.IntegerField(_('reunion status'),
                                          choices=STATUS_CHOICES, default=1)
     reunion_type = models.CharField(_('reunion type'), max_length=200,
@@ -76,11 +65,7 @@ class Room(TimestampedMixin):
                                       blank=True)
     location = models.CharField(_('location'), max_length=200, null=True,
                                 blank=True)
-    legislative_body_type = models.IntegerField(_('legislative body type'),
-                                                choices=TYPE_CHOICES,
-                                                default=1)
     is_joint = models.BooleanField(_('is joint'), default=False)
-    is_live = models.BooleanField(_('is live'), default=False)
     youtube_status = models.IntegerField(_('youtube status'),
                                          choices=YOUTUBE_STATUS_CHOICES,
                                          default=0)
