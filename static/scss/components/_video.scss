@@ -4,6 +4,10 @@
   overflow-y: auto;
   padding: 0 2em;
 
+  @include breakpoint(medium down) {
+    padding: 0 1em;
+  }
+
   .video__title {
     display: flex;
     flex-direction: column;
@@ -36,6 +40,11 @@
     padding-bottom: 56.25%;
     position: relative;
     width: 100%;
+
+    @include breakpoint(medium down) {
+      width: calc(100% + 2em);
+      margin-left: -1em;
+    }
   }
 
   .video__iframe {
