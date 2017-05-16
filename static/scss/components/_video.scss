@@ -95,9 +95,11 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  left: 0;
   margin: auto;
   padding: 2em;
   position: absolute;
+  right: 0;
   top: 0;
 
   .video--empty__message {
