@@ -93,6 +93,7 @@
   bottom: 0;
   color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   margin: auto;
   padding: 2em;
@@ -102,16 +103,10 @@
   .video--empty__message {
     font-size: 1.5em;
     font-weight: 400;
+    text-align: center;
   }
 
   .video--empty__icon {
-    @include breakpoint(large only) {
-      display: none;
-    }
-
-    @include breakpoint(large up) {
-      margin: 0em 1.5em 0em 2em;
-    }
-
+    margin-bottom: 1em;
   }
 }

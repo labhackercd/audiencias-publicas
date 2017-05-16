@@ -394,23 +394,18 @@
   align-items: center;
   display: flex;
   justify-content: center;
-  margin: 2.2em;
+  margin: 0 1em;
+  flex-direction: column;
 
-  @include breakpoint(small down) {
-    flex-wrap: wrap;
-    margin: 1em;
+  img {
+    margin-bottom: 1em;
   }
 
   p {
     color: hsl(158, 42%, 24%);
     font-size: 1.5em;
     font-weight: 600;
-    margin-left: 2.2em;
-
-    @include breakpoint(small down) {
-      margin: 1em 0 0;
-      text-align: center;
-    }
+    text-align: center;
   }
 }
 

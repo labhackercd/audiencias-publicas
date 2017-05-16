@@ -67,18 +67,17 @@
     display: flex;
     justify-content: center;
     margin: 2em;
-    flex-wrap: wrap;
+    flex-direction: column;
+
+    img {
+      margin-bottom: 1em;
+    }
 
     p {
       color: $color-gray-84;
       font-size: 1.5em;
       font-weight: 600;
-      margin-left: 1em;
-
-      @include breakpoint(large down) {
-        margin: 1em 0 0;
-        text-align: center;
-      }
+      text-align: center;
     }
   }
 }
