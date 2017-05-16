@@ -35,10 +35,11 @@
   }
 
   .header-wrapper {
-    background-color: #235643;
-    border-top: 3.5em solid #235643;
-    border-right: 3.5em solid #092b2a;
+    background-color: $color-primary-xlight;
+    border-right: 4em solid $color-primary;
+    border-top: 4em solid $color-primary-xlight;
     position: relative;
+    width: calc(100% + 2em);
 
     @include breakpoint(medium down) {
       display: none;
@@ -49,9 +50,8 @@
     display: flex;
     align-items: center;
     margin: 0 2.5em;
-    margin-right: 3.5em;
     position: absolute;
-    top: -3em;
+    top: -3.25em;
 
     .logo__image--audiencias-logo {
       height: 2.5em;
