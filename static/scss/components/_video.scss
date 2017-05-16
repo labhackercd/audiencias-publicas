@@ -2,11 +2,13 @@
   background-color: $color-primary;
   flex: 1;
   overflow-y: auto;
+  padding: 0 2em;
 
   .video__iframe-wrapper {
     background-color: $color-black;
     display: flex;
     justify-content: center;
+    padding: .25em 0;
     width: 100%;
 
     @include breakpoint(medium down) {
