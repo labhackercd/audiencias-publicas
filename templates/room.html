@@ -99,7 +99,7 @@
           {% else %}
             <div class="video--empty">
               <img class="video--empty__icon" src="{% static 'img/calendar-book.svg' %}" data-fallback="{% static 'img/calendar-book.png' %}">
-              <p class="video--empty__message">O vídeo {% if object.is_joint %}{{ object.title_reunion }}{% else %}{{ object.reunion_type }} - {{ object.legislative_body_alias }}{% endif %} está previsto para <span class="video--empty__date">{{object.date}}</span>.</p>
+              <p class="video--empty__message">Vídeo previsto para <span class="video--empty__date">{{object.date}}</span>.</p>
             </div>
           {% endif %}
         </div>
