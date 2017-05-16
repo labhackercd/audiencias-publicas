@@ -90,23 +90,14 @@
 .video--empty {
   align-items: center;
   background-color: black;
+  bottom: 0;
   color: white;
   display: flex;
   justify-content: center;
+  margin: auto;
   padding: 2em;
-
-  @include breakpoint(medium down) {
-    height: 100%;
-    flex-wrap: wrap;
-  }
-
-  @include breakpoint(large only) {
-    height: 186px;
-  }
-
-  @include breakpoint(xlarge up) {
-    height: 253px;
-  }
+  position: absolute;
+  top: 0;
 
   .video--empty__message {
     font-size: 1.5em;
