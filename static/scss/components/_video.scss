@@ -4,39 +4,26 @@
   overflow-y: auto;
   padding: 0 2em;
 
-  .video__iframe-wrapper {
-    background-color: $color-black;
     display: flex;
     justify-content: center;
     padding: .25em 0;
+  .video__iframe-wrapper {
+    height: 0;
+    margin-bottom: 0.25em;
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    position: relative;
     width: 100%;
-
-    @include breakpoint(medium down) {
-      height: 0;
-      padding-bottom: 56.25%;
-      padding-top: 25px;
-      position: relative;
-    }
   }
 
   .video__iframe {
-    @include breakpoint(medium down) {
-      height: 100%;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-    }
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
 
-    @include breakpoint(large only) {
-      height: 186px;
-      width: 330px;
-    }
-
-    @include breakpoint(xlarge up) {
-      height: 253px;
-      width: 450px;
-    }
   }
 
   .video__title {
