@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'compressor_toolkit',
     'django_q', # not used, but don't remove
     'channels',
+    'channels_presence',
 )
 
 SITE_ID = 1
