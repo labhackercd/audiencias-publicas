@@ -32,29 +32,6 @@
         </div>
       </div>
 
-      {% if closed_videos %}
-        <div class="preview--closed-videos">
-      {% else %}
-        <div class="preview--closed-videos hide">
-      {% endif %}
-        <div class="preview__floating-header">
-          <i class="header__icon icon icon-play"></i>
-          <h2 class="header__title">Veja Audiências Que Já Aconteceram</h2>
-        </div>
-
-        <div class="preview__list-wrapper">
-          <ul class="preview__list">
-            {% for room in closed_videos %}
-            {% include "includes/home_video.html" with room=room %}
-            {% endfor %}
-          </ul>
-        </div>
-
-        <div class="preview__show-all">
-          <a href="{% url 'video_list' %}" class="show-all__button">Ver Tudo</a>
-        </div>
-      </div>
-
       {% if agendas %}
         <div class="preview--calendar">
           <div class="preview__floating-header">
@@ -82,8 +59,11 @@
                     </div>
                   </td>
 
-                  <td class="calendar-table__column">
-                    <div class="calendar-table__event-title">{% if agenda.is_joint %}{{ agenda.title_reunion }}{% else %}{{ agenda.reunion_type }} - {{ agenda.legislative_body_alias }}{% endif %} | {{ agenda.location }}</div>
+                  <td class="calendar-table__column" title="{{ agenda.reunion_object.strip }}">
+                    <div class="calendar-table__event-title">{% if agenda.is_joint %}{{ agenda.title_reunion }}{% else %}{{ agenda.reunion_type }} - {{ agenda.legislative_body_alias }}{% endif %}</div>
+                    <div class="calendar-table__description" >
+                        {{ agenda.reunion_object|truncatechars:170 }}
+                    </div>
                     <div class="calendar-table__hour">
                       {% if agenda.date|date:"H" == "00" %}
                         Horário não informado
@@ -93,7 +73,7 @@
                     </div>
                   </td>
                   <td class="calendar-table__column">
-                    <div class="calendar-table__event-title"><a href="{{agenda.get_absolute_url}}">Ir para a sala &gt;</a></div>
+                    <div class="calendar-table__event-title"><a class="button" href="{{agenda.get_absolute_url}}">Participar</a></div>
                   </td>
                 </tr>
               {% endfor %}
@@ -101,6 +81,30 @@
           </table>
         </div>
       {% endif %}
+
+      {% if closed_videos %}
+        <div class="preview--closed-videos">
+      {% else %}
+        <div class="preview--closed-videos hide">
+      {% endif %}
+        <div class="preview__floating-header">
+          <i class="header__icon icon icon-play"></i>
+          <h2 class="header__title">Veja Audiências Que Já Aconteceram</h2>
+        </div>
+
+        <div class="preview__list-wrapper">
+          <ul class="preview__list">
+            {% for room in closed_videos %}
+            {% include "includes/home_video.html" with room=room %}
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="preview__show-all">
+          <a href="{% url 'video_list' %}" class="show-all__button">Ver Tudo</a>
+        </div>
+      </div>
+
     </section>
   </main>
 {% endblock main %}
