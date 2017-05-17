@@ -61,5 +61,6 @@ class Command(BaseCommand):
                     mail.send()
                 allowed_rooms.append(item['codReuniao'])
         rooms_without_interaction = Room.objects.filter(
-            date__gte=today).exclude(cod_reunion__in=allowed_rooms)
+            date__gte=today).exclude(cod_reunion__in=allowed_rooms).exclude(
+            cod_reunion='')
         rooms_without_interaction.update(is_visible=False)
