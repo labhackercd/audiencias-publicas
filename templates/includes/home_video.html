@@ -2,11 +2,21 @@
 
 {% if room.is_visible and room.youtube_id %}
   <li class="list__video" data-video-id="{{room.id}}">
-    <a class="video__link" href="{{room.get_absolute_url}}">
-      <img class="video__thumbnail" src="https://i.ytimg.com/vi/{{room.youtube_id}}/mqdefault_live.jpg">
-    </a>
-    <h2 class="video__title">
-      <a class="title__link" href="{{room.get_absolute_url}}">{% if room.is_joint %}{{ room.title_reunion }}{% elif room.reunion_type %}{{ room.reunion_type }} - {{ room.legislative_body_alias }}{% else %}{{ room.legislative_body_alias }}{% endif %}</a>
-    </h2>
+		<a class="video__link" href="{{room.get_absolute_url}}">
+		  <img class="video__thumbnail" src="https://i.ytimg.com/vi/{{room.youtube_id}}/mqdefault_live.jpg">
+		</a>
+		  <a class="title__link" href="{{room.get_absolute_url}}">
+			  {% if room.reunion_theme %}
+					<h2 class="video__title" title="{{room.reunion_theme}}">{{room.reunion_theme|truncatechars:50}}</h2>
+			  {% endif %}
+				{% if room.is_joint %}
+				  <span class="reunion__alias">{{ room.title_reunion }}</span>
+				{% elif room.reunion_type %}
+				  <span class="reunion__alias">{{ room.legislative_body_alias|truncatechars:47 }}</span>
+				  <span class="reunion__type">{{ room.reunion_type }}</span>
+				{% else %}
+				  <span class="reunion__alias">{{ room.legislative_body_alias|truncatechars:47 }}</span>
+			  {% endif %}
+		  </a>
   </li>
 {% endif %}

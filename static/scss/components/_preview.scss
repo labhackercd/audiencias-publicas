@@ -41,22 +41,42 @@
     width: 208px;
   }
 
+  .title__link {
+    display: block;
+    margin-bottom: 1em;
+
+    &:hover { 
+      .video__title {
+        text-decoration: underline;
+      }
+    }
+  }
+
   .video__title {
     font-size: 1em;
     font-weight: 600;
-    margin-bottom: 1em;
+    margin-bottom: 0.1rem;
 
     @include breakpoint(small only) {
       font-size: .9em
     }
+    color: $color-link;
+  }
 
-    .title__link {
-      color: $color-link;
 
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+
+  .reunion__alias {
+    display: block;
+    color: #404040;
+    font-weight: 600;
+    font-size: 0.8em;
+  }
+
+  .reunion__type {
+    display: block;
+    font-size: .8em;
+    color: black;
+    margin-bottom: 1em;
   }
 }
 

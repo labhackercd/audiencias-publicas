@@ -231,7 +231,10 @@ def room_pre_save(sender, instance, **kwargs):
         lines = list(filter(str.strip, lines))
         for i, line in enumerate(lines):
             if line == 'TEMA':
-                instance.reunion_theme = lines[i + 1]
+                theme = lines[i + 1]
+                if theme[0] == '"' and theme[-1] == '"':
+                    theme = theme[1:-1]
+                instance.reunion_theme = theme
             if 'Tema:' in line:
                 instance.reunion_theme = line.replace('Tema:', '')
 
