@@ -97,6 +97,9 @@ function chatComponent(socket) {
     elements.$messages.on('scroll', events.messagesScroll);
     elements.$readMore.on('click', events.readMoreClick);
     elements.$form.on('submit', events.sendMessage);
+    setInterval(function() {
+      socket.send(JSON.stringify({heartbeat: true}));
+    }, 3000);
   }
 
   (function init() {

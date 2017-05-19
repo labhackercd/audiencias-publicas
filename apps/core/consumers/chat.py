@@ -39,8 +39,9 @@ def on_receive(message, pk):
     room = get_room(pk)
     data = get_data(message)
 
-    if message.content('text') == '"heartbeat"':
+    if 'heartbeat' in data.keys():
         Presence.objects.touch(message.reply_channel.name)
+        return
 
     if set(data.keys()) != set(('handler', 'message')):
         log.debug("Message unexpected format data")

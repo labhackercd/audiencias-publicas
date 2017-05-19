@@ -11,10 +11,6 @@ if (!closedRoom) {
   const questionsSocket = createSocketHelper('questions', 'questions/stream/');
   const chatSocket = createSocketHelper('chat', 'chat/stream/');
 
-  setInterval(function() {
-      chatSocket.socket.send(JSON.stringify("heartbeat"));
-  }, 3000);
-
   chatSocket.socket.onopen = () => {
     console.log('Connected to chat socket'); // eslint-disable-line no-console
     onlineUsers.get();
