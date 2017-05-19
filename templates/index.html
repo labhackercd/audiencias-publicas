@@ -59,17 +59,12 @@
                     </div>
                   </td>
 
-                  <td class="calendar-table__column" title="{{ agenda.reunion_object.strip }}">
-                    <div class="calendar-table__event-title">{% if agenda.is_joint %}{{ agenda.title_reunion }}{% else %}{{ agenda.reunion_type }} - {{ agenda.legislative_body_alias }}{% endif %}</div>
-                    <div class="calendar-table__description" >
-                        {{ agenda.reunion_object|truncatechars:170 }}
-                    </div>
-                    <div class="calendar-table__hour">
-                      {% if agenda.date|date:"H" == "00" %}
-                        Horário não informado
-                      {% else %}
-                        {{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}
-                      {% endif %}
+                  <td class="calendar-table__column">
+                    <div class="calendar-table__event-title">{% if agenda.date|date:"H" == "00" %}Horário não informado{% else %}{{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}{% endif %} - {% if agenda.is_joint %}{{ agenda.title_reunion }}{% else %}{{ agenda.reunion_type }} - {{ agenda.legislative_body_alias }}{% endif %}</div>
+                    <div class="calendar-table__description">
+                      <div class="content-truncate">{{ agenda.reunion_object|truncatechars:150 }}</div>  
+                      <div class="content-full hide">{{ agenda.reunion_object|linebreaks }}</div>
+                      <div class="show-more"><a>Ver mais</a></div>
                     </div>
                   </td>
                   <td class="calendar-table__column">
