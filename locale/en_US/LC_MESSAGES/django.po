@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-09 12:44-0300\n"
+"POT-Creation-Date: 2017-05-19 16:00-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,136 +25,128 @@ msgstr ""
 msgid "modified"
 msgstr ""
 
-#: apps/core/models.py:57
+#: apps/core/models.py:48
 msgid "code reunion"
 msgstr ""
 
-#: apps/core/models.py:59
+#: apps/core/models.py:50
 msgid "title reunion"
 msgstr ""
 
-#: apps/core/models.py:61
+#: apps/core/models.py:52
 msgid "legislative body initials"
 msgstr ""
 
-#: apps/core/models.py:64
+#: apps/core/models.py:55
 msgid "legislative body alias"
 msgstr ""
 
-#: apps/core/models.py:67
+#: apps/core/models.py:58
 msgid "legislative body"
 msgstr ""
 
-#: apps/core/models.py:69
-msgid "subcomission"
-msgstr ""
-
-#: apps/core/models.py:71
+#: apps/core/models.py:60
 msgid "reunion status"
 msgstr ""
 
-#: apps/core/models.py:73
+#: apps/core/models.py:62
 msgid "reunion type"
 msgstr ""
 
-#: apps/core/models.py:75
+#: apps/core/models.py:64
 msgid "reunion object"
 msgstr ""
 
-#: apps/core/models.py:77
+#: apps/core/models.py:66
+msgid "reunion theme"
+msgstr ""
+
+#: apps/core/models.py:67
 msgid "location"
 msgstr ""
 
-#: apps/core/models.py:79
-msgid "legislative body type"
-msgstr ""
-
-#: apps/core/models.py:82
+#: apps/core/models.py:69
 msgid "is joint"
 msgstr ""
 
-#: apps/core/models.py:83
-msgid "is live"
-msgstr ""
-
-#: apps/core/models.py:84
+#: apps/core/models.py:70
 msgid "youtube status"
 msgstr ""
 
-#: apps/core/models.py:87
+#: apps/core/models.py:73
 msgid "youtube id"
 msgstr ""
 
-#: apps/core/models.py:89
+#: apps/core/models.py:75
 msgid "date"
 msgstr ""
 
-#: apps/core/models.py:90
+#: apps/core/models.py:76
 msgid "online users"
 msgstr ""
 
-#: apps/core/models.py:91
+#: apps/core/models.py:77
 msgid "max online users"
 msgstr ""
 
-#: apps/core/models.py:92
+#: apps/core/models.py:78
 msgid "views"
 msgstr ""
 
-#: apps/core/models.py:93
+#: apps/core/models.py:79
 msgid "is visible"
 msgstr ""
 
-#: apps/core/models.py:96 apps/core/models.py:105 apps/core/models.py:168
-#: apps/core/models.py:188
+#: apps/core/models.py:82 apps/core/models.py:91 apps/core/models.py:154
+#: apps/core/models.py:174
 msgid "room"
 msgstr ""
 
-#: apps/core/models.py:97
+#: apps/core/models.py:83
 msgid "rooms"
 msgstr ""
 
-#: apps/core/models.py:150 apps/core/models.py:170 apps/core/models.py:189
+#: apps/core/models.py:136 apps/core/models.py:156 apps/core/models.py:175
 msgid "user"
 msgstr ""
 
-#: apps/core/models.py:152 apps/core/models.py:190 apps/core/models.py:221
+#: apps/core/models.py:138 apps/core/models.py:176 apps/core/models.py:207
 msgid "question"
 msgstr ""
 
-#: apps/core/models.py:153 apps/core/models.py:158
+#: apps/core/models.py:139 apps/core/models.py:144
 msgid "vote"
 msgstr ""
 
-#: apps/core/models.py:154
+#: apps/core/models.py:140
 msgid "Up Vote"
 msgstr ""
 
-#: apps/core/models.py:155
+#: apps/core/models.py:141
 msgid "Down Vote"
 msgstr ""
 
-#: apps/core/models.py:159
+#: apps/core/models.py:145
 msgid "votes"
 msgstr ""
 
-#: apps/core/models.py:171 apps/core/models.py:174
+#: apps/core/models.py:157 apps/core/models.py:160
 msgid "message"
 msgstr ""
 
-#: apps/core/models.py:175
+#: apps/core/models.py:161
 msgid "messages"
 msgstr ""
 
-#: apps/core/models.py:191
+#: apps/core/models.py:177
 msgid "answer time"
 msgstr ""
 
-#: apps/core/models.py:192
+#: apps/core/models.py:178
 msgid "answered"
 msgstr ""
 
-#: apps/core/models.py:222
+#: apps/core/models.py:208
 msgid "questions"
 msgstr ""
 
