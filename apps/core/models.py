@@ -225,6 +225,17 @@ def room_post_save(sender, instance, created, **kwargs):
     instance.send_notification(is_closed=is_closed)
 
 
+def room_pre_save(sender, instance, **kwargs):
+    if instance.reunion_object:
+        lines = instance.reunion_object.splitlines()
+        lines = list(filter(str.strip, lines))
+        for i, line in enumerate(lines):
+            if line == 'TEMA':
+                instance.reunion_theme = lines[i + 1]
+            if 'Tema:' in line:
+                instance.reunion_theme = line.replace('Tema:', '')
+
+
 def room_pre_delete(sender, instance, **kwargs):
     if hasattr(instance, 'room'):
         instance.send_notification(deleted=True)
@@ -248,4 +259,5 @@ def vote_post_delete(sender, instance, **kwargs):
 
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
+models.signals.pre_save.connect(room_pre_save, sender=Room)
 models.signals.post_save.connect(room_post_save, sender=Room)
