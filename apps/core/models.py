@@ -63,6 +63,7 @@ class Room(TimestampedMixin):
                                     null=True, blank=True)
     reunion_object = models.TextField(_('reunion object'), null=True,
                                       blank=True)
+    reunion_theme = models.TextField(_('reunion theme'), null=True, blank=True)
     location = models.CharField(_('location'), max_length=200, null=True,
                                 blank=True)
     is_joint = models.BooleanField(_('is joint'), default=False)
