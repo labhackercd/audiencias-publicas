@@ -11,12 +11,22 @@
 			  {% endif %}
 				{% if room.is_joint %}
 				  <span class="reunion__alias">{{ room.title_reunion }}</span>
+				  {% if room.youtube_status == 2 %}
+					  <span class="reunion__type">{{ room.date|date:"d/m/Y" }}</span>
+			  	{% endif %}
 				{% elif room.reunion_type %}
 				  <span class="reunion__alias">{{ room.legislative_body_alias|truncatechars:47 }}</span>
-				  <span class="reunion__type">{{ room.reunion_type }}</span>
+				  {% if room.youtube_status == 2 %}
+				  	<span class="reunion__type">{{ room.reunion_type }} - {{ room.date|date:"d/m/Y" }}</span>
+				  {% else %}
+				  	<span class="reunion__type">{{ room.reunion_type }}</span>
+			  	{% endif %}
 				{% else %}
 				  <span class="reunion__alias">{{ room.legislative_body_alias|truncatechars:47 }}</span>
-			  {% endif %}
+				  {% if room.youtube_status == 2 %}
+					  <span class="reunion__type">{{ room.date|date:"d/m/Y" }}</span>
+			  	{% endif %}
+		  	{% endif %}
 		  </a>
   </li>
 {% endif %}
