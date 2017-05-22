@@ -178,6 +178,7 @@ BOWER_INSTALLED_APPS = [
     'mixitup#~2.1.11',
     'https://github.com/labhackercd/fontastic-labhacker.git',
     'https://github.com/joewalnes/reconnecting-websocket.git',
+    'jquery-ui#~1.12.1',
 ]
 
 BOWER_PATH = os.path.join(BASE_DIR, 'node_modules/.bin/bower')

@@ -157,8 +157,8 @@ class ClosedVideos(ListView):
 
     def get_queryset(self):
         q = self.request.GET.get('q')
-        initial_date = self.request.GET.get('initial-date')
-        end_date = self.request.GET.get('end-date')
+        initial_date = self.request.GET.get('initial_date')
+        end_date = self.request.GET.get('end_date')
         object_list = Room.objects.filter(
             is_visible=True, youtube_status=2).order_by('-date')
         if q:
