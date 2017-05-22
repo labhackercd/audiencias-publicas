@@ -156,10 +156,27 @@ class ClosedVideos(ListView):
     template_name = 'video-list.html'
 
     def get_queryset(self):
-        return Room.objects.filter(
-            is_visible=True,
-            youtube_status=2,
-        ).order_by('-date')
+        q = self.request.GET.get('q')
+        initial_date = self.request.GET.get('initial-date')
+        end_date = self.request.GET.get('end-date')
+        object_list = Room.objects.filter(
+            is_visible=True, youtube_status=2).order_by('-date')
+        if q:
+            object_list = object_list.filter(Q(
+                title_reunion__icontains=q) | Q(
+                legislative_body_initials__icontains=q) | Q(
+                legislative_body_alias__icontains=q) | Q(
+                legislative_body__icontains=q) | Q(
+                reunion_type__icontains=q) | Q(
+                reunion_object__icontains=q) | Q(
+                reunion_theme__icontains=q))
+        if initial_date:
+            initial_date = datetime.strptime(initial_date, '%d/%m/%Y')
+            object_list = object_list.filter(date__gte=initial_date)
+        if end_date:
+            end_date = datetime.strptime(end_date, '%d/%m/%Y')
+            object_list = object_list.filter(date__lte=end_date)
+        return object_list
 
 
 class RoomQuestionList(DetailView):
