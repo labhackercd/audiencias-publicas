@@ -10,6 +10,32 @@
   }
 }
 
+.header__search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  max-width: 75em;
+  margin: 0 auto;
+  justify-content: center;
+
+  .searh-input{
+    width: 8em;
+    margin: 0 0.5em;
+    margin-bottom: 0.5em;
+    align-self: center;
+  }
+  .search-submit{
+    background-color: #092b2a;
+    padding: .7em;
+    font-weight: bold;
+    color: white;
+  }
+  .search-submit:hover {
+      background: #09a67c;
+      color: #ffffff;
+    }
+}
+
 .preview__list-wrapper {
   align-items: flex-start;
   display: flex;

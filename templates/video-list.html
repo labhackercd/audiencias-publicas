@@ -3,8 +3,20 @@
 
 {% block title %}Audiências Passadas{% endblock %}
 
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'jquery-ui/themes/flick/jquery-ui.css' %}" />
+{% endblock extra_css %}
+
 {% block main %}
   <main class="video-list">
+    <form class="header__search" method="GET" action="{% url 'video_list' %}">
+      <input class="searh-input" placeholder="pesquisa..." type="text" name="q" value={{ request.GET.q }}>
+      <label for="initial-date">De</label>
+      <input class="searh-input" placeholder="01/01/2015" type="text" name="initial_date" id="initial-date" value={{ request.GET.initial_date }}>
+      <label for="end-date">Até</label>
+      <input class="searh-input" placeholder="31/12/2017" type="text" name="end_date" id="end-date" value={{ request.GET.end_date }}>
+      <button class="search-submit" type="submit">Filtrar</button>
+    </form>
     <div class="preview--video-list">
       <div class="preview__floating-header">
         <i class="header__icon icon icon-play"></i>
@@ -15,9 +27,61 @@
         <ul class="preview__list">
           {% for room in object_list %}
             {% include "includes/home_video.html" with room=room %}
+          {% empty %}
+            <h5>Não foram encontradas audiências correspondentes a sua busca.</h5>
           {% endfor %}
         </ul>
       </div>
     </div>
   </main>
 {% endblock main %}
+{% block extra_js %}
+  <script src="{% static 'jquery-ui/jquery-ui.min.js'%}"></script>
+  <script>
+  $( function() {
+    var dateFormat = "dd/mm/yy",
+      from = $( "#initial-date" )
+        .datepicker({
+          changeMonth: false,
+          numberOfMonths: 2,
+          dateFormat: 'dd/mm/yy',
+          dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+          dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+          dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+          monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+          monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+          nextText: 'Próximo',
+          prevText: 'Anterior'
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#end-date" ).datepicker({
+        changeMonth: false,
+        numberOfMonths: 2,
+        dateFormat: 'dd/mm/yy',
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+        dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+        dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+        monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+        monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+        nextText: 'Próximo',
+        prevText: 'Anterior'
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+ 
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+ 
+      return date;
+    }
+  } );
+  </script>
+{% endblock extra_js %}
