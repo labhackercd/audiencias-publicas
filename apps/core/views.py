@@ -78,10 +78,10 @@ def index(request):
             is_visible=True).order_by('-date'),
         agendas=Room.objects.filter(Q(
             is_visible=True,
-            reunion_status=2,
+            reunion_status__in=[2, 3],
             youtube_id='') | Q(
             is_visible=True,
-            reunion_status=2,
+            reunion_status__in=[2, 3],
             youtube_id__isnull=True)).order_by('date'),
     ))
 
