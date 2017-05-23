@@ -64,11 +64,13 @@
                     <div class="calendar-table__description">
                       {% if agenda.reunion_theme %}
                       <div class="content-truncate">{{ agenda.reunion_theme|truncatechars:150 }}</div>  
-                      {% else %}
-                      <div class="content-truncate">{{ agenda.reunion_object|truncatechars:150 }}</div>  
-                      {% endif %}
                       <div class="content-full hide">{{ agenda.reunion_object|linebreaks }}</div>
                       <div class="show-more"><a>Ver mais</a></div>
+                      {% elif agenda.reunion_object %}
+                      <div class="content-truncate">{{ agenda.reunion_object|truncatechars:150 }}</div>
+                      <div class="content-full hide">{{ agenda.reunion_object|linebreaks }}</div>
+                      <div class="show-more"><a>Ver mais</a></div>  
+                      {% endif %}
                     </div>
                   </td>
                   <td class="calendar-table__column">
