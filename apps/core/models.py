@@ -220,7 +220,7 @@ def notification(subject, html, email_list):
 
 def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
-    if instance.youtube_status == 2:
+    if instance.youtube_status in [2, 3]:
         is_closed = True
     instance.send_notification(is_closed=is_closed)
 
