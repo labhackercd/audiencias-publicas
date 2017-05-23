@@ -59,4 +59,5 @@ class RoomSerializer(serializers.ModelSerializer):
         fields = ('id', 'cod_reunion', 'online_users', 'youtube_id',
                   'legislative_body_alias', 'youtube_status', 'is_joint',
                   'max_online_users', 'created', 'modified', 'is_visible',
-                  'reunion_type', 'title_reunion')
+                  'reunion_type', 'title_reunion', 'reunion_object',
+                  'reunion_theme')
