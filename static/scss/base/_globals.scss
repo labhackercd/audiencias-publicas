@@ -15,6 +15,10 @@ body {
   }
 }
 
+main {
+  font-size: 14px;
+}
+
 table {
   @include breakpoint(small only) {
     display: block;
