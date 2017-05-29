@@ -19,7 +19,14 @@ def simplify(value):
 
 @register.simple_tag(takes_context=True)
 def vote_action(context, question, user):
-    if question.user.username == user:
+    if question.room.youtube_status == 2:
+        html = render_to_string('includes/question_action.html', {
+            'extra_classes': 'disabled',
+            'total_votes': question.votes_count,
+            'extra_attributes': 'disabled',
+            'object': context['object'],
+            'upvote_content': 'Votação Encerrada'})
+    elif question.user.username == user:
         html = render_to_string('includes/question_action.html', {
             'extra_classes': 'voted disabled',
             'total_votes': question.votes_count,
