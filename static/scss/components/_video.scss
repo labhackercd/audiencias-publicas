@@ -71,7 +71,7 @@
     flex-wrap: wrap;
     font-size: 1em;
     justify-content: space-between;
-    margin-bottom: 1em;
+    margin-bottom: 2em;
   }
 
   .status__transmission-text {
@@ -105,6 +105,31 @@
     font-weight: 700;
     margin-right: 0.25em;
   }
+}
+
+.video__info-header {
+  color: #ffffff;
+  display: inline-flex;
+  font-size: 1.25em;
+  font-weight: 700;
+  position: relative;
+  text-transform: uppercase;
+
+  &::after {
+    background-color: $color-accent;
+    bottom: -0.25em;
+    content: '';
+    height: 0.2em;
+    left: 0;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.video__info-text {
+  color: $color-white;
+  font-size: 1em;
+  font-weight: 400;
 }
 
 .video--empty {
