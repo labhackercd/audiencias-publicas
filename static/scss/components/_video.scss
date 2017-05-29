@@ -17,10 +17,21 @@
 
     .title__secondary {
       color: $color-primary-xxlight;
+      display: flex;
+      flex-wrap: wrap;
       font-size: 1em;
       font-weight: 600;
       margin-bottom: 0;
       text-transform: uppercase;
+
+      .secondary__text {
+        margin-right: 0.5em;
+      }
+
+      .secondary__separator {
+        color: $color-accent;
+        margin-right: 0.5em
+      }
     }
 
     .title__primary {
