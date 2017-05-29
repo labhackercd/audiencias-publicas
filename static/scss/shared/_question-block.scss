@@ -1,4 +1,6 @@
 .question-block__info {
+  align-items: baseline;
+  display: flex;
   margin-bottom: .5em;
 
   .info__username {
@@ -9,9 +11,10 @@
     color: $color-gray-45;
     font-size: .7em;
     font-weight: 400;
+    margin-right: 0.5em;
   }
 }
 
 .question-block__text {
-  margin-bottom: .5em;
+  margin-bottom: 0;
 }

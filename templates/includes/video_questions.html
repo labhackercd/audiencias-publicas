@@ -1,45 +1,13 @@
 {% load video_utils %}
 <li class="list__item" id="{{question.id}}" data-question-id="{{question.id}}" data-question-author="{{author}}" data-question-votes="{{question.votes_count}}" data-question-path="{% url 'question_detail' pk=question.id %}">
 
-  <div class="item__vote-block">
-    {% vote_action question user.username %}
-  </div>
-
   <div class="item__question-block">
     <div class="question-block__info">
+      <div class="info__timestamp">{{question.created | date:'H:i'}}</div>
       <span class="info__username">{{question.user}}</span>
-      <div class="info__timestamp"> {{question.created | date:'H:i'}}</div>
     </div>
 
-    {% if object.youtube_status != 2 %}
-      <span class="question-block__share-button" role="button" title="Compartilhar esta pergunta">
-        <i class="share-button__icon icon icon-share-alt"></i>
-      </span>
-    {% endif %}
 
-    <ul class="question-block__share-list">
-      <li class="share-list__item--facebook ">
-        <a class="item__link" data-social="facebook" target="_blank" title="Compartilhar pelo Facebook">
-          <i class="item__icon icon icon-facebook"></i>
-        </a>
-      </li>
-
-      <li class="share-list__item--twitter ">
-        <a class="item__link" data-social="twitter" target="_blank" title="Compartilhar pelo Twitter">
-          <i class="item__icon icon icon-twitter"></i>
-        </a>
-      </li>
-
-      <li class="share-list__item--whatsapp ">
-        <a class="item__link" data-social="whatsapp" target="_blank" title="Compartilhar pelo Whatsapp">
-          <i class="item__icon icon icon-whatsapp"></i>
-        </a>
-      </li>
-
-      <span class="share-list__close" role="button" title="Cancelar">
-        <i class="icon icon-times"></i>
-      </span>
-    </ul>
 
     <p class="question-block__text">{{question.question}}</p>
 
@@ -67,5 +35,41 @@
         </form>
       {% endwith %}
     {% endif %}
+  </div>
+
+  <div class="item__action-block">
+    {% if object.youtube_status != 2 %}
+      <span class="question-block__share-button" role="button" title="Compartilhar esta pergunta">
+        <i class="share-button__icon icon icon-share-alt"></i>
+      </span>
+    {% endif %}
+
+    <ul class="question-block__share-list">
+      <span class="share-list__close" role="button" title="Cancelar">
+        <i class="icon icon-times"></i>
+      </span>
+
+      <li class="share-list__item--facebook ">
+        <a class="item__link" data-social="facebook" target="_blank" title="Compartilhar pelo Facebook">
+          <i class="item__icon icon icon-facebook"></i>
+        </a>
+      </li>
+
+      <li class="share-list__item--twitter ">
+        <a class="item__link" data-social="twitter" target="_blank" title="Compartilhar pelo Twitter">
+          <i class="item__icon icon icon-twitter"></i>
+        </a>
+      </li>
+
+      <li class="share-list__item--whatsapp ">
+        <a class="item__link" data-social="whatsapp" target="_blank" title="Compartilhar pelo Whatsapp">
+          <i class="item__icon icon icon-whatsapp"></i>
+        </a>
+      </li>
+    </ul>
+
+    <div class="item__vote-block">
+      {% vote_action question user.username %}
+    </div>
   </div>
 </li>

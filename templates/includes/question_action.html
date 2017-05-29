@@ -1,15 +1,11 @@
-{% if object.video.closed_date %}
-  <span class="vote-block__total-votes closed {{extra_classes}}">{{total_votes}}</span>
-
-  <div class="vote-block__vote-label closed">
-    {% if total_votes > 1 %}Votos{% else %}Voto{% endif %}
+{% if object.youtube_status == 2 %}
+  <button class="vote-block__upvote-button {{extra_classes}} {{question_vote}}" {{extra_attributes}}>{{upvote_content}}</button>
+  <div class="vote-block__total-votes closed {{extra_classes}}">
+    <span class="vote-block__total-count">{{total_votes}}</span><i class="vote-block__vote-icon icon icon-chevron-up"></i>
   </div>
 {% else %}
-  <span class="vote-block__total-votes {{extra_classes}}">{{total_votes}}</span>
-
-  <div class="vote-block__vote-label hide">
-    {% if total_votes > 1 %}Votos{% else %}Voto{% endif %}
-  </div>
-
   <button class="vote-block__upvote-button {{extra_classes}} {{question_vote}}" {{extra_attributes}}>{{upvote_content}}</button>
+  <div class="vote-block__total-votes {{extra_classes}}">
+    <span class="vote-block__total-count">{{total_votes}}</span><i class="vote-block__vote-icon icon icon-chevron-up"></i>
+  </div>
 {% endif %}

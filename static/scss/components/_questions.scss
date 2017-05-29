@@ -14,6 +14,7 @@
   @include breakpoint(medium down) {
     margin-bottom: 112px;
     overflow-y: auto;
+    padding: 0 1em;
   }
 
   @include breakpoint(large down) {
@@ -27,11 +28,12 @@
 
   @include breakpoint(large up) {
     position: relative;
+    padding-left: 2.75em;
   }
 }
 
 .questions__header {
-  padding: 1em;
+  padding-top: 1em;
 
   .header__title {
     align-items: center;
@@ -65,7 +67,9 @@
 .questions__list {
   list-style: none;
   margin: 1em 0;
-  padding: 0 1em;
+  padding: 0 .5em;
+  width: calc(100% + 1em);
+  margin-left: -.5em;
 
   @include breakpoint(large up) {
     overflow-y: auto;
@@ -75,10 +79,7 @@
   .list__item {
     display: flex;
     position: relative;
-
-    @include breakpoint(medium down) {
-      flex-direction: column-reverse;
-    }
+    flex-direction: column;
 
     &:not(:last-child) {
       margin-bottom: 1em;
@@ -108,78 +109,86 @@
     }
   }
 
-  .item__vote-block {
-    align-items: center;
+  .item__action-block {
+    background-color: $color-gray-90;
     display: flex;
-    flex-basis: 6em;
-    flex-direction: column;
-    justify-content: center;
     position: relative;
-    z-index: 1;
+    overflow: hidden;
+  }
 
-    @include breakpoint(medium down) {
-      background-color: $color-primary-light;
-      flex-basis: 2em;
-      flex-direction: row;
-    }
+  .item__vote-block {
+    display: flex;
+    margin-left: auto;
   }
 
   .vote-block__total-votes {
-    color: $color-primary-xxlight;
+    align-items: center;
+    background-color: $color-primary-xxhighlight;
+    color: $color-white;
+    display: flex;
+    flex: 1 0 2.5em;
     font-weight: 700;
-    margin-bottom: .5em;
-
-    @include breakpoint(medium down) {
-      margin: 0;
-      text-align: center;
-      width: auto;
-    }
+    justify-content: center;
+    position: relative;
 
     @include breakpoint(large up) {
       font-size: 1.2em;
     }
 
-    &.closed {
-      @include breakpoint(medium down) {
-        margin-right: .5em;
-      }
-    }
-
-    &:not(.closed) {
-      @include breakpoint(medium down) {
-        flex: .5 1 0;
-      }
-    }
-
     &.voted,
-    &.voted:not(.disabled) + .vote-block__vote-label {
-      color: $color-accent;
+    &.voted:not(.disabled) {
+      color: $color-black;
+      background-color: $color-accent-highlight;
     }
 
     &.disabled {
       color: $color-primary-xxlight;
+      background-color: $color-gray-80;
     }
   }
 
+  .vote-block__total-count {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    transition: $translate-transition;
+  }
+
+  .vote-block__vote-icon {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    top: 100%;
+    transition: $translate-transition;
+    width: 100%;
+  }
+
+  .vote-block__total-votes.voted .vote-block__vote-icon {
+    top: initial;
+    bottom: 100%
+  }
+
+  .vote-block__total-votes.voted .vote-block__vote-icon::before {
+    transform: rotate(180deg);
+  }
+
   .vote-block__upvote-button {
-    border: 1px solid $color-primary-xxlight;
-    border-radius: 3em;
+    align-items: center;
+    background-color: $color-primary-xxlight;
     color: $color-white;
+    display: inline-flex;
+    flex: 0 1 auto;
     font-size: .7em;
-    font-weight: 400;
-    min-height: 3em;
-    padding: .3em;
-    text-align: center;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.2em;
+    min-height: 3.25em;
+    padding: .5em;
     text-transform: uppercase;
     transition: $hover-transition;
-    width: 100%;
-
-    @include breakpoint(medium down) {
-      background-color: $color-primary-xxlight;
-      border: 0;
-      border-radius: 0;
-      flex: 1 1 0;
-    }
+    width: 12.5em;
 
     &:not(.disabled) {
       &:hover {
@@ -188,34 +197,31 @@
 
       &:not(.voted):hover,
       &:not(.voted):focus {
-        background-color: $color-primary-xxlight;
-        border-color: $color-primary-xxlight;
+        background-color: $color-primary-xxhighlight;
+
+        & + .vote-block__total-votes .vote-block__total-count, & + .vote-block__total-votes .vote-block__vote-icon {
+          transform: translateY(-100%);
+        }
       }
 
       &.voted {
-        border-color: $color-accent;
-
-        @include breakpoint(medium down) {
-          background-color: $color-accent;
-          color: $color-primary-light;
-        }
+        background-color: $color-accent;
+        color: $color-black;
 
         &:hover {
-          background-color: $color-accent;
-          color: $color-primary-light;
+          background-color: $color-accent-highlight;
+
+          & + .vote-block__total-votes .vote-block__total-count, & + .vote-block__total-votes .vote-block__vote-icon {
+            transform: translateY(100%);
+          }
         }
       }
     }
 
     &.disabled {
-      border-color: $color-gray-60;
+      background-color: $color-gray-84;
       color: $color-gray-60;
       cursor: default;
-
-      @include breakpoint(medium down) {
-        background-color: $color-gray-45;
-        color: $color-gray-80;
-      }
     }
   }
 
@@ -227,9 +233,8 @@
   .item__question-block {
     background-color: $color-white;
     display: flex;
-    flex: 1;
     flex-direction: column;
-    margin-left: 1em;
+    flex: 1;
     overflow: hidden;
     padding: .75em;
     position: relative;
@@ -241,13 +246,14 @@
   }
 
   .question-block__share-button {
+    align-items: center;
+    background-color: $color-gray-84;
     color: $color-gray-40;
     cursor: pointer;
-    padding: 1em;
-    position: absolute;
-    right: 0;
-    top: 0;
+    display: flex;
+    justify-content: center;
     transition: $hover-transition;
+    width: 2.5em;
 
     &:hover {
       color: $color-black;
@@ -258,16 +264,17 @@
     align-items: center;
     background-color: $color-white;
     display: flex;
-    height: 3em;
+    height: 100%;
     justify-content: space-around;
     left: 0;
     list-style: none;
     margin: 0;
     position: absolute;
     top: 0;
-    transform: translateY(-100%);
+    transform: translateY(100%);
     transition: $translate-transition;
     width: 100%;
+    z-index: 1;
 
     [class^="share-list__item"] {
       align-items: center;
@@ -282,7 +289,7 @@
         color: $color-white;
         display: flex;
         flex: 1;
-        font-size: 1.4em;
+        font-size: 1.2em;
         height: 100%;
         justify-content: center;
 
@@ -313,7 +320,7 @@
       color: $color-white;
       cursor: pointer;
       display: flex;
-      flex-basis: 3em;
+      flex-basis: 2.5em;
       height: 100%;
       justify-content: center;
     }
@@ -402,7 +409,7 @@
   }
 
   p {
-    color: hsl(158, 42%, 24%);
+    color: $color-primary-xlight;
     font-size: 1.5em;
     font-weight: 600;
     text-align: center;
@@ -428,8 +435,10 @@
   }
 
   @include breakpoint(large up) {
-    bottom: 50px;
-    width: 100%;
+    bottom: 40px;
+    margin: auto;
+    right: 0;
+    left: 2.75em;
   }
 
   &:hover {
