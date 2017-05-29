@@ -37,8 +37,8 @@
 
   .header-wrapper {
     background-color: $color-primary-xlight;
-    border-right: 4em solid $color-primary;
-    border-top: 4em solid $color-primary-xlight;
+    border-right: 6.5em solid $color-primary;
+    border-top: 6.5em solid $color-primary-xlight;
     position: relative;
     width: calc(100% + 2em);
 
@@ -50,25 +50,17 @@
   .header__logo {
     display: flex;
     align-items: center;
-    margin: 0 2.5em;
+    margin: 0 2.75em;
     position: absolute;
-    top: -3.25em;
+    top: -4.75em;
 
     .logo__image--audiencias-logo {
-      height: 2.5em;
-
-      @include breakpoint(small down) {
-        height: 1.8em;
-      }
+      height: 3em;
     }
 
     .logo__image--audiencias-text {
-      height: 1.2em;
+      height: 1.5em;
       margin-left: .8em;
-
-      @include breakpoint(small down) {
-        display: none;
-      }
     }
   }
 
