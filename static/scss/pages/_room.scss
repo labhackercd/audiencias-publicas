@@ -27,6 +27,7 @@
 
     @include breakpoint(large up) {
       flex: 0 1 500px;
+      max-width: 500px;
     }
 
     @include breakpoint(medium down) {
