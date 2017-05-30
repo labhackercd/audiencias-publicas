@@ -90,12 +90,22 @@
       <div class="video">
         <div class="video__title">
           <h2 class="title__secondary">
-            <span class="secondary__text">Audiência Pública</span>
+            <span class="secondary__text">{{object.reunion_type}}</span>
             <div class="secondary__date-wrapper">
               <span class="secondary__separator">•</span><span class="secondary__date">{{object.date}}</span>
             </div>
           </h2>
-          <h1 class="title__primary">Comissão geral do Lorem ipsum dolor sit amet consectetur adipisicing elit Accusamus beatae</h1>
+          <h1 class="title__primary">
+            {% if object.reunion_theme %}
+              {{object.reunion_theme}}
+            {% else %}
+              {% if obcject.is_joint %}
+                {{object.title_reunion}}
+              {% else %}
+                {{object.legislative_body_alias}}
+              {% endif %}
+            {% endif %}
+          </h1>
         </div>
 
         <div class="video__iframe-wrapper">
@@ -124,7 +134,7 @@
 
           <div class="status__counter">
             {% if object.youtube_status == 1 %}
-              <span class="status__counter-number" id="online-users"></span> <span class="status__counter-text"> assistindo</span>
+              <span class="status__counter-number" id="online-users">{{object.online_users}}</span> <span class="status__counter-text">assistindo</span>
             {% else %}
               <span class="status__counter-number">{{object.views}}</span> <span class="status__counter-text"> visualizações</span>
             {% endif %}
@@ -134,12 +144,12 @@
         <div class="video__main-infos">
           <div class="video__info--description">
             <h3 class="video__info-header">Pauta</h3>
-            <p class="video__info-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veritatis facere enim ipsum alias, sequi architecto officia blanditiis, maxime modi in quis eius at exercitationem eligendi commodi nulla, expedita quae. Repellendus.</p>
+            <div class="video__info-text">{{object.reunion_object|linebreaks}}</div>
           </div>
 
           <div class="video__info--holder">
             <h3 class="video__info-header">Organizado por</h3>
-            <p class="video__info-text">CLIPSUM - Comissão do lelém ipsum dolor sit amet, consectetur adipisicing elit. Id, in.</p>
+            <p class="video__info-text">{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
           </div>
         </div>
 
