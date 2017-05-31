@@ -234,8 +234,6 @@ def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
     if instance.youtube_status in [2, 3]:
         is_closed = True
-    elif instance.youtube_status == 1:
-        instance.send_video()
     instance.send_notification(is_closed=is_closed)
 
 
@@ -251,6 +249,12 @@ def room_pre_save(sender, instance, **kwargs):
                 instance.reunion_theme = theme
             if 'Tema:' in line:
                 instance.reunion_theme = line.replace('Tema:', '')
+    try:
+        obj = sender.objects.get(pk=instance.pk)
+        if instance.youtube_id != obj.youtube_id:
+            instance.send_video()
+    except sender.DoesNotExist:
+        pass
 
 
 def room_pre_delete(sender, instance, **kwargs):
