@@ -107,6 +107,9 @@ class Room(TimestampedMixin):
     def html_body(self):
         return render_to_string('includes/home_video.html', {'room': self})
 
+    def html_room_video(self):
+        return render_to_string('includes/room_video.html', {'object': self})
+
     def send_notification(self, deleted=False, is_closed=False):
         notification = {
             'id': self.id,
@@ -118,6 +121,15 @@ class Room(TimestampedMixin):
             Group(self.group_questions_name).send({'text': 'closed'})
             Group(self.group_chat_name).send({'text': 'closed'})
         Group('home').send({'text': json.dumps(notification)})
+
+    def send_video(self):
+        text = {
+            'video': True,
+            'html': self.html_room_video(),
+        }
+        Group(self.group_chat_name).send(
+            {'text': json.dumps(text)}
+        )
 
     @property
     def group_chat_name(self):
@@ -222,6 +234,8 @@ def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
     if instance.youtube_status in [2, 3]:
         is_closed = True
+    elif instance.youtube_status == 1:
+        instance.send_video()
     instance.send_notification(is_closed=is_closed)
 
 

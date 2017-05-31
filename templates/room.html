@@ -108,16 +108,7 @@
           </h1>
         </div>
 
-        <div class="video__iframe-wrapper">
-          {% if object.youtube_id %}
-              <iframe class="video__iframe" src="https://www.youtube.com/embed/{{object.youtube_id}}?modestbranding=1&autoplay=1&showinfo=0&rel=0{% if answer_time %}&start={{answer_time}}{% endif %}" frameborder="0" allowfullscreen=""></iframe>
-          {% else %}
-            <div class="video--empty">
-              <img class="video--empty__icon" src="{% static 'img/calendar-book.svg' %}" data-fallback="{% static 'img/calendar-book.png' %}">
-              <p class="video--empty__message">Transmissão prevista para <span class="video--empty__date">{{object.date}}</span>.</p>
-            </div>
-          {% endif %}
-        </div>
+        {% include "includes/room_video.html" with object=object %}
 
         <div class="video__status">
           <div class="status__transmission">

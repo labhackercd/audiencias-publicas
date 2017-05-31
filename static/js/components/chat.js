@@ -10,6 +10,7 @@ function chatComponent(socket) {
     $readMore: $('.chat__read-more'),
     $form: $('#chatform'),
     $formInput: $('#message'),
+    $videoFrame: $('.video__iframe-wrapper'),
   };
 
   const vars = {
@@ -52,12 +53,16 @@ function chatComponent(socket) {
     } else {
       const data = JSON.parse(message.data);
 
-      if (isScrolledToBottom()) {
-        elements.$messagesList.append(data.hmtl);
-        animateToBottom();
+      if (data.video) {
+        elements.$videoFrame.html(data.html);
       } else {
-        elements.$messagesList.append(data.hmtl);
-        showReadMore();
+        if (isScrolledToBottom()) {
+          elements.$messagesList.append(data.hmtl);
+          animateToBottom();
+        } else {
+          elements.$messagesList.append(data.hmtl);
+          showReadMore();
+        }
       }
     }
   }
