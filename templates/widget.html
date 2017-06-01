@@ -208,6 +208,14 @@
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
 {% endblock extra_js %}
 
+{% block foot_js %}
+  <script type="text/javascript" src="{% static 'jquery/dist/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'foundation-sites/dist/js/foundation.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/foundation.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/svg-support.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.inputmask.bundle.min.js' %}"></script>
+{% endblock foot_js %}
+
 {% if object.youtube_status != 2 %}
   {% block websockets %}
     <script>

@@ -5,6 +5,7 @@ function createSocketHelper(name = 'unknown', path = '') {
     const wsScheme = window.location.protocol === 'https:' ? 'wss' : 'ws';
     let wsPath = `${wsScheme}://${window.location.host}${window.location.pathname}`;
     wsPath = wsPath.endsWith('/') ? `${wsPath}${path}` : `${wsPath}/${path}`;
+    wsPath = wsPath.replace('widget', 'sala');
 
     console.log(`Connecting to ${wsPath}`); // eslint-disable-line no-console
     return wsPath;
