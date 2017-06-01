@@ -12,6 +12,8 @@ from django.shortcuts import redirect
 from datetime import datetime
 from django.db.models import Q
 from channels import Group
+from django.utils.decorators import method_decorator
+from django.views.decorators.clickjacking import xframe_options_exempt
 import json
 
 
@@ -106,6 +108,7 @@ class VideoDetail(DetailView):
         return context
 
 
+@method_decorator(xframe_options_exempt, name='dispatch')
 class WidgetVideoDetail(DetailView):
     model = Room
     template_name = 'widget.html'
