@@ -106,6 +106,26 @@ class VideoDetail(DetailView):
         return context
 
 
+class WidgetVideoDetail(DetailView):
+    model = Room
+    template_name = 'widget.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(WidgetVideoDetail, self).get_context_data(**kwargs)
+        if self.request.user.is_authenticated():
+            context['handler'] = encrypt(str(self.request.user.id).rjust(10))
+            context['groups'] = list(self.request.user.groups.all()
+                                     .values_list('name', flat=True))
+        context['questions'] = sorted(self.object.questions.all(),
+                                      key=lambda vote: vote.votes_count,
+                                      reverse=True)
+        context['answer_time'] = self.request.GET.get('t', None)
+        context['domain'] = Site.objects.get_current().domain
+        context['domain'] += settings.FORCE_SCRIPT_NAME
+        context['url_prefix'] = settings.FORCE_SCRIPT_NAME
+        return context
+
+
 class RoomReportView(DetailView):
     model = Room
     template_name = 'room_report.html'

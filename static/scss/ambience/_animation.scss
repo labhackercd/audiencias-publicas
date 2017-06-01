@@ -14,3 +14,7 @@ $translate-transition: transform .3s $swift-out;
 .live-blink {
   animation: blink ease-in-out 1.2s infinite both alternate;
 }
+
+@mixin transition-default($property) {
+  transition: $property 0.3s $swift-out;
+}
