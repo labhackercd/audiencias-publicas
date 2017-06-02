@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Relatório | {{object.legislative_body_alias}}</title>
+  <title>Relatório | {% if object.reunion_theme %}{{object.reunion_theme}}{% else %}{% if obcject.is_joint %}{{object.title_reunion}}{% else %}{{object.legislative_body_alias}}{% endif %}{% endif %}</title>
   <link rel="stylesheet" href="{% static 'fontastic-labhacker/styles.css' %}" />
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
   {% compress css %}
@@ -15,8 +15,18 @@
     <div class="report__header">
       <img class="header__logo" src="{% static "/img/logo-audiencias-icon.svg" %}">
       <div class="header__info">
-        <h1 class="info__title">{{object.legislative_body_alias}}</h1>
-        <p class="info__date">Audiência realizada em {{object.date}}</p>
+        <h1 class="info__title">
+            {% if object.reunion_theme %}
+              {{object.reunion_theme}}
+            {% else %}
+              {% if obcject.is_joint %}
+                {{object.title_reunion}}
+              {% else %}
+                {{object.legislative_body_alias}}
+              {% endif %}
+            {% endif %}</h1>
+        <p class="info__date">{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
+        <p class="info__date">{{object.reunion_type}} realizada em {{object.date}}</p>
       </div>
     </div>
 
@@ -24,7 +34,7 @@
       <div class="room__stats">
         <i class="stats__icon icon icon-question"></i>
         <span class="stats__number">{{object.questions.all.count}}</span>
-        <span class="stats__text">Questões</span>
+        <span class="stats__text">Perguntas</span>
       </div>
       <div class="room__stats">
         <i class="stats__icon icon icon-comments"></i>
@@ -39,7 +49,7 @@
     </div>
 
     <div class="report__section--question">
-      <h1 class="section__title">Questões</h1>
+      <h1 class="section__title">Perguntas</h1>
       <ul class="section__question-list">
         {% for question in questions %}
           <li class="question-list__item">
@@ -55,12 +65,16 @@
               {% endif %}
             </div>
           </li>
+        {% empty %}
+          <li class="question-list__item">
+            <p class="question__text">Não houve perguntas nesta reunião.</p>
+          </li>
         {% endfor %}
       </ul>
     </div>
 
     <div class="report__section--chat">
-      <h1 class="section__title">Chat</h1>
+      <h1 class="section__title">Bate-Papo</h1>
       <ul class="section__chat-list">
         {% for message in messages %}
           <li class="chat-list__item">
@@ -69,6 +83,10 @@
               <span class="chat-message__author">{{message.user}}:</span>
               <span class="chat-message__text">{{message.message}}</span>
             </div>
+          </li>
+        {% empty %}
+          <li class="chat-list__item">
+            <p class="chat-message__text">Não houve mensagens nesta reunião.</p>
           </li>
         {% endfor %}
       </ul>
