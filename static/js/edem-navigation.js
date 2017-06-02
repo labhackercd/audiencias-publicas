@@ -1,6 +1,6 @@
 let searchWrapper = document.querySelector('.search-form'),
     searchInput = document.querySelector('.search-form__input');
-    navBar = document.querySelector('.navigation');
+    navBar = document.querySelector('.edem-navigation');
 
 document.addEventListener('click', (e) => {
   if (~e.target.className.indexOf('search-form')) {
