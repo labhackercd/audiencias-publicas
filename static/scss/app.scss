@@ -20,19 +20,20 @@
 @import 'pages/room-questions-list';
 @import 'pages/room';
 @import 'pages/video-list';
+@import 'pages/widget';
 
 // Components
 @import 'components/banner';
 @import 'components/calendar-table';
 @import 'components/chat';
 @import 'components/footer';
+@import 'components/hamburger';
 @import 'components/navigation';
 @import 'components/preview';
 @import 'components/questions';
 @import 'components/registration-form';
 @import 'components/tabs-nav';
 @import 'components/video';
-@import 'components/hamburger';
 
 // Overrides
 @import 'overrides/olark';
