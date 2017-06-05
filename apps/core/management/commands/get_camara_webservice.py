@@ -62,5 +62,5 @@ class Command(BaseCommand):
                 allowed_rooms.append(item['codReuniao'])
         rooms_without_interaction = Room.objects.filter(
             date__gte=today).exclude(cod_reunion__in=allowed_rooms).exclude(
-            cod_reunion='')
+            cod_reunion='').exclude(cod_reunion__isnull=True)
         rooms_without_interaction.update(is_visible=False)
