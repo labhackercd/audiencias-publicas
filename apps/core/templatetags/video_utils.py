@@ -19,7 +19,14 @@ def simplify(value):
 
 @register.simple_tag(takes_context=True)
 def vote_action(context, question, user):
-    if question.room.youtube_status == 2:
+    if question.answered:
+        html = render_to_string('includes/question_action.html', {
+            'extra_classes': 'voted disabled',
+            'total_votes': question.votes_count,
+            'extra_attributes': 'disabled',
+            'object': context['object'],
+            'upvote_content': 'Pergunta Respondida'})
+    elif question.room.youtube_status == 2:
         html = render_to_string('includes/question_action.html', {
             'extra_classes': 'disabled',
             'total_votes': question.votes_count,
@@ -33,13 +40,6 @@ def vote_action(context, question, user):
             'extra_attributes': 'disabled',
             'object': context['object'],
             'upvote_content': 'Sua Pergunta'})
-    elif question.answered:
-        html = render_to_string('includes/question_action.html', {
-            'extra_classes': 'voted disabled',
-            'total_votes': question.votes_count,
-            'extra_attributes': 'disabled',
-            'object': context['object'],
-            'upvote_content': 'Pergunta Respondida'})
     elif question.votes.filter(user__username=user).count() > 0:
         html = render_to_string('includes/question_action.html', {
             'extra_classes': 'voted',
@@ -64,8 +64,13 @@ def format_seconds(s):
 
 @register.filter()
 def belongs_to_group(user, group_name):
+    if hasattr(user, 'profile'):
+        user_is_admin = user.profile.is_admin
+    else:
+        user_is_admin = False
+
     try:
         group = Group.objects.get(name=group_name)
-        return group in user.groups.all()
+        return group in user.groups.all() or user_is_admin
     except Group.DoesNotExist:
-        return False
+        return False or user_is_admin
