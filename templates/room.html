@@ -217,6 +217,7 @@
           "{{group}}",
         {% endfor %}
       ]
+      var HANDLER_ADMIN = {{user.profile.is_admin|lower|default:'false'}};
 
       var urlPrefix = "{{url_prefix|default_if_none:''}}";
 

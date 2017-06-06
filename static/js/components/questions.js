@@ -1,4 +1,4 @@
-/* global HANDLER, loginRedirect */
+/* global HANDLER, HANDLER_ADMIN, loginRedirect */
 import sendFormHelper from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 
@@ -132,6 +132,8 @@ function questionsComponent(socket) {
     const $answeredForm = $question.find('.js-answered-form');
 
     if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
+      $answeredForm.removeClass('hide');
+    } else if (HANDLER_ADMIN) {
       $answeredForm.removeClass('hide');
     } else {
       $answeredForm.addClass('hide');
