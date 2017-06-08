@@ -72,8 +72,9 @@
   margin-left: -.5em;
 
   @include breakpoint(large up) {
-    overflow-y: auto;
+    flex: 1 0 auto;
     height: 100%;
+    overflow-y: auto;
   }
 
   .list__item {
