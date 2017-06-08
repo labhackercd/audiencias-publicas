@@ -72,7 +72,7 @@
   margin-left: -.5em;
 
   @include breakpoint(large up) {
-    flex: 1 0 auto;
+    flex: 1 auto;
     height: 100%;
     overflow-y: auto;
   }
