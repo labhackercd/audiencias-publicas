@@ -34,6 +34,7 @@
 
     @include breakpoint(large up) {
       display: flex;
+      flex: 1 0 auto;
     }
   }
 
@@ -60,7 +61,6 @@
     display: flex;
     font-size: .9em;
     font-weight: 600;
-    height: 100%;
     margin: 0;
     padding: 0 .5em 0 1em;
   }
