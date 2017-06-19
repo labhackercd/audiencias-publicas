@@ -45,17 +45,22 @@ def on_receive(message, pk):
                 if not created:
                     vote.delete()
         else:
-            blackList = settings.WORDS_BLACK_LIST
-            wordList = re.sub("[^\w]", " ", data['question'].lower()).split()
-            censured_words = list(set(blackList) & set(wordList))
-            query = data['question']
+            if len(data['question']) <= 300:
+                blackList = settings.WORDS_BLACK_LIST
+                wordList = re.sub(
+                    "[^\w]", " ", data['question'].lower()).split()
+                censured_words = list(set(blackList) & set(wordList))
+                query = data['question']
 
-            if censured_words:
-                for word in censured_words:
-                    query = re.sub(word, '♥', query, flags=re.IGNORECASE)
-            question = Question.objects.create(room=room, user=user,
-                                               question=query)
-            UpDownVote.objects.create(question=question, user=user, vote=True)
+                if censured_words:
+                    for word in censured_words:
+                        query = re.sub(word, '♥', query, flags=re.IGNORECASE)
+                question = Question.objects.create(room=room, user=user,
+                                                   question=query)
+                UpDownVote.objects.create(
+                    question=question, user=user, vote=True)
+            else:
+                return
 
         vote_list = []
         for vote in question.votes.all():

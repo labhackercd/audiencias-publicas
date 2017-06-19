@@ -185,7 +185,7 @@ class Question(TimestampedMixin):
     room = models.ForeignKey(Room, related_name='questions', null=True,
                              verbose_name=_('room'))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
-    question = models.TextField(_('question'), max_length='600')
+    question = models.TextField(_('question'), max_length='300')
     answer_time = models.IntegerField(_('answer time'), null=True, blank=True)
     answered = models.BooleanField(_('answered'), default=False)
 

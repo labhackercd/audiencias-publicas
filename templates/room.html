@@ -63,12 +63,12 @@
 
         {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="send-form--questions" id="questionform">
-            <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" maxlength="600" autocomplete="off" required=""></textarea>
+            <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
             <div class="send-form__actions">
               <div class="actions__character-counter">
                 <span class="character-counter__actual-length">0</span>
                 /
-                <span class="character-counter__max-length">600</span>
+                <span class="character-counter__max-length">300</span>
               </div>
               <button class="actions__button">
                 <span class="button__text">Enviar</span>
