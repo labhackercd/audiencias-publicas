@@ -187,6 +187,7 @@ class Question(TimestampedMixin):
     question = models.TextField(_('question'), max_length='300')
     answer_time = models.IntegerField(_('answer time'), null=True, blank=True)
     answered = models.BooleanField(_('answered'), default=False)
+    is_priority = models.BooleanField(_('is priority'), default=False)
 
     @property
     def votes_count(self):
@@ -285,7 +286,12 @@ def vote_post_delete(sender, instance, **kwargs):
     instance.question.send_notification()
 
 
+def question_post_save(sender, instance, **kwargs):
+    instance.send_notification()
+
+
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
 models.signals.pre_save.connect(room_pre_save, sender=Room)
 models.signals.post_save.connect(room_post_save, sender=Room)
+models.signals.post_save.connect(question_post_save, sender=Question)
