@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import (Http404, HttpResponseForbidden,
-                         HttpResponseBadRequest)
+                         HttpResponseBadRequest, HttpResponse)
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from apps.core.models import Question, Room
@@ -64,7 +64,26 @@ def set_answered(request, question_id):
             Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
-            return redirect('video_room', pk=question.room.pk)
+            return HttpResponse(status=200)
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+
+def set_priotity(request, question_id):
+    if request.user.is_authenticated() and request.method == 'POST':
+        is_priority = request.POST.get('is_priority')
+        question = Question.objects.get(pk=question_id)
+        group_name = question.room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            if is_priority == 'true':
+                question.is_priority = True
+            else:
+                question.is_priority = False
+
+            question.save()
+            return HttpResponse(status=200)
         else:
             return HttpResponseForbidden()
     else:
@@ -209,7 +228,7 @@ class RoomQuestionList(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(RoomQuestionList, self).get_context_data(**kwargs)
-        questions = self.object.questions.all()
+        questions = self.object.questions.filter(is_priority=True)
         context['no_offset_top'] = 'no-offset-top'
         context['questions'] = sorted(questions,
                                       key=lambda vote: vote.votes_count,

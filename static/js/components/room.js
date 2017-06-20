@@ -25,6 +25,7 @@ function roomComponent(socket) {
     $formChat: $('#chatform'),
     $formInputChat: $('#message'),
     $videoFrame: $('.video__iframe-wrapper'),
+    $priorityCheckbox: $('.js-priority-checkbox'),
   };
 
   const vars = {
@@ -173,13 +174,16 @@ function roomComponent(socket) {
 
         const $question = $(`[data-question-id=${data.id}]`);
         const $answeredForm = $question.find('.js-answered-form');
+        const $priorityForm = $question.find('.js-priority-form');
 
         if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
           $answeredForm.removeClass('hide');
         } else if (HANDLER_ADMIN) {
           $answeredForm.removeClass('hide');
+          $priorityForm.removeClass('hide');
         } else {
           $answeredForm.addClass('hide');
+          $priorityForm.addClass('hide');
         }
 
         updateVoteBlock($question, data);
@@ -329,6 +333,21 @@ function roomComponent(socket) {
       $.post(`${urlPrefix}/pergunta/${questionId}/respondida/`, {
         answered: event.target.checked
       })
+    },
+
+    sendPriorityForm(event) {
+      const questionId = $(event.target).closest('[data-question-id]')[0].dataset.questionId;
+      const csrftoken = getCookie('csrftoken');
+
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      });
+
+      $.post(`${urlPrefix}/pergunta/${questionId}/prioritaria/`, {
+        is_priority: event.target.checked
+      })
     }
   };
 
@@ -351,6 +370,7 @@ function roomComponent(socket) {
       setInterval(function() {
         socket.send(JSON.stringify({heartbeat: true}));
       }, 3000);
+      elements.$priorityCheckbox.on('change', events.sendPriorityForm);
     },
 
     onAdd($question) {
@@ -359,12 +379,14 @@ function roomComponent(socket) {
       const $shareListCloseBtn = $question.find('.share-list__close');
       const $shareListItemLink = $question.find('.question-block__share-list .item__link');
       const $answeredCheckbox = $question.find('.js-answered-checkbox');
+      const $priorityCheckbox = $question.find('.js-priority-checkbox');
 
       $voteBtnEnabled.on('click', events.vote);
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
       $shareListItemLink.on('click', events.share);
       $answeredCheckbox.on('change', events.sendAnsweredForm);
+      $priorityCheckbox.on('change', events.sendPriorityForm);
       $('.answered_time__input').inputmask("99:99:99", {
         placeholder: "0",
         numericInput: true,
