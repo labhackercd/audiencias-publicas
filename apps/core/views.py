@@ -15,6 +15,7 @@ from channels import Group
 from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
 import json
+from itertools import chain
 
 
 def set_answer_time(request, question_id):
@@ -228,12 +229,19 @@ class RoomQuestionList(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(RoomQuestionList, self).get_context_data(**kwargs)
-        questions = self.object.questions.filter(is_priority=True)
+        priorities = self.object.questions.filter(
+            is_priority=True, answered=False)
+        other = self.object.questions.filter(is_priority=False, answered=False)
+        answered = self.object.questions.filter(answered=True)
+        priority_questions = sorted(
+            priorities, key=lambda vote: vote.votes_count, reverse=True)
+        other_questions = sorted(
+            other, key=lambda vote: vote.votes_count, reverse=True)
+        answered_questions = sorted(
+            answered, key=lambda vote: vote.votes_count, reverse=True)
         context['no_offset_top'] = 'no-offset-top'
-        context['questions'] = sorted(questions,
-                                      key=lambda vote: vote.votes_count,
-                                      reverse=True)
-
+        context['questions'] = list(chain(
+            priority_questions, other_questions, answered_questions))
         return context
 
 
