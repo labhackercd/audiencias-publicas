@@ -40,8 +40,12 @@ class Command(BaseCommand):
                 room.youtube_id = item['idYoutube']
                 room.is_visible = item['bolHabilitarEventoInterativo']
                 room.youtube_status = item['codEstadoTransmissaoYoutube']
-                date = datetime.strptime(item['datReuniaoString'],
-                                         '%d/%m/%Y %H:%M:%S')
+                if item['datSisAudio'] == "":
+                    date = datetime.strptime(item['datReuniaoString'],
+                                             '%d/%m/%Y %H:%M:%S')
+                else:
+                    date = datetime.strptime(item['datSisAudio'],
+                                             '%d/%m/%Y %H:%M:%S')
                 room.date = date
                 room.save()
                 Group.objects.get_or_create(
