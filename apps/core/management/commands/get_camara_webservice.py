@@ -25,9 +25,28 @@ class Command(BaseCommand):
         data = json.loads(response.text)
         allowed_rooms = []
         for item in data:
+            room_created = False
+            has_video = item['idYoutube'] == ""
             if item['codReuniao'] == item['codReuniaoPrincipal']:
-                room, created = Room.objects.get_or_create(
-                    cod_reunion=item['codReuniao'])
+                rooms = Room.objects.filter(cod_reunion=item['codReuniao'])
+                if rooms.count() == 0:
+                    room = Room.objects.create(
+                        cod_reunion=item['codReuniao'],
+                        youtube_id=item['idYoutube'])
+                    room_created = True
+                elif rooms.count() == 1:
+                    room = rooms.latest('id')
+                    if room.youtube_id != item['idYoutube'] and has_video:
+                        if room.youtube_id == "":
+                            room.youtube_id = item['idYoutube']
+                        else:
+                            room, room_created = Room.objects.get_or_create(
+                                cod_reunion=item['codReuniao'],
+                                youtube_id=item['idYoutube'])
+                else:
+                    room, room_created = Room.objects.get_or_create(
+                        cod_reunion=item['codReuniao'],
+                        youtube_id=item['idYoutube'])
                 room.title_reunion = item['txtTituloReuniao']
                 room.legislative_body_initials = item['txtSiglaOrgao']
                 room.legislative_body_alias = item['txtApelido']
@@ -37,7 +56,6 @@ class Command(BaseCommand):
                 room.reunion_object = item['txtObjeto']
                 room.location = item['txtLocal']
                 room.is_joint = item['bolReuniaoConjunta']
-                room.youtube_id = item['idYoutube']
                 room.is_visible = item['bolHabilitarEventoInterativo']
                 room.youtube_status = item['codEstadoTransmissaoYoutube']
                 if item['datSisAudio'] == "":
@@ -51,7 +69,7 @@ class Command(BaseCommand):
                 Group.objects.get_or_create(
                     name=room.legislative_body_initials
                 )
-                if created:
+                if room_created:
                     domain = Site.objects.get_current().domain
                     html = render_to_string('email/new-room.html',
                                             {'domain': domain, 'room': room})
