@@ -244,7 +244,7 @@ def room_pre_save(sender, instance, **kwargs):
         theme = ''
         for i, line in enumerate(lines):
             if 'tema:' in line.lower():
-                theme = line.replace('Tema:', '').replace('TEMA:', '')
+                theme = line.replace('Tema:', '').replace('TEMA:', '').strip()
             elif line.lower() == 'tema' or line.lower() == 'tema:':
                 theme = lines[i + 1]
             if theme is not '':
