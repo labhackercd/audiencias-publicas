@@ -241,14 +241,27 @@ def room_pre_save(sender, instance, **kwargs):
     if instance.reunion_object:
         lines = instance.reunion_object.splitlines()
         lines = list(filter(str.strip, lines))
+        theme = ''
         for i, line in enumerate(lines):
-            if line == 'TEMA':
+            if 'tema:' in line.lower():
+                theme = line.replace('Tema:', '').replace('TEMA:', '')
+            elif line.lower() == 'tema' or line.lower() == 'tema:':
                 theme = lines[i + 1]
-                if theme[0] == '"' and theme[-1] == '"':
+            if theme is not '':
+                if theme.startswith('"') and theme.endswith('"'):
                     theme = theme[1:-1]
+                elif theme.startswith('"') and theme.endswith('".'):
+                    theme = theme[1:-2]
+                elif theme.startswith('"') and theme.endswith('"'):
+                    theme = theme[1:-1]
+                elif theme.startswith('"') and theme.endswith('".'):
+                    theme = theme[1:-2]
+                elif theme.startswith('“') and theme.endswith('”'):
+                    theme = theme[1:-1]
+                elif theme.startswith('“') and theme.endswith('”.'):
+                    theme = theme[1:-2]
+
                 instance.reunion_theme = theme
-            if 'Tema:' in line:
-                instance.reunion_theme = line.replace('Tema:', '')
     try:
         obj = sender.objects.get(pk=instance.pk)
         if instance.youtube_id != obj.youtube_id:
