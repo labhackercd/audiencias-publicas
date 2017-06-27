@@ -37,7 +37,7 @@ class Command(BaseCommand):
                 elif rooms.count() == 1:
                     room = rooms.latest('id')
                     if room.youtube_id != item['idYoutube'] and has_video:
-                        if room.youtube_id == "":
+                        if room.youtube_id == "" or room.youtube_id is None:
                             room.youtube_id = item['idYoutube']
                         else:
                             room, room_created = Room.objects.get_or_create(
