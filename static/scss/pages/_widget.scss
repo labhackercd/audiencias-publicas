@@ -20,6 +20,7 @@
     &__icon {
       font-size: 1.4em;
       color: white;
+      pointer-events: none;
     }
 
     &__item {
@@ -61,6 +62,7 @@
     &__text {
       margin-right: 1em;
       color: white;
+      pointer-events: none;
     }
   }
 }
