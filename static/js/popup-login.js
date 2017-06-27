@@ -8,6 +8,7 @@ $('.js-login-button').click(function(e){
       setTimeout(checkWindow, 100);
       return;
     } else {
+      %('.widget-loader').addClass('show');
       document.location.reload(true);
     }
   }
