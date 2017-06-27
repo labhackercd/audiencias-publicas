@@ -26,7 +26,7 @@ class Command(BaseCommand):
         allowed_rooms = []
         for item in data:
             room_created = False
-            has_video = item['idYoutube'] == ""
+            has_video = item['idYoutube'] != ""
             if item['codReuniao'] == item['codReuniaoPrincipal']:
                 rooms = Room.objects.filter(cod_reunion=item['codReuniao'])
                 if rooms.count() == 0:
