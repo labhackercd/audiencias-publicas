@@ -167,7 +167,7 @@ class VideoReunionDetail(DetailView):
             queryset = queryset.filter(
                 cod_reunion=cod_reunion, is_visible=True)
         try:
-            obj = queryset.get()
+            obj = queryset.latest('date')
         except queryset.model.DoesNotExist:
             raise Http404(_("No %(verbose_name)s found matching the query") %
                           {'verbose_name': queryset.model._meta.verbose_name})
