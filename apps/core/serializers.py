@@ -1,18 +1,18 @@
-from django.contrib.auth.models import User
 from django.conf import settings
 from rest_framework import serializers
 from apps.core.models import Message, Question, UpDownVote, Room
+from django.contrib.auth import get_user_model
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ('id', 'email', 'username', 'first_name', 'last_name')
 
 
 class BasicUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ('id', 'username', 'first_name', 'last_name')
 
 

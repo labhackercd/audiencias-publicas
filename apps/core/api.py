@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -22,7 +22,7 @@ class TokenPermission(permissions.BasePermission):
 
 
 class UserListAPI(generics.ListAPIView):
-    queryset = User.objects.all()
+    queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     permission_classes = (TokenPermission, )
 

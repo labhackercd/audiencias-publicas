@@ -59,6 +59,8 @@ INSTALLED_APPS = (
     'channels_presence',
 )
 
+AUTH_USER_MODEL = 'accounts.User'
+
 SITE_ID = 1
 
 CORS_ORIGIN_ALLOW_ALL = True
