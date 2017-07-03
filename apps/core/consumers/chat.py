@@ -5,11 +5,12 @@ from channels import Group
 from apps.core.models import Room, Message
 from apps.core.utils import decrypt
 from apps.core.consumers.utils import get_room, get_data
-from django.contrib.auth.models import User
 from django.conf import settings
 from channels_presence.models import Room as RoomPresence, Presence
 from channels.auth import channel_session_user
 from channels_presence.decorators import touch_presence
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 log = logging.getLogger("chat")
 

@@ -2,11 +2,12 @@ from channels import Group
 from apps.core.models import Room, Question, UpDownVote
 from apps.core.utils import decrypt, encrypt
 from apps.core.consumers.utils import get_room, get_data
-from django.contrib.auth.models import User
 from django.conf import settings
 import json
 import logging
 import re
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 log = logging.getLogger("chat")
 
