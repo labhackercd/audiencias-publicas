@@ -43,10 +43,13 @@ class Room(TimestampedMixin):
     YOUTUBE_STATUS_CHOICES = (
         (0, 'Sem transmissão'),
         (1, 'Em andamento'),
-        (2, 'Transmissão encerrada')
+        (2, 'Transmissão encerrada'),
+        (3, 'Cancelada')
     )
     cod_reunion = models.CharField(_('code reunion'), max_length=200,
                                    null=True, blank=True)
+    cod_audio = models.CharField(_('code audio'), max_length=200,
+                                 null=True, blank=True)
     title_reunion = models.CharField(_('title reunion'), max_length=200,
                                      null=True, blank=True)
     legislative_body_initials = models.CharField(_('legislative body initials'),
