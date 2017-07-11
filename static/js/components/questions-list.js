@@ -20,7 +20,7 @@ function questionsListComponent(socket) {
     }
 
     elements.$listEmpty.remove();
-    elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
+    elements.$list.mixItUp('sort', 'question-priority:desc question-votes:desc question-id:asc');
   }
 
   function mixItUpInit() {

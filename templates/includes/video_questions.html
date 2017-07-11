@@ -33,10 +33,6 @@
           <input class="answered_time__checkbox js-answered-checkbox" name="answered" type="checkbox" {% if question.answered %}checked{% endif %}>
           <span class="answered_time__label">Pergunta respondida</span>
         </form>
-      {% endwith %}
-    {% endif %}
-    {% if object.youtube_status == 1 %}
-      {% with user|belongs_to_group:question.room.legislative_body_initials as hide %}
         <form class="question-block__answered-form js-priority-form {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_priotity' question_id=question.pk %}">
           <input class="answered_time__checkbox js-priority-checkbox" name="is_priority" type="checkbox" {% if question.is_priority %}checked{% endif %}>
           <span class="answered_time__label">Prioridade</span>

@@ -37,7 +37,7 @@
 {% if object.youtube_status != 2 %}
   {% block websockets %}
     {% compress js %}
-      <script type="text/es6" src="{% static 'js/pages/room-questions-list.js' %}"></script>
+      <script type="text/es6" src="{% static 'js/pages/questions-panel.js' %}"></script>
     {% endcompress %}
   {% endblock %}
 {% endif %}

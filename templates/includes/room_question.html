@@ -1,5 +1,5 @@
 {% load video_utils %}
-<li class="list__item" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}">
+<li class="list__item" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}">
   <div class="item__vote-block">
     <span class="vote-block__total-votes">{{question.votes_count}}</span>
     <span class="vote-block__vote-label">Votos</span>

@@ -19,7 +19,7 @@ channel_routing = [
           path=prefix + r'/sala/(?P<pk>\d+)/stream/$'),
 
     route("websocket.connect", room_questions.on_connect,
-          path=prefix + r'/sala/(?P<pk>\d+)/perguntas/questions/stream/$'),
+          path=prefix + r'/sala/(?P<pk>\d+)/perguntas/questions-panel/stream/$'),
     route("websocket.disconnect", room_questions.on_disconnect,
-          path=prefix + r'/sala/(?P<pk>\d+)/perguntas/questions/stream/$'),
+          path=prefix + r'/sala/(?P<pk>\d+)/perguntas/questions-panel/stream/$'),
 ]
