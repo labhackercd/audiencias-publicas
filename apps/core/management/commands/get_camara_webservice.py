@@ -37,7 +37,8 @@ class Command(BaseCommand):
                 elif rooms.count() == 1:
                     room = rooms.latest('id')
                     if room.youtube_id != item['idYoutube'] and has_video:
-                        if room.youtube_id == "" or room.youtube_id is None:
+                        if room.youtube_id == "" or room.youtube_id is None or \
+                                room.cod_audio == str(item['codAudio']):
                             room.youtube_id = item['idYoutube']
                         else:
                             room, room_created = Room.objects.get_or_create(
@@ -48,6 +49,7 @@ class Command(BaseCommand):
                         cod_reunion=item['codReuniao'],
                         youtube_id=item['idYoutube'])
                 room.title_reunion = item['txtTituloReuniao']
+                room.cod_audio = item['codAudio']
                 room.legislative_body_initials = item['txtSiglaOrgao']
                 room.legislative_body_alias = item['txtApelido']
                 room.legislative_body = item['txtNomeOrgao']
