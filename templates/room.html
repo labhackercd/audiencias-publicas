@@ -221,12 +221,6 @@
 
       var urlPrefix = "{{url_prefix|default_if_none:''}}";
 
-      {% if object.youtube_status == 2 %}
-      var closedRoom = true;
-      {% else %}
-      var closedRoom = false;
-      {% endif %}
-
       function loginRedirect() {
         var next = "{{request.path}}";
         var login_url = "/home";
