@@ -9,7 +9,7 @@ function roomComponent(socket) {
     $listEmpty: $('.questions__list--empty'),
     $voteBtnEnabled: $('.question-vote'),
     $voteBtn: $('.vote-block__upvote-button'),
-    $voteLabel: $('.vote-block__vote-label'),
+    $totalVotes: $('.vote-block__total-votes'),
     $shareListOpenBtn: $('.question-block__share-button'),
     $shareListCloseBtn: $('.share-list__close'),
     $shareListItemLink: $('.question-block__share-list .item__link'),
@@ -146,8 +146,9 @@ function roomComponent(socket) {
       sendChatForm.close();
       sendQuestionForm.close();
       elements.$shareListOpenBtn.remove();
-      elements.$voteBtn.remove();
-      elements.$voteLabel.removeClass('hide');
+      elements.$voteBtn.addClass('disabled');
+      elements.$voteBtn.attr('disabled', true);
+      elements.$totalVotes.addClass('voted disabled');
       return;
     }
 
