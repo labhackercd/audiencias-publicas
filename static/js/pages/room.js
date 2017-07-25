@@ -1,29 +1,25 @@
 import createSocketHelper from '../helpers/create-socket';
-import questionsComponent from '../components/questions';
-import chatComponent from '../components/chat';
+import roomComponent from '../components/room';
 import tabsNavComponent from '../components/tabs-nav';
 import characterCounterComponent from '../components/character-counter';
 import onlineUsersComponent from '../components/online-users';
 
-if (!closedRoom) {
-  const onlineUsers = onlineUsersComponent();
 
-  const questionsSocket = createSocketHelper('questions', 'questions/stream/');
-  const chatSocket = createSocketHelper('chat', 'chat/stream/');
+const onlineUsers = onlineUsersComponent();
 
-  chatSocket.socket.onopen = () => {
-    console.log('Connected to chat socket'); // eslint-disable-line no-console
-    onlineUsers.get();
-  };
+const roomSocket = createSocketHelper('room', 'stream/');
 
-  questionsComponent(questionsSocket.socket);
-  chatComponent(chatSocket.socket);
+roomSocket.socket.onopen = () => {
+  console.log('Connected to room socket'); // eslint-disable-line no-console
+  onlineUsers.get();
+};
 
-  window.onbeforeunload = () => {
-    questionsSocket.close();
-    chatSocket.close();
-  };
-}
+roomComponent(roomSocket.socket);
+
+window.onbeforeunload = () => {
+  roomSocket.close();
+};
+
 
 tabsNavComponent();
 characterCounterComponent();

@@ -2,9 +2,9 @@
 import sendFormHelper from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 
-function questionsComponent(socket) {
+function roomComponent(socket) {
   const elements = {
-    $wrapper: $('.questions'),
+    $wrapperQuestion: $('.questions'),
     $list: $('.questions__list'),
     $listEmpty: $('.questions__list--empty'),
     $voteBtnEnabled: $('.question-vote'),
@@ -13,26 +13,39 @@ function questionsComponent(socket) {
     $shareListOpenBtn: $('.question-block__share-button'),
     $shareListCloseBtn: $('.share-list__close'),
     $shareListItemLink: $('.question-block__share-list .item__link'),
-    $readMore: $('.questions__read-more'),
-    $form: $('#questionform'),
-    $formInput: $('#question'),
+    $readMoreQuestion: $('.questions__read-more'),
+    $formQuestion: $('#questionform'),
+    $formInputQuestion: $('#question'),
     $answeredCheckbox: $('.js-answered-checkbox'),
+    $wrapperChat: $('.chat'),
+    $messages: $('.chat__messages'),
+    $messagesList: $('.messages__list'),
+    $messagesListEmpty: $('.messages__list--empty'),
+    $readMoreChat: $('.chat__read-more'),
+    $formChat: $('#chatform'),
+    $formInputChat: $('#message'),
+    $videoFrame: $('.video__iframe-wrapper'),
   };
 
   const vars = {
     listHeight: () => elements.$list[0].offsetHeight,
     listScrollHeight: () => elements.$list[0].scrollHeight,
     listScrollTop: () => elements.$list[0].scrollTop,
-    wrapperHeight: () => elements.$wrapper[0].offsetHeight,
-    wrapperScrollHeight: () => elements.$wrapper[0].scrollHeight,
-    wrapperScrollTop: () => elements.$wrapper[0].scrollTop,
+    wrapperHeight: () => elements.$wrapperQuestion[0].offsetHeight,
+    wrapperScrollHeight: () => elements.$wrapperQuestion[0].scrollHeight,
+    wrapperScrollTop: () => elements.$wrapperQuestion[0].scrollTop,
+    messagesHeight: () => elements.$messages[0].offsetHeight,
+    messagesScrollHeight: () => elements.$messages[0].scrollHeight,
+    messagesScrollTop: () => elements.$messages[0].scrollTop,
+    messagesListHeight: () => elements.$messagesList[0].offsetHeight,
   };
 
   let isCurrentUserQuestion = false;
   let newQuestionsCount = 0;
-  let sendForm = {};
+  let sendQuestionForm = {};
+  let sendChatForm = {};
 
-  function animateToBottom() {
+  function animateToBottomQuestion() {
     if (window.matchMedia('(min-width: 1024px)').matches) {
       elements.$list.animate({
         scrollTop: vars.listScrollHeight(),
@@ -40,7 +53,7 @@ function questionsComponent(socket) {
         isCurrentUserQuestion = false;
       });
     } else {
-      elements.$wrapper.animate({
+      elements.$wrapperQuestion.animate({
         scrollTop: vars.wrapperScrollHeight(),
       }, 600, () => {
         isCurrentUserQuestion = false;
@@ -48,27 +61,49 @@ function questionsComponent(socket) {
     }
   }
 
-  function isScrolledToBottom() {
+  function animateToBottomChat() {
+    elements.$messages.animate({ scrollTop: vars.messagesListHeight() }, 'slow');
+  }
+
+  function isScrolledToBottomQuestion() {
     if (window.matchMedia('(min-width: 1024px)').matches) {
       return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
     }
     return vars.wrapperScrollTop() === (vars.wrapperScrollHeight() - vars.wrapperHeight());
   }
 
-  function showReadMore() {
+  function isScrolledToBottomChat() {
+    return vars.messagesScrollTop() === (vars.messagesScrollHeight() - vars.messagesHeight());
+  }
+
+  function scrollToBottomChat() {
+    elements.$messages[0].scrollTop = vars.messagesListHeight();
+  }
+
+  function showReadMoreQuestion() {
     if (newQuestionsCount === 1) {
-      elements.$readMore.html('Há 1 nova pergunta disponível abaixo');
+      elements.$readMoreQuestion.html('Há 1 nova pergunta disponível abaixo');
     } else {
-      elements.$readMore.html(`Há ${newQuestionsCount} novas perguntas disponíveis abaixo`);
+      elements.$readMoreQuestion.html(`Há ${newQuestionsCount} novas perguntas disponíveis abaixo`);
     }
 
-    elements.$readMore.removeClass('questions__read-more');
-    elements.$readMore.addClass('questions__read-more--visible');
+    elements.$readMoreQuestion.removeClass('questions__read-more');
+    elements.$readMoreQuestion.addClass('questions__read-more--visible');
+  }
+
+  function showReadMoreChat() {
+    elements.$readMoreChat.removeClass('chat__read-more');
+    elements.$readMoreChat.addClass('chat__read-more--visible');
   }
 
   function hideReadMore() {
-    elements.$readMore.removeClass('questions__read-more--visible');
-    elements.$readMore.addClass('questions__read-more');
+    elements.$readMoreQuestion.removeClass('questions__read-more--visible');
+    elements.$readMoreQuestion.addClass('questions__read-more');
+  }
+
+  function hideReadMore() {
+    elements.$readMoreChat.removeClass('chat__read-more--visible');
+    elements.$readMoreChat.addClass('chat__read-more');
   }
 
   function updateVoteBlock($question, data) {
@@ -103,10 +138,13 @@ function questionsComponent(socket) {
 
   function evaluateSocketMessage(message) {
     const listIsEmpty = elements.$listEmpty.length;
+    const messagesListIsEmpty = elements.$messagesListEmpty.length;
     if (listIsEmpty) elements.$listEmpty.remove();
+    if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
     if (message.data === 'closed') {
-      sendForm.close();
+      sendChatForm.close();
+      sendQuestionForm.close();
       elements.$shareListOpenBtn.remove();
       elements.$voteBtn.remove();
       elements.$voteLabel.removeClass('hide');
@@ -114,34 +152,47 @@ function questionsComponent(socket) {
     }
 
     const data = JSON.parse(message.data);
-    const $existingQuestion = $(`[data-question-id=${data.id}]`);
-    const questionExists = $existingQuestion.length;
+    
+    if (data.video) {
+        elements.$videoFrame.html(data.html);
+    } else if (data.question) {
+        const $existingQuestion = $(`[data-question-id=${data.id}]`);
+        const questionExists = $existingQuestion.length;
 
-    if (questionExists) {
-      $existingQuestion.replaceWith(data.html);
-    } else {
-      elements.$list.append(data.html);
+        if (questionExists) {
+          $existingQuestion.replaceWith(data.html);
+        } else {
+          elements.$list.append(data.html);
 
-      if (!isScrolledToBottom() && !isCurrentUserQuestion) {
-        newQuestionsCount += 1;
-        showReadMore();
-      }
+          if (!isScrolledToBottomQuestion() && !isCurrentUserQuestion) {
+            newQuestionsCount += 1;
+            showReadMoreQuestion();
+          }
+        }
+
+        const $question = $(`[data-question-id=${data.id}]`);
+        const $answeredForm = $question.find('.js-answered-form');
+
+        if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
+          $answeredForm.removeClass('hide');
+        } else if (HANDLER_ADMIN) {
+          $answeredForm.removeClass('hide');
+        } else {
+          $answeredForm.addClass('hide');
+        }
+
+        updateVoteBlock($question, data);
+        bindEventsHandlers.onAdd($question);
+        elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
+    } else if (data.chat) {
+        if (isScrolledToBottomChat()) {
+          elements.$messagesList.append(data.html);
+          animateToBottomChat();
+        } else {
+          elements.$messagesList.append(data.html);
+          showReadMoreChat();
+        }
     }
-
-    const $question = $(`[data-question-id=${data.id}]`);
-    const $answeredForm = $question.find('.js-answered-form');
-
-    if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
-      $answeredForm.removeClass('hide');
-    } else if (HANDLER_ADMIN) {
-      $answeredForm.removeClass('hide');
-    } else {
-      $answeredForm.addClass('hide');
-    }
-
-    updateVoteBlock($question, data);
-    bindEventsHandlers.onAdd($question);
-    elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
   }
 
   function mixItUpInit() {
@@ -156,19 +207,28 @@ function questionsComponent(socket) {
   }
 
   function sendFormHelperInit() {
-    sendForm = sendFormHelper(elements.$wrapper);
+    sendQuestionForm = sendFormHelper(elements.$wrapperQuestion);
+    sendChatForm = sendFormHelper(elements.$wrapperChat);
   }
 
   const events = {
-    readMoreClick() {
-      animateToBottom();
+    readMoreClickQuestion() {
+      animateToBottomQuestion();
+    },
+
+    readMoreClickChat() {
+      animateToBottomChat();
     },
 
     questionsScroll() {
-      if (isScrolledToBottom()) {
+      if (isScrolledToBottomQuestion()) {
         newQuestionsCount = 0;
         hideReadMore();
       }
+    },
+
+    messagesScroll() {
+      if (isScrolledToBottomChat()) hideReadMore();
     },
 
     vote() {
@@ -223,18 +283,34 @@ function questionsComponent(socket) {
     sendQuestion(event) {
       event.preventDefault();
 
-      if (sendForm.isBlank()) return false;
+      if (sendQuestionForm.isBlank()) return false;
 
       isCurrentUserQuestion = true;
 
       socket.send(JSON.stringify({
         handler: HANDLER,
-        question: elements.$formInput.val(),
+        question: elements.$formInputQuestion.val(),
         is_vote: false,
       }));
 
-      elements.$formInput.val('').focus();
-      animateToBottom();
+      elements.$formInputQuestion.val('').focus();
+      animateToBottomQuestion();
+
+      return true;
+    },
+
+    sendMessage(event) {
+      event.preventDefault();
+
+      if (sendChatForm.isBlank()) return false;
+
+      socket.send(JSON.stringify({
+        handler: HANDLER, // defined in room.html
+        message: elements.$formInputChat.val(),
+      }));
+
+      elements.$formInputChat.val('').focus();
+      scrollToBottomChat();
 
       return true;
     },
@@ -263,11 +339,17 @@ function questionsComponent(socket) {
       elements.$shareListOpenBtn.on('click', events.openShareList);
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.share);
-      elements.$form.on('submit', events.sendQuestion);
+      elements.$formQuestion.on('submit', events.sendQuestion);
       elements.$list.on('scroll', events.questionsScroll);
-      elements.$wrapper.on('scroll', events.questionsScroll);
-      elements.$readMore.on('click', events.readMoreClick);
+      elements.$wrapperQuestion.on('scroll', events.questionsScroll);
+      elements.$readMoreQuestion.on('click', events.readMoreClickQuestion);
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);
+      elements.$messages.on('scroll', events.messagesScroll);
+      elements.$readMoreChat.on('click', events.readMoreClickChat);
+      elements.$formChat.on('submit', events.sendMessage);
+      setInterval(function() {
+        socket.send(JSON.stringify({heartbeat: true}));
+      }, 3000);
     },
 
     onAdd($question) {
@@ -291,10 +373,11 @@ function questionsComponent(socket) {
   };
 
   (function init() {
+    scrollToBottomChat();
     mixItUpInit();
     sendFormHelperInit(); // defined in room.html
     bindEventsHandlers.onPageLoad();
   }());
 }
 
-export default questionsComponent;
+export default roomComponent;

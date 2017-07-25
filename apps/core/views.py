@@ -54,13 +54,14 @@ def set_answered(request, question_id):
 
             html = question.html_question_body(request.user)
             text = {
+                'question': True,
                 'html': html,
                 'id': question.id,
                 'voteList': vote_list,
                 'answered': question.answered,
                 'groupName': group_name,
             }
-            Group(question.room.group_questions_name).send(
+            Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
             return redirect('video_room', pk=question.room.pk)
