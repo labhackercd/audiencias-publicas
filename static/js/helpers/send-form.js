@@ -1,7 +1,7 @@
 function sendFormHelper($wrapper) {
   const elements = {
     $wrapper,
-    $form: $wrapper.find('[class^="send-form--"]'),
+    $form: $wrapper.find('form[class^="send-form--"]'),
     $formInput: $wrapper.find('.send-form__input'),
     $formBtn: $wrapper.find('.actions__button'),
   };

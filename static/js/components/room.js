@@ -96,12 +96,12 @@ function roomComponent(socket) {
     elements.$readMoreChat.addClass('chat__read-more--visible');
   }
 
-  function hideReadMore() {
+  function hideReadMoreQuestion() {
     elements.$readMoreQuestion.removeClass('questions__read-more--visible');
     elements.$readMoreQuestion.addClass('questions__read-more');
   }
 
-  function hideReadMore() {
+  function hideReadMoreChat() {
     elements.$readMoreChat.removeClass('chat__read-more--visible');
     elements.$readMoreChat.addClass('chat__read-more');
   }
@@ -152,7 +152,7 @@ function roomComponent(socket) {
     }
 
     const data = JSON.parse(message.data);
-    
+
     if (data.video) {
         elements.$videoFrame.html(data.html);
     } else if (data.question) {
@@ -223,12 +223,12 @@ function roomComponent(socket) {
     questionsScroll() {
       if (isScrolledToBottomQuestion()) {
         newQuestionsCount = 0;
-        hideReadMore();
+        hideReadMoreQuestion();
       }
     },
 
     messagesScroll() {
-      if (isScrolledToBottomChat()) hideReadMore();
+      if (isScrolledToBottomChat()) hideReadMoreChat();
     },
 
     vote() {
