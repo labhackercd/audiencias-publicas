@@ -121,8 +121,7 @@ class Room(TimestampedMixin):
             'is_closed': is_closed
         }
         if is_closed:
-            Group(self.group_questions_name).send({'text': 'closed'})
-            Group(self.group_chat_name).send({'text': 'closed'})
+            Group(self.group_room_name).send({'text': 'closed'})
         Group('home').send({'text': json.dumps(notification)})
 
     def send_video(self):
@@ -130,17 +129,13 @@ class Room(TimestampedMixin):
             'video': True,
             'html': self.html_room_video(),
         }
-        Group(self.group_chat_name).send(
+        Group(self.group_room_name).send(
             {'text': json.dumps(text)}
         )
 
     @property
-    def group_chat_name(self):
-        return "video-chat-%s" % self.id
-
-    @property
-    def group_questions_name(self):
-        return "video-questions-%s" % self.id
+    def group_room_name(self):
+        return "room-%s" % self.id
 
     @property
     def group_room_questions_name(self):
