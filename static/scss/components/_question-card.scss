@@ -1,0 +1,36 @@
+.question-card {
+  background-color: #fff;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-right: 1rem;
+  padding-left: 8rem;
+  margin: 1rem;
+  position: relative;
+  max-width: 960px;
+
+  > .vote {
+    background-color: $color-primary-xxhighlight;
+    color: #fff;
+    width: 7rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+
+  > .meta {
+    margin-bottom: 0.5rem;
+    > .username { font-weight: 700; }
+    > .timestamp {
+      font-size: 0.7em;
+      color: $color-gray-45;
+    }
+  }
+
+  > .question { margin: 0; }
+
+}

@@ -1,0 +1,17 @@
+{% load video_utils %}
+
+<li class="question-card" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}">
+
+  <div class="vote">
+    <span class="number">{{question.votes_count}}</span>
+    <span class="label">Votos</span>
+  </div>
+
+  <header class="meta">
+    <span class="username">{{question.user}}</span>
+    <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
+  </header>
+
+  <p class="question">{{question.question}}</p>
+
+</li>

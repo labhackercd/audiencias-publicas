@@ -8,15 +8,6 @@
   flex-direction: column;
   overflow: hidden;
   padding: 1em;
-
-  @include breakpoint(large up) {
-    height: 100vh;
-    max-height: 100vh;
-  }
-
-  @include breakpoint(small only) { font-size: 80%; }
-  @include breakpoint(medium only) { font-size: 100%; }
-  @include breakpoint(xxlarge up) { font-size: 125%; }
 }
 
 .room-questions__title {
