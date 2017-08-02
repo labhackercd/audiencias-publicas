@@ -7,22 +7,32 @@
     <span class="label">Votos</span>
   </div>
 
-  <header class="meta">
+  <div class="meta">
     <span class="username">{{question.user}}</span>
     <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
-  </header>
+    <span class="answered">Respondida em 00:13:42</span>
+  </div>
 
   <p class="question">{{question.question}}</p>
 
-  <footer foo="check" class="actions">
-    <label class="label">
+  <div class="actions">
+
+    <label class="action -checkbox">
       <input class="checkbox" type="checkbox" name="answered">
-      <span>Pergunta Respondida</span>
+      <span class="label">Pergunta Respondida</span>
     </label>
-    <label class="label">
+
+    <label class="action -checkbox">
       <input class="checkbox" type="checkbox" name="priority">
-      <span>Prioridade</span>
+      <span class="label">Prioridade</span>
     </label>
-  </footer>
+
+    <div class="action -field">
+      <span class="label">Respondida em:</span>
+      <input class="field" type="text" name="timestamp" placeholder="00:00:00">
+      <a class="send">Salvar</a>
+    </div>
+
+  </div>
 
 </li>
