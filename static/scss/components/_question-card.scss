@@ -42,11 +42,56 @@
     height: 2rem;
     display: flex;
     > .label {
-      background-color: rgba(#000, 0.2);
+      line-height: 2rem;
       padding-left: 1rem;
-      padding-right: 1rem;
+      padding-right: 2.5rem;
+      position: relative;
+      z-index: 1;
       > .checkbox {
-        background-color: #f00;
+        position: absolute;
+        appearance: none;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        cursor: pointer;
+        z-index: -1;
+        background-color: rgba(#000, 0.1);
+        @include icon($icon-check);
+        &:before {
+          opacity: 0;
+          z-index: 2;
+          color: white;
+        }
+        &:after {
+          content: '';
+          background-color: rgba(#000, 0.2);
+          box-shadow: 0 0 0 0 $color-primary;
+        }
+        &:before,
+        &:after {
+          display: block;
+          width: 1rem;
+          height: 1rem;
+          position: absolute;
+          right: 1rem;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        &:checked {
+          background-color: $color-primary-xxlight;
+          &:before {
+            opacity: 1;
+          }
+          &:after {
+            background-color: $color-primary-xlight;
+            box-shadow: 0 0 0 0.5rem transparent;
+            transition: box-shadow 0.3s ease;
+          }
+        }
       }
     }
   }
