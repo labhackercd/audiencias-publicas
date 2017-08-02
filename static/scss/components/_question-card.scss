@@ -1,15 +1,12 @@
 .question-card {
   background-color: #fff;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-right: 1rem;
-  padding-left: 8rem;
-  margin: 1rem;
+  padding-left: 7rem;
+  margin: 0.5rem;
   position: relative;
   max-width: 960px;
 
   > .vote {
-    background-color: $color-primary-xxhighlight;
+    background-color: $color-primary-xxlight;
     color: #fff;
     width: 7rem;
     position: absolute;
@@ -20,17 +17,44 @@
     flex-direction: column;
     text-align: center;
     justify-content: center;
+    font-weight: 700;
+    > .number { font-size: 1.2em; }
   }
 
-  > .meta {
+  > header.meta {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
     margin-bottom: 0.5rem;
-    > .username { font-weight: 700; }
+    > .username {
+      font-weight: 700;
+      margin-right: 0.2em;
+    }
     > .timestamp {
       font-size: 0.7em;
-      color: $color-gray-45;
+      color: hsl(0, 0%, 40%);
+      font-weight: 400;
     }
   }
 
-  > .question { margin: 0; }
+  > footer.actions {
+    background-color: hsl(0, 0%, 90%);
+    height: 2rem;
+    display: flex;
+    > .label {
+      background-color: rgba(#000, 0.2);
+      padding-left: 1rem;
+      padding-right: 1rem;
+      > .checkbox {
+        background-color: #f00;
+      }
+    }
+  }
+
+  > .question {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
 
 }
