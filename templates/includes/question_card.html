@@ -15,24 +15,19 @@
 
   <p class="question">{{question.question}}</p>
 
-  <div class="actions">
-
-    <label class="action -checkbox">
-      <input class="checkbox" type="checkbox" name="answered">
-      <span class="label">Pergunta Respondida</span>
-    </label>
-
-    <label class="action -checkbox">
-      <input class="checkbox" type="checkbox" name="priority">
-      <span class="label">Prioridade</span>
-    </label>
-
-    <div class="action -field">
-      <span class="label">Respondida em:</span>
-      <input class="field" type="text" name="timestamp" placeholder="00:00:00">
-      <a class="send">Salvar</a>
-    </div>
-
-  </div>
+  <footer foo="check" class="actions">
+    {% if question.room.youtube_status == 1 %}
+      {% with user|belongs_to_group:question.room.legislative_body_initials as hide %}
+        <label class="label">
+          <input class="checkbox" type="checkbox" name="answered" {% if question.answered %}checked{% endif %}>
+          <span>Pergunta Respondida</span>
+        </label>
+        <label class="label">
+          <input class="checkbox" type="checkbox" name="priority" {% if question.is_priority %}checked{% endif %}>
+          <span>Prioridade</span>
+        </label>
+      {% endwith %}
+    {% endif %}
+  </footer>
 
 </li>

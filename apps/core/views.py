@@ -65,6 +65,16 @@ def set_answered(request, question_id):
             Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
+
+            html_question_panel = question.html_room_question_body(request.user)
+            text_question_panel = {
+                'html': html_question_panel,
+                'id': question.id
+            }
+            Group(question.room.group_room_questions_name).send(
+                {'text': json.dumps(text_question_panel)}
+            )
+
             return HttpResponse(status=200)
         else:
             return HttpResponseForbidden()
@@ -84,6 +94,14 @@ def set_priotity(request, question_id):
                 question.is_priority = False
 
             question.save()
+            html = question.html_room_question_body(request.user)
+            text = {
+                'html': html,
+                'id': question.id
+            }
+            Group(question.room.group_room_questions_name).send(
+                {'text': json.dumps(text)}
+            )
             return HttpResponse(status=200)
         else:
             return HttpResponseForbidden()

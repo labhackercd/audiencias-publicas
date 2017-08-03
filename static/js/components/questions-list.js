@@ -26,10 +26,7 @@ function questionsListComponent(socket) {
   function mixItUpInit() {
     elements.$list.mixItUp({
       selectors: {
-        target: '.list__item',
-      },
-      layout: {
-        display: 'flex',
+        target: '.question-card',
       },
     });
   }

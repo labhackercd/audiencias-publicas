@@ -202,18 +202,10 @@ class Question(TimestampedMixin):
              'author': encrypt(str(self.user.id).rjust(10))}
         )
 
-    def html_room_question_body(self):
-        return render_to_string('includes/room_question.html',
-                                {'question': self})
-
-    def send_notification(self):
-        text = {
-            'html': self.html_room_question_body(),
-            'id': self.id,
-        }
-        Group(self.room.group_room_questions_name).send(
-            {'text': json.dumps(text)}
-        )
+    def html_room_question_body(self, user):
+        return render_to_string('includes/question_card.html',
+                                {'question': self,
+                                 'user': user})
 
     class Meta:
         verbose_name = _('question')
@@ -286,12 +278,7 @@ def vote_post_delete(sender, instance, **kwargs):
     instance.question.send_notification()
 
 
-def question_post_save(sender, instance, **kwargs):
-    instance.send_notification()
-
-
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
 models.signals.pre_save.connect(room_pre_save, sender=Room)
 models.signals.post_save.connect(room_post_save, sender=Room)
-models.signals.post_save.connect(question_post_save, sender=Question)
