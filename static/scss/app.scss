@@ -10,6 +10,7 @@
 @import 'base/globals';
 @import 'base/reset';
 @import 'base/icons';
+@import 'base/reusables';
 
 // Shared
 @import 'shared/floating-header';
@@ -37,7 +38,9 @@
 @import 'components/registration-form';
 @import 'components/tabs-nav';
 @import 'components/video';
-// RSCSS Components
+// RSCSS/BEM components
+@import 'components/question-actions';
+// RSCSS components
 @import 'components/question-card';
 
 // Overrides
