@@ -39,8 +39,7 @@
       {% endwith %}
     {% endif %}
 
-<!-- 
->>>>>>> Add vote element to question-card
+  {% comment %}
     <span class="question-block__share-button" role="button" title="Compartilhar esta pergunta">
       <i class="share-button__icon icon icon-share-alt"></i>
     </span>
@@ -69,29 +68,11 @@
       </li>
     </ul>
 
-<<<<<<< 5fd4cec2db8ee7f32c4d5e5ea295599c1bcc2502
-    <label class="action -checkbox">
-      <input class="checkbox" type="checkbox" name="answered">
-      <span class="label">Pergunta Respondida</span>
-    </label>
-
-    <label class="action -checkbox">
-      <input class="checkbox" type="checkbox" name="priority">
-      <span class="label">Prioridade</span>
-    </label>
-
-    <div class="action -field">
-      <span class="label">Respondida em:</span>
-      <input class="field" type="text" name="timestamp" placeholder="00:00:00">
-      <a class="send">Salvar</a>
-    </div>
-
-  </div>
-=======
     <div class="item__vote-block">
-      {% vote_action question user.username %}
+      {% vote_action question user.username %} 
     </div>
- -->
+  {% endcomment %}
+ 
 
   </div>
 
