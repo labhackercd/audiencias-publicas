@@ -27,7 +27,7 @@
     margin-right: 1rem;
     margin-bottom: 0.5rem;
     position: relative;
-    padding-right: 4rem;
+    padding-right: 10rem;
     height: 1.5rem;
     display: flex;
     align-items: center;
@@ -44,7 +44,7 @@
     > .answered {
       position: absolute;
       right: 0;
-      border: 2px solid $color-primary-xxlight;
+      border: 1px solid $color-primary-xxlight;
       color: $color-primary-xxlight;
       font-size: 0.7em;
       text-transform: uppercase;
@@ -53,6 +53,9 @@
       padding-left: 0.75rem;
       border-radius: 1rem;
       line-height: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-color: #fff
       &:hover {
         background-color: $color-primary-xxlight;
         color: #fff;

@@ -16,7 +16,31 @@
   <p class="question">{{question.question}}</p>
 
   <div class="question-actions">
+  
+    {% if question.room.youtube_status == 1 %}
+      {% with user|belongs_to_group:question.room.legislative_body_initials as hide %}
 
+      <form class="action -checkbox">
+        <input class="checkbox" type="checkbox" name="answered">
+        <span class="label">Pergunta Respondida</span>
+      </form>
+
+      <form class="action -checkbox">
+        <input class="checkbox" type="checkbox" name="priority">
+        <span class="label">Prioridade</span>
+      </form>
+
+      <form class="action -field">
+        <span class="label">Respondida em:</span>
+        <input class="field" type="text" name="timestamp" placeholder="00:00:00">
+        <a class="send">Salvar</a>
+      </form>
+
+      {% endwith %}
+    {% endif %}
+
+<!-- 
+>>>>>>> Add vote element to question-card
     <span class="question-block__share-button" role="button" title="Compartilhar esta pergunta">
       <i class="share-button__icon icon icon-share-alt"></i>
     </span>
@@ -45,6 +69,7 @@
       </li>
     </ul>
 
+<<<<<<< 5fd4cec2db8ee7f32c4d5e5ea295599c1bcc2502
     <label class="action -checkbox">
       <input class="checkbox" type="checkbox" name="answered">
       <span class="label">Pergunta Respondida</span>
@@ -60,6 +85,13 @@
       <input class="field" type="text" name="timestamp" placeholder="00:00:00">
       <a class="send">Salvar</a>
     </div>
+
+  </div>
+=======
+    <div class="item__vote-block">
+      {% vote_action question user.username %}
+    </div>
+ -->
 
   </div>
 
