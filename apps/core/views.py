@@ -94,13 +94,28 @@ def set_priotity(request, question_id):
                 question.is_priority = False
 
             question.save()
-            html = question.html_room_question_body(request.user)
+            vote_list = []
+            for vote in question.votes.all():
+                vote_list.append(encrypt(str(vote.user.id).rjust(10)))
+            html = question.html_question_body(request.user)
             text = {
+                'question': True,
                 'html': html,
+                'id': question.id,
+                'voteList': vote_list,
+                'answered': question.answered,
+                'groupName': group_name,
+            }
+            Group(question.room.group_room_name).send(
+                {'text': json.dumps(text)}
+            )
+            html_question_panel = question.html_room_question_body(request.user)
+            text_question_panel = {
+                'html': html_question_panel,
                 'id': question.id
             }
             Group(question.room.group_room_questions_name).send(
-                {'text': json.dumps(text)}
+                {'text': json.dumps(text_question_panel)}
             )
             return HttpResponse(status=200)
         else:
@@ -260,6 +275,8 @@ class RoomQuestionList(DetailView):
         context['no_offset_top'] = 'no-offset-top'
         context['questions'] = list(chain(
             priority_questions, other_questions, answered_questions))
+        if self.request.user.is_authenticated():
+            context['handler'] = encrypt(str(self.request.user.id).rjust(10))
         return context
 
 

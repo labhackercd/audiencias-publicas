@@ -1,4 +1,4 @@
-/* global HANDLER, HANDLER_ADMIN, loginRedirect */
+/* global HANDLER, HANDLER_ADMIN, loginRedirect, urlPrefix */
 import sendFormHelper from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 

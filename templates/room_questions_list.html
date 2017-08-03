@@ -36,6 +36,9 @@
 
 {% if object.youtube_status != 2 %}
   {% block websockets %}
+    <script type="text/javascript">
+      var urlPrefix = "{{url_prefix|default_if_none:''}}";
+    </script>
     {% compress js %}
       <script type="text/es6" src="{% static 'js/pages/questions-panel.js' %}"></script>
     {% endcompress %}
