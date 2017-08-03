@@ -47,6 +47,8 @@
       cursor: pointer;
       > span {
         pointer-events: none;
+        position: relative;
+        z-index: 1;
       }
       > .checkbox {
         cursor: pointer;
@@ -59,7 +61,7 @@
         width: 100%;
         height: 100%;
         outline: none;
-        z-index: -1;
+        z-index: 0;
         @include icon($icon-check);
         &:before {
           opacity: 0;
