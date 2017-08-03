@@ -203,6 +203,7 @@ class Question(TimestampedMixin):
              'author': encrypt(str(self.user.id).rjust(10))}
         )
 
+<<<<<<< e9749a772c2a95f7de7d0c2b01c3a9c2eb64e9c8
     def send_notification(self, user):
         html = self.html_question_body(
             user, 'question-panel')
@@ -214,6 +215,12 @@ class Question(TimestampedMixin):
         Group(self.room.group_room_questions_name).send(
             {'text': json.dumps(text)}
         )
+=======
+    def html_room_question_body(self, user):
+        return render_to_string('includes/question_card.html',
+                                {'question': self,
+                                 'user': user})
+>>>>>>> override room_question.html to question_card.html and fix sockets
 
     class Meta:
         verbose_name = _('question')
