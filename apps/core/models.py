@@ -207,6 +207,15 @@ class Question(TimestampedMixin):
                                 {'question': self,
                                  'user': user})
 
+    def send_notification(self, user):
+        text = {
+            'html': self.html_room_question_body(user),
+            'id': self.id,
+        }
+        Group(self.room.group_room_questions_name).send(
+            {'text': json.dumps(text)}
+        )
+
     class Meta:
         verbose_name = _('question')
         verbose_name_plural = _('questions')
@@ -271,11 +280,11 @@ def vote_post_save(sender, instance, **kwargs):
         email_list = []
         notification(subject, html, email_list)
 
-    instance.question.send_notification()
+    instance.question.send_notification(instance.user)
 
 
 def vote_post_delete(sender, instance, **kwargs):
-    instance.question.send_notification()
+    instance.question.send_notification(instance.user)
 
 
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
