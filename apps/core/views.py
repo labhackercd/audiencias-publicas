@@ -53,7 +53,7 @@ def set_answered(request, question_id):
             for vote in question.votes.all():
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
-            html = question.html_question_body(request.user)
+            html = question.html_question_body(request.user, 'room')
             text = {
                 'question': True,
                 'html': html,
@@ -66,7 +66,7 @@ def set_answered(request, question_id):
                 {'text': json.dumps(text)}
             )
 
-            html_question_panel = question.html_room_question_body(
+            html_question_panel = question.html_question_body(
                 request.user, 'question-panel')
             text_question_panel = {
                 'html': html_question_panel,
@@ -98,7 +98,7 @@ def set_priotity(request, question_id):
             vote_list = []
             for vote in question.votes.all():
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
-            html = question.html_question_body(request.user)
+            html = question.html_question_body(request.user, 'room')
             text = {
                 'question': True,
                 'html': html,
@@ -110,7 +110,8 @@ def set_priotity(request, question_id):
             Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
-            html_question_panel = question.html_room_question_body(request.user)
+            html_question_panel = question.html_question_body(
+                request.user, 'question-panel')
             text_question_panel = {
                 'html': html_question_panel,
                 'id': question.id

@@ -1,9 +1,14 @@
 .question-card {
   background-color: #fff;
-  padding-left: 7rem;
   margin: 0.5rem;
   position: relative;
   max-width: 960px;
+  display: flex;
+  flex-direction: column;
+
+  &.-inroom {
+    padding-left: 7rem;
+  }
 
   > .vote {
     background-color: $color-primary-xxlight;

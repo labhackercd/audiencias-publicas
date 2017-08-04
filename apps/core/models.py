@@ -195,27 +195,30 @@ class Question(TimestampedMixin):
 
     def html_question_body(self, user, page=None):
         return render_to_string(
-            'includes/video_questions.html',
+            'includes/question_card.html',
             {'question': self,
              'user': user,
-             'object': self.room,
-             'page': page,
-             'author': encrypt(str(self.user.id).rjust(10))}
+             'page': page}
         )
 
-    def html_room_question_body(self, user, page=None):
-        return render_to_string('includes/question_card.html',
-                                {'question': self,
-                                 'page': page,
-                                 'user': user})
-
     def send_notification(self, user):
+        html = self.html_question_body(user, 'room')
         text = {
-            'html': self.html_room_question_body(user),
+            'question': True,
+            'html': html,
             'id': self.id,
         }
-        Group(self.room.group_room_questions_name).send(
+        Group(self.room.group_room_name).send(
             {'text': json.dumps(text)}
+        )
+        html_question_panel = self.html_question_body(
+            user, 'question-panel')
+        text_question_panel = {
+            'html': html_question_panel,
+            'id': self.id
+        }
+        Group(self.room.group_room_questions_name).send(
+            {'text': json.dumps(text_question_panel)}
         )
 
     class Meta:

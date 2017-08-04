@@ -50,7 +50,7 @@
         <ul class="questions__list" id="questions">
           {% if questions %}
             {% for question in questions %}
-              {% include "includes/video_questions.html" with questions=questions user=user %}
+              {% include "includes/question_card.html" with page="room" %}
             {% endfor %}
           {% elif object.youtube_status != 2 %}
             <div class="questions__list--empty">

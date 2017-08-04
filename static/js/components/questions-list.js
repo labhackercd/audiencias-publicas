@@ -35,6 +35,9 @@ function questionsListComponent(socket) {
       selectors: {
         target: '.question-card',
       },
+      layout: {
+        display: 'flex',
+      },
     });
   }
 

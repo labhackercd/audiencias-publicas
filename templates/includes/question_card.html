@@ -1,6 +1,6 @@
 {% load video_utils %}
 
-<li class="question-card" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}">
+<li class="question-card {% if page == 'question-panel' %}-inroom{% endif %}" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}">
   
   {% if page == "question-panel" %}
   <div class="vote">
@@ -13,7 +13,7 @@
     <span class="username">{{question.user}}</span>
     <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
     {% if page == "room" and question.answer_time %}
-      <a class="answered">Respondida em 00:13:42</a>
+      <a class="answered">Ver resposta</a>
     {% endif %}
   </div>
 
