@@ -25,6 +25,11 @@
 @import 'pages/video-list';
 @import 'pages/widget';
 
+// eDemocracia Components
+@import 'edem/base';
+@import 'edem/edem-navigation';
+@import 'edem/edem-access';
+
 // Components
 @import 'components/ie-banner';
 @import 'components/banner';
