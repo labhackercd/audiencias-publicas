@@ -237,7 +237,8 @@ CHANNEL_LAYERS = {
         # This example app uses the Redis channel layer implementation asgi_redis
         "BACKEND": "asgi_redis.RedisChannelLayer",
         "CONFIG": {
-            "capacity": "10000"
+            "capacity": "5000",
+            "hosts": [(config('REDIS_SERVER', default='localhost'), 6379)],
         },
         "ROUTING": "apps.core.routing.channel_routing",
     },
