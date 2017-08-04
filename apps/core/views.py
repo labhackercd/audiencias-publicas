@@ -66,7 +66,8 @@ def set_answered(request, question_id):
                 {'text': json.dumps(text)}
             )
 
-            html_question_panel = question.html_room_question_body(request.user)
+            html_question_panel = question.html_room_question_body(
+                request.user, 'question-panel')
             text_question_panel = {
                 'html': html_question_panel,
                 'id': question.id

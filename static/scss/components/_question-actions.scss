@@ -30,14 +30,6 @@
         height: 1.5rem;
         border: 1px solid rgba(#000, 0.1);
       }
-      > .send {
-        background-color: $color-primary-xxlight;
-        border-radius: 3px;
-        padding: 0.25rem 0.5rem;
-        color: #fff;
-        &:hover { background-color: $color-primary-xlight; }
-        &:active { background-color: $color-primary-light; }
-      }
     }
 
     &.-checkbox {

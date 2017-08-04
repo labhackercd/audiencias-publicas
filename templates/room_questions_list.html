@@ -15,7 +15,7 @@
     <ul class="room-questions__list" id="questions">
       {% if questions %}
         {% for question in questions %}
-          {% include "includes/question_card.html" with user=user %}
+          {% include "includes/question_card.html" with page="question-panel" %}
         {% endfor %}
       {% else %}
         <p class="room-questions__empty">Nenhuma pergunta foi feita ainda.</p>

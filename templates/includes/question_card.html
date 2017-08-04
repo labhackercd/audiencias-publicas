@@ -1,16 +1,20 @@
 {% load video_utils %}
 
 <li class="question-card" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}">
-
+  
+  {% if page == "question-panel" %}
   <div class="vote">
     <span class="number">{{question.votes_count}}</span>
     <span class="label">Votos</span>
   </div>
+  {% endif %}
 
   <div class="meta">
     <span class="username">{{question.user}}</span>
     <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
-    <a class="answered">Respondida em 00:13:42</a>
+    {% if page == "room" and question.answer_time %}
+      <a class="answered">Respondida em 00:13:42</a>
+    {% endif %}
   </div>
 
   <p class="question">{{question.question}}</p>
@@ -30,16 +34,18 @@
         <span class="label">Prioridade</span>
       </form>
 
-      <form class="action -field">
-        <span class="label">Respondida em:</span>
-        <input class="field" type="text" name="timestamp" placeholder="00:00:00">
-        <a class="send">Salvar</a>
+      {% if page == "room" %}
+      <form class="action -checkbox {% if not hide %}hide{% endif %}" method="POST" action="">
+        <input class="checkbox js-priority-checkbox" type="checkbox" name="priority" {% if question.answer_time %}checked{% endif %}>
+        <span class="label">Marcar tempo de resposta</span>
       </form>
+      {% endif %}
 
       {% endwith %}
     {% endif %}
 
-  {% comment %}
+  
+    {% if page == "room" %}
     <span class="question-block__share-button" role="button" title="Compartilhar esta pergunta">
       <i class="share-button__icon icon icon-share-alt"></i>
     </span>
@@ -71,8 +77,8 @@
     <div class="item__vote-block">
       {% vote_action question user.username %} 
     </div>
-  {% endcomment %}
- 
+    {% endif %}
+  
 
   </div>
 
