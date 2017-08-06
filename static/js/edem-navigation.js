@@ -46,3 +46,12 @@ $('.c-hamburger')
     $(this).toggleClass('toggled');
     $('.navigation-wrapper').toggleClass('toggled');
 });
+
+$('.js-access-link')
+  .click(function() {
+    if ($(this).hasClass('-active')) {  
+      $('.js-access-link').parent('li').removeClass('-active');
+    } else {
+      $(this).parent('li').addClass('-active');
+    }
+});

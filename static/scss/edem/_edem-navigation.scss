@@ -180,29 +180,8 @@
       cursor: pointer;
       position: relative;
 
-      &:hover {
-        background-color: darken(#134836,5%);
-      }
-
       @media screen and (max-width: 39.9375em) {
         width: 100%;
-      }
-
-      &.-active {
-        background-color: darken(#134836,5%);
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          bottom: -1.5rem;
-          width: 1rem;
-          height: 1rem;
-          width: 0; 
-          height: 0; 
-          border-left: 1rem solid transparent;
-          border-right: 1rem solid transparent;
-          border-bottom: 1rem solid #134836;
-        }
       }
 
     }
@@ -219,6 +198,7 @@
 
       &:hover {
         color: white;
+        background-color: darken(#134836,5%);
       }
 
       @media screen and (max-width: 39.9375em) {
@@ -380,4 +360,66 @@
     margin: 0 0 1rem 0 !important;
     // Damn you Foundation for making me use !important :(
   }
+
+  // No BEM below here…
+
+  .access-navigation {
+
+    > li {
+      margin-left: 1rem;
+
+      > .link {
+        height: 2rem;
+        background-color: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 0 1rem;
+        font-size: 0.7em;
+        line-height: 1.8rem;
+        transition: 0.2s ease;
+        cursor: pointer;
+
+        &.-fill {
+          color: #e9c23a;
+          border-color: #e9c23a;
+        }
+        &:hover {
+          background-color: #fff;
+          color: #0d2625;
+          &.-fill {
+            background-color: #e9c23a;
+          }
+        }
+      }
+
+      &.-active {
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          bottom: -1.5rem;
+          width: 1rem;
+          height: 1rem;
+          width: 0; 
+          height: 0; 
+          border-left: 1rem solid transparent;
+          border-right: 1rem solid transparent;
+          border-bottom: 1rem solid #134836;
+        }
+        > .link {
+          background-color: #fff;
+          color: #0d2625;
+          &.-fill {
+            background-color: #e9c23a;
+          }
+        }
+      }
+
+    }
+
+  }
+
+
 }

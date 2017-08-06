@@ -1,10 +1,3 @@
-$primary: #134836;
-$secondary: #e9c23a;
-$link: #a9de8c;
-$facebook: #3b5998;
-$google: #ffffff;
-$darken-active-value: 8%;
-
 .edem-access {
   position: fixed;
   z-index: 10500;
@@ -16,7 +9,7 @@ $darken-active-value: 8%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background: linear-gradient(45deg, #0d2625 0%, #134836 100%);
+  background: linear-gradient(#134836, #0d2625);
   padding: 2em;
   box-sizing: border-box;
   font-family: "open sans";
