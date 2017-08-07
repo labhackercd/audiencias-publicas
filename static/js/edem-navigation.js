@@ -49,9 +49,10 @@ $('.c-hamburger')
 
 $('.js-access-link')
   .click(function() {
-    if ($(this).hasClass('-active')) {  
-      $('.js-access-link').parent('li').removeClass('-active');
+    if ($(this).parent('li').hasClass('-active')) {  
+      $(this).parent('li').removeClass('-active');
     } else {
+      $('.js-access-link').parent('li').removeClass('-active');
       $(this).parent('li').addClass('-active');
     }
 });
