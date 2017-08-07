@@ -48,6 +48,8 @@ $('.c-hamburger')
 });
 
 
+// eDemocracia open/close edem-access
+
 $('.js-access-link').click(function() {
 
   $('.edem-access').removeClass('-open');
@@ -70,3 +72,17 @@ $('.js-access-link').click(function() {
 
 });
 
+
+// eDemocracia edem-access input status
+
+$('.form__field').focus(function() {
+  $(this).addClass('form__field--filled');
+});
+
+$('.form__field').blur(function() {
+  if (!$(this).val() == '') {
+    $(this).addClass('form__field--filled');
+  } else {
+    $(this).removeClass('form__field--filled')
+  }
+});

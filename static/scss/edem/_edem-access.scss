@@ -167,12 +167,13 @@
       
       &--select {
         @extend .form__field-container;
+        @include icon($icon-angle-down);
         
-        &::after {
-          font-family: 'fontawesome';
-          content: '\f078';
+        &::before {
           position: absolute;
           right: 0;
+          top: 50%;
+          transform: translateY(-50%);
         }
         
         & .form__field {
@@ -205,6 +206,7 @@
       }
 
       &:focus {
+        outline: none;
         
         & ~ .form__label {
           
@@ -301,6 +303,7 @@
       tansition-property: transform, font-weight, color;
       transition: 0.3s cubic-bezier(.55, 0, .1, 1);
       animation: anim 0.3s backwards reverse;
+      color: #fff;
     }
     
     .form__input-error {
@@ -344,14 +347,61 @@
       @extend .login-box__button;
       background-color: transparent;
       color: $link;
+      @include icon($icon-arrow-right);
 
-      &::after {
-        font-family: 'fontawesome';
-        content: '\f054';
+      &::before {
         color: $secondary;
         position: absolute;
         right: 0;
       }
     }
   }
+}
+
+
+@keyframes anim {
+  35% {
+    opacity: 0;
+    transform: translate3d(1em, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: translate3d(-1em, 0, 0) scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.7);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+@keyframes anim-copy {
+  35% {
+    opacity: 0;
+    transform: translate3d(1em, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: translate3d(-1em, 0, 0) scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(0.7);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+
+.form__optional-header {
+  margin: 0;
+  color: #e9c23a;
+  font-size: 1.25em;
+  flex: 1 0 100%;
+  margin: 0 0.1em;
+  margin-top: 1em;
+}
+
+.form__optional-wrapper {
+  display: flex;
+  flex-wrap: wrap;
 }
