@@ -185,7 +185,8 @@ class Question(TimestampedMixin):
                              verbose_name=_('room'))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
     question = models.TextField(_('question'), max_length='300')
-    answer_time = models.IntegerField(_('answer time'), null=True, blank=True)
+    answer_time = models.CharField(_('answer time'), max_length=200,
+                                   null=True, blank=True)
     answered = models.BooleanField(_('answered'), default=False)
     is_priority = models.BooleanField(_('is priority'), default=False)
 

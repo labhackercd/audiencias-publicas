@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^pergunta/(?P<pk>\d+)/?$', QuestionDetail.as_view(),
         name='question_detail'),
     url(r'^pergunta/(?P<question_id>\d+)/definir_resposta/?$', set_answer_time,
-        name='set_question_answer'),
+        name='set_question_answer_time'),
     url(r'^pergunta/(?P<question_id>\d+)/respondida/?$', set_answered,
         name='set_question_answered'),
     url(r'^pergunta/(?P<question_id>\d+)/prioritaria/?$', set_priotity,

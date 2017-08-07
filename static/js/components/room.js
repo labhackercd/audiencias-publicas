@@ -1,4 +1,4 @@
-/* global HANDLER, HANDLER_ADMIN, loginRedirect */
+/* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
 import sendFormHelper from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 
@@ -349,8 +349,12 @@ function roomComponent(socket) {
         }
       });
 
+      var answer_time = '0';
+      if(event.target.checked){
+        answer_time = player.getCurrentTime();
+      };
       $.post(event.target.form.action, {
-        is_priority: event.target.checked
+          answer_time: answer_time
       })
     },
 
@@ -390,6 +394,7 @@ function roomComponent(socket) {
         socket.send(JSON.stringify({heartbeat: true}));
       }, 3000);
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
+      elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
     },
 
     onAdd($question) {
@@ -399,6 +404,7 @@ function roomComponent(socket) {
       const $shareListItemLink = $question.find('.question-block__share-list .item__link');
       const $answeredCheckbox = $question.find('.js-answered-checkbox');
       const $priorityCheckbox = $question.find('.js-priority-checkbox');
+      const $answerTimeCheckbox = $question.find('.js-answer-time-checkbox');
 
       $voteBtnEnabled.on('click', events.vote);
       $shareListOpenBtn.on('click', events.openShareList);
@@ -406,6 +412,7 @@ function roomComponent(socket) {
       $shareListItemLink.on('click', events.share);
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
+      $answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
     },
   };
 

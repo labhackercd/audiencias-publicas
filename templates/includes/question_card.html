@@ -13,7 +13,7 @@
     <span class="username">{{question.user}}</span>
     <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
     {% if page == "room" and question.answer_time %}
-      <a class="answered">Assistir resposta</a>
+      <a class="answered" onclick="player.seekTo({{question.answer_time}});">Assistir resposta</a>
     {% endif %}
   </div>
 
@@ -30,7 +30,7 @@
       </form>
 
       {% if page == "room" and question.answered %}
-      <form class="action -checkbox js-answer-time-form {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_answer' question_id=question.pk %}">
+      <form class="action -checkbox js-answer-time-form {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_answer_time' question_id=question.pk %}">
         <input class="checkbox js-answer-time-checkbox" type="checkbox" name="answer_time" {% if question.answer_time %}checked{% endif %}>
         <span class="label">Marcar tempo de resposta</span>
       </form>
