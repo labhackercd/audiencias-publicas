@@ -6,13 +6,24 @@
 
   width: 24em;
   min-height: 29em;
+  min-height: 29em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background: linear-gradient(#134836, #0d2625);
   padding: 2em;
-  box-sizing: border-box;
   font-family: "open sans";
+
+  box-shadow: 0 6px 16px rgba(#000, 0.3);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+
+  &.-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   a {
     color: #a9de8c;

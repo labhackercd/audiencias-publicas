@@ -47,12 +47,26 @@ $('.c-hamburger')
     $('.navigation-wrapper').toggleClass('toggled');
 });
 
-$('.js-access-link')
-  .click(function() {
-    if ($(this).parent('li').hasClass('-active')) {  
-      $(this).parent('li').removeClass('-active');
-    } else {
-      $('.js-access-link').parent('li').removeClass('-active');
-      $(this).parent('li').addClass('-active');
+
+$('.js-access-link').click(function() {
+
+  $('.edem-access').removeClass('-open');
+
+  if ($(this).parent().hasClass('-active')) { 
+    $(this).parent().removeClass('-active');
+  } else {
+    $('.js-access-link').parent().removeClass('-active');
+    $(this).parent().addClass('-active');
+  
+    if ($(this).hasClass('js-login-link')) {
+      $('.js-edem-login').addClass('-open');
     }
+  
+    else if ($(this).hasClass('js-signup-link')) {
+      $('.js-edem-signup').addClass('-open');
+    }
+  
+  }
+
 });
+
