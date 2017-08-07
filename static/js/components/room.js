@@ -1,4 +1,4 @@
-/* global HANDLER, HANDLER_ADMIN, loginRedirect, urlPrefix */
+/* global HANDLER, HANDLER_ADMIN, loginRedirect */
 import sendFormHelper from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 
@@ -26,6 +26,7 @@ function roomComponent(socket) {
     $formInputChat: $('#message'),
     $videoFrame: $('.video__iframe-wrapper'),
     $priorityCheckbox: $('.js-priority-checkbox'),
+    $answerTimeCheckbox: $('.js-answer-time-checkbox'),
   };
 
   const vars = {
@@ -175,15 +176,18 @@ function roomComponent(socket) {
         const $question = $(`[data-question-id=${data.id}]`);
         const $answeredForm = $question.find('.js-answered-form');
         const $priorityForm = $question.find('.js-priority-form');
+        const $answerTimeForm = $question.find('.js-answer-time-form');
 
         if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
           $answeredForm.removeClass('hide');
         } else if (HANDLER_ADMIN) {
           $answeredForm.removeClass('hide');
           $priorityForm.removeClass('hide');
+          $answerTimeForm.removeClass('hide');
         } else {
           $answeredForm.addClass('hide');
           $priorityForm.addClass('hide');
+          $answerTimeForm.addClass('hide');
         }
 
         updateVoteBlock($question, data);
@@ -330,8 +334,23 @@ function roomComponent(socket) {
         }
       });
 
-      $.post(`${urlPrefix}/pergunta/${questionId}/respondida/`, {
+      $.post(event.target.form.action, {
         answered: event.target.checked
+      })
+    },
+
+    sendAnswerTimeForm(event) {
+      const questionId = $(event.target).closest('[data-question-id]')[0].dataset.questionId;
+      const csrftoken = getCookie('csrftoken');
+
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      });
+
+      $.post(event.target.form.action, {
+        is_priority: event.target.checked
       })
     },
 
@@ -345,7 +364,7 @@ function roomComponent(socket) {
         }
       });
 
-      $.post(`${urlPrefix}/pergunta/${questionId}/prioritaria/`, {
+      $.post(event.target.form.action, {
         is_priority: event.target.checked
       })
     }
@@ -387,11 +406,6 @@ function roomComponent(socket) {
       $shareListItemLink.on('click', events.share);
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
-      $('.answered_time__input').inputmask("99:99:99", {
-        placeholder: "0",
-        numericInput: true,
-        showMaskOnHover: false,
-      });
     },
   };
 

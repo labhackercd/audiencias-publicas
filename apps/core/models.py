@@ -198,7 +198,8 @@ class Question(TimestampedMixin):
             'includes/question_card.html',
             {'question': self,
              'user': user,
-             'page': page}
+             'page': page,
+             'author': encrypt(str(self.user.id).rjust(10))}
         )
 
     def send_notification(self, user):

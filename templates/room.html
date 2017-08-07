@@ -219,8 +219,6 @@
       ]
       var HANDLER_ADMIN = {{user.profile.is_admin|lower|default:'false'}};
 
-      var urlPrefix = "{{url_prefix|default_if_none:''}}";
-
       {% if object.youtube_status == 2 %}
       var closedRoom = true;
       {% else %}

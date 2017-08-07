@@ -1,4 +1,3 @@
-/* global urlPrefix */
 import { getCookie } from '../helpers/cookies';
 
 function questionsListComponent(socket) {
@@ -27,7 +26,7 @@ function questionsListComponent(socket) {
     const $question = $(`[data-question-id=${data.id}]`);
     elements.$listEmpty.remove();
     bindEventsHandlers.onAdd($question);
-    elements.$list.mixItUp('sort', 'question-priority:desc question-votes:desc question-id:asc');
+    elements.$list.mixItUp('sort', 'question-answered:asc question-priority:desc question-votes:desc question-id:asc');
   }
 
   function mixItUpInit() {
@@ -52,7 +51,7 @@ function questionsListComponent(socket) {
         }
       });
 
-      $.post(`${urlPrefix}/pergunta/${questionId}/respondida/`, {
+      $.post(event.target.form.action, {
         answered: event.target.checked
       })
     },
@@ -67,7 +66,7 @@ function questionsListComponent(socket) {
         }
       });
 
-      $.post(`${urlPrefix}/pergunta/${questionId}/prioritaria/`, {
+      $.post(event.target.form.action, {
         is_priority: event.target.checked
       })
     }
