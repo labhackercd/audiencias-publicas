@@ -1,13 +1,6 @@
 {% load video_utils %}
 
-<li class="question-card {% if page == 'question-panel' %}-inroom{% endif %}" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}" data-question-answered="{{question.answered}}" data-question-author="{{author}}">
-  
-  {% if page == "question-panel" %}
-  <div class="vote">
-    <span class="number">{{question.votes_count}}</span>
-    <span class="label">Votos</span>
-  </div>
-  {% endif %}
+<li class="question-card" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}" data-question-answered="{{question.answered}}" data-question-author="{{author}}">
 
   <div class="meta">
     <span class="username">{{question.user}}</span>
@@ -75,10 +68,11 @@
       </li>
     </ul>
 
+    {% endif %}
+    
     <div class="item__vote-block">
       {% vote_action question user.username %} 
     </div>
-    {% endif %}
   
 
   </div>

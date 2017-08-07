@@ -6,26 +6,6 @@
   display: flex;
   flex-direction: column;
 
-  &.-inroom {
-    padding-left: 7rem;
-  }
-
-  > .vote {
-    background-color: $color-primary-xxlight;
-    color: #fff;
-    width: 7rem;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    font-weight: 700;
-    > .number { font-size: 1.2em; }
-  }
-
   > .meta {
     margin-top: 1rem;
     margin-left: 1rem;

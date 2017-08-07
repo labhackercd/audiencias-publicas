@@ -209,6 +209,7 @@
     font-weight: 700;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 
     @include breakpoint(large up) {
       font-size: 1.2em;
