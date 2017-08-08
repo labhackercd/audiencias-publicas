@@ -89,7 +89,7 @@ def on_receive(message, pk):
                     'groupName': question.room.legislative_body_initials,
                     'voteList': vote_list,
                     'answered': question.answered,
-                    'html': question.html_question_body(user)
+                    'html': question.html_question_body(user, 'room')
                 })}
             )
 

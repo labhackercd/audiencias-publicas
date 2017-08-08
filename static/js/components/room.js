@@ -207,7 +207,7 @@ function roomComponent(socket) {
   function mixItUpInit() {
     elements.$list.mixItUp({
       selectors: {
-        target: '.list__item',
+        target: '.question-card',
       },
       layout: {
         display: 'flex',
@@ -244,7 +244,7 @@ function roomComponent(socket) {
       if (HANDLER === '') {
         loginRedirect(); // defined in room.html
       } else {
-        const id = $(this).closest('.list__item').data('question-id');
+        const id = $(this).closest('.question-card').data('question-id');
 
         socket.send(JSON.stringify({
           handler: HANDLER,
@@ -269,7 +269,7 @@ function roomComponent(socket) {
     share() {
       const socialNetwork = $(this).data('social');
 
-      const $question = $(this).closest('.list__item');
+      const $question = $(this).closest('.question-card');
       const questionPath = $question.data('question-path');
 
       const windowOptions = 'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes';

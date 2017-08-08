@@ -204,23 +204,14 @@ class Question(TimestampedMixin):
         )
 
     def send_notification(self, user):
-        html = self.html_question_body(user, 'room')
-        text = {
-            'question': True,
-            'html': html,
-            'id': self.id,
-        }
-        Group(self.room.group_room_name).send(
-            {'text': json.dumps(text)}
-        )
-        html_question_panel = self.html_question_body(
+        html = self.html_question_body(
             user, 'question-panel')
-        text_question_panel = {
-            'html': html_question_panel,
+        text = {
+            'html': html,
             'id': self.id
         }
         Group(self.room.group_room_questions_name).send(
-            {'text': json.dumps(text_question_panel)}
+            {'text': json.dumps(text)}
         )
 
     class Meta:
