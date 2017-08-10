@@ -129,6 +129,8 @@ def on_receive(message, pk):
 def on_disconnect(message, pk):
     try:
         room = Room.objects.get(pk=pk)
+        room.online_users -= 1
+        room.save()
         Group(room.group_room_name).discard(message.reply_channel)
         log.debug('Room websocket disconnected.')
     except (KeyError, Room.DoesNotExist):
