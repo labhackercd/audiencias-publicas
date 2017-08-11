@@ -246,7 +246,7 @@ def room_pre_save(sender, instance, **kwargs):
             if 'TEMA:' in line:
                 theme = re.sub(r'.*TEMA:', '', line).strip()
             elif line == 'TEMA' or line == 'TEMA:':
-                theme = lines[i + 1]
+                theme = lines[i + 1].upper()
             if theme is not '':
                 if theme.startswith('"'):
                     theme = re.findall(r'"(.*?)"', theme)[0]
