@@ -9,6 +9,7 @@ import datetime
 from channels import Group
 from apps.core.utils import encrypt
 import json
+import re
 
 
 class TimestampedMixin(models.Model):
@@ -241,23 +242,18 @@ def room_pre_save(sender, instance, **kwargs):
         lines = list(filter(str.strip, lines))
         theme = ''
         for i, line in enumerate(lines):
-            if 'tema:' in line.lower():
-                theme = line.replace('Tema:', '').replace('TEMA:', '').strip()
-            elif line.lower() == 'tema' or line.lower() == 'tema:':
+            line = line.upper()
+            if 'TEMA:' in line:
+                theme = re.sub(r'.*TEMA:', '', line).strip()
+            elif line == 'TEMA' or line == 'TEMA:':
                 theme = lines[i + 1]
             if theme is not '':
-                if theme.startswith('"') and theme.endswith('"'):
-                    theme = theme[1:-1]
-                elif theme.startswith('"') and theme.endswith('".'):
-                    theme = theme[1:-2]
-                elif theme.startswith('"') and theme.endswith('"'):
-                    theme = theme[1:-1]
-                elif theme.startswith('"') and theme.endswith('".'):
-                    theme = theme[1:-2]
-                elif theme.startswith('“') and theme.endswith('”'):
-                    theme = theme[1:-1]
-                elif theme.startswith('“') and theme.endswith('”.'):
-                    theme = theme[1:-2]
+                if theme.startswith('"'):
+                    theme = re.findall(r'"(.*?)"', theme)[0]
+                elif theme.startswith('“'):
+                    theme = re.findall(r'“(.*?)”', theme)[0]
+                elif theme.startswith("'"):
+                    theme = re.findall(r"'(.*?)'", theme)[0]
 
                 instance.reunion_theme = theme
     try:
