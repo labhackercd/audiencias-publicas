@@ -9,8 +9,6 @@
 
     <div class="wrapper">
 
-      <h1 class="room-questions__title">Perguntas</h1>
-
       <div class="video__title">
         <h2 class="title__secondary">
           <span class="secondary__text">Audiência Pública</span>
@@ -21,15 +19,13 @@
         <h1 class="title__primary">REVISÃO DO PROTOCOLO NACIONAL DE HIPERTENSÃO PULMONAR</h1>
       </div>
 
-      <h3 class="video__info-header">Organizado por</h3>
-      <h3 class="video__info-text">CSSF - Comissão de Seguridade Social e Família</h3>
-
-      <h3 class="numberofquestions">43 prguntas</h3>
-
-      <h2 class="room-questions__video-info">
-        <i class="video-info__icon icon icon-circle live-blink"></i>
-        <a class="video-info__text" href="{% url 'video_room' pk=object.id %}">{{object.legislative_body_alias}}</a>
-      </h2>
+      <div class="flex">
+        <div>
+          <h3 class="video__info-header">Organizado por</h3>
+          <h3 class="video__info-text">CSSF - Comissão de Seguridade Social e Família</h3>
+        </div>
+        <span class="numberofquestions">43 perguntas</span>
+      </div>
 
       <ul class="room-questions__list" id="questions">
         {% if questions %}
