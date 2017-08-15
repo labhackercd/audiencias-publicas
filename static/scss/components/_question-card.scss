@@ -1,0 +1,58 @@
+.question-card {
+  background-color: #fff;
+  margin: 0.5rem;
+  position: relative;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+
+  > .meta {
+    margin-top: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-right: 10rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+
+    > .username {
+      font-weight: 700;
+      margin-right: 0.2em;
+    }
+    > .timestamp {
+      font-size: 0.7em;
+      color: hsl(0, 0%, 40%);
+      font-weight: 400;
+    }
+    > .answered {
+      position: absolute;
+      right: 0;
+      border: 1px solid $color-primary-xxlight;
+      color: $color-primary-xxlight;
+      font-size: 0.7em;
+      text-transform: uppercase;
+      font-weight: 600;
+      padding-right: 0.75rem;
+      padding-left: 0.75rem;
+      border-radius: 1rem;
+      line-height: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background-color: #fff
+      &:hover {
+        background-color: $color-primary-xxlight;
+        color: #fff;
+      }
+    }
+
+  }
+
+  > .question {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+
+}

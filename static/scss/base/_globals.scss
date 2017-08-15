@@ -3,6 +3,17 @@ html {
   overflow-x: hidden;
 }
 
+html {
+  font-size: $global-font-size;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 body {
   display: flex;
   flex-direction: column;

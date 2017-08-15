@@ -185,30 +185,31 @@ class Question(TimestampedMixin):
                              verbose_name=_('room'))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
     question = models.TextField(_('question'), max_length='300')
-    answer_time = models.IntegerField(_('answer time'), null=True, blank=True)
+    answer_time = models.CharField(_('answer time'), max_length=200,
+                                   null=True, blank=True)
     answered = models.BooleanField(_('answered'), default=False)
+    is_priority = models.BooleanField(_('is priority'), default=False)
 
     @property
     def votes_count(self):
         return self.votes.filter(vote=True).count()
 
-    def html_question_body(self, user):
+    def html_question_body(self, user, page=None):
         return render_to_string(
-            'includes/video_questions.html',
+            'includes/question_card.html',
             {'question': self,
              'user': user,
-             'object': self.room,
+             'page': page,
              'author': encrypt(str(self.user.id).rjust(10))}
         )
 
-    def html_room_question_body(self):
-        return render_to_string('includes/room_question.html',
-                                {'question': self})
-
-    def send_notification(self):
+    def send_notification(self, user):
+        html = self.html_question_body(
+            user, 'question-panel')
         text = {
-            'html': self.html_room_question_body(),
-            'id': self.id,
+            'html': html,
+            'counter': self.room.questions.count(),
+            'id': self.id
         }
         Group(self.room.group_room_questions_name).send(
             {'text': json.dumps(text)}
@@ -278,11 +279,11 @@ def vote_post_save(sender, instance, **kwargs):
         email_list = []
         notification(subject, html, email_list)
 
-    instance.question.send_notification()
+    instance.question.send_notification(instance.user)
 
 
 def vote_post_delete(sender, instance, **kwargs):
-    instance.question.send_notification()
+    instance.question.send_notification(instance.user)
 
 
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)

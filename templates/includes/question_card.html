@@ -1,0 +1,80 @@
+{% load video_utils %}
+
+<li class="question-card" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}" data-question-answered="{{question.answered}}" data-question-author="{{author}}">
+
+  <div class="meta">
+    <span class="username">{{question.user}}</span>
+    <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
+    {% if page == "room" and question.answer_time %}
+      <a class="answered" onclick="player.seekTo({{question.answer_time}});">Assistir resposta</a>
+    {% endif %}
+  </div>
+
+  <p class="question">{{question.question}}</p>
+
+  <div class="question-actions">
+  
+    {% if question.room.youtube_status == 1 %}
+      {% with user|belongs_to_group:question.room.legislative_body_initials as hide %}
+
+      <form class="action -checkbox js-answered-form {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_answered' question_id=question.pk %}">
+        <input class="checkbox js-answered-checkbox" type="checkbox" name="answered" {% if question.answered %}checked{% endif %}>
+        <span class="label">Pergunta Respondida</span>
+      </form>
+
+      {% if page == "room" and question.answered %}
+      <form class="action -checkbox js-answer-time-form {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_answer_time' question_id=question.pk %}">
+        <input class="checkbox js-answer-time-checkbox" type="checkbox" name="answer_time" {% if question.answer_time %}checked{% endif %}>
+        <span class="label">Marcar tempo de resposta</span>
+      </form>
+      {% endif %}
+
+      <form class="action -checkbox js-priority-form {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_priotity' question_id=question.pk %}">
+        <input class="checkbox js-priority-checkbox" type="checkbox" name="priority" {% if question.is_priority %}checked{% endif %}>
+        <span class="label">Prioridade</span>
+      </form>
+
+
+      {% endwith %}
+    {% endif %}
+
+  
+    {% if page == "room" %}
+    <span class="question-block__share-button" role="button" title="Compartilhar esta pergunta">
+      <i class="share-button__icon icon icon-share-alt"></i>
+    </span>
+
+    <ul class="question-block__share-list">
+      <span class="share-list__close" role="button" title="Cancelar">
+        <i class="icon icon-times"></i>
+      </span>
+
+      <li class="share-list__item--facebook ">
+        <a class="item__link" data-social="facebook" target="_blank" title="Compartilhar pelo Facebook">
+          <i class="item__icon icon icon-facebook"></i>
+        </a>
+      </li>
+
+      <li class="share-list__item--twitter ">
+        <a class="item__link" data-social="twitter" target="_blank" title="Compartilhar pelo Twitter">
+          <i class="item__icon icon icon-twitter"></i>
+        </a>
+      </li>
+
+      <li class="share-list__item--whatsapp ">
+        <a class="item__link" data-social="whatsapp" target="_blank" title="Compartilhar pelo Whatsapp">
+          <i class="item__icon icon icon-whatsapp"></i>
+        </a>
+      </li>
+    </ul>
+
+    {% endif %}
+    
+    <div class="item__vote-block {% if page == 'question-panel' %}-viewonly{% endif %}">
+      {% vote_action question user.username %} 
+    </div>
+  
+
+  </div>
+
+</li>

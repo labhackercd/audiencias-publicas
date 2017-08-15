@@ -1,4 +1,4 @@
-/* global HANDLER, HANDLER_ADMIN, loginRedirect */
+/* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
 import sendFormHelper from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 
@@ -25,6 +25,8 @@ function roomComponent(socket) {
     $formChat: $('#chatform'),
     $formInputChat: $('#message'),
     $videoFrame: $('.video__iframe-wrapper'),
+    $priorityCheckbox: $('.js-priority-checkbox'),
+    $answerTimeCheckbox: $('.js-answer-time-checkbox'),
   };
 
   const vars = {
@@ -173,13 +175,19 @@ function roomComponent(socket) {
 
         const $question = $(`[data-question-id=${data.id}]`);
         const $answeredForm = $question.find('.js-answered-form');
+        const $priorityForm = $question.find('.js-priority-form');
+        const $answerTimeForm = $question.find('.js-answer-time-form');
 
         if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
           $answeredForm.removeClass('hide');
         } else if (HANDLER_ADMIN) {
           $answeredForm.removeClass('hide');
+          $priorityForm.removeClass('hide');
+          $answerTimeForm.removeClass('hide');
         } else {
           $answeredForm.addClass('hide');
+          $priorityForm.addClass('hide');
+          $answerTimeForm.addClass('hide');
         }
 
         updateVoteBlock($question, data);
@@ -199,7 +207,7 @@ function roomComponent(socket) {
   function mixItUpInit() {
     elements.$list.mixItUp({
       selectors: {
-        target: '.list__item',
+        target: '.question-card',
       },
       layout: {
         display: 'flex',
@@ -236,7 +244,7 @@ function roomComponent(socket) {
       if (HANDLER === '') {
         loginRedirect(); // defined in room.html
       } else {
-        const id = $(this).closest('.list__item').data('question-id');
+        const id = $(this).closest('.question-card').data('question-id');
 
         socket.send(JSON.stringify({
           handler: HANDLER,
@@ -261,7 +269,7 @@ function roomComponent(socket) {
     share() {
       const socialNetwork = $(this).data('social');
 
-      const $question = $(this).closest('.list__item');
+      const $question = $(this).closest('.question-card');
       const questionPath = $question.data('question-path');
 
       const windowOptions = 'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes';
@@ -326,8 +334,42 @@ function roomComponent(socket) {
         }
       });
 
-      $.post(`${urlPrefix}/pergunta/${questionId}/respondida/`, {
+      $.post(event.target.form.action, {
         answered: event.target.checked
+      })
+    },
+
+    sendAnswerTimeForm(event) {
+      const questionId = $(event.target).closest('[data-question-id]')[0].dataset.questionId;
+      const csrftoken = getCookie('csrftoken');
+
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      });
+
+      var answer_time = '0';
+      if(event.target.checked){
+        answer_time = player.getCurrentTime();
+      };
+      $.post(event.target.form.action, {
+          answer_time: answer_time
+      })
+    },
+
+    sendPriorityForm(event) {
+      const questionId = $(event.target).closest('[data-question-id]')[0].dataset.questionId;
+      const csrftoken = getCookie('csrftoken');
+
+      $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+          xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+      });
+
+      $.post(event.target.form.action, {
+        is_priority: event.target.checked
       })
     }
   };
@@ -351,6 +393,8 @@ function roomComponent(socket) {
       setInterval(function() {
         socket.send(JSON.stringify({heartbeat: true}));
       }, 3000);
+      elements.$priorityCheckbox.on('change', events.sendPriorityForm);
+      elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
     },
 
     onAdd($question) {
@@ -359,17 +403,16 @@ function roomComponent(socket) {
       const $shareListCloseBtn = $question.find('.share-list__close');
       const $shareListItemLink = $question.find('.question-block__share-list .item__link');
       const $answeredCheckbox = $question.find('.js-answered-checkbox');
+      const $priorityCheckbox = $question.find('.js-priority-checkbox');
+      const $answerTimeCheckbox = $question.find('.js-answer-time-checkbox');
 
       $voteBtnEnabled.on('click', events.vote);
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
       $shareListItemLink.on('click', events.share);
       $answeredCheckbox.on('change', events.sendAnsweredForm);
-      $('.answered_time__input').inputmask("99:99:99", {
-        placeholder: "0",
-        numericInput: true,
-        showMaskOnHover: false,
-      });
+      $priorityCheckbox.on('change', events.sendPriorityForm);
+      $answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
     },
   };
 

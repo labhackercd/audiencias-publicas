@@ -7,15 +7,15 @@ from apps.core.utils import decrypt, encrypt
 from apps.core.consumers.utils import get_room, get_data
 from django.conf import settings
 from channels_presence.models import Room as RoomPresence, Presence
-from channels.auth import channel_session_user
-from channels_presence.decorators import touch_presence
+from channels.auth import channel_session_user, channel_session_user_from_http
+from channels_presence.decorators import touch_presence, remove_presence
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 log = logging.getLogger("room")
 
 
-@channel_session_user
+@channel_session_user_from_http
 def on_connect(message, pk):
     message.reply_channel.send({
         'accept': True
@@ -25,8 +25,9 @@ def on_connect(message, pk):
         room_presence = RoomPresence.objects.add(room.group_room_name,
                                                  message.reply_channel.name,
                                                  message.user)
-        room_presence.prune_presences(age_in_seconds=10)
-        room.online_users = room_presence.get_anonymous_count()
+        anonymous_count = room_presence.get_anonymous_count()
+        users_count = room_presence.get_users().count()
+        room.online_users = anonymous_count + users_count
         room.views += 1
         if room.online_users > room.max_online_users:
             room.max_online_users = room.online_users
@@ -36,6 +37,7 @@ def on_connect(message, pk):
 
 
 @touch_presence
+@channel_session_user
 def on_receive(message, pk):
     room = get_room(pk)
     data = get_data(message)
@@ -89,7 +91,7 @@ def on_receive(message, pk):
                     'groupName': question.room.legislative_body_initials,
                     'voteList': vote_list,
                     'answered': question.answered,
-                    'html': question.html_question_body(user)
+                    'html': question.html_question_body(user, 'room')
                 })}
             )
 
@@ -123,10 +125,12 @@ def on_receive(message, pk):
             return
 
 
+@remove_presence
 def on_disconnect(message, pk):
     try:
         room = Room.objects.get(pk=pk)
-        RoomPresence.objects.remove(room.group_room_name, message.reply_channel.name)
+        room.online_users -= 1
+        room.save()
         Group(room.group_room_name).discard(message.reply_channel)
         log.debug('Room websocket disconnected.')
     except (KeyError, Room.DoesNotExist):

@@ -24,9 +24,3 @@ if (!closedRoom) {
 
 tabsNavComponent();
 characterCounterComponent();
-
-$('.answered_time__input').inputmask("99:99:99", {
-  placeholder: "0",
-  numericInput: true,
-  showMaskOnHover: false,
-});

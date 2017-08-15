@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import (Http404, HttpResponseForbidden,
-                         HttpResponseBadRequest)
+                         HttpResponseBadRequest, HttpResponse)
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from apps.core.models import Question, Room
@@ -8,30 +8,60 @@ from apps.core.utils import encrypt
 from apps.core.templatetags.video_utils import belongs_to_group
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render
-from django.shortcuts import redirect
 from datetime import datetime
 from django.db.models import Q
 from channels import Group
 from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
 import json
+from itertools import chain
 
 
 def set_answer_time(request, question_id):
     if request.user.is_authenticated() and request.method == 'POST':
-        answer_time = request.POST.get('answered_time')
+        answer_time = request.POST.get('answer_time')
         if answer_time:
-            time = datetime.strptime(answer_time, '%H:%M:%S')
-            seconds = time.second
-            seconds += time.minute * 60
-            seconds += time.hour * 3600
-
             question = Question.objects.get(pk=question_id)
-            question.answer_time = seconds
-            question.save()
-            return redirect('video_room', pk=question.room.pk)
+            group_name = question.room.legislative_body_initials
+            if belongs_to_group(request.user, group_name):
+                if answer_time == '0':
+                    question.answer_time = None
+                    question.answered = False
+                else:
+                    question.answer_time = answer_time
+                    question.answered = True
+                question.save()
+                vote_list = []
+                for vote in question.votes.all():
+                    vote_list.append(encrypt(str(vote.user.id).rjust(10)))
+
+                html = question.html_question_body(request.user, 'room')
+                text = {
+                    'question': True,
+                    'html': html,
+                    'id': question.id,
+                    'voteList': vote_list,
+                    'answered': question.answered,
+                    'groupName': group_name,
+                }
+                Group(question.room.group_room_name).send(
+                    {'text': json.dumps(text)}
+                )
+
+                html_question_panel = question.html_question_body(
+                    request.user, 'question-panel')
+                text_question_panel = {
+                    'html': html_question_panel,
+                    'id': question.id
+                }
+                Group(question.room.group_room_questions_name).send(
+                    {'text': json.dumps(text_question_panel)}
+                )
+                return HttpResponse(status=200)
+            else:
+                return HttpResponseForbidden()
         else:
-            return HttpResponseBadRequest('Invalid date format.')
+            return HttpResponseBadRequest('Invalid format.')
     else:
         return HttpResponseForbidden()
 
@@ -46,13 +76,13 @@ def set_answered(request, question_id):
                 question.answered = True
             else:
                 question.answered = False
-
+                question.answer_time = None
             question.save()
             vote_list = []
             for vote in question.votes.all():
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
-            html = question.html_question_body(request.user)
+            html = question.html_question_body(request.user, 'room')
             text = {
                 'question': True,
                 'html': html,
@@ -64,7 +94,61 @@ def set_answered(request, question_id):
             Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
-            return redirect('video_room', pk=question.room.pk)
+
+            html_question_panel = question.html_question_body(
+                request.user, 'question-panel')
+            text_question_panel = {
+                'html': html_question_panel,
+                'id': question.id
+            }
+            Group(question.room.group_room_questions_name).send(
+                {'text': json.dumps(text_question_panel)}
+            )
+
+            return HttpResponse(status=200)
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+
+def set_priotity(request, question_id):
+    if request.user.is_authenticated() and request.method == 'POST':
+        is_priority = request.POST.get('is_priority')
+        question = Question.objects.get(pk=question_id)
+        group_name = question.room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            if is_priority == 'true':
+                question.is_priority = True
+            else:
+                question.is_priority = False
+
+            question.save()
+            vote_list = []
+            for vote in question.votes.all():
+                vote_list.append(encrypt(str(vote.user.id).rjust(10)))
+            html = question.html_question_body(request.user, 'room')
+            text = {
+                'question': True,
+                'html': html,
+                'id': question.id,
+                'voteList': vote_list,
+                'answered': question.answered,
+                'groupName': group_name,
+            }
+            Group(question.room.group_room_name).send(
+                {'text': json.dumps(text)}
+            )
+            html_question_panel = question.html_question_body(
+                request.user, 'question-panel')
+            text_question_panel = {
+                'html': html_question_panel,
+                'id': question.id
+            }
+            Group(question.room.group_room_questions_name).send(
+                {'text': json.dumps(text_question_panel)}
+            )
+            return HttpResponse(status=200)
         else:
             return HttpResponseForbidden()
     else:
@@ -102,10 +186,8 @@ class VideoDetail(DetailView):
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
-        context['answer_time'] = self.request.GET.get('t', None)
         context['domain'] = Site.objects.get_current().domain
         context['domain'] += settings.FORCE_SCRIPT_NAME
-        context['url_prefix'] = settings.FORCE_SCRIPT_NAME
         return context
 
 
@@ -123,10 +205,8 @@ class WidgetVideoDetail(DetailView):
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
-        context['answer_time'] = self.request.GET.get('t', None)
         context['domain'] = Site.objects.get_current().domain
         context['domain'] += settings.FORCE_SCRIPT_NAME
-        context['url_prefix'] = settings.FORCE_SCRIPT_NAME
         return context
 
 
@@ -151,10 +231,11 @@ class VideoReunionDetail(DetailView):
         context = super(VideoReunionDetail, self).get_context_data(**kwargs)
         if self.request.user.is_authenticated():
             context['handler'] = encrypt(str(self.request.user.id).rjust(10))
+            context['groups'] = list(self.request.user.groups.all()
+                                     .values_list('name', flat=True))
         context['questions'] = sorted(self.object.questions.all(),
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
-        context['answer_time'] = self.request.GET.get('t', None)
         context['domain'] = Site.objects.get_current().domain
         context['domain'] += settings.FORCE_SCRIPT_NAME
 
@@ -209,13 +290,31 @@ class RoomQuestionList(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(RoomQuestionList, self).get_context_data(**kwargs)
-        questions = self.object.questions.all()
+        priorities = self.object.questions.filter(
+            is_priority=True, answered=False)
+        other = self.object.questions.filter(is_priority=False, answered=False)
+        answered = self.object.questions.filter(answered=True)
+        priority_questions = sorted(
+            priorities, key=lambda vote: vote.votes_count, reverse=True)
+        other_questions = sorted(
+            other, key=lambda vote: vote.votes_count, reverse=True)
+        answered_questions = sorted(
+            answered, key=lambda vote: vote.votes_count, reverse=True)
         context['no_offset_top'] = 'no-offset-top'
-        context['questions'] = sorted(questions,
-                                      key=lambda vote: vote.votes_count,
-                                      reverse=True)
-
+        context['questions'] = list(chain(
+            priority_questions, other_questions, answered_questions))
+        context['counter'] = self.object.questions.count()
+        if self.request.user.is_authenticated():
+            context['handler'] = encrypt(str(self.request.user.id).rjust(10))
         return context
+
+    def get_queryset(self):
+        room = Room.objects.get(pk=self.kwargs.get('pk', None))
+        group_name = room.legislative_body_initials
+        if belongs_to_group(self.request.user, group_name):
+            return Room.objects.filter(pk=self.kwargs.get('pk', None))
+        else:
+            raise Http404()
 
 
 class QuestionDetail(DetailView):
