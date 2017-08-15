@@ -307,6 +307,14 @@ class RoomQuestionList(DetailView):
             context['handler'] = encrypt(str(self.request.user.id).rjust(10))
         return context
 
+    def get_queryset(self):
+        room = Room.objects.get(pk=self.kwargs.get('pk', None))
+        group_name = room.legislative_body_initials
+        if belongs_to_group(self.request.user, group_name):
+            return Room.objects.filter(pk=self.kwargs.get('pk', None))
+        else:
+            raise Http404()
+
 
 class QuestionDetail(DetailView):
     model = Question
