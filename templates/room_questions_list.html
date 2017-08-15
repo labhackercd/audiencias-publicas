@@ -11,20 +11,30 @@
 
       <div class="video__title">
         <h2 class="title__secondary">
-          <span class="secondary__text">Audiência Pública</span>
+          <span class="secondary__text">{{object.reunion_type}}</span>
           <div class="secondary__date-wrapper">
-            <span class="secondary__separator">•</span><span class="secondary__date">8 de Agosto de 2017 às 09:30</span>
+            <span class="secondary__separator">•</span><span class="secondary__date">{{object.date}}</span>
           </div>
         </h2>
-        <h1 class="title__primary">REVISÃO DO PROTOCOLO NACIONAL DE HIPERTENSÃO PULMONAR</h1>
+        <h1 class="title__primary">
+          {% if object.reunion_theme %}
+            {{object.reunion_theme}}
+          {% else %}
+            {% if object.is_joint %}
+              {{object.title_reunion}}
+            {% else %}
+              {{object.legislative_body_alias}}
+            {% endif %}
+          {% endif %}
+        </h1>
       </div>
 
       <div class="flex">
         <div>
           <h3 class="video__info-header">Organizado por</h3>
-          <h3 class="video__info-text">CSSF - Comissão de Seguridade Social e Família</h3>
+          <h3 class="video__info-text">{{object.legislative_body_initials}} - {{object.legislative_body}}</h3>
         </div>
-        <span class="numberofquestions">43 perguntas</span>
+        <span class="numberofquestions">{{counter}} pergunta{% if counter > 1 %}s{% endif %}</span>
       </div>
 
       <ul class="room-questions__list" id="questions">

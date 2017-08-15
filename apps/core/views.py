@@ -303,6 +303,7 @@ class RoomQuestionList(DetailView):
         context['no_offset_top'] = 'no-offset-top'
         context['questions'] = list(chain(
             priority_questions, other_questions, answered_questions))
+        context['counter'] = self.object.questions.count()
         if self.request.user.is_authenticated():
             context['handler'] = encrypt(str(self.request.user.id).rjust(10))
         return context

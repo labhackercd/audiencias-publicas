@@ -208,6 +208,7 @@ class Question(TimestampedMixin):
             user, 'question-panel')
         text = {
             'html': html,
+            'counter': self.room.questions.count(),
             'id': self.id
         }
         Group(self.room.group_room_questions_name).send(

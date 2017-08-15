@@ -6,6 +6,7 @@ function questionsListComponent(socket) {
     $listEmpty: $('.room-questions__empty'),
     $answeredCheckbox: $('.js-answered-checkbox'),
     $priorityCheckbox: $('.js-priority-checkbox'),
+    $numberOfQuestions: $('.numberofquestions'),
   };
 
   function evaluateSocketMessage(message) {
@@ -21,6 +22,14 @@ function questionsListComponent(socket) {
       }
     } else {
       elements.$list.append(data.html);
+    }
+
+    if (data.counter) {
+      if (data.counter > 1) {
+        elements.$numberOfQuestions.html(`${data.counter} perguntas`);
+      } else {
+        elements.$numberOfQuestions.html(`${data.counter} pergunta`);
+      }
     }
 
     const $question = $(`[data-question-id=${data.id}]`);
