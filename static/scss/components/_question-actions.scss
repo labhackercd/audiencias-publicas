@@ -198,6 +198,12 @@
     margin-left: auto;
     flex-direction: row;
     align-items: stretch;
+    &.-viewonly {
+      pointer-events: none;
+      > button {
+        display: none;
+      }
+    }
   }
 
   .vote-block__total-votes {

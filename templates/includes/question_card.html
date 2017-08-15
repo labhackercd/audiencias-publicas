@@ -70,7 +70,7 @@
 
     {% endif %}
     
-    <div class="item__vote-block">
+    <div class="item__vote-block {% if page == 'question-panel' %}-viewonly{% endif %}">
       {% vote_action question user.username %} 
     </div>
   
