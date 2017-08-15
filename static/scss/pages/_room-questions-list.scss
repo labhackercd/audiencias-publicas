@@ -9,6 +9,20 @@
   overflow: hidden;
   padding: 1em;
   min-height: 100vh;
+
+  > .wrapper {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    > .numberofquestions {
+      color: $color-primary-xxlight;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+  }
+
+
 }
 
 .room-questions__title {

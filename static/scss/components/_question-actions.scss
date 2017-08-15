@@ -203,6 +203,10 @@
       > button {
         display: none;
       }
+      .vote-block__total-votes {
+        color: $color-primary-xxlight;
+        background-color: $color-gray-80;
+      }
     }
   }
 
