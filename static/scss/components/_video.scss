@@ -122,7 +122,9 @@
   }
 }
 
-.video__title {
+.video .video__title,
+.room-questions .video__title,
+.room .video__title {
   display: flex;
   flex-direction: column;
   justify-content: center;
