@@ -6,21 +6,21 @@ import onlineUsersComponent from '../components/online-users';
 
 
 if (!closedRoom) {
-    const onlineUsers = onlineUsersComponent();
-
-    const roomSocket = createSocketHelper('room', 'stream/');
-
-    roomSocket.socket.onopen = () => {
-      console.log('Connected to room socket'); // eslint-disable-line no-console
-      onlineUsers.get();
-    };
-
-    roomComponent(roomSocket.socket);
-
-    window.onbeforeunload = () => {
-      roomSocket.close();
-    };
+  const onlineUsers = onlineUsersComponent();
 }
+
+const roomSocket = createSocketHelper('room', 'stream/');
+
+roomSocket.socket.onopen = () => {
+  console.log('Connected to room socket'); // eslint-disable-line no-console
+  onlineUsers.get();
+};
+
+roomComponent(roomSocket.socket);
+
+window.onbeforeunload = () => {
+  roomSocket.close();
+};
 
 tabsNavComponent();
 characterCounterComponent();
