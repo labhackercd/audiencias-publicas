@@ -203,7 +203,10 @@
       > button {
         display: none;
       }
-      .vote-block__total-votes {
+      .vote-block__total-votes,
+      .vote-block__total-votes.voted,
+      .vote-block__total-votes.voted:not(.disabled),
+      .vote-block__total-votes.voted.disabled {
         color: $color-primary-xxlight;
         background-color: $color-gray-80;
       }
