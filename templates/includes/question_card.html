@@ -1,6 +1,6 @@
 {% load video_utils %}
 
-<li class="question-card" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}" data-question-answered="{{question.answered}}" data-question-author="{{author}}">
+<li class="question-card" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}" data-question-answered="{{question.answered}}" data-question-author="{{author}}" data-question-path="{% url 'question_detail' pk=question.id %}">
 
   <div class="meta">
     <span class="username">{{question.user}}</span>
