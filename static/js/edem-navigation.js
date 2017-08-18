@@ -1,5 +1,5 @@
-let searchWrapper = document.querySelector('.search-form'),
-    searchInput = document.querySelector('.search-form__input');
+var searchWrapper = document.querySelector('.search-form'),
+    searchInput = document.querySelector('.search-form__input'),
     navBar = document.querySelector('.edem-navigation');
 
 document.addEventListener('click', (e) => {
@@ -85,4 +85,27 @@ $('.form__field').blur(function() {
   } else {
     $(this).removeClass('form__field--filled')
   }
+});
+
+$('.login-box__form').submit(function(event) {
+  event.preventDefault();
+  $.ajax({
+    type:"POST",
+    url: 'http://localhost:8000/ajax/login/', // only development
+    data: $(event.target).serialize(),
+    success: function(response){
+      if (response['result'] == 'success') {
+        window.location = window.location;
+      } else if (response['result'] == 'failed') {
+        $('.form__input-error').text('');
+        $.each(response['message'], function(key, value) {
+          if (key == '__all__') {
+            console.log(value); // only development
+          } else {
+            $('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
+          }
+        });
+      }
+    }
+  });
 });

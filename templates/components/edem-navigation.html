@@ -204,7 +204,7 @@
     <span class="login-box__choice-text">Entre usando login social:</span>
     
     <div class="login-box__social">
-      <button class="social__button--google button">
+      <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
         <div class="social__button-container">
     
           <div class="social__icon-wrapper">
@@ -214,9 +214,9 @@
     
           <span class="social__text">Google</span>
         </div>
-      </button>
+      </a>
     
-      <button class="social__button--facebook button">
+      <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}">
         <div class="social__button-container">
     
           <div class="social__icon-wrapper">
@@ -226,27 +226,29 @@
     
           <span class="social__text">Facebook</span>
         </div>
-      </button>
+      </a>
     </div>
     
     <span class="login-box__choice-text">ou<br>Entre com seu email:</span>
   </div>
 
-  <form action="" class="login-box__form">
+  <form action="" method="POST" class="login-box__form">
     <div class="form__inputs-container">
       <div class="form__input">
         <div class="form__field-container">
-          <input class="form__field" id="mail" type="email">
+          <input class="form__field" id="id_username" name="username">
       
           <label class="form__label" for="mail">
             <span class="label__content">Endereço de Email</span>
           </label>
         </div>
+        <p class="form__input-error" data-input-name="username" hidden></p>
       </div>
       
+
       <div class="form__input">
         <div class="form__field-container">
-          <input class="form__field" id="password" type="password">
+          <input class="form__field" id="id_password" name="password" type="password">
       
           <span class="form__field-action" role="button">Mostrar Senha <i class="field-action__icon icon icon-eye"></i></span>
       
@@ -255,7 +257,7 @@
           </label>
         </div>
       
-        <p class="form__input-error">Insira uma senha</p>
+        <p class="form__input-error" data-input-name="password" hidden></p>
       
         <a class="form__input-action" href="#">Esqueceu sua senha?</a>
       </div>
