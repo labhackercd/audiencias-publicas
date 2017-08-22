@@ -56,7 +56,7 @@
         <ul class="questions__list" id="questions">
           {% if questions %}
             {% for question in questions %}
-              {% include "includes/video_questions.html" with questions=questions user=user %}
+              {% include "includes/question_card.html" with page="room" %}
             {% endfor %}
           {% elif object.youtube_status != 2 %}
             <div class="questions__list--empty">
@@ -212,6 +212,30 @@
 
 {% block extra_js %}
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
+  <script type="text/javascript">
+    // This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    // This function creates an <iframe> (and YouTube player)
+    // after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+          height: '',
+          width: '',
+          videoId: '{{object.youtube_id}}',
+          events: {
+            'onReady': onPlayerReady
+          }
+      });
+    }
+    // The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+       event.target.playVideo();
+    }
+  </script>
 {% endblock extra_js %}
 
 {% block foot_js %}
@@ -232,6 +256,7 @@
           "{{group}}",
         {% endfor %}
       ]
+      var HANDLER_ADMIN = {{user.profile.is_admin|lower|default:'false'}};
 
       {% if object.youtube_status == 2 %}
       var closedRoom = true;
