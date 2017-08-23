@@ -1,5 +1,5 @@
 {% extends "components/base.html" %}
-{% load staticfiles compress %}
+{% load staticfiles compress video_utils %}
 
 {% block metadata %}
   <meta property="og:title" content="{{object.legislative_body_alias}}" />
@@ -233,7 +233,7 @@
 {% endblock extra_js %}
 
 {% block websockets %}
-  {% if object.youtube_status != 2 %}
+  {% if object.youtube_status != 2 or user|belongs_to_group:object.legislative_body_initials %}
     <script>
       var HANDLER = "{{handler|default:''}}";
       var HANDLER_GROUPS = [
