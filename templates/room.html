@@ -232,8 +232,8 @@
   </script>
 {% endblock extra_js %}
 
-{% if object.youtube_status != 2 %}
-  {% block websockets %}
+{% block websockets %}
+  {% if object.youtube_status != 2 %}
     <script>
       var HANDLER = "{{handler|default:''}}";
       var HANDLER_GROUPS = [
@@ -242,12 +242,6 @@
         {% endfor %}
       ]
       var HANDLER_ADMIN = {{user.profile.is_admin|lower|default:'false'}};
-
-      {% if object.youtube_status == 2 %}
-      var closedRoom = true;
-      {% else %}
-      var closedRoom = false;
-      {% endif %}
 
       function loginRedirect() {
         var next = "{{request.path}}";
@@ -260,5 +254,5 @@
     {% compress js %}
       <script type="text/es6" src="{% static 'js/pages/room.js' %}"></script>
     {% endcompress %}
-  {% endblock %}
-{% endif %}
+  {% endif %}
+{% endblock %}

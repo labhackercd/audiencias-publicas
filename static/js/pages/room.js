@@ -5,9 +5,7 @@ import characterCounterComponent from '../components/character-counter';
 import onlineUsersComponent from '../components/online-users';
 
 
-if (!closedRoom) {
-  const onlineUsers = onlineUsersComponent();
-}
+const onlineUsers = onlineUsersComponent();
 
 const roomSocket = createSocketHelper('room', 'stream/');
 
