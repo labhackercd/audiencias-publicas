@@ -20,5 +20,4 @@ window.onbeforeunload = () => {
   roomSocket.close();
 };
 
-tabsNavComponent();
 characterCounterComponent();

@@ -87,4 +87,4 @@ function tabsNavComponent() {
   }());
 }
 
-export default tabsNavComponent;
+tabsNavComponent();

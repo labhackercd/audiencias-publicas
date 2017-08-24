@@ -236,6 +236,9 @@
        event.target.playVideo();
     }
   </script>
+  {% compress js %}
+    <script type="text/es6" src="{% static 'js/components/tabs-nav.js' %}"></script>
+  {% endcompress %}
 {% endblock extra_js %}
 
 {% block foot_js %}
