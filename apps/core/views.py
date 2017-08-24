@@ -7,7 +7,7 @@ from apps.core.models import Question, Room
 from apps.core.utils import encrypt
 from apps.core.templatetags.video_utils import belongs_to_group
 from django.views.generic import DetailView, ListView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from datetime import datetime
 from django.db.models import Q
 from channels import Group
@@ -15,6 +15,16 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
 import json
 from itertools import chain
+
+
+def redirect_to_room(request, cod_reunion):
+    rooms = Room.objects.filter(cod_reunion=cod_reunion, is_visible=True)
+    try:
+        obj = rooms.latest('date')
+    except rooms.model.DoesNotExist:
+        raise Http404(_("No %(verbose_name)s found matching the query") %
+                      {'verbose_name': rooms.model._meta.verbose_name})
+    return redirect('video_room', pk=obj.id)
 
 
 def set_answer_time(request, question_id):
@@ -221,39 +231,6 @@ class RoomReportView(DetailView):
                                       reverse=True)
         context['messages'] = self.object.messages.all().order_by('-created')
         return context
-
-
-class VideoReunionDetail(DetailView):
-    model = Room
-    template_name = 'room.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(VideoReunionDetail, self).get_context_data(**kwargs)
-        if self.request.user.is_authenticated():
-            context['handler'] = encrypt(str(self.request.user.id).rjust(10))
-            context['groups'] = list(self.request.user.groups.all()
-                                     .values_list('name', flat=True))
-        context['questions'] = sorted(self.object.questions.all(),
-                                      key=lambda vote: vote.votes_count,
-                                      reverse=True)
-        context['domain'] = Site.objects.get_current().domain
-        context['domain'] += settings.FORCE_SCRIPT_NAME
-
-        return context
-
-    def get_object(self, queryset=None):
-        if queryset is None:
-            queryset = self.get_queryset()
-        cod_reunion = self.kwargs.get('cod_reunion')
-        if cod_reunion is not None:
-            queryset = queryset.filter(
-                cod_reunion=cod_reunion, is_visible=True)
-        try:
-            obj = queryset.latest('date')
-        except queryset.model.DoesNotExist:
-            raise Http404(_("No %(verbose_name)s found matching the query") %
-                          {'verbose_name': queryset.model._meta.verbose_name})
-        return obj
 
 
 class ClosedVideos(ListView):

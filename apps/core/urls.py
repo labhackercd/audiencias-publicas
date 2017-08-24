@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.decorators.csrf import ensure_csrf_cookie
 from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
-                             VideoReunionDetail, QuestionDetail, index,
+                             QuestionDetail, index, redirect_to_room,
                              RoomReportView, set_answer_time, set_answered,
                              set_priotity, WidgetVideoDetail)
 from apps.core.api import (api_root, MessageListAPI, QuestionListAPI,
@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
     url(r'^sala/(?P<pk>\d+)/relatorio/?$', RoomReportView.as_view(),
         name='room_report'),
-    url(r'^sala/reuniao/(?P<cod_reunion>\d+)/?$', VideoReunionDetail.as_view(),
+    url(r'^sala/reuniao/(?P<cod_reunion>\d+)/?$', redirect_to_room,
         name='video_reunion_room'),
     url(r'^sala/(?P<pk>\d+)/perguntas/?$', RoomQuestionList.as_view(),
         name='questions_list'),
