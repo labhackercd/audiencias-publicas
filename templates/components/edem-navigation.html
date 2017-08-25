@@ -232,7 +232,7 @@
     <span class="login-box__choice-text">ou<br>Entre com seu email:</span>
   </div>
 
-  <form action="" method="POST" class="login-box__form">
+  <form id="id_form_login" action="" class="login-box__form">
     <div class="form__inputs-container">
       <div class="form__input">
         <div class="form__field-container">
@@ -286,7 +286,7 @@
     <span class="login-box__choice-text">Crie sua conta usando login social:</span>
     
     <div class="login-box__social">
-      <button class="social__button--google button">
+      <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
         <div class="social__button-container">
     
           <div class="social__icon-wrapper">
@@ -296,9 +296,9 @@
     
           <span class="social__text">Google</span>
         </div>
-      </button>
+      </a>
     
-      <button class="social__button--facebook button">
+      <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}">
         <div class="social__button-container">
     
           <div class="social__icon-wrapper">
@@ -308,50 +308,95 @@
     
           <span class="social__text">Facebook</span>
         </div>
-      </button>
+      </a>
     </div>
     
     <span class="login-box__choice-text">ou<br>Crie manualmente com seu email:</span>
   </div>
 
-  <form action="" class="login-box__form">
+  <form id="id_form_validation" action="" class="login-box__form">
     <div class="form__inputs-container">
       <div class="form__input">
         <div class="form__field-container">
-          <input class="form__field" id="mail" type="email">
+          <input class="form__field" id="mail" name="email" type="email">
       
           <label class="form__label" for="mail">
             <span class="label__content">Endereço de Email *</span>
           </label>
         </div>
+        <p class="form__input-error" data-input-name="email" hidden></p>
       </div>
       
       <div class="form__input">
         <div class="form__field-container">
-          <input class="form__field" id="password" type="password">
+          <input class="form__field" id="password" name="password" type="password">
       
           <label class="form__label" for="password">
             <span class="label__content">Senha *</span>
           </label>
         </div>
+        <p class="form__input-error" data-input-name="password" hidden></p>
       </div>
       
       <div class="form__input">
         <div class="form__field-container--select">
       
-          <select class="form__field" id="state">
+          <select class="form__field" name="uf" id="id_uf">
             <option class="form__field-option" value="" selected disabled hidden></option>
-            <option class="form__field-option" value="df">Distrito Federal</option>
-            <option class="form__field-option" value="mg">Minas Gerais</option>
-            <option class="form__field-option" value="sp">São Paulo</option>
-            <option class="form__field-option" value="rj">Rio de Janeiro</option>
+            <option class="form__field-option" value="AC">Acre</option>
+            <option class="form__field-option" value="AL">Alagoas</option>
+            <option class="form__field-option" value="AP">Amapá</option>
+            <option class="form__field-option" value="AM">Amazonas</option>
+            <option class="form__field-option" value="BA">Bahia</option>
+            <option class="form__field-option" value="CE">Ceará</option>
+            <option class="form__field-option" value="DF">Distrito Federal</option>
+            <option class="form__field-option" value="ES">Espírito Santo</option>
+            <option class="form__field-option" value="GO">Goiás</option>
+            <option class="form__field-option" value="MA">Maranhão</option>
+            <option class="form__field-option" value="MT">Mato Grosso</option>
+            <option class="form__field-option" value="MS">Mato Grosso do Sul</option>
+            <option class="form__field-option" value="MG">Minas Gerais</option>
+            <option class="form__field-option" value="PA">Pará</option>
+            <option class="form__field-option" value="PB">Paraíba</option>
+            <option class="form__field-option" value="PR">Paraná</option>
+            <option class="form__field-option" value="PE">Pernambuco</option>
+            <option class="form__field-option" value="PI">Piauí</option>
+            <option class="form__field-option" value="RJ">Rio de Janeiro</option>
+            <option class="form__field-option" value="RN">Rio Grande do Norte</option>
+            <option class="form__field-option" value="RS">Rio Grande do Sul</option>
+            <option class="form__field-option" value="RO">Rondônia</option>
+            <option class="form__field-option" value="RR">Roraima</option>
+            <option class="form__field-option" value="SC">Santa Catarina</option>
+            <option class="form__field-option" value="SP">São Paulo</option>
+            <option class="form__field-option" value="SE">Sergipe</option>
+            <option class="form__field-option" value="TO">Tocantins</option>
           </select>
       
-          <label class="form__label" for="state">
+          <label class="form__label" for="id_uf">
             <span class="label__content">Estado *</span>
           </label>
       
         </div>
+        <p class="form__input-error" data-input-name="uf" hidden></p>
+      </div>
+
+      <div class="form__input">
+        <div class="form__field-container--select">
+      
+          <select class="form__field" name="country" id="id_country">
+            <option class="form__field-option" value="" selected disabled hidden></option>
+            <option class="form__field-option" value="fr">França</option>
+            <option class="form__field-option" value="us">Estados Unidos</option>
+            <option class="form__field-option" value="pt">Portugal</option>
+            <option class="form__field-option" value="en">Inglaterra</option>
+          </select>
+      
+          <label class="form__label" for="id_country">
+            <span class="label__content">País *</span>
+          </label>
+      
+        </div>
+        <p class="form__input-error" data-input-name="country" hidden></p>
       </div>
     </div>
 
