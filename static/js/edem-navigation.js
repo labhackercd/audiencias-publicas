@@ -116,7 +116,8 @@ $('#id_form_validation').submit(function(event) {
     url: 'http://localhost:8000/ajax/validation/', // only development
     data: $(event.target).serialize(),
     success: function(response){
-        window.location = window.location;
+      window.sessionStorage.setItem('userData', JSON.stringify(response['data']));
+      // go to next sign up page
     },
     error: function(jqXRH) {
       $('.form__input-error').text('');
