@@ -94,18 +94,17 @@ $('#id_form_login').submit(function(event) {
     url: 'http://localhost:8000/ajax/login/', // only development
     data: $(event.target).serialize(),
     success: function(response){
-      if (response['result'] == 'success') {
-        window.location = window.location;
-      } else if (response['result'] == 'failed') {
-        $('.form__input-error').text('');
-        $.each(response['message'], function(key, value) {
-          if (key == '__all__') {
-            console.log(value); // only development
-          } else {
-            $('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
-          }
-        });
-      }
+      window.location = window.location;
+    },
+    error: function(jqXRH){
+      $('.form__input-error').text('');
+      $.each(jqXRH.responseJSON["data"], function(key, value) {
+        if (key == '__all__') {
+          console.log(value); // only development
+        } else {
+          $('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
+        }
+      });
     }
   });
 });
@@ -117,18 +116,17 @@ $('#id_form_validation').submit(function(event) {
     url: 'http://localhost:8000/ajax/validation/', // only development
     data: $(event.target).serialize(),
     success: function(response){
-      if (response['result'] == 'success') {
         window.location = window.location;
-      } else if (response['result'] == 'failed') {
-        $('.form__input-error').text('');
-        $.each(response['message'], function(key, value) {
-          if (key == '__all__') {
-            console.log(value); // only development
-          } else {
-            $('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
-          }
-        });
-      }
+    },
+    error: function(jqXRH) {
+      $('.form__input-error').text('');
+      $.each(jqXRH.responseJSON["data"], function(key, value) {
+        if (key == '__all__') {
+          console.log(value); // only development
+        } else {
+          $('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
+        }
+      });
     }
   });
 });
