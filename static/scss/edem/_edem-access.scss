@@ -41,7 +41,27 @@
       color: hsla(99, 45%, 60%, 1);
     }
   }
-  
+
+  .login-box__signup-wrapper {
+    display: flex;
+    flex: 1 auto;
+    overflow: hidden;
+
+    &.step-2 .login-box__signup-step {
+      transform: translateX(calc(-100% - 4rem));
+    }
+  }
+
+  .login-box__signup-step {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 100%;
+    width: 100%;
+    margin-right: 4rem;
+    transform: translateX(0%);
+    @include transition-default(transform);
+  }
+
   .login-box__primary-section {
     display: flex;
     flex-direction: column;
@@ -134,13 +154,13 @@
     flex-direction: column;
     color: white;
     flex: 1 0 auto;
-    
+
     .form__inputs-container {
       margin: 0 -0.25em;
       display: flex;
       flex-wrap: wrap;
     }
-    
+
     .form__input {
       margin: 0.75em 0;
       position: relative;
@@ -150,7 +170,7 @@
       flex: 1 0 auto;
       width: 100%;
       box-sizing: border-box;
-      
+
       &--gender {
         width: 8em;
       }
@@ -159,23 +179,23 @@
         width: 6em;
       }
     }
-    
+
     .form__field-container {
       position: relative;
       display: flex;
       align-items: baseline;
-      
+
       &--select {
         @extend .form__field-container;
         @include icon($icon-angle-down);
-        
+
         &::before {
           position: absolute;
           right: 0;
           top: 50%;
           transform: translateY(-50%);
         }
-        
+
         & .form__field {
           cursor: pointer;
         }
@@ -199,7 +219,7 @@
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
-      
+
       &:-moz-focusring {
         color: transparent;
         text-shadow: 0 0 0 #000;
@@ -207,36 +227,36 @@
 
       &:focus {
         outline: none;
-        
+
         & ~ .form__label {
-          
+
           &::after {
             transform: scaleX(1);
           }
-          
+
           & > .label__content {
             animation: anim-copy 0.3s forwards;
             color: #a9de8c;
           }
-        }        
+        }
       }
-      
+
       &.form__field--filled {
-        
+
         & ~ .form__label {
-          
+
           & > .label__content {
             animation: anim-copy 0.3s forwards;
           }
         }
       }
     }
-    
+
     .form__field-option {
       font-family: 'open sans';
       color: black;
     }
-    
+
     .form__field-action {
       flex: 0 0 auto;
       margin-left: 0.5em;
@@ -247,13 +267,13 @@
       cursor: pointer;
       display: flex;
       align-items: baseline;
-      
+
       .field-action__icon {
         font-size: 1.25em;
         margin-left: 0.25em;
       }
     }
-        
+
     .form__label {
       display: block;
       font-weight: 400;
@@ -266,7 +286,7 @@
       user-select: none;
       position: absolute;
       cursor: inherit;
-      
+
       &::before, &::after {
         content: '';
         width: 100%;
@@ -274,12 +294,12 @@
         bottom: 0px;
         z-index: 2;
       }
-      
+
       &::before {
         height: 1px;
         background-color: rgba(255, 255, 255, 0.5);
       }
-      
+
       &::after {
         height: 2px;
         background-color: #a9de8c;
@@ -305,16 +325,16 @@
       animation: anim 0.3s backwards reverse;
       color: #fff;
     }
-    
+
     .form__input-error {
       margin: 0;
       margin-top: 0.1em;
       font-size: 0.7em;
       font-weight: 700;
       // display: none;
-      color: #e74c3c; 
+      color: #e74c3c;
     }
-    
+
     .form__input-action {
       text-transform: uppercase;
       font-size: 0.7em;
@@ -342,17 +362,48 @@
     text-transform: uppercase;
     font-size: 1em;
     position: relative;
-    
+    margin-bottom: 0;
+    font-weight: 700;
+    background-color: white;
+    color: $primary;
+    padding: 0.5rem 1rem;
+    @include transition-default(background-color);
+
+    &:hover {
+      background-color: $secondary;
+    }
+
     &--next {
       @extend .login-box__button;
       background-color: transparent;
       color: $link;
-      @include icon($icon-arrow-right);
+      @include icon($icon-chevron-right);
+
+      &:hover {
+        background-color: transparent;
+      }
 
       &::before {
         color: $secondary;
         position: absolute;
         right: 0;
+      }
+    }
+
+    &--prev {
+      @extend .login-box__button;
+      background-color: transparent;
+      color: $link;
+      @include icon($icon-chevron-left);
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      &::before {
+        color: $secondary;
+        position: absolute;
+        left: 0;
       }
     }
   }

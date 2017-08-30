@@ -202,33 +202,33 @@
 
   <div class="login-box__primary-section">
     <span class="login-box__choice-text">Entre usando login social:</span>
-    
+
     <div class="login-box__social">
       <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
         <div class="social__button-container">
-    
+
           <div class="social__icon-wrapper">
             <svg class="social__icon" viewBox="0 0 366 372" xmlns="http://www.w3.org/2000/svg"><path d="M125.9 10.2c40.2-13.9 85.3-13.6 125.3 1.1 22.2 8.2 42.5 21 59.9 37.1-5.8 6.3-12.1 12.2-18.1 18.3l-34.2 34.2c-11.3-10.8-25.1-19-40.1-23.6-17.6-5.3-36.6-6.1-54.6-2.2-21 4.5-40.5 15.5-55.6 30.9-12.2 12.3-21.4 27.5-27 43.9-20.3-15.8-40.6-31.5-61-47.3 21.5-43 60.1-76.9 105.4-92.4z" id="Shape" fill="#EA4335"/><path d="M20.6 102.4c20.3 15.8 40.6 31.5 61 47.3-8 23.3-8 49.2 0 72.4-20.3 15.8-40.6 31.6-60.9 47.3C1.9 232.7-3.8 189.6 4.4 149.2c3.3-16.2 8.7-32 16.2-46.8z" id="Shape" fill="#FBBC05"/><path d="M361.7 151.1c5.8 32.7 4.5 66.8-4.7 98.8-8.5 29.3-24.6 56.5-47.1 77.2l-59.1-45.9c19.5-13.1 33.3-34.3 37.2-57.5H186.6c.1-24.2.1-48.4.1-72.6h175z" id="Shape" fill="#4285F4"/><path d="M81.4 222.2c7.8 22.9 22.8 43.2 42.6 57.1 12.4 8.7 26.6 14.9 41.4 17.9 14.6 3 29.7 2.6 44.4.1 14.6-2.6 28.7-7.9 41-16.2l59.1 45.9c-21.3 19.7-48 33.1-76.2 39.6-31.2 7.1-64.2 7.3-95.2-1-24.6-6.5-47.7-18.2-67.6-34.1-20.9-16.6-38.3-38-50.4-62 20.3-15.7 40.6-31.5 60.9-47.3z" fill="#34A853"/>
             </svg>
           </div>
-    
+
           <span class="social__text">Google</span>
         </div>
       </a>
-    
+
       <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}">
         <div class="social__button-container">
-    
+
           <div class="social__icon-wrapper">
             <svg class="social__icon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" version="1.1" y="0px" x="0px"><path fill="#fff" d="m134.9 272.7h56.12v231.1c0 4.562 3.696 8.258 8.258 8.258h95.16c4.562 0 8.258-3.696 8.258-8.258v-230h64.52c4.195 0 7.725-3.148 8.204-7.315l9.799-85.06c0.269-2.34-0.472-4.684-2.038-6.44-1.567-1.757-3.81-2.763-6.164-2.763h-74.32v-53.3c0-16.07 8.654-24.22 25.73-24.22h48.59c4.562 0 8.258-3.698 8.258-8.258v-78.1c0-4.562-3.696-8.258-8.258-8.258h-66.96c-0.5-0.024-1.5-0.062-3.1-0.062-11.62 0-52.01 2.281-83.91 31.63-35.35 32.52-30.43 71.46-29.26 78.22v62.35h-58.92c-4.562 0-8.258 3.696-8.258 8.258v83.98c0.1 4.5 3.8 8.2 8.3 8.2z"/>
             </svg>
           </div>
-    
+
           <span class="social__text">Facebook</span>
         </div>
       </a>
     </div>
-    
+
     <span class="login-box__choice-text">ou<br>Entre com seu email:</span>
   </div>
 
@@ -237,28 +237,28 @@
       <div class="form__input">
         <div class="form__field-container">
           <input class="form__field" id="id_username" name="username">
-      
+
           <label class="form__label" for="mail">
             <span class="label__content">Endereço de Email</span>
           </label>
         </div>
         <p class="form__input-error" data-input-name="username" hidden></p>
       </div>
-      
+
 
       <div class="form__input">
         <div class="form__field-container">
           <input class="form__field" id="id_password" name="password" type="password">
-      
+
           <span class="form__field-action" role="button">Mostrar Senha <i class="field-action__icon icon icon-eye"></i></span>
-      
+
           <label class="form__label" for="password">
             <span class="label__content">Senha</span>
           </label>
         </div>
-      
+
         <p class="form__input-error" data-input-name="password" hidden></p>
-      
+
         <a class="form__input-action" href="#">Esqueceu sua senha?</a>
       </div>
     </div>
@@ -276,203 +276,191 @@
 </div>
 
 
-<!-- eDemocracia Cadastro 1/2 -->
-
 <div class="edem-access js-edem-signup">
 
   <h1 class="login-box__title">Criar Conta</h1>
 
-  <div class="login-box__primary-section">
-    <span class="login-box__choice-text">Crie sua conta usando login social:</span>
-    
-    <div class="login-box__social">
-      <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
-        <div class="social__button-container">
-    
-          <div class="social__icon-wrapper">
-            <svg class="social__icon" viewBox="0 0 366 372" xmlns="http://www.w3.org/2000/svg"><path d="M125.9 10.2c40.2-13.9 85.3-13.6 125.3 1.1 22.2 8.2 42.5 21 59.9 37.1-5.8 6.3-12.1 12.2-18.1 18.3l-34.2 34.2c-11.3-10.8-25.1-19-40.1-23.6-17.6-5.3-36.6-6.1-54.6-2.2-21 4.5-40.5 15.5-55.6 30.9-12.2 12.3-21.4 27.5-27 43.9-20.3-15.8-40.6-31.5-61-47.3 21.5-43 60.1-76.9 105.4-92.4z" id="Shape" fill="#EA4335"/><path d="M20.6 102.4c20.3 15.8 40.6 31.5 61 47.3-8 23.3-8 49.2 0 72.4-20.3 15.8-40.6 31.6-60.9 47.3C1.9 232.7-3.8 189.6 4.4 149.2c3.3-16.2 8.7-32 16.2-46.8z" id="Shape" fill="#FBBC05"/><path d="M361.7 151.1c5.8 32.7 4.5 66.8-4.7 98.8-8.5 29.3-24.6 56.5-47.1 77.2l-59.1-45.9c19.5-13.1 33.3-34.3 37.2-57.5H186.6c.1-24.2.1-48.4.1-72.6h175z" id="Shape" fill="#4285F4"/><path d="M81.4 222.2c7.8 22.9 22.8 43.2 42.6 57.1 12.4 8.7 26.6 14.9 41.4 17.9 14.6 3 29.7 2.6 44.4.1 14.6-2.6 28.7-7.9 41-16.2l59.1 45.9c-21.3 19.7-48 33.1-76.2 39.6-31.2 7.1-64.2 7.3-95.2-1-24.6-6.5-47.7-18.2-67.6-34.1-20.9-16.6-38.3-38-50.4-62 20.3-15.7 40.6-31.5 60.9-47.3z" fill="#34A853"/>
-            </svg>
-          </div>
-    
-          <span class="social__text">Google</span>
+  <div class="login-box__signup-wrapper">
+    <div class="login-box__signup-step">
+      <div class="login-box__primary-section">
+        <span class="login-box__choice-text">Crie sua conta usando login social:</span>
+
+        <div class="login-box__social">
+          <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+            <div class="social__button-container">
+
+              <div class="social__icon-wrapper">
+                <svg class="social__icon" viewBox="0 0 366 372" xmlns="http://www.w3.org/2000/svg"><path d="M125.9 10.2c40.2-13.9 85.3-13.6 125.3 1.1 22.2 8.2 42.5 21 59.9 37.1-5.8 6.3-12.1 12.2-18.1 18.3l-34.2 34.2c-11.3-10.8-25.1-19-40.1-23.6-17.6-5.3-36.6-6.1-54.6-2.2-21 4.5-40.5 15.5-55.6 30.9-12.2 12.3-21.4 27.5-27 43.9-20.3-15.8-40.6-31.5-61-47.3 21.5-43 60.1-76.9 105.4-92.4z" id="Shape" fill="#EA4335"/><path d="M20.6 102.4c20.3 15.8 40.6 31.5 61 47.3-8 23.3-8 49.2 0 72.4-20.3 15.8-40.6 31.6-60.9 47.3C1.9 232.7-3.8 189.6 4.4 149.2c3.3-16.2 8.7-32 16.2-46.8z" id="Shape" fill="#FBBC05"/><path d="M361.7 151.1c5.8 32.7 4.5 66.8-4.7 98.8-8.5 29.3-24.6 56.5-47.1 77.2l-59.1-45.9c19.5-13.1 33.3-34.3 37.2-57.5H186.6c.1-24.2.1-48.4.1-72.6h175z" id="Shape" fill="#4285F4"/><path d="M81.4 222.2c7.8 22.9 22.8 43.2 42.6 57.1 12.4 8.7 26.6 14.9 41.4 17.9 14.6 3 29.7 2.6 44.4.1 14.6-2.6 28.7-7.9 41-16.2l59.1 45.9c-21.3 19.7-48 33.1-76.2 39.6-31.2 7.1-64.2 7.3-95.2-1-24.6-6.5-47.7-18.2-67.6-34.1-20.9-16.6-38.3-38-50.4-62 20.3-15.7 40.6-31.5 60.9-47.3z" fill="#34A853"/>
+                </svg>
+              </div>
+
+              <span class="social__text">Google</span>
+            </div>
+          </a>
+
+          <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}">
+            <div class="social__button-container">
+
+              <div class="social__icon-wrapper">
+                <svg class="social__icon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" version="1.1" y="0px" x="0px"><path fill="#fff" d="m134.9 272.7h56.12v231.1c0 4.562 3.696 8.258 8.258 8.258h95.16c4.562 0 8.258-3.696 8.258-8.258v-230h64.52c4.195 0 7.725-3.148 8.204-7.315l9.799-85.06c0.269-2.34-0.472-4.684-2.038-6.44-1.567-1.757-3.81-2.763-6.164-2.763h-74.32v-53.3c0-16.07 8.654-24.22 25.73-24.22h48.59c4.562 0 8.258-3.698 8.258-8.258v-78.1c0-4.562-3.696-8.258-8.258-8.258h-66.96c-0.5-0.024-1.5-0.062-3.1-0.062-11.62 0-52.01 2.281-83.91 31.63-35.35 32.52-30.43 71.46-29.26 78.22v62.35h-58.92c-4.562 0-8.258 3.696-8.258 8.258v83.98c0.1 4.5 3.8 8.2 8.3 8.2z"/>
+                </svg>
+              </div>
+
+              <span class="social__text">Facebook</span>
+            </div>
+          </a>
         </div>
-      </a>
-    
-      <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}">
-        <div class="social__button-container">
-    
-          <div class="social__icon-wrapper">
-            <svg class="social__icon" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 512 512" version="1.1" y="0px" x="0px"><path fill="#fff" d="m134.9 272.7h56.12v231.1c0 4.562 3.696 8.258 8.258 8.258h95.16c4.562 0 8.258-3.696 8.258-8.258v-230h64.52c4.195 0 7.725-3.148 8.204-7.315l9.799-85.06c0.269-2.34-0.472-4.684-2.038-6.44-1.567-1.757-3.81-2.763-6.164-2.763h-74.32v-53.3c0-16.07 8.654-24.22 25.73-24.22h48.59c4.562 0 8.258-3.698 8.258-8.258v-78.1c0-4.562-3.696-8.258-8.258-8.258h-66.96c-0.5-0.024-1.5-0.062-3.1-0.062-11.62 0-52.01 2.281-83.91 31.63-35.35 32.52-30.43 71.46-29.26 78.22v62.35h-58.92c-4.562 0-8.258 3.696-8.258 8.258v83.98c0.1 4.5 3.8 8.2 8.3 8.2z"/>
-            </svg>
+
+        <span class="login-box__choice-text">ou<br>Crie manualmente com seu email:</span>
+      </div>
+
+      <form id="id_form_validation" action="" class="login-box__form">
+        <div class="form__inputs-container">
+          <div class="form__input">
+            <div class="form__field-container">
+              <input class="form__field" id="mail" name="email" type="email">
+
+              <label class="form__label" for="mail">
+                <span class="label__content">Endereço de Email *</span>
+              </label>
+            </div>
+            <p class="form__input-error" data-input-name="email" hidden></p>
           </div>
-    
-          <span class="social__text">Facebook</span>
+
+          <div class="form__input">
+            <div class="form__field-container">
+              <input class="form__field" id="password" name="password" type="password">
+
+              <label class="form__label" for="password">
+                <span class="label__content">Senha *</span>
+              </label>
+            </div>
+            <p class="form__input-error" data-input-name="password" hidden></p>
+          </div>
+
+          <div class="form__input">
+            <div class="form__field-container--select">
+
+              <select class="form__field" name="uf" id="id_uf">
+                <option class="form__field-option" value="" selected disabled hidden></option>
+                <option class="form__field-option" value="AC">Acre</option>
+                <option class="form__field-option" value="AL">Alagoas</option>
+                <option class="form__field-option" value="AP">Amapá</option>
+                <option class="form__field-option" value="AM">Amazonas</option>
+                <option class="form__field-option" value="BA">Bahia</option>
+                <option class="form__field-option" value="CE">Ceará</option>
+                <option class="form__field-option" value="DF">Distrito Federal</option>
+                <option class="form__field-option" value="ES">Espírito Santo</option>
+                <option class="form__field-option" value="GO">Goiás</option>
+                <option class="form__field-option" value="MA">Maranhão</option>
+                <option class="form__field-option" value="MT">Mato Grosso</option>
+                <option class="form__field-option" value="MS">Mato Grosso do Sul</option>
+                <option class="form__field-option" value="MG">Minas Gerais</option>
+                <option class="form__field-option" value="PA">Pará</option>
+                <option class="form__field-option" value="PB">Paraíba</option>
+                <option class="form__field-option" value="PR">Paraná</option>
+                <option class="form__field-option" value="PE">Pernambuco</option>
+                <option class="form__field-option" value="PI">Piauí</option>
+                <option class="form__field-option" value="RJ">Rio de Janeiro</option>
+                <option class="form__field-option" value="RN">Rio Grande do Norte</option>
+                <option class="form__field-option" value="RS">Rio Grande do Sul</option>
+                <option class="form__field-option" value="RO">Rondônia</option>
+                <option class="form__field-option" value="RR">Roraima</option>
+                <option class="form__field-option" value="SC">Santa Catarina</option>
+                <option class="form__field-option" value="SP">São Paulo</option>
+                <option class="form__field-option" value="SE">Sergipe</option>
+                <option class="form__field-option" value="TO">Tocantins</option>
+              </select>
+
+              <label class="form__label" for="id_uf">
+                <span class="label__content">Estado *</span>
+              </label>
+
+            </div>
+            <p class="form__input-error" data-input-name="uf" hidden></p>
+          </div>
+
+          <div class="form__input">
+            <div class="form__field-container--select">
+
+              <select class="form__field" name="country" id="id_country">
+                <option class="form__field-option" value="" selected disabled hidden></option>
+                <option class="form__field-option" value="fr">França</option>
+                <option class="form__field-option" value="us">Estados Unidos</option>
+                <option class="form__field-option" value="pt">Portugal</option>
+                <option class="form__field-option" value="en">Inglaterra</option>
+              </select>
+
+              <label class="form__label" for="id_country">
+                <span class="label__content">País *</span>
+              </label>
+
+            </div>
+            <p class="form__input-error" data-input-name="country" hidden></p>
+          </div>
         </div>
-      </a>
+
+        <div class="form__footer">
+          <div class="form__alt-action">
+            <p class="alt-action__text">Já possui uma conta?</p>
+            <a class="alt-action__link" href="#">Entre aqui!</a>
+          </div>
+
+          <button class="login-box__button--next button">Seguinte</button>
+        </div>
+      </form>
     </div>
-    
-    <span class="login-box__choice-text">ou<br>Crie manualmente com seu email:</span>
+
+    <div class="login-box__signup-step">
+      <form class="login-box__form" action="">
+        <div class="form__inputs-container">
+          <div class="form__input">
+            <div class="form__field-container">
+              <input class="form__field" id="name" type="text">
+
+              <label class="form__label" for="name">
+                <span class="label__content">Nome de Exibição *</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form__optional-wrapper">
+            <h2 class="form__optional-header">Dados Opcionais</h2>
+
+            <div class="form__input form__input--gender">
+              <div class="form__field-container--select">
+
+                <select class="form__field" id="state">
+                  <option class="form__field-option" value="" selected disabled hidden></option>
+                  <option class="form__field-option" value="male">Masculino</option>
+                  <option class="form__field-option" value="female">Feminino</option>
+                </select>
+
+                <label class="form__label" for="gender">
+                  <span class="label__content">Sexo *</span>
+                </label>
+
+              </div>
+            </div>
+
+            <div class="form__input form__input--year">
+              <div class="form__field-container">
+                <input class="form__field" id="name" type="text">
+
+                <label class="form__label" for="name">
+                  <span class="label__content">Ano em que nasceu</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form__footer">
+          <span role="button" class="login-box__button--prev button">Voltar</span>
+          <button class="login-box__button button">Criar Conta</button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <form id="id_form_validation" action="" class="login-box__form">
-    <div class="form__inputs-container">
-      <div class="form__input">
-        <div class="form__field-container">
-          <input class="form__field" id="mail" name="email" type="email">
-      
-          <label class="form__label" for="mail">
-            <span class="label__content">Endereço de Email *</span>
-          </label>
-        </div>
-        <p class="form__input-error" data-input-name="email" hidden></p>
-      </div>
-      
-      <div class="form__input">
-        <div class="form__field-container">
-          <input class="form__field" id="password" name="password" type="password">
-      
-          <label class="form__label" for="password">
-            <span class="label__content">Senha *</span>
-          </label>
-        </div>
-        <p class="form__input-error" data-input-name="password" hidden></p>
-      </div>
-      
-      <div class="form__input">
-        <div class="form__field-container--select">
-      
-          <select class="form__field" name="uf" id="id_uf">
-            <option class="form__field-option" value="" selected disabled hidden></option>
-            <option class="form__field-option" value="AC">Acre</option>
-            <option class="form__field-option" value="AL">Alagoas</option>
-            <option class="form__field-option" value="AP">Amapá</option>
-            <option class="form__field-option" value="AM">Amazonas</option>
-            <option class="form__field-option" value="BA">Bahia</option>
-            <option class="form__field-option" value="CE">Ceará</option>
-            <option class="form__field-option" value="DF">Distrito Federal</option>
-            <option class="form__field-option" value="ES">Espírito Santo</option>
-            <option class="form__field-option" value="GO">Goiás</option>
-            <option class="form__field-option" value="MA">Maranhão</option>
-            <option class="form__field-option" value="MT">Mato Grosso</option>
-            <option class="form__field-option" value="MS">Mato Grosso do Sul</option>
-            <option class="form__field-option" value="MG">Minas Gerais</option>
-            <option class="form__field-option" value="PA">Pará</option>
-            <option class="form__field-option" value="PB">Paraíba</option>
-            <option class="form__field-option" value="PR">Paraná</option>
-            <option class="form__field-option" value="PE">Pernambuco</option>
-            <option class="form__field-option" value="PI">Piauí</option>
-            <option class="form__field-option" value="RJ">Rio de Janeiro</option>
-            <option class="form__field-option" value="RN">Rio Grande do Norte</option>
-            <option class="form__field-option" value="RS">Rio Grande do Sul</option>
-            <option class="form__field-option" value="RO">Rondônia</option>
-            <option class="form__field-option" value="RR">Roraima</option>
-            <option class="form__field-option" value="SC">Santa Catarina</option>
-            <option class="form__field-option" value="SP">São Paulo</option>
-            <option class="form__field-option" value="SE">Sergipe</option>
-            <option class="form__field-option" value="TO">Tocantins</option>
-          </select>
-      
-          <label class="form__label" for="id_uf">
-            <span class="label__content">Estado *</span>
-          </label>
-      
-        </div>
-        <p class="form__input-error" data-input-name="uf" hidden></p>
-      </div>
-
-      <div class="form__input">
-        <div class="form__field-container--select">
-      
-          <select class="form__field" name="country" id="id_country">
-            <option class="form__field-option" value="" selected disabled hidden></option>
-            <option class="form__field-option" value="fr">França</option>
-            <option class="form__field-option" value="us">Estados Unidos</option>
-            <option class="form__field-option" value="pt">Portugal</option>
-            <option class="form__field-option" value="en">Inglaterra</option>
-          </select>
-      
-          <label class="form__label" for="id_country">
-            <span class="label__content">País *</span>
-          </label>
-      
-        </div>
-        <p class="form__input-error" data-input-name="country" hidden></p>
-      </div>
-    </div>
-
-    <div class="form__footer">
-      <div class="form__alt-action">
-        <p class="alt-action__text">Já possui uma conta?</p>
-        <a class="alt-action__link" href="#">Entre aqui!</a>
-      </div>
-
-      <button class="login-box__button--next button">Seguinte</button>
-    </div>
-  </form>
-
 </div>
- 
-
-<!-- eDemocracia Cadastro 2/2 -->
-
-<!-- <div class="edem-access">
-
-  <h1 class="login-box__title">Criar Conta</h1>
-
-  <form class="login-box__form" action="">
-    <div class="form__inputs-container">
-      <div class="form__input">
-        <div class="form__field-container">
-          <input class="form__field" id="name" type="text">
-      
-          <label class="form__label" for="name">
-            <span class="label__content">Nome de Exibição *</span>
-          </label>
-        </div>
-      </div>
-      
-      <div class="form__optional-wrapper">
-        <h2 class="form__optional-header">Dados Opcionais</h2>
-      
-        <div class="form__input form__input--gender">
-          <div class="form__field-container--select">
-      
-            <select class="form__field" id="state">
-              <option class="form__field-option" value="" selected disabled hidden></option>
-              <option class="form__field-option" value="male">Masculino</option>
-              <option class="form__field-option" value="female">Feminino</option>
-            </select>
-      
-            <label class="form__label" for="gender">
-              <span class="label__content">Sexo *</span>
-            </label>
-      
-          </div>
-        </div>
-      
-        <div class="form__input form__input--year">
-          <div class="form__field-container">
-            <input class="form__field" id="name" type="text">
-      
-            <label class="form__label" for="name">
-              <span class="label__content">Ano em que nasceu</span>
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="form__footer">
-      <div class="form__alt-action">
-        <p class="alt-action__text">Já possui uma conta?</p>
-        <a href="" class="alt-action__link">Entre aqui!</a>
-      </div>
-
-      <button class="login-box__button--next button">Seguinte</button>
-    </div>
-  </form>
-
-</div> -->
-
-
- 
