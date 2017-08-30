@@ -54,20 +54,20 @@ $('.js-access-link').click(function() {
 
   $('.edem-access').removeClass('-open');
 
-  if ($(this).parent().hasClass('-active')) { 
+  if ($(this).parent().hasClass('-active')) {
     $(this).parent().removeClass('-active');
   } else {
     $('.js-access-link').parent().removeClass('-active');
     $(this).parent().addClass('-active');
-  
+
     if ($(this).hasClass('js-login-link')) {
       $('.js-edem-login').addClass('-open');
     }
-  
+
     else if ($(this).hasClass('js-signup-link')) {
       $('.js-edem-signup').addClass('-open');
     }
-  
+
   }
 
 });
@@ -108,6 +108,15 @@ $('#id_form_login').submit(function(event) {
     }
   });
 });
+
+$('.login-box__button--next').click(function(){
+  $('.login-box__signup-wrapper').addClass('step-2');
+});
+
+$('.login-box__button--prev').click(function(){
+  $('.login-box__signup-wrapper').removeClass('step-2');
+});
+
 
 $('#id_form_validation').submit(function(event) {
   event.preventDefault();
