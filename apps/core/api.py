@@ -46,7 +46,7 @@ class MessageListAPI(generics.ListAPIView):
         filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'room')
+    filter_fields = ('id', 'room', 'user', 'message')
     search_fields = ('message',)
     ordering_fields = ('timestamp', 'user', 'room')
 
@@ -58,7 +58,7 @@ class QuestionListAPI(generics.ListAPIView):
         filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'room')
+    filter_fields = ('id', 'room', 'user', 'question')
     search_fields = ('question',)
     ordering_fields = ('up_votes', 'down_votes', 'timestamp')
 
@@ -66,8 +66,20 @@ class QuestionListAPI(generics.ListAPIView):
 class RoomListAPI(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
-    search_fields = ('cod_reunion')
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        filters.SearchFilter)
+    search_fields = (
+        'cod_reunion', 'youtube_id', 'legislative_body_alias',
+        'legislative_body_initials', 'reunion_type', 'title_reunion',
+        'reunion_object', 'reunion_theme', 'legislative_body',
+        'reunion_status')
+    filter_fields = (
+        'id', 'cod_reunion', 'online_users', 'youtube_id',
+        'legislative_body_alias', 'legislative_body_initials',
+        'youtube_status', 'is_joint', 'max_online_users', 'is_visible',
+        'reunion_type', 'title_reunion', 'reunion_object', 'reunion_theme',
+        'legislative_body', 'reunion_status')
 
 
 class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
