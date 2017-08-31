@@ -204,7 +204,7 @@
     <span class="login-box__choice-text">Entre usando login social:</span>
 
     <div class="login-box__social">
-      <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+      <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}" tabindex="0">
         <div class="social__button-container">
 
           <div class="social__icon-wrapper">
@@ -216,7 +216,7 @@
         </div>
       </a>
 
-      <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}">
+      <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}" tabindex="0">
         <div class="social__button-container">
 
           <div class="social__icon-wrapper">
@@ -236,7 +236,7 @@
     <div class="form__inputs-container">
       <div class="form__input">
         <div class="form__field-container">
-          <input class="form__field" id="id_username" name="username">
+          <input class="form__field" id="id_username" name="username" tabindex="0">
 
           <label class="form__label" for="mail">
             <span class="label__content">Endereço de Email</span>
@@ -248,9 +248,9 @@
 
       <div class="form__input">
         <div class="form__field-container">
-          <input class="form__field" id="id_password" name="password" type="password">
+          <input class="form__field" id="id_password" name="password" type="password" tabindex="0">
 
-          <span class="form__field-action" role="button">Mostrar Senha <i class="field-action__icon icon icon-eye"></i></span>
+          <span class="form__field-action" role="button" tabindex="0">Mostrar Senha <i class="field-action__icon icon icon-eye"></i></span>
 
           <label class="form__label" for="password">
             <span class="label__content">Senha</span>
@@ -259,17 +259,17 @@
 
         <p class="form__input-error" data-input-name="password" hidden></p>
 
-        <a class="form__input-action" href="#">Esqueceu sua senha?</a>
+        <a class="form__input-action" href="#" tabindex="0">Esqueceu sua senha?</a>
       </div>
     </div>
 
     <div class="form__footer">
       <div class="form__alt-action">
         <p class="alt-action__text">Ainda não possui uma conta?</p>
-        <a href="#" class="alt-action__link">Crie sua conta aqui!</a>
+        <a href="#" class="alt-action__link" tabindex="0">Crie sua conta aqui!</a>
       </div>
 
-      <button class="login-box__button button">Entrar</button>
+      <button class="login-box__button button" tabindex="0">Entrar</button>
     </div>
   </form>
 
@@ -286,7 +286,7 @@
         <span class="login-box__choice-text">Crie sua conta usando login social:</span>
 
         <div class="login-box__social">
-          <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+          <a class="social__button--google button" href="/account/social/login/google-oauth2/?next={{ request.path }}" tabindex="0">
             <div class="social__button-container">
 
               <div class="social__icon-wrapper">
@@ -298,7 +298,7 @@
             </div>
           </a>
 
-          <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}">
+          <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}" tabindex="0">
             <div class="social__button-container">
 
               <div class="social__icon-wrapper">
@@ -318,7 +318,7 @@
         <div class="form__inputs-container">
           <div class="form__input">
             <div class="form__field-container">
-              <input class="form__field" id="mail" name="email" type="email">
+              <input class="form__field" id="mail" name="email" type="email" tabindex="0">
 
               <label class="form__label" for="mail">
                 <span class="label__content">Endereço de Email *</span>
@@ -329,7 +329,7 @@
 
           <div class="form__input">
             <div class="form__field-container">
-              <input class="form__field" id="password" name="password" type="password">
+              <input class="form__field" id="password" name="password" type="password" tabindex="0">
 
               <label class="form__label" for="password">
                 <span class="label__content">Senha *</span>
@@ -341,7 +341,7 @@
           <div class="form__input">
             <div class="form__field-container--select">
 
-              <select class="form__field" name="uf" id="id_uf">
+              <select class="form__field" name="uf" id="id_uf" tabindex="0">
                 <option class="form__field-option" value="" selected disabled hidden></option>
                 <option class="form__field-option" value="AC">Acre</option>
                 <option class="form__field-option" value="AL">Alagoas</option>
@@ -378,13 +378,13 @@
 
             </div>
             <p class="form__input-error" data-input-name="uf" hidden></p>
-            <a class="form__input-action -state">Sou Estrangeiro</a>
+            <a class="form__input-action -state" tabindex="0">Sou Estrangeiro</a>
           </div>
 
           <div class="form__input" hidden>
             <div class="form__field-container--select">
 
-              <select class="form__field" name="country" id="id_country">
+              <select class="form__field" name="country" id="id_country" tabindex="0">
                 <option class="form__field-option" value="" selected disabled hidden></option>
                 <option class="form__field-option" value="fr">França</option>
                 <option class="form__field-option" value="us">Estados Unidos</option>
@@ -398,17 +398,17 @@
 
             </div>
             <p class="form__input-error" data-input-name="country" hidden></p>
-            <a class="form__input-action -country">Sou Brasileiro</a>
+            <a class="form__input-action -country" tabindex="0">Sou Brasileiro</a>
           </div>
         </div>
 
         <div class="form__footer">
           <div class="form__alt-action">
             <p class="alt-action__text">Já possui uma conta?</p>
-            <a class="alt-action__link" href="#">Entre aqui!</a>
+            <a class="alt-action__link" href="#" tabindex="0">Entre aqui!</a>
           </div>
 
-          <button class="login-box__button--next button">Seguinte</button>
+          <button class="login-box__button--next button" tabindex="0">Seguinte</button>
         </div>
       </form>
     </div>
@@ -418,7 +418,7 @@
         <div class="form__inputs-container">
           <div class="form__input">
             <div class="form__field-container">
-              <input class="form__field" id="name" type="text">
+              <input class="form__field" id="name" type="text" tabindex="-1">
 
               <label class="form__label" for="name">
                 <span class="label__content">Nome de Exibição *</span>
@@ -432,7 +432,7 @@
             <div class="form__input form__input--gender">
               <div class="form__field-container--select">
 
-                <select class="form__field" id="state">
+                <select class="form__field" id="state" tabindex="-1">
                   <option class="form__field-option" value="" selected disabled hidden></option>
                   <option class="form__field-option" value="male">Masculino</option>
                   <option class="form__field-option" value="female">Feminino</option>
@@ -447,7 +447,7 @@
 
             <div class="form__input form__input--year">
               <div class="form__field-container">
-                <input class="form__field" id="name" type="text">
+                <input class="form__field" id="name" type="text" tabindex="-1"
 
                 <label class="form__label" for="name">
                   <span class="label__content">Ano em que nasceu</span>
@@ -458,8 +458,8 @@
         </div>
 
         <div class="form__footer">
-          <span role="button" class="login-box__button--prev button">Voltar</span>
-          <button class="login-box__button button">Criar Conta</button>
+          <span role="button" class="login-box__button--prev button" tabindex="-1">Voltar</span>
+          <button class="login-box__button button" tabindex="-1">Criar Conta</button>
         </div>
       </form>
     </div>
