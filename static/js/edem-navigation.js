@@ -102,21 +102,16 @@ $('#id_form_login').submit(function(event) {
         if (key == '__all__') {
           console.log(value); // only development
         } else {
-          $('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
+          $(event.target).find('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
         }
       });
     }
   });
 });
 
-$('.login-box__button--next').click(function(){
-  $('.login-box__signup-wrapper').addClass('step-2');
-});
-
 $('.login-box__button--prev').click(function(){
   $('.login-box__signup-wrapper').removeClass('step-2');
 });
-
 
 // Toggle country/state input
 
@@ -141,7 +136,7 @@ $('#id_form_validation').submit(function(event) {
     data: $(event.target).serialize(),
     success: function(response){
       window.sessionStorage.setItem('userData', JSON.stringify(response['data']));
-      // go to next sign up page
+      $('.login-box__signup-wrapper').addClass('step-2');
     },
     error: function(jqXRH) {
       $('.form__input-error').text('');
@@ -149,7 +144,7 @@ $('#id_form_validation').submit(function(event) {
         if (key == '__all__') {
           console.log(value); // only development
         } else {
-          $('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
+          $(event.target).find('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
         }
       });
     }
