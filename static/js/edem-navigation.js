@@ -118,6 +118,21 @@ $('.login-box__button--prev').click(function(){
 });
 
 
+// Toggle country/state input
+
+$('.form__input-action.-state').click(function(){
+  $(this).closest('.form__input').attr('hidden','');
+  $('.form__input-action.-country').closest('.form__input').removeAttr('hidden');
+  $('#id_uf').val('').removeClass('form__field--filled');
+});
+
+$('.form__input-action.-country').click(function(){
+  $(this).closest('.form__input').attr('hidden','');
+  $('.form__input-action.-state').closest('.form__input').removeAttr('hidden');
+  $('#id_country').val('').removeClass('form__field--filled');
+});
+
+
 $('#id_form_validation').submit(function(event) {
   event.preventDefault();
   $.ajax({
