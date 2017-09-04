@@ -91,20 +91,16 @@ $('#id_form_login').submit(function(event) {
   event.preventDefault();
   $.ajax({
     type:"POST",
-    url: 'http://localhost:8000/ajax/login/', // only development
+    url: '/ajax/login/',
     data: $(event.target).serialize(),
     success: function(response){
-      window.location = window.location;
+      location.reload();
     },
     error: function(jqXRH){
       $('.form__input-error').text('');
-      $.each(jqXRH.responseJSON["data"], function(key, value) {
-        if (key == '__all__') {
-          console.log(value); // only development
-        } else {
-          $(event.target).find('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
-        }
-      });
+      $('.form__input-error')
+        .text(jqXRH.responseJSON['data'])
+        .removeAttr('hidden');
     }
   });
 });
@@ -116,9 +112,15 @@ $('.login-box__button--prev').click(function(){
 // Toggle country/state input
 
 $('.form__input-action.-state').click(function(){
-  $(this).closest('.form__input').attr('hidden','');
-  $('.form__input-action.-country').closest('.form__input').removeAttr('hidden');
-  $('#id_uf').val('').removeClass('form__field--filled');
+  $(this)
+    .closest('.form__input')
+    .attr('hidden','');
+  $('.form__input-action.-country')
+    .closest('.form__input')
+    .removeAttr('hidden');
+  $('#id_uf')
+    .val('')
+    .removeClass('form__field--filled');
 });
 
 $('.form__input-action.-country').click(function(){
@@ -127,26 +129,65 @@ $('.form__input-action.-country').click(function(){
   $('#id_country').val('').removeClass('form__field--filled');
 });
 
-
 $('#id_form_validation').submit(function(event) {
   event.preventDefault();
   $.ajax({
     type:"POST",
-    url: 'http://localhost:8000/ajax/validation/', // only development
+    url: '/ajax/validation/',
     data: $(event.target).serialize(),
     success: function(response){
-      window.sessionStorage.setItem('userData', JSON.stringify(response['data']));
+      window.sessionStorage
+        .setItem('userData', JSON.stringify(response['data']));
       $('.login-box__signup-wrapper').addClass('step-2');
     },
     error: function(jqXRH) {
       $('.form__input-error').text('');
       $.each(jqXRH.responseJSON["data"], function(key, value) {
-        if (key == '__all__') {
-          console.log(value); // only development
-        } else {
-          $(event.target).find('[data-input-name="'+key+'"]').text(value).removeAttr('hidden');
+        if (key != '__all__') {
+          $(event.target)
+            .find('[data-input-name="'+key+'"]')
+            .text(value)
+            .removeAttr('hidden');
         }
       });
     }
   });
+});
+
+$('#id_form_signup').submit(function(event) {
+  event.preventDefault();
+  var signup_form = {}
+  $.map($(event.target).serializeArray(), function(n, i){
+    signup_form[n['name']] = n['value'];
+  });
+  var user_data = $.extend(JSON.parse(sessionStorage.userData), signup_form);
+  if (grecaptcha.getResponse() == ""){
+    alert("Por favor preencha o reCAPTCHA.");
+  } else {
+    $.ajax({
+      type:"POST",
+      url: '/ajax/signup/',
+      data: user_data,
+      success: function(response){
+        console.log(response["data"]);
+      },
+      error: function(jqXRH) {
+        $('.form__input-error').text('');
+        $.each(jqXRH.responseJSON["data"], function(key, value) {
+          if (key == 'email') {
+            $('.login-box__signup-wrapper').removeClass('step-2');
+            $('#id_form_validation')
+              .find('[data-input-name="'+key+'"]')
+              .text(value)
+              .removeAttr('hidden');
+          } else if (key != '__all__') {
+            $(event.target)
+              .find('[data-input-name="'+key+'"]')
+              .text(value)
+              .removeAttr('hidden');
+          }
+        });
+      }
+    });
+  }
 });
