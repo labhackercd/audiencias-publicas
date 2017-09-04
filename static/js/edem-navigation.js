@@ -105,6 +105,8 @@ $('#id_form_login').submit(function(event) {
   });
 });
 
+// Go back function inside signup
+
 $('.login-box__button--prev').click(function(){
   $('.login-box__signup-wrapper').removeClass('step-2');
 });
@@ -127,6 +129,21 @@ $('.form__input-action.-country').click(function(){
   $(this).closest('.form__input').attr('hidden','');
   $('.form__input-action.-state').closest('.form__input').removeAttr('hidden');
   $('#id_country').val('').removeClass('form__field--filled');
+});
+
+// Toggle show password
+
+$('.form__field-action.-showpassword').click(function(){
+  var input = $(this).closest('.form__field-container').find('.form__field');
+  if (input.attr('type') === 'text') {
+    input.attr('type', 'password');
+    $(this).children('span').text('Mostrar Senha');
+    $(this).children('i').addClass('icon-eye').removeClass('icon-eye-slash');
+  } else {
+    input.attr('type', 'text');
+    $(this).children('span').text('Esconder Senha');
+    $(this).children('i').addClass('icon-eye-slash').removeClass('icon-eye');
+  }
 });
 
 $('#id_form_validation').submit(function(event) {
