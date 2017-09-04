@@ -414,16 +414,17 @@
     </div>
 
     <div class="login-box__signup-step">
-      <form class="login-box__form" action="">
+      <form id="id_form_signup" class="login-box__form" action="">
         <div class="form__inputs-container">
           <div class="form__input">
             <div class="form__field-container">
-              <input class="form__field" id="name" type="text" tabindex="-1">
+              <input class="form__field" id="name" name="first_name" type="text" tabindex="-1">
 
               <label class="form__label" for="name">
                 <span class="label__content">Nome de Exibição *</span>
               </label>
             </div>
+            <p class="form__input-error" data-input-name="first_name" hidden></p>
           </div>
 
           <div class="form__optional-wrapper">
@@ -432,7 +433,7 @@
             <div class="form__input form__input--gender">
               <div class="form__field-container--select">
 
-                <select class="form__field" id="state" tabindex="-1">
+                <select class="form__field" name="gender" id="gender" tabindex="-1">
                   <option class="form__field-option" value="" selected disabled hidden></option>
                   <option class="form__field-option" value="male">Masculino</option>
                   <option class="form__field-option" value="female">Feminino</option>
@@ -443,18 +444,22 @@
                 </label>
 
               </div>
+              <p class="form__input-error" data-input-name="gender" hidden></p>
             </div>
 
             <div class="form__input form__input--year">
               <div class="form__field-container">
-                <input class="form__field" id="name" type="text" tabindex="-1"
+                <input class="form__field" name="birthyear" id="birthyear" type="text" tabindex="-1">
 
-                <label class="form__label" for="name">
+                <label class="form__label" for="birthyear">
                   <span class="label__content">Ano em que nasceu</span>
                 </label>
               </div>
+              <p class="form__input-error" data-input-name="birthyear" hidden></p>
             </div>
           </div>
+            <div id="recaptcha" class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
         </div>
 
         <div class="form__footer">
