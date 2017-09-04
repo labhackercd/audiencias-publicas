@@ -1,7 +1,7 @@
 #olark-wrapper button.olark-launch-button {
   height: 32px !important;
   z-index: 999 !important;
-  right: 350px !important;
+  right: 375px !important;
 
   @include breakpoint(medium down) {
     display: none !important;
