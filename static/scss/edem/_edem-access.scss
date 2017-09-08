@@ -10,6 +10,7 @@
   justify-content: space-between;
   background: linear-gradient(#134836, #0d2625);
   padding: 2em;
+  overflow: hidden;
   font-family: "open sans";
 
   box-shadow: 0 6px 16px rgba(#000, 0.3);
@@ -38,6 +39,34 @@
       background-size: 100% 1px;
       color: hsla(99, 45%, 60%, 1);
     }
+  }
+
+  .login-box__error-block {
+    background-color: #e74c3c;
+    position: absolute;
+    width: calc(100% - 4rem);
+    top: -5rem;
+    padding: 1rem;
+    min-height: 4.9rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    z-index: 2;
+    transition: transform $swift-out 0.3s 0s, visibility 0s 0.3s;
+
+    &.-show {
+      transform: translateY(5rem);
+      visibility: visible;
+      transition: transform $swift-out 0.3s 0s, visibility 0s 0s;
+    }
+  }
+
+  .login-box__error-message {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0;
   }
 
   .login-box__signup-wrapper {
