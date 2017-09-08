@@ -46,7 +46,11 @@
     overflow: hidden;
 
     &.step-2 .login-box__signup-step {
-      transform: translateX(calc(-100% - 4rem));
+      transform: translateX(-100%);
+    }
+
+    &.step-3 .login-box__signup-step {
+      transform: translateX(-200%);
     }
   }
 
@@ -55,7 +59,6 @@
     flex-direction: column;
     flex: 1 0 100%;
     width: 100%;
-    margin-right: 4rem;
     transform: translateX(0%);
     @include transition-default(transform);
   }
@@ -93,6 +96,13 @@
     align-items: center;
     justify-content: center;
     display: flex;
+  }
+
+  .login-box__ending-text {
+    color: #e9c23a;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
   }
 
   .login-box__social {
