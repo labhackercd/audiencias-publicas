@@ -62,14 +62,14 @@ $('.js-access-link').click(function() {
 
     if ($(this).hasClass('js-login-link')) {
       $('.js-edem-login').addClass('-open');
+      $('.js-login-link').closest('.menu-list__item').addClass('-active');
     }
 
     else if ($(this).hasClass('js-signup-link')) {
       $('.js-edem-signup').addClass('-open');
+      $('.js-signup-link').closest('.menu-list__item').addClass('-active');
     }
-
   }
-
 });
 
 
