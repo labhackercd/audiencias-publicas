@@ -105,7 +105,8 @@ $('#id_form_login').submit(function(event) {
         showError("Verifique sua conexão com a internet.")
       } else if (jqXRH.status == 401) {
         $('.form__input-error').text('');
-        $('.form__input-error')
+        $(event.target)
+          .find('.form__input-error')
           .text(jqXRH.responseJSON['data'])
           .removeAttr('hidden');
       } else {
