@@ -72,6 +72,10 @@ $('.js-access-link').click(function() {
   }
 });
 
+function showError(errorMessage) {
+  $('.login-box__error-block').addClass('-show');
+  $('.login-box__error-message').text(errorMessage);
+}
 
 // eDemocracia edem-access input status
 
@@ -98,14 +102,14 @@ $('#id_form_login').submit(function(event) {
     },
     error: function(jqXRH){
       if (jqXRH.status == 0) {
-        console.log("Verifique sua conexão com a internet.")
+        showError("Verifique sua conexão com a internet.")
       } else if (jqXRH.status == 401) {
         $('.form__input-error').text('');
         $('.form__input-error')
           .text(jqXRH.responseJSON['data'])
           .removeAttr('hidden');
       } else {
-        console.log("Ocorreu um erro no servidor, tente novamente em alguns instantes.")
+        showError("Ocorreu um erro no servidor, tente novamente em alguns instantes.");
       }
     }
   });
@@ -171,7 +175,7 @@ $('#id_form_validation').submit(function(event) {
     },
     error: function(jqXRH) {
       if (jqXRH.status == 0) {
-        console.log("Verifique sua conexão com a internet.")
+        showError('Verifique sua conexão com a internet.');
       } else if (jqXRH.status == 400) {
         $('.form__input-error').text('');
         $.each(jqXRH.responseJSON["data"], function(key, value) {
@@ -183,7 +187,7 @@ $('#id_form_validation').submit(function(event) {
           }
         });
       } else {
-        console.log("Ocorreu um erro no servidor, tente novamente em alguns instantes.")
+        showError("Ocorreu um erro no servidor, tente novamente em alguns instantes.");
       }
     }
   });
@@ -204,11 +208,11 @@ $('#id_form_signup').submit(function(event) {
       url: '/ajax/signup/',
       data: user_data,
       success: function(response){
-        console.log(response["data"]);
+        $('.login-box__signup-wrapper').removeClass('step-2').addClass('step-3');
       },
       error: function(jqXRH) {
         if (jqXRH.status == 0) {
-          console.log("Verifique sua conexão com a internet.")
+          showError('Verifique sua conexão com a internet.');
         } else if (jqXRH.status == 400) {
           $('.form__input-error').text('');
           $.each(jqXRH.responseJSON["data"], function(key, value) {
@@ -226,7 +230,8 @@ $('#id_form_signup').submit(function(event) {
             }
           });
         } else {
-          console.log("Ocorreu um erro no servidor, tente novamente em alguns instantes.")
+
+          showError("Ocorreu um erro no servidor, tente novamente em alguns instantes.");
         }
       }
     });
