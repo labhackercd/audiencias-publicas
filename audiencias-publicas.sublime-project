@@ -1,0 +1,44 @@
+{
+  "folders":
+  [
+    {
+      "path": "./static/scss",
+      "name": "-Styles",
+    },
+    {
+      "path": "./templates",
+      "name": "-HTML",
+    },
+    {
+      "path": "./static/js",
+      "name": "-JS",
+    },
+    {
+      "path": "./static/img",
+      "name": "-Images",
+    },
+    {
+      "path": "./static/bower_components",
+      "name": "[Bower crap]",
+    },
+    {
+      "path": "audiencias_publicas",
+      "name": "[Python Settings]",
+      "folder_exclude_patterns": ["**/**"],
+      "file_include_patterns": [
+        "settings.py",
+        "settings.ini"
+      ]
+    },
+    {
+      "path": ".",
+      "folder_exclude_patterns": ["**/**"],
+      "name": "[Root]",
+      "file_include_patterns": [
+        "package.json",
+        "requirements.txt",
+        ".gitignore"
+      ]
+    }
+  ]
+}
