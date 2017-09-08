@@ -155,7 +155,7 @@ $('.form__field-action.-showpassword').click(function(){
 // Close error
 
 $('.login-box__error-close').click(function(){
-  $(this).closest('.login-box__error-block').removeClass('-show');
+  $('.login-box__error-block').removeClass('-show');
 });
 
 $('#id_form_validation').submit(function(event) {
