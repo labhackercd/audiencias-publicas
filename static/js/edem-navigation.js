@@ -97,10 +97,16 @@ $('#id_form_login').submit(function(event) {
       location.reload();
     },
     error: function(jqXRH){
-      $('.form__input-error').text('');
-      $('.form__input-error')
-        .text(jqXRH.responseJSON['data'])
-        .removeAttr('hidden');
+      if (jqXRH.status == 0) {
+        console.log("Verifique sua conexão com a internet.")
+      } else if (jqXRH.status == 401) {
+        $('.form__input-error').text('');
+        $('.form__input-error')
+          .text(jqXRH.responseJSON['data'])
+          .removeAttr('hidden');
+      } else {
+        console.log("Ocorreu um erro no servidor, tente novamente em alguns instantes.")
+      }
     }
   });
 });
@@ -164,15 +170,21 @@ $('#id_form_validation').submit(function(event) {
       $('.login-box__signup-wrapper').addClass('step-2');
     },
     error: function(jqXRH) {
-      $('.form__input-error').text('');
-      $.each(jqXRH.responseJSON["data"], function(key, value) {
-        if (key != '__all__') {
-          $(event.target)
-            .find('[data-input-name="'+key+'"]')
-            .text(value)
-            .removeAttr('hidden');
-        }
-      });
+      if (jqXRH.status == 0) {
+        console.log("Verifique sua conexão com a internet.")
+      } else if (jqXRH.status == 400) {
+        $('.form__input-error').text('');
+        $.each(jqXRH.responseJSON["data"], function(key, value) {
+          if (key != '__all__') {
+            $(event.target)
+              .find('[data-input-name="'+key+'"]')
+              .text(value)
+              .removeAttr('hidden');
+          }
+        });
+      } else {
+        console.log("Ocorreu um erro no servidor, tente novamente em alguns instantes.")
+      }
     }
   });
 });
@@ -195,21 +207,27 @@ $('#id_form_signup').submit(function(event) {
         console.log(response["data"]);
       },
       error: function(jqXRH) {
-        $('.form__input-error').text('');
-        $.each(jqXRH.responseJSON["data"], function(key, value) {
-          if (key == 'email') {
-            $('.login-box__signup-wrapper').removeClass('step-2');
-            $('#id_form_validation')
-              .find('[data-input-name="'+key+'"]')
-              .text(value)
-              .removeAttr('hidden');
-          } else if (key != '__all__') {
-            $(event.target)
-              .find('[data-input-name="'+key+'"]')
-              .text(value)
-              .removeAttr('hidden');
-          }
-        });
+        if (jqXRH.status == 0) {
+          console.log("Verifique sua conexão com a internet.")
+        } else if (jqXRH.status == 400) {
+          $('.form__input-error').text('');
+          $.each(jqXRH.responseJSON["data"], function(key, value) {
+            if (key == 'email') {
+              $('.login-box__signup-wrapper').removeClass('step-2');
+              $('#id_form_validation')
+                .find('[data-input-name="'+key+'"]')
+                .text(value)
+                .removeAttr('hidden');
+            } else if (key != '__all__') {
+              $(event.target)
+                .find('[data-input-name="'+key+'"]')
+                .text(value)
+                .removeAttr('hidden');
+            }
+          });
+        } else {
+          console.log("Ocorreu um erro no servidor, tente novamente em alguns instantes.")
+        }
       }
     });
   }
