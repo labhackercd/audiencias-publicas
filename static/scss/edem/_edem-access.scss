@@ -75,20 +75,21 @@
     overflow: hidden;
 
     &.step-2 .login-box__signup-step {
-      transform: translateX(-100%);
+      transform: translateX(calc(-100% - 2rem));
     }
 
     &.step-3 .login-box__signup-step {
-      transform: translateX(-200%);
+      transform: translateX(calc(-200% - 2rem));
     }
   }
 
   .login-box__signup-step {
     display: flex;
     flex-direction: column;
-    flex: 1 0 100%;
-    width: 100%;
-    transform: translateX(0%);
+    flex: 1 0 auto;
+    padding: 0 2rem;
+    width: calc(100% + 4rem);
+    transform: translateX(calc(0% - 2rem));
     @include transition-default(transform);
   }
 
