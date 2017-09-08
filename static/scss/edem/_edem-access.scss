@@ -62,6 +62,22 @@
     }
   }
 
+  .login-box__error-close {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    color: white;
+    cursor: pointer;
+    right: 1rem;
+    top: 1rem;
+    right: 0;
+    transform: translateY(-50%);
+  }
+
   .login-box__error-message {
     color: white;
     font-weight: 600;
