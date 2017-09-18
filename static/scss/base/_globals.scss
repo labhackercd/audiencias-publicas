@@ -17,13 +17,6 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  margin-top: 4em;
-  min-height: calc(100% - 4em);
-
-  @include breakpoint(small only) {
-    margin-top: 3em;
-    min-height: calc(100% - 3em);
-  }
 }
 
 table {
