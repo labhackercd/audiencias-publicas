@@ -1,0 +1,77 @@
+.edem-topbar {
+  height: $edem-size-navigation;
+  width: 100%;
+
+  > .stick {
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: $edem-size-navigation;
+    background: linear-gradient(90deg, #114433 0%, #002222 100%);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23);
+    overflow: hidden;
+    z-index: 1000000;
+
+    > .brand {
+      display: inline-flex;
+      align-items: center;
+      height: 100%
+    }
+
+    > .brand > .rainbow {
+      height: 100%;
+      display: none;
+      margin-right: 0.5em;
+
+      @include bp-smallonly {
+        &.-small {
+          display: block
+        }
+      }
+
+      @include bp-smallup {
+        &.-large {
+          display: block;
+        }
+      }
+    }
+
+    > .brand > .logo {
+      height: 12px;
+    }
+
+    > .actions {
+      display: flex;
+      height: 100%
+    }
+
+    > .actions > .link {
+      display: inline-flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 0.75em;
+      color: white;
+      font-size: 0.75em;
+      font-weight: 700;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: white;
+        color: $edem-color-primary
+      }
+
+      &.-highlight {
+        color: $edem-color-secondary;
+
+        &:hover {
+          background-color: $edem-color-secondary;
+          color: $edem-color-primary;
+        }
+      }
+    }
+  }
+}
