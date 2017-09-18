@@ -39,16 +39,20 @@
     {% if 'perguntas' in request.path  %}
       <body class="room-questions-body">
     {% elif 'sala' in request.path  %}
-      <body class="room-body">    
+      <body class="room-body">
     {% elif 'widget' in request.path  %}
       <body class="room-body widget">
     {% else %}
       <body class="{{no_offset_top}}">
     {% endif %}
 
+      {# e-Democracia Core #}
+      {% block edem_core %}
+        {% include "components/edem-topbar.html" %}
+      {% endblock edem_core %}
+
       {# Navigation #}
       {% block navigation %}
-        {% include "components/edem-bar.html" %}
         {% include "components/navigation.html" %}
       {% endblock navigation %}
 
@@ -112,5 +116,5 @@
     </body>
 
   </html>
-  
+
 {% endblock html %}
