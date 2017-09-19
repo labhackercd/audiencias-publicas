@@ -18,25 +18,22 @@
     > .brand {
       display: inline-flex;
       align-items: center;
-      height: 100%
-    }
-
-    > .brand > .rainbow {
       height: 100%;
-      display: none;
-      margin-right: 0.5em;
-
-      @include bp-smallonly {
-        &.-small {
-          display: block
-        }
-      }
+      background-image: url('../img/edem/edem-bar-rainbow-small.png');
+      background-size: auto 100%;
+      background-position: left;
+      background-repeat: no-repeat;
+      padding-left: 6em;
 
       @include bp-smallup {
-        &.-large {
-          display: block;
-        }
+        background-image: url('../img/edem/edem-bar-rainbow-large.png');
+        padding-left: 11.5em;
       }
+
+      @media screen and (max-width: 25.5em) {
+        margin-left: calc(100vw - 25.5em);
+      }
+
     }
 
     > .brand > .logo {
