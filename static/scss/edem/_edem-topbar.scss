@@ -46,27 +46,44 @@
     }
 
     > .actions > .link {
+      position: relative;
       display: inline-flex;
       align-items: center;
       height: 100%;
-      padding: 0 0.75em;
+      padding: 0 0.625em;
       color: white;
-      font-size: 0.75em;
+      font-size: 0.625em;
       font-weight: 700;
       text-transform: uppercase;
       transition: all 0.3s ease;
 
-      &:hover {
+      @include bp-smallup {
+        font-size: 0.75em;
+        padding: 0 0.75em;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
         background-color: white;
-        color: $edem-color-primary
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 0.3s $swift-out;
+      }
+
+      &:hover::after {
+        transform: scaleX(1);
       }
 
       &.-highlight {
         color: $edem-color-secondary;
 
-        &:hover {
+        &::after {
           background-color: $edem-color-secondary;
-          color: $edem-color-primary;
         }
       }
     }
