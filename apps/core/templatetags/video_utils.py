@@ -59,7 +59,7 @@ def vote_action(question, user):
 @register.filter()
 def format_seconds(s):
     if s:
-        return str(datetime.timedelta(seconds=s))
+        return str(datetime.timedelta(seconds=float(s))).split('.')[0]
 
 
 @register.filter()
