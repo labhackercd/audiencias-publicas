@@ -30,6 +30,7 @@
       {# Styles #}
       <link rel="stylesheet" href="{% static 'fontastic-labhacker/styles.css' %}" />
       {% compress css %}
+        <link rel="stylesheet" href="{% static 'edem/scss/edem.scss' %}" type="text/x-scss" />
         <link rel="stylesheet" href="{% static 'scss/app.scss' %}" type="text/x-scss" />
       {% endcompress %}
       {% block extra_css %}
@@ -48,7 +49,7 @@
 
       {# e-Democracia Core #}
       {% block edem_core %}
-        {% include "components/edem-topbar.html" %}
+        {% include "components/edem/edem-topbar.html" %}
       {% endblock edem_core %}
 
       {# Navigation #}

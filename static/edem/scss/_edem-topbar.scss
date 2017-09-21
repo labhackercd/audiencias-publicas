@@ -19,14 +19,14 @@
       display: inline-flex;
       align-items: center;
       height: 100%;
-      background-image: url('../img/edem/edem-bar-rainbow-small.png');
+      background-image: url('../img/edem-bar-rainbow-small.png');
       background-size: auto 100%;
       background-position: left;
       background-repeat: no-repeat;
       padding-left: 6em;
 
       @include bp-smallup {
-        background-image: url('../img/edem/edem-bar-rainbow-large.png');
+        background-image: url('../img/edem-bar-rainbow-large.png');
         padding-left: 11.5em;
       }
 
