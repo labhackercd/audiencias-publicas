@@ -1,16 +1,10 @@
-/**
- * RESPONSIVE
- */
-
 // Breakopints
-
 $bp-small: 640px;
 $bp-medium: 960px;
 $bp-large: 1024px;
 $bp-huge: 1920px;
 
 // Mixins
-
 @mixin bp-smallonly {
   @media (max-width: $bp-small) { @content; }
 }
@@ -45,25 +39,4 @@ $bp-huge: 1920px;
 }
 @mixin bp-hugedown {
   @media (max-width: $bp-huge) { @content; }
-}
-
-
-/**
- * ANIMATION
- */
-
-$swift-out: cubic-bezier(.55, 0, .1, 1);
-
-@mixin material-shadow($depth) {
-  @if $depth < 1 {
-    box-shadow: none;
-    transition: box-shadow 0.3s $swift-out;
-  }
-  @else if $depth > 5 {
-    @warn "Invalid $depth `#{$depth}` for mixin `material-shadow`.";
-  }
-  @else {
-    box-shadow: bottom-shadow($depth), top-shadow($depth);
-    transition: box-shadow 0.3s $swift-out;
-  }
 }

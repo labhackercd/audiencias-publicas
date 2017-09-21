@@ -1,5 +1,10 @@
-@import './ambience';
+// Ambience
+@import 'ambience/colors';
+@import 'ambience/sizes';
 
-@import './base';
+// Base
+@import 'base/animation';
+@import 'base/responsive';
 
-@import './edem-topbar';
+// Components
+@import 'components/edem-topbar';
