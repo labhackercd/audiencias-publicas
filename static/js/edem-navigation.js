@@ -79,15 +79,15 @@ function showError(errorMessage) {
 
 // eDemocracia edem-access input status
 
-$('.JS-form-field').focus(function() {
-  $(this).addClass('form__field--filled');
+$('.JS-form-input').focus(function() {
+  $(this).closest('.form-field').addClass('-filled');
 });
 
-$('.JS-form-field').blur(function() {
+$('.JS-form-input').blur(function() {
   if (!$(this).val() == '') {
-    $(this).addClass('form__field--filled');
+    $(this).closest('.form-field').addClass('-filled');
   } else {
-    $(this).removeClass('form__field--filled')
+    $(this).closest('.form-field').removeClass('-filled');
   }
 });
 
