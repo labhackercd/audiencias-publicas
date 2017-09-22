@@ -54,7 +54,7 @@
         height: 100%;
         outline: none;
         z-index: 0;
-        @include icon($icon-check);
+        @include icon('check');
         &:before {
           opacity: 0;
           z-index: 2;
