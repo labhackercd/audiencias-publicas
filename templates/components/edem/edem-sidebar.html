@@ -2,25 +2,27 @@
 
 <div class="edem-sidebar">
 
-  <span class="close" role="button"></span>
+  <div class="stick">
+    <span class="close" role="button"></span>
 
-  <h1 class="header">Entrar</h1>
+    <h1 class="header">Entrar</h1>
 
-  <a class="social-button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
-    <img src="{% static 'img/edem/social-icon-google.svg' %}" alt="Ícone do Google">
-  </a>
+    <a class="social-button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+      <img src="{% static 'img/edem/social-icon-google.svg' %}" alt="Ícone do Google">
+    </a>
 
-  <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}" tabindex="0">
-    <img src="{% static 'img/edem/social-icon-facebook.svg' %}" alt="Ícone do Facebook">
-  </a>
+    <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}" tabindex="0">
+      <img src="{% static 'img/edem/social-icon-facebook.svg' %}" alt="Ícone do Facebook">
+    </a>
 
-  <div class="access-form">
-    <div class="form-field">
-      <input class="input JS-form-input" id="id_password" name="password" type="password" tabindex="0">
-      <label class="label" for="password"><span class="labeltext">Senha</span></label>
-      <a class="action -input JS-field-action-password" role="button" tabindex="0">Mostrar Senha</a>
+    <div class="access-form">
+      <div class="form-field">
+        <input class="input JS-form-input" id="id_password" name="password" type="password" tabindex="0">
+        <label class="label" for="password"><span class="labeltext">Senha</span></label>
+        <a class="action -input JS-field-action-password" role="button" tabindex="0">Mostrar Senha</a>
 
-      <p class="error JS-input-error" data-input-name="password" hidden>Eita carai teve uma batida ali</p>
+        <p class="error JS-input-error" data-input-name="password" hidden>Eita carai teve uma batida ali</p>
+      </div>
     </div>
   </div>
 
