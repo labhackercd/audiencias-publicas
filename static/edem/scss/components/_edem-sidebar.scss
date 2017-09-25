@@ -12,6 +12,13 @@
     background-color: $edem-color-primary;
     z-index: 100000;
   }
+
+  .header {
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+    border-bottom: 4px solid $edem-color-accent;
+  }
 }
 
 body.-opensidebar {
