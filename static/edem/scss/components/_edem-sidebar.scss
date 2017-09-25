@@ -1,14 +1,18 @@
 .edem-sidebar {
   position: absolute;
-  width: $edem-sidebar-width-smallup;
+  width: $edem-sidebar-width;
   left: 100%;
 
   .stick {
     position: fixed;
-    width: $edem-sidebar-width-smallup;
+    width: $edem-sidebar-width;
     height: 100vh;
     margin-top: 1.5em;
     background-color: $edem-color-primary;
     z-index: 100000;
   }
+}
+
+body.-opensidebar {
+  margin-left: calc(#{$edem-sidebar-width} * -1); // Calc to give the variable in negative value
 }
