@@ -1,0 +1,6 @@
+body {
+  // Necessary styles so that edem-sidebar may work
+  position: relative;
+  width: 100%;
+  transition: margin-left 0.3s $swift-out
+}

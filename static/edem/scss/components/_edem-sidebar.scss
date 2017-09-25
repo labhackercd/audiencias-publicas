@@ -1,3 +1,14 @@
 .edem-sidebar {
-  background-color: $edem-color-primary
+  position: absolute;
+  width: $edem-sidebar-width-smallup;
+  left: 100%;
+
+  .stick {
+    position: fixed;
+    width: $edem-sidebar-width-smallup;
+    height: 100vh;
+    margin-top: 1.5em;
+    background-color: $edem-color-primary;
+    z-index: 100000;
+  }
 }
