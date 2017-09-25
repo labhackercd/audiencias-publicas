@@ -7,12 +7,12 @@
 
     <h1 class="header">Entrar</h1>
 
-    <a class="social-button" href="/account/social/login/google-oauth2/?next={{ request.path }}">
-      <img src="{% static 'img/edem/social-icon-google.svg' %}" alt="Ícone do Google">
+    <a class="social-button -facebook" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+      <span class="label">Entrar Com Facebook</span>
     </a>
 
-    <a class="social__button--facebook button" href="/account/social/login/facebook/?next={{ request.path }}" tabindex="0">
-      <img src="{% static 'img/edem/social-icon-facebook.svg' %}" alt="Ícone do Facebook">
+    <a class="social-button -google" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+      <span class="label">Entrar Com Google</span>
     </a>
 
     <div class="access-form">
