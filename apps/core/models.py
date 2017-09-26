@@ -258,11 +258,6 @@ def room_pre_save(sender, instance, **kwargs):
         pass
 
 
-def room_pre_delete(sender, instance, **kwargs):
-    if hasattr(instance, 'room'):
-        instance.send_notification(deleted=True)
-
-
 def vote_post_save(sender, instance, **kwargs):
     instance.question.send_notification(instance.user)
 
