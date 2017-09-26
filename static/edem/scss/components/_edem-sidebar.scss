@@ -31,6 +31,9 @@
       @extend %button;
       background-color: $edem-color-accent;
       color: white;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 1rem;
 
       &.-social {
         position: relative;
