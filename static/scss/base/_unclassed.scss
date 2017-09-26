@@ -4,7 +4,6 @@ html {
 }
 
 html {
-  font-size: 16px;
   box-sizing: border-box;
 }
 
@@ -17,13 +16,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  margin-top: 4em;
-  min-height: calc(100% - 4em);
-
-  @include bp-smallonly {
-    margin-top: 3em;
-    min-height: calc(100% - 3em);
-  }
+  min-height: 100%;
 }
 
 table {

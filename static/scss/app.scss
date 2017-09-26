@@ -2,13 +2,15 @@
 @import 'ambience/animation';
 @import 'ambience/colors';
 @import 'ambience/fonts';
+@import 'ambience/typography';
 
 // Base
 @import 'base/responsive';
-@import 'base/globals';
-@import 'base/reset';
-@import 'base/icons';
 @import 'base/reusables';
+@import 'base/reset';
+@import 'base/typography';
+@import 'base/unclassed';
+@import 'base/icons';
 
 // Shared
 @import 'shared/floating-header';
