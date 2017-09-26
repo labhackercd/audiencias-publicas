@@ -6,6 +6,8 @@ $label-underline-height: 2px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  padding-top: 1rem;
+  margin-bottom: 0.5rem;
 
   > .input {
     flex: 1;
@@ -36,7 +38,7 @@ $label-underline-height: 2px;
 
   > .label {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     display: flex;
     align-items: center;
@@ -47,7 +49,7 @@ $label-underline-height: 2px;
     color: rgba(#fff, 0.6);
     font-size: $font-size-base;
     font-weight: 400;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, color 0.2s ease;
 
     &::after {
       content: '';
@@ -63,7 +65,7 @@ $label-underline-height: 2px;
     }
 
     > .labeltext {
-      transform-origin: -2rem -5.5rem;
+      line-height: 1rem;
 
       @at-root .-filled#{&} {
         animation: slideOut 0.3s forwards;
@@ -74,7 +76,7 @@ $label-underline-height: 2px;
   > .action {
     flex: 0 1 auto;
     padding-right: 0.5rem;
-    margin-bottom: $label-underline-height; // To compensate label underline height
+    margin-top: $label-underline-height; // To compensate label underline height
     color: $edem-color-link;
     font-size: $font-size-centi;
     font-weight: 600;
@@ -95,15 +97,22 @@ $label-underline-height: 2px;
 @keyframes slideOut {
   35% {
     opacity: 0;
-    transform: translate3d(1rem, 0, 0) scale(1);
+    transform: translate3d(1rem, 0, 0);
+    font-size: $font-size-base;
+    letter-spacing: initial;
   }
   50% {
     opacity: 0;
-    transform: translate3d(-1rem, 0, 0) scale(0.75);
+    transform: translate3d(-1rem, -1.5rem, 0);
+    font-size: $font-size-mili;
+    letter-spacing: 0.05em;
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(0.75);
+    transform: translate3d(-0.5rem, -1.5rem, 0);
+    text-transform: uppercase;
     font-weight: 700;
+    font-size: $font-size-mili;
+    letter-spacing: 0.05em;
   }
 }
