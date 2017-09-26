@@ -32,11 +32,13 @@
   </nav>
 
   <header class="room-header">
+
     <a class="logo" href="{% url 'home' %}">
       <img src="{% static 'img/logo-audiencias-h.svg' %}">
     </a>
+
     <div class="room-info">
-      <h1>
+      <h1 class="title">
         {% if object.reunion_theme %}
           {{object.reunion_theme}}
         {% else %}
@@ -47,11 +49,17 @@
           {% endif %}
         {% endif %}
       </h1>
-      <h2>
+      <div class="info">
+        <span class="social-share">
+          <a class="button -facebook JS-share-lnk" data-social="facebook" title="Facebook"></a>
+          <a class="button -twitter JS-share-lnk" data-social="twitter" title="Twitter"></a>
+          <a class="button -whatsapp JS-share-lnk" data-social="whatsapp" title="Whatsapp"></a>
+        </span>
         <span>{{object.reunion_type}}</span>
         <span>{{object.date}}</span>
-      </h2>
+      </div>
     </div>
+
   </header>
 
   <main class="room" data-tab-index="0">

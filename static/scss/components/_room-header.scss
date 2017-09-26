@@ -6,7 +6,7 @@
   min-height: $logo-height;
   display: flex;
 
-  .logo {
+  > .logo {
     height: $logo-height;
     background-color: $logo-background;
     padding: 1rem;

@@ -1,0 +1,37 @@
+.social-share {
+  display: inline-flex;
+
+  > .button {
+    $bottom: 2px;
+
+    width: 2rem;
+    height: 1rem;
+    border-radius: 2px;
+    line-height: 1rem;
+    font-size: $font-size-centi;
+    box-shadow: 0 -#{$bottom} 0 0 rgba(#000, 0.2) inset;
+    color: #fff;
+    margin-right: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: $color-edem-action;
+    @include icon($icon-facebook);
+
+    &:last-child { margin-right: 0; }
+
+    &.-facebook {
+      @include icon($icon-facebook);
+      background-color: $color-facebook;
+    }
+    &.-twitter {
+      @include icon($icon-twitter);
+      background-color: $color-twitter;
+    }
+    &.-whatsapp {
+      @include icon($icon-whatsapp);
+      background-color: $color-whatsapp;
+    }
+  
+  }
+
+}

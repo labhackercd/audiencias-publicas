@@ -2,3 +2,29 @@ html {
   font-size: 16px;
   font-family: $font-family-base
 }
+
+p {
+  font-size: $font-size-base;
+  line-height: 1.5rem;
+}
+
+h1 {
+  font-size: $font-size-hecto;
+}
+
+h2 {
+  font-size: $font-size-deca;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: $font-size-deca;
+}
+
+h4 {
+  font-size: $font-size-base;
+}
+
+h5 {
+  font-size: $font-size-deci;
+}
