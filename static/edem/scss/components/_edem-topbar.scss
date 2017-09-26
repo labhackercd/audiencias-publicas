@@ -53,13 +53,13 @@
       height: 100%;
       padding: 0 0.625rem;
       color: white;
-      font-size: 0.625rem;
+      font-size: 0.625em;
       font-weight: 700;
       text-transform: uppercase;
       transition: all 0.3s ease;
 
       @include bp-smallup {
-        font-size: 0.75rem;
+        font-size: 0.75em;
         padding: 0 0.75rem;
       }
 
