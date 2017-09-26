@@ -223,13 +223,6 @@ class Question(TimestampedMixin):
         return self.question
 
 
-def notification(subject, html, email_list):
-    mail = EmailMultiAlternatives(subject, '', settings.EMAIL_HOST_USER,
-                                  email_list)
-    mail.attach_alternative(html, 'text/html')
-    mail.send()
-
-
 def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
     if instance.youtube_status in [2, 3]:
@@ -271,14 +264,6 @@ def room_pre_delete(sender, instance, **kwargs):
 
 
 def vote_post_save(sender, instance, **kwargs):
-    count_votes = UpDownVote.objects.filter(question=instance.question).count()
-    if count_votes == settings.QUESTION_MIN_UPVOTES:
-        html = render_to_string('notifications/question.html',
-                                {'question': instance.question})
-        subject = u'[Audiências] Notificação de pergunta em destaque'
-        email_list = []
-        notification(subject, html, email_list)
-
     instance.question.send_notification(instance.user)
 
 
