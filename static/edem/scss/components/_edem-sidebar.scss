@@ -4,7 +4,7 @@
   width: $edem-sidebar-width;
   left: 100%;
 
-  .stick {
+  > .stick {
     position: fixed;
     width: $edem-sidebar-width;
     height: 100vh;
@@ -12,15 +12,54 @@
     padding: 0 calc(1.5rem + 4vw);
     background-color: $edem-color-primary;
     z-index: 100000;
-  }
 
-  .header {
-    color: #fff;
-    font-weight: 700;
-    font-size: $font-size-kilo;
-    line-height: 3rem;
-    text-align: center;
-    border-bottom: 4px solid $edem-color-accent;
+    > .header {
+      color: #fff;
+      font-weight: 700;
+      font-size: $font-size-kilo;
+      line-height: 3rem;
+      text-align: center;
+      border-bottom: 4px solid $edem-color-accent;
+    }
+
+    > .button {
+      @extend %button;
+      background-color: $edem-color-accent;
+      color: white;
+
+      &.-social {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-left: 3.5rem;
+        padding-right: 1rem;
+        margin-bottom: 1rem;
+
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          width: 2.5rem;
+          height: 100%;
+          background-size: 1.25rem;
+          background-repeat: no-repeat;
+          background-position: center center;
+        }
+
+        &.-facebook {
+          background-color: $edem-color-facebook;
+          color: #fff;
+          &::before { background-image: url('../img/social-icon-facebook.svg') }
+        }
+
+        &.-google {
+          background-color: $edem-color-google;
+          color: hsl(0, 0, 50%);
+          &::before { background-image: url('../img/social-icon-google.svg') }
+        }
+      }
+    }
   }
 }
 
