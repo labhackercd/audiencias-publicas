@@ -1,0 +1,16 @@
+[run]
+include = ./apps/*
+branch = True
+
+[report]
+omit =
+    */migrations/*
+    manage.py
+    ./audiencias-publicas/*.py
+
+show_missing = True
+
+
+[paths]
+source =
+    audiencias-publicas/
