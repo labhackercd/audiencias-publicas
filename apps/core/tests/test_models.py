@@ -13,7 +13,8 @@ class ModelsTestCase(TestCase):
         self.room_fixture = AutoFixture(models.Room, field_values={
             'date': datetime.datetime(2017, 9, 24),
             'youtube_status': 2,
-            'is_visible': True
+            'is_visible': True,
+            'youtube_id': 'oldId',
         })
         self.user_fixture = AutoFixture(User, field_values={
             'first_name': 'Michael',
@@ -114,3 +115,25 @@ class ModelsTestCase(TestCase):
         question.question = 'Teste'
         question.save()
         self.assertEquals(question.__str__(), 'Teste')
+
+    def test_room_pre_save(self):
+        room = self.room_fixture.create_one()
+        room.reunion_object = 'TEMA\nTeste'
+        room.youtube_id = 'newId'
+        room.save()
+        room.reunion_object = 'TEMA: Teste'
+        room.save()
+        room.reunion_object = 'TEMA: "Teste"'
+        room.save()
+        room.reunion_object = 'TEMA: “Teste”'
+        room.save()
+        room.reunion_object = "TEMA: 'Teste'"
+        room.save()
+
+    def test_room_pre_delete(self):
+        room = self.room_fixture.create_one()
+        room.delete()
+
+    def test_vote_post_delete(self):
+        vote = self.vote_fixture.create_one()
+        vote.delete()
