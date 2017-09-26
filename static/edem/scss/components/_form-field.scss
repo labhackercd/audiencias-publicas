@@ -1,7 +1,6 @@
-$input-height: 2rem;
-$label-underline-height: 2px;
-
 .form-field {
+  $input-height: 2rem;
+
   position: relative;
   display: flex;
   align-items: center;
@@ -12,8 +11,9 @@ $label-underline-height: 2px;
   > .input {
     flex: 1;
     padding: 0 0.5rem;
-    margin-bottom: $label-underline-height; // To compensate label underline height
     height: $input-height;
+    border: 0;
+    outline: 0;
     background-color: transparent;
     color: #fff;
     font-size: $font-size-base;
@@ -54,13 +54,14 @@ $label-underline-height: 2px;
     &::after {
       content: '';
       position: absolute;
-      bottom: -$label-underline-height;
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: $label-underline-height;
+      height: 2px;
       background-color: transparent;
       transform: scaleX(0);
       transform-origin: center;
+      z-index: 2;
       transition: transform 0s 0.3s $swift-out, background-color 0.2s ease;
     }
 
@@ -76,7 +77,6 @@ $label-underline-height: 2px;
   > .action {
     flex: 0 1 auto;
     padding-right: 0.5rem;
-    margin-bottom: $label-underline-height; // To compensate label underline height
     color: $edem-color-link;
     font-size: $font-size-centi;
     font-weight: 600;
