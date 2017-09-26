@@ -32,7 +32,7 @@
 .calendar-table__weekday {
   background-color: $color-calendar-weekday-default;
   border-radius: 1em;
-  color: $color-white;
+  color: #fff;
   font-size: .5em;
   font-weight: 600;
   min-width: 6.5em;
@@ -50,12 +50,12 @@
 }
 
 .calendar-table__day {
-  color: $color-gray-25;
+  color: hsl(0, 0, 25%);
   font-weight: 700;
 }
 
 .calendar-table__month {
-  color: $color-gray-25;
+  color: hsl(0, 0, 25%);
   font-size: .8em;
   font-weight: 400;
 }

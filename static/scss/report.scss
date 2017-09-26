@@ -11,12 +11,12 @@ html {
 }
 
 body {
-  background-color: $color-white;
-  color: $color-gray-40;
+  background-color: #fff;
+  color: hsl(0, 0, 40%);
   @media print {
     -webkit-print-color-adjust: exact;
     color-adjust: exact;
-    color: $color-black;
+    color: #000;
   }
 }
 
@@ -41,7 +41,7 @@ body {
       margin-left: 2em;
       width: 100%;
       .info__title {
-        border-bottom: 0.7px solid $color-gray-96;
+        border-bottom: 0.7px solid hsl(0, 0, 96%);
         margin-bottom: 0;
         @media print {
           font-size: 1em;
@@ -49,7 +49,7 @@ body {
       }
       .info__date {
         margin: 0;
-        color: $color-gray-60;
+        color: hsl(0, 0, 60%);
         text-transform: uppercase;
         font-size: 0.7em;
       }
@@ -123,7 +123,7 @@ body {
         display: flex;
         margin-bottom: 1em;
         .item__votes {
-          background-color: $color-gray-96;
+          background-color: hsl(0, 0, 96%);
           padding: 1em;
           display: flex;
           flex-direction: column;
@@ -145,7 +145,7 @@ body {
           }
         }
         .item__question {
-          background-color: $color-gray-98;
+          background-color: hsl(0, 0, 98%);
           padding: 0 1em;
           width: 100%;
           .question__author {
@@ -190,7 +190,7 @@ body {
           min-width: 3em;
           flex-direction: column;
           justify-content: center;
-          background-color: rgba($color-gray-96, .97);
+          background-color: rgba(hsl(0, 0, 96%), .97);
           @media print {
             font-size: 0.7em;
           }
@@ -200,7 +200,7 @@ body {
           display: flex;
           flex-direction: column;
           padding: 0.5em 1em;
-          background-color: rgba($color-gray-98, .97);
+          background-color: rgba(hsl(0, 0, 98%), .97);
 
           @media print {
             font-size: 0.7em;

@@ -1,6 +1,6 @@
 [class^="preview--"] {
-  background-color: $color-white;
-  box-shadow: 0 1px 2px $color-shadow-1;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   margin: 2em auto;
   max-width: 75em;
   padding: 0 1em;
@@ -62,7 +62,7 @@
   }
 
   .video__thumbnail {
-    background: $color-gray-32;
+    background: hsl(0, 0, 32%);
     height: 116px;
     width: 208px;
   }
@@ -108,7 +108,7 @@
 }
 
 .preview__show-all {
-  border-top: 1px solid $color-gray-80;
+  border-top: 1px solid hsl(0, 0, 80%);
   display: block;
   margin: 0 1em;
   padding: 1em 3em;

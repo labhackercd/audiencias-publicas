@@ -37,7 +37,7 @@
 
   .header__title {
     align-items: center;
-    color: $color-white;
+    color: #fff;
     display: flex;
     flex-shrink: 0;
     font-size: 1.4em;
@@ -56,7 +56,7 @@
   }
 
   .header__text {
-    color: $color-white;
+    color: #fff;
     flex-shrink: 0;
     font-weight: 400;
     margin: 0;
@@ -87,7 +87,7 @@
     }
 
     &::before {
-      background-color: $color-white;
+      background-color: #fff;
       border-radius: 5px;
       content: '';
       height: calc(100% + 1em);
@@ -111,7 +111,7 @@
   }
 
   .item__action-block {
-    background-color: $color-gray-90;
+    background-color: hsl(0, 0, 90%);
     display: flex;
     position: relative;
     overflow: hidden;
@@ -125,7 +125,7 @@
   .vote-block__total-votes {
     align-items: center;
     background-color: $color-primary-xxhighlight;
-    color: $color-white;
+    color: #fff;
     display: flex;
     flex: 1 0 2.5em;
     font-weight: 700;
@@ -138,13 +138,13 @@
 
     &.voted,
     &.voted:not(.disabled) {
-      color: $color-black;
+      color: #000;
       background-color: $color-accent-highlight;
     }
 
     &.disabled {
       color: $color-primary-xxlight;
-      background-color: $color-gray-80;
+      background-color: hsl(0, 0, 80%);
     }
   }
 
@@ -178,7 +178,7 @@
   .vote-block__upvote-button {
     align-items: center;
     background-color: $color-primary-xxlight;
-    color: $color-white;
+    color: #fff;
     display: inline-flex;
     flex: 0 1 auto;
     font-size: .7em;
@@ -207,7 +207,7 @@
 
       &.voted {
         background-color: $color-accent;
-        color: $color-black;
+        color: #000;
 
         &:hover {
           background-color: $color-accent-highlight;
@@ -220,8 +220,8 @@
     }
 
     &.disabled {
-      background-color: $color-gray-84;
-      color: $color-gray-60;
+      background-color: hsl(0, 0, 84%);
+      color: hsl(0, 0, 60%);
       cursor: default;
     }
   }
@@ -232,7 +232,7 @@
   }
 
   .item__question-block {
-    background-color: $color-white;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -257,11 +257,11 @@
 
     &:hover {
       background-color: $color-primary-xxlight;
-      color: $color-white;
+      color: #fff;
 
       .answered__icon,
       .answered__time {
-        color: $color-white;
+        color: #fff;
       }
     }
 
@@ -335,7 +335,7 @@
 [class^="questions__read-more"] {
   align-items: center;
   background-color: rgba($color-primary-xxlight, .85);
-  color: $color-white;
+  color: #fff;
   cursor: pointer;
   display: flex;
   font-weight: 600;
@@ -381,7 +381,7 @@
   .send-form--closed,
   .send-form--unauthenticated {
     background-color: $color-primary-light;
-    color: $color-white;
+    color: #fff;
   }
 
   .send-form__actions {

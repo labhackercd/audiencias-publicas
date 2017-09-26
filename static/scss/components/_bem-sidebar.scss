@@ -1,6 +1,6 @@
 .sidebar {
   background-color: $color-primary;
-  box-shadow: 0 3px 6px $color-shadow-16, 0 1px 4px $color-shadow-23;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -26,7 +26,7 @@
 
   .authentication__link {
     align-items: center;
-    color: $color-white;
+    color: #fff;
     display: flex;
     font-weight: 600;
     height: 100%;

@@ -1,5 +1,5 @@
 [class^="send-form--"] {
-  background-color: $color-gray-92;
+  background-color: hsl(0, 0, 92%);
   display: flex;
   flex-shrink: 0;
   height: 5em;
@@ -39,7 +39,7 @@
   }
 
   .actions__character-counter {
-    color: $color-white;
+    color: #fff;
     display: flex;
     font-size: .8em;
     font-weight: 700;
@@ -57,7 +57,7 @@
   .actions__button {
     background-color: $color-primary-xxlight;
     border: 0;
-    color: $color-white;
+    color: #fff;
     display: flex;
     font-size: .9em;
     font-weight: 600;

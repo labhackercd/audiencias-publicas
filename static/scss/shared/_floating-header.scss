@@ -1,7 +1,7 @@
 [class*="__floating-header"] {
   align-items: center;
-  box-shadow: 0 1.5px 4px $color-shadow-24, 0 1.5px 6px $color-shadow-12;
-  color: $color-white;
+  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+  color: #fff;
   display: flex;
   padding: .4em 1.4em;
   transform: translateY(-50%);

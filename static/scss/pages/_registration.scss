@@ -1,6 +1,6 @@
 [class^="registration--"] {
   align-items: center;
-  background: $color-gray-96;
+  background: hsl(0, 0, 96%);
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -24,12 +24,12 @@
   }
 
   .close-button:hover {
-    color: $color-white;
+    color: #fff;
   }
 
   h5,
   li {
-    color: $color-white;
+    color: #fff;
     margin: 0;
   }
 

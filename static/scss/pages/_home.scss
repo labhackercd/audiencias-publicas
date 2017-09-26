@@ -4,7 +4,7 @@
   }
 
   .section-bottom {
-    background-color: $color-gray-90;
+    background-color: hsl(0, 0, 90%);
     padding: 1em 2em;
 
     @include breakpoint(medium down) {

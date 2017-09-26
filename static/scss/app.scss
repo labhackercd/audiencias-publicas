@@ -11,6 +11,7 @@
 @import 'base/reset';
 @import 'base/icons';
 @import 'base/reusables';
+@import 'base/responsive';
 
 // Shared
 @import 'shared/floating-header';
@@ -26,22 +27,21 @@
 @import 'pages/widget';
 
 // Components
-@import 'components/ie-banner';
-@import 'components/banner';
-@import 'components/calendar-table';
-@import 'components/chat';
-@import 'components/footer';
-@import 'components/hamburger';
-@import 'components/navigation';
-@import 'components/preview';
-@import 'components/questions';
-@import 'components/registration-form';
-@import 'components/tabs-nav';
-@import 'components/video';
-// RSCSS/BEM components
-@import 'components/question-actions';
-// RSCSS components
 @import 'components/question-card';
+// BEM Components
+@import 'components/bem-ie-banner';
+@import 'components/bem-banner';
+@import 'components/bem-calendar-table';
+@import 'components/bem-chat';
+@import 'components/bem-footer';
+@import 'components/bem-hamburger';
+@import 'components/bem-navigation';
+@import 'components/bem-preview';
+@import 'components/bem-questions';
+@import 'components/bem-registration-form';
+@import 'components/bem-tabs-nav';
+@import 'components/bem-video';
+@import 'components/bem-question-actions';
 
 // Overrides
 @import 'overrides/olark';
