@@ -1,4 +1,4 @@
-$input-height: 2em;
+$input-height: 2rem;
 $label-underline-height: 2px;
 
 .form-field {
@@ -9,12 +9,12 @@ $label-underline-height: 2px;
 
   > .input {
     flex: 1;
-    padding: 0 0.5em;
+    padding: 0 0.5rem;
     margin-bottom: $label-underline-height; // To compensate label underline height
     height: $input-height;
     background-color: transparent;
     color: #fff;
-    font-size: 1em;
+    font-size: 1rem;
     z-index: 1;
 
     &:focus {
@@ -42,10 +42,10 @@ $label-underline-height: 2px;
     align-items: center;
     width: 100%;
     height: $input-height;
-    padding: 0 0.5em;
+    padding: 0 0.5rem;
     background-color: rgba($edem-color-accent, 0.3);
     color: rgba(#fff, 0.6);
-    font-size: 1em;
+    font-size: 1rem;
     font-weight: 400;
     transition: background-color 0.2s ease;
 
@@ -63,7 +63,7 @@ $label-underline-height: 2px;
     }
 
     > .labeltext {
-      transform-origin: -2em -5.5em;
+      transform-origin: -2rem -5.5rem;
 
       @at-root .-filled#{&} {
         animation: slideOut 0.3s forwards;
@@ -73,10 +73,10 @@ $label-underline-height: 2px;
 
   > .action {
     flex: 0 1 auto;
-    padding-right: 0.5em;
+    padding-right: 0.5rem;
     margin-bottom: $label-underline-height; // To compensate label underline height
     color: $edem-color-link;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     z-index: 1;
@@ -86,20 +86,20 @@ $label-underline-height: 2px;
     flex: 1 0 100%;
     margin: 0;
     color: $edem-color-negative;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     font-weight: 700;
-    margin-top: 0.25em;
+    margin-top: 0.25rem;
   }
 }
 
 @keyframes slideOut {
   35% {
     opacity: 0;
-    transform: translate3d(1em, 0, 0) scale(1);
+    transform: translate3d(1rem, 0, 0) scale(1);
   }
   50% {
     opacity: 0;
-    transform: translate3d(-1em, 0, 0) scale(0.75);
+    transform: translate3d(-1rem, 0, 0) scale(0.75);
   }
   100% {
     opacity: 1;
