@@ -1,17 +1,14 @@
-// Foundation
-@import 'foundation/foundation-includes';
-
 // Ambience
 @import 'ambience/animation';
 @import 'ambience/colors';
 @import 'ambience/fonts';
 
 // Base
+@import 'base/responsive';
 @import 'base/globals';
 @import 'base/reset';
 @import 'base/icons';
 @import 'base/reusables';
-@import 'base/responsive';
 
 // Shared
 @import 'shared/floating-header';

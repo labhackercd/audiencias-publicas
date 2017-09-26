@@ -6,12 +6,12 @@
   margin: 0;
   position: relative;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     margin: 0 0 80px;
   }
 
   [class^="send-form--"] {
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       transform: translateY(100%);
     }
   }
@@ -48,7 +48,7 @@
   background-color: $color-primary-xlight;
   transform: none;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     display: none;
   }
 

@@ -9,14 +9,14 @@
   width: 100vw;
   z-index: 10000;
 
-  @include breakpoint(small down) {
+  @include bp-smallonly {
     height: 3em;
   }
 
-  @include breakpoint(small down) { padding: 0 1em; }
-  @include breakpoint(medium only) { padding: 0 2em; }
-  @include breakpoint(large only) { padding: 0 2em 0 2.5em; }
-  @include breakpoint(xlarge up) { padding: 0 2em 0 5em; }
+  @include bp-smallonly { padding: 0 1em; }
+  @include bp-mediumonly { padding: 0 2em; }
+  @include bp-largeonly { padding: 0 2em 0 2.5em; }
+  @include bp-hugeup { padding: 0 2em 0 5em; }
 
   .navigation__logo {
     margin-right: auto;
@@ -25,7 +25,7 @@
   .logo__image--audiencias-logo {
     height: 2.5em;
 
-    @include breakpoint(small down) {
+    @include bp-smallonly {
       height: 1.8em;
     }
   }
@@ -34,7 +34,7 @@
     height: 1.5em;
     margin-left: .8em;
 
-    @include breakpoint(small down) {
+    @include bp-smallonly {
       display: none;
     }
   }
@@ -330,7 +330,7 @@
         position: absolute;
         bottom: 100%;
         right: 1.5em;
-        @include css-triangle(0.5em, #245d49, up);
+        // @include css-triangle(0.5em, #245d49, up); // Foundation Legacy
 
         @media screen and (max-width: 39.9375em) {
           display: none;
@@ -419,12 +419,12 @@
     width: 3rem;
     height: 3rem;
     border: 0.3rem solid;
-    border-color: $primary-color;
+    border-color: $color-primary;
     font-size: 2rem;
     line-height: 3.8rem;
     color: white;
     overflow: hidden;
-    background-color: lighten($primary-color,3%);
+    background-color: lighten($color-primary,3%);
     @include transition-default(border-color);
   }
 

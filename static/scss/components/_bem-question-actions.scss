@@ -224,7 +224,7 @@
     position: relative;
     overflow: hidden;
 
-    @include breakpoint(large up) {
+    @include bp-largeup {
       font-size: 1.2em;
     }
 
@@ -329,7 +329,7 @@
     position: relative;
     z-index: 1;
 
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       margin: 0;
     }
   }

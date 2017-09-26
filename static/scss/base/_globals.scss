@@ -4,7 +4,7 @@ html {
 }
 
 html {
-  font-size: $global-font-size;
+  font-size: 16px;
   box-sizing: border-box;
 }
 
@@ -20,14 +20,14 @@ body {
   margin-top: 4em;
   min-height: calc(100% - 4em);
 
-  @include breakpoint(small only) {
+  @include bp-smallonly {
     margin-top: 3em;
     min-height: calc(100% - 3em);
   }
 }
 
 table {
-  @include breakpoint(small only) {
+  @include bp-smallonly {
     display: block;
     overflow-x: auto;
   }

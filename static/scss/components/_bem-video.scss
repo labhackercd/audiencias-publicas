@@ -4,7 +4,7 @@
   overflow-y: auto;
   padding: 0 2.75em;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     padding: 0 1em;
   }
 
@@ -16,7 +16,7 @@
     position: relative;
     width: 100%;
 
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       width: calc(100% + 2em);
       margin-left: -1em;
     }

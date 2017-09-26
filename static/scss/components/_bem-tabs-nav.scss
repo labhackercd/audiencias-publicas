@@ -3,7 +3,7 @@
   height: 3em;
   width: 100vw;
 
-  @include breakpoint(large up) {
+  @include bp-largeup {
     display: none;
   }
 }
@@ -45,7 +45,7 @@
   transition: $tab-transition;
 }
 
-@include breakpoint(medium down) {
+@include bp-mediumdown {
   .room[data-tab-index="1"] { transform: translateX(-100vw); }
   .room[data-tab-index="2"] { transform: translateX(-200vw); }
 

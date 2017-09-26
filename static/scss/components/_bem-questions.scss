@@ -11,22 +11,22 @@
   flex-direction: column;
   width: 100%;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     margin-bottom: 112px;
     overflow-y: auto;
     padding: 0 1em;
   }
 
-  @include breakpoint(large down) {
+  @include bp-largedown {
     flex: 1 0 auto;
   }
 
-  @include breakpoint(large only) {
+  @include bp-largeonly {
     overflow-y: hidden;
     padding: 0;
   }
 
-  @include breakpoint(large up) {
+  @include bp-largeup {
     position: relative;
     padding-left: 2.75em;
   }
@@ -71,7 +71,7 @@
   width: calc(100% + 1em);
   margin-left: -.5em;
 
-  @include breakpoint(large up) {
+  @include bp-largeup {
     flex: 1 auto;
     height: 100%;
     overflow-y: auto;
@@ -132,7 +132,7 @@
     justify-content: center;
     position: relative;
 
-    @include breakpoint(large up) {
+    @include bp-largeup {
       font-size: 1.2em;
     }
 
@@ -241,7 +241,7 @@
     position: relative;
     z-index: 1;
 
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       margin: 0;
     }
   }
@@ -345,12 +345,12 @@
   transition: $translate-transition;
   z-index: 1;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     bottom: 82px;
     width: 100vw
   }
 
-  @include breakpoint(large up) {
+  @include bp-largeup {
     bottom: 40px;
     margin: auto;
     right: 0;
@@ -368,7 +368,7 @@
 
 .questions {
   [class^="send-form--"] {
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       flex-direction: column;
       height: 112px;
     }
@@ -385,7 +385,7 @@
   }
 
   .send-form__actions {
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       display: flex;
       flex: 1;
       margin: 0;
@@ -394,7 +394,7 @@
   }
 
   .actions__character-counter {
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       align-items: center;
       flex: .5 1 0;
       justify-content: center;
@@ -402,7 +402,7 @@
   }
 
   .actions__button {
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       background-color: $color-accent-secondary;
       display: block;
       flex: 1 1 0;

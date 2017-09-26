@@ -3,7 +3,7 @@
   flex: 1;
   padding: 1em 2em 0;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     padding: 1em 1em 0;
   }
 

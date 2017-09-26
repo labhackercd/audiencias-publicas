@@ -3,7 +3,7 @@
   z-index: 999 !important;
   right: 375px !important;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     display: none !important;
   }
 

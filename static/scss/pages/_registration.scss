@@ -6,7 +6,7 @@
   flex-direction: column;
   padding: 2.5em 0;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     padding: 1em 1em 2em;
   }
 }
@@ -19,7 +19,7 @@
   width: 100%;
   z-index: 10;
 
-  @include breakpoint(small down) {
+  @include bp-smallonly {
     top: 3em;
   }
 
@@ -40,7 +40,7 @@
 }
 
 .registration-wrapper {
-  @include breakpoint(medium up) {
+  @include bp-mediumup {
     max-width: 30em;
     min-width: 20em;
   }
