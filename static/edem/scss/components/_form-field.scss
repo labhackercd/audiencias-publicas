@@ -38,7 +38,7 @@ $label-underline-height: 2px;
 
   > .label {
     position: absolute;
-    bottom: 0;
+    top: 1rem;
     left: 0;
     display: flex;
     align-items: center;
@@ -76,7 +76,7 @@ $label-underline-height: 2px;
   > .action {
     flex: 0 1 auto;
     padding-right: 0.5rem;
-    margin-top: $label-underline-height; // To compensate label underline height
+    margin-bottom: $label-underline-height; // To compensate label underline height
     color: $edem-color-link;
     font-size: $font-size-centi;
     font-weight: 600;
@@ -89,7 +89,7 @@ $label-underline-height: 2px;
     margin: 0;
     color: $edem-color-negative;
     font-size: $font-size-centi;
-    font-weight: 700;
+    font-weight: 400;
     margin-top: 0.25rem;
   }
 }
