@@ -7,6 +7,9 @@
   padding-left: 2.5rem;
   margin-bottom: 0.5rem;
   border-radius: 2px;
+  font-size: $font-size-deci;
+  font-weight: 600;
+  text-align: center;
 
   &.-google {
     background-color: #fff;
@@ -40,11 +43,5 @@
       background-repeat: no-repeat;
       background-position: center center;
     }
-  }
-
-  > .label {
-    font-size: $font-size-deci;
-    font-weight: 600;
-    text-align: center;
   }
 }
