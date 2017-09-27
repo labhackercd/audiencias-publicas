@@ -64,29 +64,45 @@
         padding: 0 0.75rem;
       }
 
-      &::after {
+      &::after, &::before {
         content: '';
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 2px;
         background-color: white;
-        transform: scaleX(0);
-        transform-origin: center;
         transition: transform 0.3s $swift-out;
+        z-index: -1;
       }
 
-      &:hover::after {
+      &::before {
+        height: 2px;
+        transform: scaleX(0);
+        transform-origin: center;
+      }
+
+      &::after{
+        height: 100%;
+        transform: scaleY(0);
+        transform-origin: bottom;
+      }
+
+      &:hover::before {
         transform: scaleX(1);
       }
 
       &.-highlight {
         color: $edem-color-secondary;
 
-        &::after {
+        &::after, &::before {
           background-color: $edem-color-secondary;
         }
+      }
+
+      &.-active {
+        color: $edem-color-primary;
+        &::after { transform: scaleY(1) }
+        &:hover::after { transform: scaleY(0.85) }
       }
     }
   }
