@@ -129,4 +129,12 @@
 
 body.-sidebaropen {
   margin-left: calc(#{$edem-sidebar-width} * -1); // Calc to give the variable in negative value
+  overflow: hidden;
+  &::after {
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+    background-color: #000;
+    transition: opacity 0.3s 0s ease, width 0s 0s, height 0s 0s;
+  }
 }
