@@ -1,24 +1,14 @@
 // eDemocracia open/close edem-access
 
-$('.JS-access-link').click(function() {
+$('.JS-open-sidebar').click(function() {
+  $('.JS-sidebar-content').removeClass('-show');
+  $('.JS-open-sidebar').removeClass('-active');
+  $(this).addClass('-active');
 
-  $('.JS-access').removeClass('-open');
-
-  if ($(this).parent().hasClass('-active')) {
-    $(this).parent().removeClass('-active');
-  } else {
-    $('.JS-access-link').parent().removeClass('-active');
-    $(this).parent().addClass('-active');
-
-    if ($(this).hasClass('JS-login-link')) {
-      $('.JS-login').addClass('-open');
-      $('.JS-login-link').closest('.menu-list__item').addClass('-active');
-    }
-
-    else if ($(this).hasClass('JS-signup-link')) {
-      $('.JS-signup').addClass('-open');
-      $('.JS-signup-link').closest('.menu-list__item').addClass('-active');
-    }
+  if ($(this).hasClass('JS-show-signin')) {
+    $('.JS-signin-content').addClass('-show');
+  } else if ($(this).hasClass('JS-show-signup')) {
+    $('.JS-signup-content').addClass('-show');
   }
 });
 
