@@ -51,9 +51,13 @@
   }
 
   > .stick > .content {
-    display: flex;
+    display: none;
     flex-direction: column;
     flex: 1 0 auto;
+
+    &.-show {
+      display: flex;
+    }
 
     > .header {
       color: #fff;
