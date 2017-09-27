@@ -13,6 +13,7 @@
     padding: 0 0.5rem;
     height: $input-height;
     min-width: 0;
+    margin: 0;
     border: 0;
     outline: 0;
     background-color: transparent;
@@ -34,6 +35,12 @@
       background-color: $edem-color-link;
       transform: scaleX(1);
       transition: transform 0.3s 0s $swift-out, background-color 0s ease;
+    }
+
+    > .option {
+      color: #fff;
+      background-color: $edem-color-accent;
+      font-weight: 300;
     }
   }
 
@@ -79,7 +86,7 @@
     flex: 0 1 auto;
     padding-right: 0.5rem;
     color: $edem-color-link;
-    font-size: $font-size-centi;
+    font-size: $font-size-mili;
     font-weight: 600;
     text-transform: uppercase;
     z-index: 1;
