@@ -56,12 +56,6 @@ $('#id_form_login').submit(function(event) {
   });
 });
 
-// Go back function inside signup
-
-$('.JS-prev-form').click(function(){
-  $('.login-box__signup-wrapper').removeClass('step-2');
-});
-
 // Toggle country/state input
 
 $('.JS-input-action-state').on('mousedown', function(e){
