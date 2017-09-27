@@ -68,29 +68,29 @@
     <section class="section-left">
 
       <div class="questions-wrapper">
-        <div class="questions">
+        <div class="questions JS-wrapperQuestion">
           <div class="questions__header">
             <h1 class="header__title">Pergunte aos Deputados</h1>
             <p class="header__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
           </div>
 
-          <ul class="questions__list" id="questions">
+          <ul class="questions__list JS-questionsList" id="questions">
             {% if questions %}
               {% for question in questions %}
                 {% include "includes/question_card.html" with page="room" %}
               {% endfor %}
             {% elif object.youtube_status != 2 %}
-              <div class="questions__list--empty">
+              <div class="questions__list--empty JS-questionlistEmpty">
                 <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
                 <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
               </div>
             {% endif %}
           </ul>
-          <div class="questions__read-more"></div>
+          <div class="questions__read-more JS-readMoreQuestion"></div>
 
           {% if object.youtube_status != 2 and user.is_authenticated %}
-            <form class="send-form--questions" id="questionform">
-              <textarea class="send-form__input" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
+            <form class="send-form--questions JS-formQuestion" id="questionform">
+              <textarea class="send-form__input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
               <div class="send-form__actions">
                 <div class="actions__character-counter">
                   <span class="character-counter__actual-length">0</span>
@@ -160,31 +160,31 @@
       </div>
 
       <div class="section-right__bottom">
-        <div class="chat">
+        <div class="chat JS-wrapperChat">
           <div class="chat__floating-header">
             <i class="header__icon icon icon-comments"></i>
             <h3 class="header__title">Bate-Papo</h3>
           </div>
 
-          <div class="chat__messages">
-            <ul class="messages__list" id="chat">
+          <div class="chat__messages JS-messages">
+            <ul class="messages__list JS-messagesList" id="chat">
               {% if object.messages.all %}
                 {% for message in object.messages.all %}
                   {% include "includes/chat_message.html" with message=message %}
                 {% endfor %}
               {% elif object.youtube_status != 2 %}
-                <div class="messages__list--empty">
+                <div class="messages__list--empty JS-messagesListEmpty">
                   <img src="{% static 'img/chat-bubble.svg' %}" data-fallback="{% static 'img/chat-bubble.png' %}">
                   <p>Nenhuma mensagem foi enviada ainda. Seja o primeiro!</p>
                 </div>
               {% endif %}
             </ul>
           </div>
-          <div class="chat__read-more">Há novas mensagens disponíveis abaixo</div>
+          <div class="chat__read-more JS-readMoreChat">Há novas mensagens disponíveis abaixo</div>
 
           {% if object.youtube_status != 2 and user.is_authenticated %}
-            <form class="send-form--chat" id="chatform">
-              <textarea class="send-form__input" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required></textarea>
+            <form class="send-form--chat JS-formChat" id="chatform">
+              <textarea class="send-form__input JS-formInputChat" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required></textarea>
               <div class="send-form__actions">
                 <button class="actions__button" id="go">
                   <i class="button__icon icon icon-paper-plane"></i>

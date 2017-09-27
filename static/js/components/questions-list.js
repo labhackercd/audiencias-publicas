@@ -4,8 +4,8 @@ function questionsListComponent(socket) {
   const elements = {
     $list: $('.room-questions__list'),
     $listEmpty: $('.room-questions__empty'),
-    $answeredCheckbox: $('.js-answered-checkbox'),
-    $priorityCheckbox: $('.js-priority-checkbox'),
+    $answeredCheckbox: $('.JS-answeredCheckbox'),
+    $priorityCheckbox: $('.JS-priorityCheckbox'),
     $numberOfQuestions: $('.numberofquestions'),
   };
 
@@ -88,8 +88,8 @@ function questionsListComponent(socket) {
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
     },
     onAdd($question) {
-      const $answeredCheckbox = $question.find('.js-answered-checkbox');
-      const $priorityCheckbox = $question.find('.js-priority-checkbox');
+      const $answeredCheckbox = $question.find('.JS-answeredCheckbox');
+      const $priorityCheckbox = $question.find('.JS-priorityCheckbox');
 
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
