@@ -3,15 +3,15 @@
   position: absolute;
   width: $edem-sidebar-width;
   left: 100%;
+  top: $edem-topbar-height;
 
   > .stick {
     position: fixed;
     display: flex;
     flex-direction: column;
     width: $edem-sidebar-width;
-    height: 100vh;
-    margin-top: 1.5rem;
-    padding: 0 calc(1.5rem + 4vw);
+    height: calc(100vh - #{$edem-topbar-height});
+    padding: 2rem calc(1.5rem + 4vw);
     background-color: $edem-color-primary;
     overflow: auto;
     z-index: 100000;
