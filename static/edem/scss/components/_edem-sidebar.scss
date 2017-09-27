@@ -15,6 +15,39 @@
     background-color: $edem-color-primary;
     overflow: auto;
     z-index: 100000;
+
+    .closewrapper {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2rem;
+      height: 2rem;
+
+      > .close {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2rem;
+        height: 2rem;
+
+        &::before, &::after {
+          content: '';
+          position: absolute;
+          width: 1rem;
+          height: 2px;
+          background-color: $edem-color-link;
+        }
+
+        &::before {
+          transform: rotate(45deg);
+        }
+
+        &::after {
+          transform: rotate(-45deg);
+        }
+      }
+    }
   }
 
   > .stick > .content {
