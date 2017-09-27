@@ -13,7 +13,14 @@
     margin-top: 1.5rem;
     padding: 0 calc(1.5rem + 4vw);
     background-color: $edem-color-primary;
+    overflow: auto;
     z-index: 100000;
+  }
+
+  > .stick > .content {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
 
     > .header {
       color: #fff;
@@ -27,6 +34,7 @@
     > .access {
       display: flex;
       flex-direction: column;
+      margin-bottom: 1rem;
     }
 
     > .button {
@@ -35,7 +43,7 @@
       color: #fff;
       display: block;
       margin: 0 auto;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
 
       &.-social {
         position: relative;
@@ -45,7 +53,7 @@
         padding-left: 3.5rem;
         padding-right: 1rem;
         margin: 0;
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
 
         &::before {
           content: '';
@@ -71,6 +79,13 @@
           &::before { background-image: url('../img/social-icon-google.svg') }
         }
       }
+    }
+
+    > .link {
+      color: $edem-color-link;
+      align-self: center;
+      font-size: $font-size-centi;
+      font-weight: 400;
     }
   }
 }
