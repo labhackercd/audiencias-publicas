@@ -138,16 +138,15 @@ $('.JS-input-action-country').click(function(){
 
 // Toggle show password
 
-$('.JS-field-action-password').click(function(){
-  var input = $(this).closest('.form__field-container').find('.JS-form-field');
+$('.JS-field-action-password').on('mousedown', function(e){
+  var input = $(this).siblings('.JS-form-input');
+  e.preventDefault();
   if (input.attr('type') === 'text') {
     input.attr('type', 'password');
-    $(this).children('span').text('Mostrar Senha');
-    $(this).children('i').addClass('icon-eye').removeClass('icon-eye-slash');
+    $(this).text('Mostrar Senha');
   } else {
     input.attr('type', 'text');
-    $(this).children('span').text('Esconder Senha');
-    $(this).children('i').addClass('icon-eye-slash').removeClass('icon-eye');
+    $(this).text('Esconder Senha');
   }
 });
 
