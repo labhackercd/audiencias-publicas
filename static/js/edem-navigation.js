@@ -29,7 +29,6 @@ function showError(errorMessage) {
 }
 
 // eDemocracia edem-access input status
-
 $('.JS-form-input').focus(function() {
   $(this).closest('.form-field').addClass('-filled');
 });
@@ -68,7 +67,6 @@ $('#id_form_login').submit(function(event) {
 });
 
 // Toggle country/state input
-
 $('.JS-input-action-state').on('mousedown', function(e){
   e.preventDefault();
   $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
@@ -84,7 +82,6 @@ $('.JS-input-action-country').on('mousedown', function(e){
 });
 
 // Toggle show password
-
 $('.JS-field-action-password').on('mousedown', function(e){
   var input = $(this).siblings('.JS-form-input');
   e.preventDefault();
@@ -98,7 +95,6 @@ $('.JS-field-action-password').on('mousedown', function(e){
 });
 
 // Close error
-
 $('.JS-error-close').click(function(){
   $('.JS-error-box').removeClass('-show');
 });
