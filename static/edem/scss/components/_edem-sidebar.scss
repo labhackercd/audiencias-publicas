@@ -127,6 +127,6 @@
   }
 }
 
-body.-opensidebar {
+body.-sidebaropen {
   margin-left: calc(#{$edem-sidebar-width} * -1); // Calc to give the variable in negative value
 }
