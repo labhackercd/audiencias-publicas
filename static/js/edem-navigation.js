@@ -1,15 +1,26 @@
-// eDemocracia open/close edem-access
-
+// eDemocracia open/toggle sidebar/signin/signup
 $('.JS-open-sidebar').click(function() {
-  $('.JS-sidebar-content').removeClass('-show');
-  $('.JS-open-sidebar').removeClass('-active');
-  $(this).addClass('-active');
+  if ($(this).hasClass('-active')) {
+    $(this).removeClass('-active');
+    $('body').removeClass('-sidebaropen');
+  } else {
+    $('body').addClass('-sidebaropen')
+    $('.JS-sidebar-content').removeClass('-show');
+    $('.JS-open-sidebar').removeClass('-active');
+    $(this).addClass('-active');
 
-  if ($(this).hasClass('JS-show-signin')) {
-    $('.JS-signin-content').addClass('-show');
-  } else if ($(this).hasClass('JS-show-signup')) {
-    $('.JS-signup-content').addClass('-show');
+    if ($(this).hasClass('JS-show-signin')) {
+      $('.JS-signin-content').addClass('-show');
+    } else if ($(this).hasClass('JS-show-signup')) {
+      $('.JS-signup-content').addClass('-show');
+    }
   }
+});
+
+// eDemocracia close sidebar
+$('.JS-close-sidebar').click(function(){
+  $('.JS-open-sidebar').removeClass('-active');
+  $('body').removeClass('-sidebaropen');
 });
 
 function showError(errorMessage) {
