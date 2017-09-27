@@ -74,16 +74,18 @@ $('.JS-prev-form').click(function(){
 
 // Toggle country/state input
 
-$('.JS-input-action-state').click(function(){
-  $(this).closest('.form__input').attr('hidden','');
-  $('.JS-input-action-country').closest('.form__input').removeAttr('hidden');
-  $('#id_uf').val('').removeClass('form__field--filled');
+$('.JS-input-action-state').on('mousedown', function(e){
+  e.preventDefault();
+  $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
+  $(this).siblings('.JS-form-input').val('');
+  $('.JS-input-action-country').closest('.form-field').removeAttr('hidden');
 });
 
-$('.JS-input-action-country').click(function(){
-  $(this).closest('.form__input').attr('hidden','');
-  $('.JS-input-action-state').closest('.form__input').removeAttr('hidden');
-  $('#id_country').val('').removeClass('form__field--filled');
+$('.JS-input-action-country').on('mousedown', function(e){
+  e.preventDefault();
+  $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
+  $(this).siblings('.JS-form-input').val('');
+  $('.JS-input-action-state').closest('.form-field').removeAttr('hidden');
 });
 
 // Toggle show password
