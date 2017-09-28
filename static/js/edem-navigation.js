@@ -17,10 +17,21 @@ $('.JS-openSidebar').click(function() {
   }
 });
 
-// eDemocracia close sidebar
+// eDemocracia sidebar close button
 $('.JS-closeSidebar').click(function(){
   $('.JS-openSidebar').removeClass('-active');
   $('body').removeClass('-sidebaropen');
+});
+
+// Close sidebar if click is outside of sidebar or topbar
+document.addEventListener('click', function(e) {
+  var onEdemCore = $(e.target).closest('.edem-topbar, .edem-sidebar').length;
+  var sidebarOpen = $('body').hasClass('-sidebaropen');
+
+  if (!onEdemCore && sidebarOpen ) {
+    $('.JS-openSidebar').removeClass('-active');
+    $('body').removeClass('-sidebaropen');
+  }
 });
 
 function showError(errorMessage) {
