@@ -82,10 +82,10 @@ $('.JS-inputActionState').on('mousedown', function(e){
   e.preventDefault();
   $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
   $(this).siblings('.JS-formInput').val('');
-  $('.JS-inputAction-country').closest('.form-field').removeAttr('hidden');
+  $('.JS-inputActionCountry').closest('.form-field').removeAttr('hidden');
 });
 
-$('.JS-inputAction-country').on('mousedown', function(e){
+$('.JS-inputActionCountry').on('mousedown', function(e){
   e.preventDefault();
   $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
   $(this).siblings('.JS-formInput').val('');
