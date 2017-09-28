@@ -35,8 +35,8 @@ document.addEventListener('click', function(e) {
 });
 
 function showError(errorMessage) {
-  $('.JS-errorBox').addClass('-show');
-  $('.JS-errorMessage').text(errorMessage);
+  $('.JS-accessErrorBox').removeAttr('hidden','');
+  $('.JS-accessError').text(errorMessage);
 }
 
 // eDemocracia edem-access input status
@@ -106,8 +106,8 @@ $('.JS-fieldActionPassword').on('mousedown', function(e){
 });
 
 // Close error
-$('.JS-errorClose').click(function(){
-  $('.JS-errorBox').removeClass('-show');
+$('.JS-closeAccessError').click(function(){
+  $('.JS-accessErrorBox').attr('hidden', '');
 });
 
 $('#id_form_validation').submit(function(event) {
