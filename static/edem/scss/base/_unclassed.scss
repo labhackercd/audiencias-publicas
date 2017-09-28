@@ -15,3 +15,15 @@ body {
     transition: opacity 0.3s ease, width 0s 0.3s, height 0s 0.3s;
   }
 }
+
+button {
+  font: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+}
