@@ -133,8 +133,7 @@ body.-sidebaropen {
   &::after {
     width: 100%;
     height: 100%;
-    opacity: 0.6;
-    background-color: #000;
+    opacity: 0.8;
     transition: opacity 0.3s 0s ease, width 0s 0s, height 0s 0s;
   }
 }
