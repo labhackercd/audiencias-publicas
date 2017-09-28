@@ -10,8 +10,8 @@ body {
     opacity: 0;
     width: 0;
     height: 0;
-    background-color: #000;
+    background-color: $edem-color-primary;
     z-index: 100000;
-    transition: opacity 0.3s 0s ease, width 0s 0.3s, height 0s 0.3s;
+    transition: opacity 0.3s ease, width 0s 0.3s, height 0s 0.3s;
   }
 }
