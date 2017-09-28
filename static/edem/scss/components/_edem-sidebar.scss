@@ -52,6 +52,17 @@
       flex-direction: column;
       margin-bottom: 1rem;
 
+      > .info {
+        color: white;
+        font-size: 0.75em;
+        font-weight: 400;
+      }
+
+      > .info > .link {
+        color: $edem-color-link;
+        font-weight: 600;
+      }
+
       > .edem-button {
         margin-top: 1rem;
       }
