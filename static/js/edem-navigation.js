@@ -1,39 +1,39 @@
 // eDemocracia open/toggle sidebar/signin/signup
-$('.JS-open-sidebar').click(function() {
+$('.JS-openSidebar').click(function() {
   if ($(this).hasClass('-active')) {
     $(this).removeClass('-active');
     $('body').removeClass('-sidebaropen');
   } else {
     $('body').addClass('-sidebaropen')
-    $('.JS-sidebar-content').removeClass('-show');
-    $('.JS-open-sidebar').removeClass('-active');
+    $('.JS-sidebarContent').removeClass('-show');
+    $('.JS-openSidebar').removeClass('-active');
     $(this).addClass('-active');
 
-    if ($(this).hasClass('JS-show-signin')) {
-      $('.JS-signin-content').addClass('-show');
-    } else if ($(this).hasClass('JS-show-signup')) {
-      $('.JS-signup-content').addClass('-show');
+    if ($(this).hasClass('JS-showSignin')) {
+      $('.JS-signinContent').addClass('-show');
+    } else if ($(this).hasClass('JS-showSignup')) {
+      $('.JS-signupContent').addClass('-show');
     }
   }
 });
 
 // eDemocracia close sidebar
-$('.JS-close-sidebar').click(function(){
-  $('.JS-open-sidebar').removeClass('-active');
+$('.JS-closeSidebar').click(function(){
+  $('.JS-openSidebar').removeClass('-active');
   $('body').removeClass('-sidebaropen');
 });
 
 function showError(errorMessage) {
-  $('.JS-error-box').addClass('-show');
-  $('.JS-error-message').text(errorMessage);
+  $('.JS-errorBox').addClass('-show');
+  $('.JS-errorMessage').text(errorMessage);
 }
 
 // eDemocracia edem-access input status
-$('.JS-form-input').focus(function() {
+$('.JS-formInput').focus(function() {
   $(this).closest('.form-field').addClass('-filled');
 });
 
-$('.JS-form-input').blur(function() {
+$('.JS-formInput').blur(function() {
   if (!$(this).val() == '') {
     $(this).closest('.form-field').addClass('-filled');
   } else {
@@ -54,9 +54,9 @@ $('#id_form_login').submit(function(event) {
       if (jqXRH.status == 0) {
         showError("Verifique sua conexão com a internet.")
       } else if (jqXRH.status == 401) {
-        $('.JS-input-error').text('');
+        $('.JS-inputError').text('');
         $(event.target)
-          .find('.JS-input-error')
+          .find('.JS-inputError')
           .text(jqXRH.responseJSON['data'])
           .removeAttr('hidden');
       } else {
@@ -67,23 +67,23 @@ $('#id_form_login').submit(function(event) {
 });
 
 // Toggle country/state input
-$('.JS-input-action-state').on('mousedown', function(e){
+$('.JS-inputActionState').on('mousedown', function(e){
   e.preventDefault();
   $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
-  $(this).siblings('.JS-form-input').val('');
-  $('.JS-input-action-country').closest('.form-field').removeAttr('hidden');
+  $(this).siblings('.JS-formInput').val('');
+  $('.JS-inputAction-country').closest('.form-field').removeAttr('hidden');
 });
 
-$('.JS-input-action-country').on('mousedown', function(e){
+$('.JS-inputAction-country').on('mousedown', function(e){
   e.preventDefault();
   $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
-  $(this).siblings('.JS-form-input').val('');
-  $('.JS-input-action-state').closest('.form-field').removeAttr('hidden');
+  $(this).siblings('.JS-formInput').val('');
+  $('.JS-inputActionState').closest('.form-field').removeAttr('hidden');
 });
 
 // Toggle show password
-$('.JS-field-action-password').on('mousedown', function(e){
-  var input = $(this).siblings('.JS-form-input');
+$('.JS-fieldActionPassword').on('mousedown', function(e){
+  var input = $(this).siblings('.JS-formInput');
   e.preventDefault();
   if (input.attr('type') === 'text') {
     input.attr('type', 'password');
@@ -95,8 +95,8 @@ $('.JS-field-action-password').on('mousedown', function(e){
 });
 
 // Close error
-$('.JS-error-close').click(function(){
-  $('.JS-error-box').removeClass('-show');
+$('.JS-errorClose').click(function(){
+  $('.JS-errorBox').removeClass('-show');
 });
 
 $('#id_form_validation').submit(function(event) {
@@ -114,7 +114,7 @@ $('#id_form_validation').submit(function(event) {
       if (jqXRH.status == 0) {
         showError('Verifique sua conexão com a internet.');
       } else if (jqXRH.status == 400) {
-        $('.JS-input-error').text('');
+        $('.JS-inputError').text('');
         $.each(jqXRH.responseJSON["data"], function(key, value) {
           if (key != '__all__') {
             $(event.target)
@@ -151,7 +151,7 @@ $('#id_form_signup').submit(function(event) {
         if (jqXRH.status == 0) {
           showError('Verifique sua conexão com a internet.');
         } else if (jqXRH.status == 400) {
-          $('.JS-input-error').text('');
+          $('.JS-inputError').text('');
           $.each(jqXRH.responseJSON["data"], function(key, value) {
             if (key == 'email') {
               $('.login-box__signup-wrapper').removeClass('step-2');
