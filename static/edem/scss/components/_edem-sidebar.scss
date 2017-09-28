@@ -47,20 +47,22 @@
       border-bottom: 4px solid $edem-color-accent;
     }
 
+    > .info {
+      color: white;
+      font-size: 0.75em;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    > .info > .link {
+      color: $edem-color-link;
+      font-weight: 600;
+    }
+
     > .access {
       display: flex;
       flex-direction: column;
-
-      > .info {
-        color: white;
-        font-size: 0.75em;
-        font-weight: 400;
-      }
-
-      > .info > .link {
-        color: $edem-color-link;
-        font-weight: 600;
-      }
 
       > .edem-button {
         margin-top: 1rem;
