@@ -11,7 +11,7 @@
     flex-direction: column;
     width: $edem-sidebar-width;
     height: calc(100vh - #{$edem-topbar-height});
-    padding: 2rem calc(1.5rem + 4vw);
+    padding: 2rem $edem-sidebar-padding;
     background-color: $edem-color-primary;
     overflow: auto;
     z-index: 100000;
@@ -75,6 +75,23 @@
 
       > .edem-button {
         margin-top: 1rem;
+      }
+
+      > .error {
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 5rem;
+        width: $edem-sidebar-width;
+        margin-left: calc(#{$edem-sidebar-padding} * -1);
+        margin-bottom: 0;
+        padding: 1rem;
+        background-color: $edem-color-negative;
+        color: #fff;
+        font-weight: 500;
+        z-index: 2;
       }
     }
 
