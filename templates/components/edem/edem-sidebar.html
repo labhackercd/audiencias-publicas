@@ -10,14 +10,14 @@
     <div class="content JS-sidebarContent JS-signinContent">
       <h1 class="header">Entrar</h1>
 
-      <a class="button -social -facebook" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+      <a class="edem-button -social -facebook" href="/account/social/login/google-oauth2/?next={{ request.path }}">
         Entrar Com Facebook
       </a>
-      <a class="button -social -google" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+      <a class="edem-button -social -google" href="/account/social/login/google-oauth2/?next={{ request.path }}">
         Entrar Com Google
       </a>
 
-      <div class="access">
+      <form class="access">
         <div class="form-field">
           <input class="input JS-formInput" id="id_username" name="username">
           <label class="label" for="id_username"><span class="labeltext">Endereço de email</span></label>
@@ -30,9 +30,10 @@
           <a class="action -input JS-fieldActionPassword" role="button">Mostrar Senha</a>
           <p class="error JS-inputError" data-input-name="password" hidden></p>
         </div>
-      </div>
 
-      <button class="button">Entrar</button>
+        <button class="edem-button">Entrar</button>
+      </form>
+
 
       <a class="link" href="/account/password-reset">Esqueceu sua senha?</a>
     </div>
@@ -40,14 +41,14 @@
     <div class="content JS-sidebarContent JS-signupContent">
       <h1 class="header">Cadastrar</h1>
 
-      <a class="button -social -facebook" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+      <a class="edem-button -social -facebook" href="/account/social/login/google-oauth2/?next={{ request.path }}">
         Cadastrar Com Facebook
       </a>
-      <a class="button -social -google" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+      <a class="edem-button -social -google" href="/account/social/login/google-oauth2/?next={{ request.path }}">
         Cadastrar Com Google
       </a>
 
-      <div class="access">
+      <form class="access">
         <div class="form-field">
           <input class="input JS-formInput" id="mail" name="email" type="email">
           <label class="label" for="mail"><span class="labeltext">Endereço de email *</span></label>
@@ -303,9 +304,10 @@
           <label class="label" for="birthyear"><span class="labeltext">Ano de nascimento</span></label>
           <p class="error JS-inputError" data-input-name="birthyear" hidden></p>
         </div>
-      </div>
 
-      <button class="button">Cadastrar</button>
+        <button class="edem-button -access">Cadastrar</button>
+      </form>
+
     </div>
 
   </div>
