@@ -27,3 +27,8 @@ button {
   border-radius: 0;
   outline: none;
 }
+
+// TODO Remove this after getting rid of Foundation!!
+[hidden] {
+  display: none !important;
+}
