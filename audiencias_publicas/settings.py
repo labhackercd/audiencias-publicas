@@ -167,7 +167,12 @@ USE_TZ = False
 
 STATIC_URL = config('STATIC_URL', default='/static/')
 
-STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'static'))
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'public'))
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'templates/components/edem/static'),
+]
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',

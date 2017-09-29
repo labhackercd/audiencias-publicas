@@ -1,0 +1,15 @@
+$swift-out: cubic-bezier(.55, 0, .1, 1);
+
+@mixin material-shadow($depth) {
+  @if $depth < 1 {
+    box-shadow: none;
+    transition: box-shadow 0.3s $swift-out;
+  }
+  @else if $depth > 5 {
+    @warn "Invalid $depth `#{$depth}` for mixin `material-shadow`.";
+  }
+  @else {
+    box-shadow: bottom-shadow($depth), top-shadow($depth);
+    transition: box-shadow 0.3s $swift-out;
+  }
+}
