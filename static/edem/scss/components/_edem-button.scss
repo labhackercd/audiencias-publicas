@@ -16,6 +16,11 @@
     margin: 0;
     margin-bottom: 0.5rem;
 
+    @include bp-smallonly {
+      padding-left: 3rem;
+      padding-right: 0.5rem;
+    }
+
     &::before {
       content: '';
       position: absolute;

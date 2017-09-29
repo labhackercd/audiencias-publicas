@@ -5,6 +5,10 @@
   left: 100%;
   top: $edem-topbar-height;
 
+  @include bp-smallonly {
+    font-size: 0.9em;
+  }
+
   > .stick {
     position: fixed;
     display: flex;
