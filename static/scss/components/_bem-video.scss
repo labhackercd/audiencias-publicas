@@ -1,8 +1,4 @@
 .bem-video {
-  background-color: $color-primary;
-  flex: 1;
-  overflow-y: auto;
-  padding: 0 2.75em;
 
   @include bp-mediumdown {
     padding: 0 1em;
@@ -119,43 +115,5 @@
 
   .video--empty__icon {
     margin-bottom: 1em;
-  }
-}
-
-.video .video__title,
-.bem-room-questions .video__title,
-.room .video__title {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: 6.5em;
-  padding: 1.0725em 0;
-
-  .title__secondary {
-    color: $color-primary-xxlight;
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 1em;
-    font-weight: 600;
-    margin-bottom: 0;
-    text-transform: uppercase;
-
-    .secondary__text {
-      margin-right: 0.5em;
-    }
-
-    .secondary__separator {
-      color: $color-accent;
-      margin-right: 0.5em
-    }
-  }
-
-  .title__primary {
-    color: white;
-    font-size: 1.5em;
-    font-weight: 700;
-    line-height: 1em;
-    margin-bottom: 0;
-    text-transform: uppercase;
   }
 }

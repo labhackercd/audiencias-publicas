@@ -1,3 +1,22 @@
 .room-container {
-  display: flex; 
+  display: flex;
+  padding-left: 1rem;
+  padding-right: 1rem;
+
+  > .room-questions {
+    min-width: 20rem;
+  }
+
+  > .room-chat {
+    min-width: 16rem;
+  } 
+
+  > .room-questions,
+  > .room-main,
+  > .room-chat {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+
 }

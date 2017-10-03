@@ -1,11 +1,4 @@
-.questions-wrapper {
-  display: flex;
-  flex: 1;
-  position: relative;
-}
-
 .questions {
-  background-color: $color-primary;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -28,7 +21,6 @@
 
   @include bp-largeup {
     position: relative;
-    padding-left: 2.75em;
   }
 }
 
