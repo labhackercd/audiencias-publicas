@@ -2,15 +2,14 @@
   @extend %button;
   background-color: $edem-color-accent;
   color: #fff;
-  display: block;
   margin: 0 auto;
   margin-bottom: 0.5rem;
 
+  &.-negative {
+    background-color: $edem-color-negative;
+  }
+
   &.-social {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding-left: 3.5rem;
     padding-right: 1rem;
     margin: 0;
