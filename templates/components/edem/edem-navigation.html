@@ -1,7 +1,32 @@
-{% load staticfiles %}
+{% load staticfiles macros  %}
+
+{# Whitespace is added when calling these macros, so DO NOT ident them! #}
+{% macro facebook_url %}{% block edem_facebook_url %}{% endblock %}{% endmacro %}
+{% macro google_url %}{% block edem_google_url %}{% endblock %}{% endmacro %}
+{% macro profile_url %}{% block edem_profile_url %}{% endblock %}{% endmacro %}
+{% macro logout_url %}{% block edem_logout_url %}{% endblock %}{% endmacro %}
+{% macro root_url %}{% block edem_root_url %}{% endblock %}{% endmacro %}
+{% macro tos_url %}{% block edem_tos_url %}{% endblock %}{% endmacro %}
+{% macro userimage %}{% block edem_userimage %}{% endblock %}{% endmacro %}
+{% macro username %}{% block edem_username %}{% endblock %}{% endmacro %}
+
+<div class="edem-topbar">
+  <div class="stick">
+    <a class="brand" href="{% use_macro root_url %}">
+      <img class="logo" src="{% static 'edem/img/edem-logo-text.svg' %}" alt="e-Democracia Beta">
+    </a>
+
+    <nav class="actions">
+      <a class="link">Fale conosco</a>
+      <a class="link JS-openSidebar JS-showSignin">Entrar</a>
+      <a class="link -highlight JS-openSidebar JS-showSignup">Cadastrar</a>
+      <a class="link JS-openSidebar JS-showProfile">Menu</a>
+    </nav>
+  </div>
+</div>
+
 
 <div class="edem-sidebar">
-
   <div class="stick">
     <div class="closewrapper">
       <button class="edem-close-button JS-closeSidebar"></button>
@@ -9,10 +34,10 @@
 
     <div class="content JS-sidebarContent JS-profileContent">
 
-      <img class="userimage" alt="Imagem de perfil" style="background-image: url('image')">
-      <span class="username">username</span>
-      <a class="edem-button" href="#">Editar Perfil</a>
-      <a class="edem-button -negative" href="#">Sair</a>
+      <img class="userimage" alt="Imagem de perfil" style="background-image: url('{% use_macro userimage %}')">
+      <span class="username">{% use_macro username %}</span>
+      <a class="edem-button" href="{% use_macro profile_url %}">Editar Perfil</a>
+      <a class="edem-button -negative" href="{% use_macro logout_url %}">Sair</a>
 
     </div>
 
@@ -20,10 +45,10 @@
       <h1 class="header">Entrar</h1>
 
       <div class="social">
-          <a class="edem-button -social -facebook" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+          <a class="edem-button -social -facebook" href="{% use_macro facebook_url %}">
             Continuar com Facebook
           </a>
-          <a class="edem-button -social -google" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+          <a class="edem-button -social -google" href="{% use_macro google_url %}">
             Continuar com Google
           </a>
       </div>
@@ -53,14 +78,14 @@
       <h1 class="header">Cadastrar</h1>
 
       <p class="info">
-        Ao se cadastrar no e-Democracia você concorda com nossos <a class="link" href="https://edemocracia.camara.leg.br/sobre/tos/">Termos de Serviço</a>
+        Ao se cadastrar no e-Democracia você concorda com nossos <a class="link" href="{% use_macro tos_url %}">Termos de Serviço</a>
       </p>
 
       <div class="social">
-          <a class="edem-button -social -facebook" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+          <a class="edem-button -social -facebook" href="{% use_macro facebook_url %}">
             Continuar com Facebook
           </a>
-          <a class="edem-button -social -google" href="/account/social/login/google-oauth2/?next={{ request.path }}">
+          <a class="edem-button -social -google" href="{% use_macro google_url %}">
             Continuar com Google
           </a>
       </div>
