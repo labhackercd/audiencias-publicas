@@ -42,6 +42,29 @@
       display: flex;
     }
 
+    > .userimage {
+      align-self: center;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      margin-bottom: 0.5rem;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      text-indent: -100%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    > .username {
+      align-self: center;
+      color: white;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      font-size: 1.25em;
+      line-height: 1rem;
+    }
+
     > .header {
       color: #fff;
       font-weight: 700;

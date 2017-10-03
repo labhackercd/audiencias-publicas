@@ -13,6 +13,8 @@ $('.JS-openSidebar').click(function() {
       $('.JS-signinContent').addClass('-show');
     } else if ($(this).hasClass('JS-showSignup')) {
       $('.JS-signupContent').addClass('-show');
+    } else if ($(this).hasClass('JS-showProfile')) {
+      $('.JS-profileContent').addClass('-show');
     }
   }
 });
