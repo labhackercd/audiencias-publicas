@@ -65,58 +65,52 @@
   <div class="room-container">
 
     <aside class="room-questions">
-      <h1>Questions</h1>
-        <div class="questions-wrapper">
-          <div class="questions JS-wrapperQuestion">
-            <div class="questions__header">
-              <h1 class="header__title">Pergunte aos Deputados</h1>
-              <p class="header__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
-            </div>
-
-            <ul class="questions__list JS-questionsList" id="questions">
-              {% if questions %}
-                {% for question in questions %}
-                  {% include "includes/question_card.html" with page="room" %}
-                {% endfor %}
-              {% elif object.youtube_status != 2 %}
-                <div class="questions__list--empty JS-questionlistEmpty">
-                  <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
-                  <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
-                </div>
-              {% endif %}
-            </ul>
-            <div class="questions__read-more JS-readMoreQuestion"></div>
-
-            {% if object.youtube_status != 2 and user.is_authenticated %}
-              <form class="send-form--questions JS-formQuestion" id="questionform">
-                <textarea class="send-form__input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
-                <div class="send-form__actions">
-                  <div class="actions__character-counter JS-character-counter">
-                    <span class="character-counter__actual-length JS-characterCounterAtualLength">0</span>
-                    /
-                    <span class="character-counter__max-length">300</span>
-                  </div>
-                  <button class="actions__button">
-                    <span class="button__text">Enviar</span>
-                    <i class="button__icon icon icon-caret-right"></i>
-                  </button>
-                </div>
-              </form>
-            {% elif object.youtube_status != 2 and not user.is_authenticated %}
-              <div class="send-form--unauthenticated">
-                <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
-              </div>
-            {% elif object.youtube_status == 2 %}
-              <div class="send-form--closed">
-                <span>Audiência encerrada para participações.</span>
+      <h2 class="room-aside-title">Perguntas</h2>
+      <div class="questions-wrapper">
+        <div class="questions JS-wrapperQuestion">
+          <ul class="questions__list JS-questionsList" id="questions">
+            {% if questions %}
+              {% for question in questions %}
+                {% include "includes/question_card.html" with page="room" %}
+              {% endfor %}
+            {% elif object.youtube_status != 2 %}
+              <div class="questions__list--empty JS-questionlistEmpty">
+                <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
+                <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
               </div>
             {% endif %}
-          </div>
+          </ul>
+          <div class="questions__read-more JS-readMoreQuestion"></div>
+          {% if object.youtube_status != 2 and user.is_authenticated %}
+            <form class="send-form--questions JS-formQuestion" id="questionform">
+              <textarea class="send-form__input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
+              <div class="send-form__actions">
+                <div class="actions__character-counter JS-character-counter">
+                  <span class="character-counter__actual-length JS-characterCounterAtualLength">0</span>
+                  /
+                  <span class="character-counter__max-length">300</span>
+                </div>
+                <button class="actions__button">
+                  <span class="button__text">Enviar</span>
+                  <i class="button__icon icon icon-caret-right"></i>
+                </button>
+              </div>
+            </form>
+          {% elif object.youtube_status != 2 and not user.is_authenticated %}
+            <div class="send-form--unauthenticated">
+              <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
+            </div>
+          {% elif object.youtube_status == 2 %}
+            <div class="send-form--closed">
+              <span>Audiência encerrada para participações.</span>
+            </div>
+          {% endif %}
         </div>
+      </div>
     </aside>
 
     <main class="room-main">
-      <h1>Main</h1>
+
       <div class="bem-video">
 
         {% include "includes/room_video.html" with object=object %}
@@ -158,13 +152,8 @@
     </main>
 
     <aside class="room-chat">
-      <h1>Chat</h1>
+      <h2 class="room-aside-title">Bate-papo</h2>
       <div class="chat JS-wrapperChat">
-        <div class="chat__floating-header">
-          <i class="header__icon icon icon-comments"></i>
-          <h3 class="header__title">Bate-Papo</h3>
-        </div>
-
         <div class="chat__messages JS-messages">
           <ul class="messages__list JS-messagesList" id="chat">
             {% if object.messages.all %}
@@ -180,7 +169,6 @@
           </ul>
         </div>
         <div class="chat__read-more JS-readMoreChat">Há novas mensagens disponíveis abaixo</div>
-
         {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="send-form--chat JS-formChat" id="chatform">
             <textarea class="send-form__input JS-formInputChat" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required></textarea>
@@ -190,17 +178,14 @@
               </button>
             </div>
           </form>
-
         {% elif object.youtube_status != 2 and not user.is_authenticated %}
           <div class="send-form--unauthenticated">
             <span><a href="/home/?next={{ request.path }}">Faça Login</a> para participar no chat!</span>
           </div>
-
         {% elif object.youtube_status == 2 %}
           <div class="send-form--closed">
             <span>Audiência encerrada para participações.</span>
           </div>
-
         {% endif %}
       </div>
     </aside>
