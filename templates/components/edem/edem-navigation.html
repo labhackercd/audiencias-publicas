@@ -7,7 +7,7 @@
 {% macro logout_url %}{% block edem_logout_url %}{% endblock %}{% endmacro %}
 {% macro root_url %}{% block edem_root_url %}{% endblock %}{% endmacro %}
 {% macro tos_url %}{% block edem_tos_url %}{% endblock %}{% endmacro %}
-{% macro userimage %}{% block edem_userimage %}{% endblock %}{% endmacro %}
+{% macro avatar %}{% block edem_avatar %}{% endblock %}{% endmacro %}
 {% macro username %}{% block edem_username %}{% endblock %}{% endmacro %}
 
 <div class="edem-topbar">
@@ -34,7 +34,7 @@
 
     <div class="content JS-sidebarContent JS-profileContent">
 
-      <img class="userimage" alt="Imagem de perfil" style="background-image: url('{% use_macro userimage %}')">
+      <img class="avatar" alt="Imagem de perfil" style="background-image: url('{% use_macro avatar %}')">
       <span class="username">{% use_macro username %}</span>
       <a class="edem-button" href="{% use_macro profile_url %}">Editar Perfil</a>
       <a class="edem-button -negative" href="{% use_macro logout_url %}">Sair</a>
