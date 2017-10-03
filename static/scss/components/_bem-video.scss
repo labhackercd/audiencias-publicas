@@ -1,4 +1,4 @@
-.video {
+.bem-video {
   background-color: $color-primary;
   flex: 1;
   overflow-y: auto;
@@ -123,7 +123,7 @@
 }
 
 .video .video__title,
-.room-questions .video__title,
+.bem-room-questions .video__title,
 .room .video__title {
   display: flex;
   flex-direction: column;

@@ -21,11 +21,11 @@
 @import 'pages/home';
 @import 'pages/registration';
 @import 'pages/room-questions-list';
-@import 'pages/room';
 @import 'pages/video-list';
 @import 'pages/widget';
 
 // Components
+@import 'components/room-container';
 @import 'components/room-header';
 @import 'components/room-info';
 @import 'components/social-share';
