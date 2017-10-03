@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'corsheaders',
     'debug_toolbar',
+    'macros',
 
     'djangobower',
     'compressor',
