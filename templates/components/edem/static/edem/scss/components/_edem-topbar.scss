@@ -57,6 +57,7 @@
       font-size: $font-size-mili;
       font-weight: 700;
       text-transform: uppercase;
+      user-select: none;
       transition: all 0.3s ease;
 
       @include bp-smallup {
