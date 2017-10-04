@@ -13,6 +13,7 @@
   border-radius: 2px;
   outline: 0;
   cursor: pointer;
+  user-select: none;
   box-shadow: 1px 1px 0px 1px rgba(0, 0, 0, 0.1),
               0 0 0 5rem rgba(0, 0, 0, 0) inset;
   transition-property: background-color, box-shadow;
