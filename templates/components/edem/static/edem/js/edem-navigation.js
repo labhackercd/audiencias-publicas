@@ -1,3 +1,23 @@
+function resizeRecaptcha() {
+  var accessWidth = $('.JS-signUpForm')[0].getBoundingClientRect().width; // Get width with decimals
+  var captchaWidth = 302
+  var scaleRatio = accessWidth / captchaWidth
+  $('.g-recaptcha').css({
+    'transform' : 'scale('+scaleRatio+')',
+    '-webkit-transform' : 'scale('+scaleRatio+')',
+    '-ms-transform' : 'scale('+scaleRatio+')',
+    '-o-transform' : 'scale('+scaleRatio+')',
+    'transform-origin' : '0 0',
+    '-webkit-transform-origin' : '0 0',
+    '-ms-transform-origin' : '0 0',
+    '-o-transform-origin' : '0 0'
+  });
+}
+
+$(window).resize(function(){
+  resizeRecaptcha();
+});
+
 // eDemocracia open/toggle sidebar/signin/signup
 $('.JS-openSidebar').click(function() {
   if ($(this).hasClass('-active')) {
@@ -16,6 +36,7 @@ $('.JS-openSidebar').click(function() {
     } else if ($(this).hasClass('JS-showProfile')) {
       $('.JS-profileContent').addClass('-show');
     }
+    resizeRecaptcha();
   }
 });
 
