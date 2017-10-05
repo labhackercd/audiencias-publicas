@@ -1,7 +1,11 @@
 function resizeRecaptcha() {
-  var accessWidth = $('.JS-signUpForm')[0].getBoundingClientRect().width; // Get width with decimals
-  var captchaWidth = 302
-  var scaleRatio = accessWidth / captchaWidth
+  var accessWidth = $('.JS-signUpForm')[0].getBoundingClientRect().width; // Get value with decimals
+  var captchaWidth = 302;
+  var captchaHeight = 78;
+  var captchaDynamicHeight = $('.g-recaptcha')[0].getBoundingClientRect().height;
+  var scaleRatio = accessWidth / captchaWidth;
+  var scaleHeight = captchaHeight * scaleRatio;
+
   $('.g-recaptcha').css({
     'transform' : 'scale('+scaleRatio+')',
     '-webkit-transform' : 'scale('+scaleRatio+')',
@@ -10,7 +14,8 @@ function resizeRecaptcha() {
     'transform-origin' : '0 0',
     '-webkit-transform-origin' : '0 0',
     '-ms-transform-origin' : '0 0',
-    '-o-transform-origin' : '0 0'
+    '-o-transform-origin' : '0 0',
+    'height' : scaleHeight
   });
 }
 
