@@ -1,93 +1,56 @@
-var searchWrapper = document.querySelector('.search-form'),
-    searchInput = document.querySelector('.search-form__input'),
-    navBar = document.querySelector('.edem-navigation');
-
-document.addEventListener('click', (e) => {
-  if (~e.target.className.indexOf('search-form')) {
-    searchWrapper.classList.add('focused');
-    navBar.classList.add('search-on');
-    searchInput.focus();
+// eDemocracia open/toggle sidebar/signin/signup
+$('.JS-openSidebar').click(function() {
+  if ($(this).hasClass('-active')) {
+    $(this).removeClass('-active');
+    $('body').removeClass('-sidebaropen');
   } else {
-    searchWrapper.classList.remove('focused');
-    navBar.classList.remove('search-on');
+    $('body').addClass('-sidebaropen')
+    $('.JS-sidebarContent').removeClass('-show');
+    $('.JS-openSidebar').removeClass('-active');
+    $(this).addClass('-active');
+
+    if ($(this).hasClass('JS-showSignin')) {
+      $('.JS-signinContent').addClass('-show');
+    } else if ($(this).hasClass('JS-showSignup')) {
+      $('.JS-signupContent').addClass('-show');
+    } else if ($(this).hasClass('JS-showProfile')) {
+      $('.JS-profileContent').addClass('-show');
+    }
   }
 });
 
-$('.menu-list--dropdown')
-  .click(function() {
-    $('.menu-list--dropdown, .menu-list--dropdown__wrapper')
-      .not(this)
-      .removeClass('toggled');
-
-    $(this)
-      .toggleClass('toggled');
-
-    $(this)
-      .find('.menu-list--dropdown__wrapper')
-      .addClass('toggled');
+// eDemocracia sidebar close button
+$('.JS-closeSidebar').click(function(){
+  $('.JS-openSidebar').removeClass('-active');
+  $('body').removeClass('-sidebaropen');
 });
 
-$('.menu-list--dropdown__wrapper')
-  .click(function() {
-    event.stopPropagation();
-});
+// Close sidebar if click is outside of sidebar or topbar
+document.addEventListener('click', function(e) {
+  var onEdemCore = $(e.target).closest('.edem-topbar, .edem-sidebar').length;
+  var sidebarOpen = $('body').hasClass('-sidebaropen');
 
-$(document).click(function(e) {
-    var target = e.target
-    if (!$(target).closest('.toggled').length) {
-
-      $('.toggled')
-        .removeClass('toggled');
-    }
-});
-
-$('.c-hamburger')
-  .click(function() {
-    $(this).toggleClass('toggled');
-    $('.navigation-wrapper').toggleClass('toggled');
-});
-
-
-// eDemocracia open/close edem-access
-
-$('.JS-access-link').click(function() {
-
-  $('.JS-access').removeClass('-open');
-
-  if ($(this).parent().hasClass('-active')) {
-    $(this).parent().removeClass('-active');
-  } else {
-    $('.JS-access-link').parent().removeClass('-active');
-    $(this).parent().addClass('-active');
-
-    if ($(this).hasClass('JS-login-link')) {
-      $('.JS-login').addClass('-open');
-      $('.JS-login-link').closest('.menu-list__item').addClass('-active');
-    }
-
-    else if ($(this).hasClass('JS-signup-link')) {
-      $('.JS-signup').addClass('-open');
-      $('.JS-signup-link').closest('.menu-list__item').addClass('-active');
-    }
+  if (!onEdemCore && sidebarOpen ) {
+    $('.JS-openSidebar').removeClass('-active');
+    $('body').removeClass('-sidebaropen');
   }
 });
 
 function showError(errorMessage) {
-  $('.JS-error-box').addClass('-show');
-  $('.JS-error-message').text(errorMessage);
+  $('.JS-accessErrorBox').removeAttr('hidden','');
+  $('.JS-accessError').text(errorMessage);
 }
 
 // eDemocracia edem-access input status
-
-$('.JS-form-field').focus(function() {
-  $(this).addClass('form__field--filled');
+$('.JS-formInput').focus(function() {
+  $(this).closest('.form-field').addClass('-filled');
 });
 
-$('.JS-form-field').blur(function() {
+$('.JS-formInput').blur(function() {
   if (!$(this).val() == '') {
-    $(this).addClass('form__field--filled');
+    $(this).closest('.form-field').addClass('-filled');
   } else {
-    $(this).removeClass('form__field--filled')
+    $(this).closest('.form-field').removeClass('-filled');
   }
 });
 
@@ -104,9 +67,9 @@ $('#id_form_login').submit(function(event) {
       if (jqXRH.status == 0) {
         showError("Verifique sua conexão com a internet.")
       } else if (jqXRH.status == 401) {
-        $('.JS-input-error').text('');
+        $('.JS-inputError').text('');
         $(event.target)
-          .find('.JS-input-error')
+          .find('.JS-inputError')
           .text(jqXRH.responseJSON['data'])
           .removeAttr('hidden');
       } else {
@@ -116,45 +79,37 @@ $('#id_form_login').submit(function(event) {
   });
 });
 
-// Go back function inside signup
-
-$('.JS-prev-form').click(function(){
-  $('.login-box__signup-wrapper').removeClass('step-2');
-});
-
 // Toggle country/state input
-
-$('.JS-input-action-state').click(function(){
-  $(this).closest('.form__input').attr('hidden','');
-  $('.JS-input-action-country').closest('.form__input').removeAttr('hidden');
-  $('#id_uf').val('').removeClass('form__field--filled');
+$('.JS-inputActionState').on('mousedown', function(e){
+  e.preventDefault();
+  $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
+  $(this).siblings('.JS-formInput').val('');
+  $('.JS-inputActionCountry').closest('.form-field').removeAttr('hidden');
 });
 
-$('.JS-input-action-country').click(function(){
-  $(this).closest('.form__input').attr('hidden','');
-  $('.JS-input-action-state').closest('.form__input').removeAttr('hidden');
-  $('#id_country').val('').removeClass('form__field--filled');
+$('.JS-inputActionCountry').on('mousedown', function(e){
+  e.preventDefault();
+  $(this).closest('.form-field').attr('hidden','').removeClass('-filled');
+  $(this).siblings('.JS-formInput').val('');
+  $('.JS-inputActionState').closest('.form-field').removeAttr('hidden');
 });
 
 // Toggle show password
-
-$('.JS-field-action-password').click(function(){
-  var input = $(this).closest('.form__field-container').find('.JS-form-field');
+$('.JS-fieldActionPassword').on('mousedown', function(e){
+  var input = $(this).siblings('.JS-formInput');
+  e.preventDefault();
   if (input.attr('type') === 'text') {
     input.attr('type', 'password');
-    $(this).children('span').text('Mostrar Senha');
-    $(this).children('i').addClass('icon-eye').removeClass('icon-eye-slash');
+    $(this).text('Mostrar Senha');
   } else {
     input.attr('type', 'text');
-    $(this).children('span').text('Esconder Senha');
-    $(this).children('i').addClass('icon-eye-slash').removeClass('icon-eye');
+    $(this).text('Esconder Senha');
   }
 });
 
 // Close error
-
-$('.JS-error-close').click(function(){
-  $('.JS-error-box').removeClass('-show');
+$('.JS-closeAccessError').click(function(){
+  $('.JS-accessErrorBox').attr('hidden', '');
 });
 
 $('#id_form_validation').submit(function(event) {
@@ -172,7 +127,7 @@ $('#id_form_validation').submit(function(event) {
       if (jqXRH.status == 0) {
         showError('Verifique sua conexão com a internet.');
       } else if (jqXRH.status == 400) {
-        $('.JS-input-error').text('');
+        $('.JS-inputError').text('');
         $.each(jqXRH.responseJSON["data"], function(key, value) {
           if (key != '__all__') {
             $(event.target)
@@ -209,7 +164,7 @@ $('#id_form_signup').submit(function(event) {
         if (jqXRH.status == 0) {
           showError('Verifique sua conexão com a internet.');
         } else if (jqXRH.status == 400) {
-          $('.JS-input-error').text('');
+          $('.JS-inputError').text('');
           $.each(jqXRH.responseJSON["data"], function(key, value) {
             if (key == 'email') {
               $('.login-box__signup-wrapper').removeClass('step-2');
