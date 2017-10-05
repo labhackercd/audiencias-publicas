@@ -9,6 +9,7 @@
 {% macro tos_url %}{% block edem_tos_url %}{% endblock %}{% endmacro %}
 {% macro avatar %}{% block edem_avatar %}{% endblock %}{% endmacro %}
 {% macro username %}{% block edem_username %}{% endblock %}{% endmacro %}
+{% macro recaptcha %}{% block edem_recaptcha %}{% endblock %}{% endmacro %}
 
 <div class="edem-topbar">
   <div class="stick">
@@ -57,7 +58,7 @@
             </a>
         </div>
 
-        <form class="access">
+        <form class="access JS-loginForm">
           <div class="form-field">
             <input class="input JS-formInput" id="id_username" name="username">
             <label class="label" for="id_username"><span class="labeltext">Endereço de email</span></label>
@@ -72,6 +73,11 @@
           </div>
 
           <button class="edem-button">Entrar</button>
+
+          <div class="errorbox JS-accessErrorBox" hidden>
+            <p class="error JS-accessError"></p>
+            <button class="edem-close-button -white JS-closeAccessError" type="button"></button>
+          </div>
         </form>
 
 
@@ -94,7 +100,7 @@
             </a>
         </div>
 
-        <form class="access">
+        <form class="access JS-signUpForm">
           <div class="form-field">
             <input class="input JS-formInput" id="mail" name="email" type="email">
             <label class="label" for="mail"><span class="labeltext">Endereço de email *</span></label>
@@ -329,7 +335,7 @@
 
           <div class="form-field">
             <input class="input JS-formInput" id="name" name="first_name" type="text">
-            <label class="label" for="name"><span class="labeltext">Nome de exibição *</span></label>
+            <label class="label" for="name"><span class="labeltext">Nome de exibição</span></label>
             <p class="error JS-inputError" data-input-name="first_name" hidden></p>
           </div>
 
@@ -351,12 +357,15 @@
             <p class="error JS-inputError" data-input-name="birthyear" hidden></p>
           </div>
 
+          <div id="recaptcha" class="g-recaptcha" data-sitekey="{% use_macro recaptcha %}"></div>
+          <script src='https://www.google.com/recaptcha/api.js'></script>
+
           <button class="edem-button">Cadastrar</button>
 
 
           <div class="errorbox JS-accessErrorBox" hidden>
             <p class="error JS-accessError"></p>
-            <button class="edem-close-button -white JS-closeAccessError"></button>
+            <button class="edem-close-button -white JS-closeAccessError" type="button"></button>
           </div>
         </form>
       </div>
