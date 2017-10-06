@@ -88,6 +88,15 @@
       font-weight: 600;
     }
 
+    > .success {
+      @extend .info;
+      font-size: $font-size-deca;
+    }
+
+    > .success > .highlight {
+      color: $edem-color-secondary;
+    }
+
     > .social { margin-bottom: 1rem }
 
     > .access {
