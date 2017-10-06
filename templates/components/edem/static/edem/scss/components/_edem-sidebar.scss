@@ -94,6 +94,10 @@
       display: flex;
       flex-direction: column;
 
+      > .g-recaptcha {
+        margin-top: 1rem;
+      }
+
       > .edem-button {
         margin-top: 1rem;
       }
