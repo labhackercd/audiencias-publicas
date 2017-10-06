@@ -1,27 +1,39 @@
 function resizeRecaptcha() {
-  var accessWidth = $('.JS-signUpForm')[0].getBoundingClientRect().width; // Get value with decimals
-  var captchaWidth = 302;
-  var captchaHeight = 78;
-  var captchaDynamicHeight = $('.g-recaptcha')[0].getBoundingClientRect().height;
-  var scaleRatio = accessWidth / captchaWidth;
-  var scaleHeight = captchaHeight * scaleRatio;
+  if (!$('.JS-signupContent').hasClass('JS-signupFinished')){ // Only run if signup is not completed
+    var accessWidth = $('.JS-signUpForm')[0].getBoundingClientRect().width; // Get value with decimals
+    var captchaWidth = 302;
+    var captchaHeight = 78;
+    var captchaDynamicHeight = $('.g-recaptcha')[0].getBoundingClientRect().height;
+    var scaleRatio = accessWidth / captchaWidth;
+    var scaleHeight = captchaHeight * scaleRatio;
 
-  $('.g-recaptcha').css({
-    'transform' : 'scale('+scaleRatio+')',
-    '-webkit-transform' : 'scale('+scaleRatio+')',
-    '-ms-transform' : 'scale('+scaleRatio+')',
-    '-o-transform' : 'scale('+scaleRatio+')',
-    'transform-origin' : '0 0',
-    '-webkit-transform-origin' : '0 0',
-    '-ms-transform-origin' : '0 0',
-    '-o-transform-origin' : '0 0',
-    'height' : scaleHeight
-  });
+    $('.g-recaptcha').css({
+      'transform' : 'scale('+scaleRatio+')',
+      '-webkit-transform' : 'scale('+scaleRatio+')',
+      '-ms-transform' : 'scale('+scaleRatio+')',
+      '-o-transform' : 'scale('+scaleRatio+')',
+      'transform-origin' : '0 0',
+      '-webkit-transform-origin' : '0 0',
+      '-ms-transform-origin' : '0 0',
+      '-o-transform-origin' : '0 0',
+      'height' : scaleHeight
+    });
+  }
 }
 
 function showError(errorMessage) {
   $('.JS-accessErrorBox').removeAttr('hidden');
   $('.JS-accessError').text(errorMessage);
+}
+
+function showSuccessSignupMessage() {
+// Replace signup content html with our success message.
+  var userEmail = $('#mail').val();
+  var successMessage = "Para ativar sua conta, siga as instruções enviadas para o email que você forneceu (<span class='highlight'>" + userEmail + "</span>).";
+  var thanksElement = $('<p/>').addClass('success').text('Obrigado por se cadastrar!')
+  var successElement = $('<p/>').addClass('success').html(successMessage);
+
+  $('.JS-signupContent').addClass('JS-signupFinished').html(thanksElement).append(successElement);
 }
 
 // Resize reCAPTCHA on window resize
@@ -34,6 +46,7 @@ $('.JS-openSidebar').click(function() {
   if ($(this).hasClass('-active')) {
     $(this).removeClass('-active');
     $('body').removeClass('-sidebaropen');
+
   } else {
     $('body').addClass('-sidebaropen')
     $('.JS-sidebarContent').removeClass('-show');
@@ -42,12 +55,14 @@ $('.JS-openSidebar').click(function() {
 
     if ($(this).hasClass('JS-showSignin')) {
       $('.JS-signinContent').addClass('-show');
+
     } else if ($(this).hasClass('JS-showSignup')) {
       $('.JS-signupContent').addClass('-show');
+      resizeRecaptcha();
+
     } else if ($(this).hasClass('JS-showProfile')) {
       $('.JS-profileContent').addClass('-show');
     }
-    resizeRecaptcha();
   }
 });
 
@@ -149,9 +164,11 @@ $('.JS-signUpForm').submit(function(event) {
       type:"POST",
       url: '/ajax/signup/',
       data: $(event.target).serialize(),
+
       success: function(response){
-        alert("Usuário cadastrado com sucesso. Verifique seu email."); // Falta criar local para mensagem de sucesso
+        showSuccessSignupMessage();
       },
+
       error: function(jqXRH) {
         grecaptcha.reset();
         $("#g-recaptcha-response").val("");
