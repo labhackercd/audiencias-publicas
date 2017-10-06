@@ -19,11 +19,17 @@ function resizeRecaptcha() {
   });
 }
 
+function showError(errorMessage) {
+  $('.JS-accessErrorBox').removeAttr('hidden');
+  $('.JS-accessError').text(errorMessage);
+}
+
+// Resize reCAPTCHA on window resize
 $(window).resize(function(){
   resizeRecaptcha();
 });
 
-// eDemocracia open/toggle sidebar/signin/signup
+// eDemocracia open sidebar and its contents
 $('.JS-openSidebar').click(function() {
   if ($(this).hasClass('-active')) {
     $(this).removeClass('-active');
@@ -62,12 +68,7 @@ document.addEventListener('click', function(e) {
   }
 });
 
-function showError(errorMessage) {
-  $('.JS-accessErrorBox').removeAttr('hidden');
-  $('.JS-accessError').text(errorMessage);
-}
-
-// eDemocracia edem-access input status
+// Detect when input is filled
 $('.JS-formInput').focus(function() {
   $(this).closest('.form-field').addClass('-filled');
 });
@@ -78,31 +79,6 @@ $('.JS-formInput').blur(function() {
   } else {
     $(this).closest('.form-field').removeClass('-filled');
   }
-});
-
-$('.JS-loginForm').submit(function(event) {
-  event.preventDefault();
-  $.ajax({
-    type:"POST",
-    url: '/ajax/login/',
-    data: $(event.target).serialize(),
-    success: function(response){
-      location.reload();
-    },
-    error: function(jqXRH){
-      if (jqXRH.status == 0) {
-        showError("Verifique sua conexão com a internet.")
-      } else if (jqXRH.status == 401) {
-        $('.JS-inputError').text('');
-        $(event.target)
-          .find('.JS-inputError')
-          .text(jqXRH.responseJSON['data'])
-          .removeAttr('hidden');
-      } else {
-        showError("Ocorreu um erro no servidor, tente novamente em alguns instantes.");
-      }
-    }
-  });
 });
 
 // Toggle country/state input
@@ -133,9 +109,35 @@ $('.JS-fieldActionPassword').on('mousedown', function(e){
   }
 });
 
-// Close error
+// Close error message
 $('.JS-closeAccessError').click(function(){
   $('.JS-accessErrorBox').attr('hidden', '');
+});
+
+// Ajax calls for login and signup
+$('.JS-loginForm').submit(function(event) {
+  event.preventDefault();
+  $.ajax({
+    type:"POST",
+    url: '/ajax/login/',
+    data: $(event.target).serialize(),
+    success: function(response){
+      location.reload();
+    },
+    error: function(jqXRH){
+      if (jqXRH.status == 0) {
+        showError("Verifique sua conexão com a internet.")
+      } else if (jqXRH.status == 401) {
+        $('.JS-inputError').text('');
+        $(event.target)
+          .find('.JS-inputError')
+          .text(jqXRH.responseJSON['data'])
+          .removeAttr('hidden');
+      } else {
+        showError("Ocorreu um erro no servidor, tente novamente em alguns instantes.");
+      }
+    }
+  });
 });
 
 $('.JS-signUpForm').submit(function(event) {
