@@ -109,10 +109,8 @@
 
     <main class="room-main">
 
-      <div class="bem-video">
-
+      <div class="room-video JS-videoFrame">  
         {% include "includes/room_video.html" with object=object %}
-
         <div class="video__status">
           <div class="status__transmission">
             <span class="status__transmission-text">
@@ -125,7 +123,6 @@
               {% endif %}
             </span>
           </div>
-
           <div class="status__counter">
             {% if object.youtube_status == 1 %}
               <span class="status__counter-number" id="online-users">{{object.online_users}}</span> <span class="status__counter-text">assistindo</span>
@@ -134,19 +131,20 @@
             {% endif %}
           </div>
         </div>
-
         <div class="video__main-infos">
           <div class="video__info--description">
             <h3 class="video__info-header">Pauta</h3>
             <div class="video__info-text">{{object.reunion_object|linebreaks}}</div>
           </div>
-
           <div class="video__info--holder">
             <h3 class="video__info-header">Organizado por</h3>
             <p class="video__info-text">{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
           </div>
         </div>
+
       </div>
+
+
     </main>
 
     <aside class="room-chat">
