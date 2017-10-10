@@ -5,6 +5,7 @@
 
   min-height: $logo-height;
   display: flex;
+  flex-shrink: 0;
   margin-bottom: 1rem;
 
   > .logo {

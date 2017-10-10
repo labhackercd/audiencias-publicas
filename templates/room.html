@@ -37,7 +37,7 @@
       <img src="{% static 'img/logo-audiencias-h.svg' %}">
     </a>
 
-    <div class="room-info">
+    <div class="room-title">
       <h1 class="title">
         {% if object.reunion_theme %}
           {{object.reunion_theme}}
@@ -131,19 +131,32 @@
             {% endif %}
           </div>
         </div>
-        <div class="video__main-infos">
-          <div class="video__info--description">
-            <h3 class="video__info-header">Pauta</h3>
-            <div class="video__info-text">{{object.reunion_object|linebreaks}}</div>
-          </div>
-          <div class="video__info--holder">
-            <h3 class="video__info-header">Organizado por</h3>
-            <p class="video__info-text">{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
-          </div>
-        </div>
-
       </div>
 
+      <div class="room-info">
+        <h3>Pauta</h3>
+        {{object.reunion_object|cut:"  "|linebreaks}}
+        <button class="more" href="#">Ler mais</button>
+      </div>
+
+      <div class="room-info">
+        <h3>Organização</h3>
+        <p>{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
+        <button class="more" href="#">Ler mais</button>
+      </div>
+
+      <div class="room-info">
+        <h3>Conteúdo complementar</h3>
+        <ul class="list">
+          <li>
+            <a href="" target="_blank">Matéria da SECOM sobre transporte público</a>
+          </li>
+          <li>
+            <a href="" target="_blank">Vídeo da campanha de transporte público do estado de São Paulo</a>
+          </li>
+        </ul>
+        <button class="more" href="#">Ler mais</button>
+      </div>
 
     </main>
 

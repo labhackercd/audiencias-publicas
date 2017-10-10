@@ -28,10 +28,11 @@
 @import 'components/room-body';
 @import 'components/room-container';
 @import 'components/room-header';
-@import 'components/room-info';
+@import 'components/room-title';
 @import 'components/room-main'; // Refact: include inside room-container
 @import 'components/room-questions'; // Refact: include inside room-container
 @import 'components/room-chat'; // Refact: include inside room-container
+@import 'components/room-info';
 @import 'components/room-h2';
 @import 'components/room-video';
 @import 'components/social-share';
