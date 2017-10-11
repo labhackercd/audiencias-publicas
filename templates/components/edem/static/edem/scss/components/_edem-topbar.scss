@@ -1,6 +1,6 @@
 .edem-topbar {
   font-family: $font-family-main;
-  height: $edem-topbar-height;
+  min-height: $edem-topbar-height;
   width: 100%;
 
   > .stick {
