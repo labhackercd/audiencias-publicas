@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django_filters import rest_framework as django_filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -31,7 +32,7 @@ class VoteListAPI(generics.ListAPIView):
     queryset = UpDownVote.objects.all()
     serializer_class = VoteSerializer
     filter_backends = (
-        filters.DjangoFilterBackend,
+        django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
     filter_fields = ('user', 'vote')
@@ -43,7 +44,7 @@ class MessageListAPI(generics.ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     filter_backends = (
-        filters.DjangoFilterBackend,
+        django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
     filter_fields = ('id', 'room', 'user', 'message')
@@ -55,7 +56,7 @@ class QuestionListAPI(generics.ListAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     filter_backends = (
-        filters.DjangoFilterBackend,
+        django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
     filter_fields = ('id', 'room', 'user', 'question')
@@ -67,7 +68,7 @@ class RoomListAPI(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     filter_backends = (
-        filters.DjangoFilterBackend,
+        django_filters.DjangoFilterBackend,
         filters.SearchFilter)
     search_fields = (
         'cod_reunion', 'youtube_id', 'legislative_body_alias',
