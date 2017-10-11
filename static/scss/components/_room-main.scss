@@ -1,3 +1,7 @@
 .room-main {
   overflow-y: auto;
+  padding-bottom: 2rem;
+  > * + * {
+    margin-top: 2rem;
+  }
 }
