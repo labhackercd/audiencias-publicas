@@ -27,15 +27,15 @@
     }
 
     &.-facebook {
-      @include icon($icon-facebook);
+      @include icon(facebook);
       background-color: $color-facebook;
     }
     &.-twitter {
-      @include icon($icon-twitter);
+      @include icon(twitter);
       background-color: $color-twitter;
     }
     &.-whatsapp {
-      @include icon($icon-whatsapp);
+      @include icon(whatsapp);
       background-color: $color-whatsapp;
     }
     

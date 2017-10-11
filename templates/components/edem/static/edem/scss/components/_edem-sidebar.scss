@@ -1,0 +1,158 @@
+.edem-sidebar {
+  font-family: $font-family-main;
+  position: absolute;
+  width: $edem-sidebar-width;
+  left: 100%;
+  top: $edem-topbar-height;
+
+  @include bp-smallonly {
+    font-size: 0.9em;
+  }
+
+  > .stick {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: $edem-sidebar-width;
+    height: calc(100vh - #{$edem-topbar-height});
+    padding: 2rem $edem-sidebar-padding;
+    background-color: $edem-color-primary;
+    overflow: auto;
+    z-index: 100000;
+
+    .closewrapper {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2rem;
+      height: 2rem;
+
+      > .edem-close-button {
+        position: fixed;
+      }
+    }
+  }
+
+  > .stick > .content {
+    display: none;
+    flex-direction: column;
+    flex: 1 0 auto;
+
+    &.-show {
+      display: flex;
+    }
+
+    > .avatar{
+      align-self: center;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      margin-bottom: 0.5rem;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      text-indent: -100%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    > .username {
+      align-self: center;
+      color: white;
+      margin-bottom: 1rem;
+      font-weight: 500;
+      font-size: 1.25em;
+      line-height: 1rem;
+    }
+
+    > .header {
+      color: #fff;
+      font-weight: 700;
+      font-size: $font-size-kilo;
+      line-height: 3rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid $edem-color-accent;
+    }
+
+    > .info {
+      color: white;
+      font-size: 0.75em;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    > .info > .link {
+      color: $edem-color-link;
+      font-weight: 600;
+    }
+
+    > .success {
+      @extend .info;
+      font-size: $font-size-deca;
+    }
+
+    > .success > .highlight {
+      color: $edem-color-secondary;
+    }
+
+    > .social { margin-bottom: 1rem }
+
+    > .access {
+      display: flex;
+      flex-direction: column;
+
+      > .g-recaptcha {
+        margin-top: 1rem;
+      }
+
+      > .edem-button {
+        margin-top: 1rem;
+      }
+
+      > .errorbox {
+        position: fixed;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 5rem;
+        width: $edem-sidebar-width;
+        margin-left: calc(#{$edem-sidebar-padding} * -1);
+        padding: 1rem;
+        background-color: $edem-color-negative;
+        color: #fff;
+        font-weight: 500;
+        z-index: 2;
+      }
+
+      > .errorbox > .error { margin-bottom: 0 }
+
+      > .errorbox > .edem-close-button {
+        position: absolute;
+        top: 0;
+        right: 1rem;
+      }
+    }
+
+    > .link {
+      color: $edem-color-link;
+      align-self: center;
+      font-size: $font-size-centi;
+      font-weight: 400;
+    }
+  }
+}
+
+body.-sidebaropen {
+  margin-left: calc(#{$edem-sidebar-width} * -1); // Calc to give the variable in negative value
+  overflow: hidden;
+  &::after {
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: opacity 0.3s 0s ease, width 0s 0s, height 0s 0s;
+  }
+}
