@@ -1,0 +1,74 @@
+version: '2.3'
+services:
+  # nginx:
+  #   image: nginx
+  #   depends_on:
+  #     - web
+  #   volumes:
+  #     - data:/var/labhacker/audiencias
+  #     - ./config/etc/nginx/conf.d/:/etc/nginx/conf.d/
+  #   ports:
+  #     - "8000:80"
+
+  db:
+    image: postgres
+    healthcheck:
+      test: runuser postgres -c "pg_isready"
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: audiencias
+      POSTGRES_DB: audiencias
+  worker:
+    build: .
+    command: ./start-worker.sh
+    links:
+      - redis
+      - db
+    environment:
+      ADMIN_PASSWORD: 123
+      ADMIN_EMAIL: admin@admin.com
+      DATABASE_URL: postgres://root:audiencias@db:5432/audiencias
+      DEBUG: 'True'
+      REDIS_SERVER: redis
+    volumes:
+      - data:/var/labhacker/audiencias
+    depends_on:
+      - 'web'
+  web:
+    build: .
+    command: ./start-web.sh
+    restart: on-failure
+    links:
+      - db
+      - redis
+    volumes:
+      - data:/var/labhacker/audiencias
+    environment:
+      ADMIN_PASSWORD: 123
+      ADMIN_EMAIL: admin@admin.com
+      DATABASE_URL: postgres://root:audiencias@db:5432/audiencias
+      DEBUG: 'False'
+      REDIS_SERVER: redis
+    ports:
+      - "8000:8000"
+    # expose:
+    #   - "8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+  redis:
+    image: redis:alpine
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+volumes:
+  data:
+    driver: local

@@ -17,4 +17,6 @@ RUN python3 manage.py bower_install --allow-root && \
     python3 manage.py collectstatic --no-input && \
     python3 manage.py compilemessages
 
+RUN npm rebuild node-sass --force
+
 EXPOSE 8000
