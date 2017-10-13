@@ -5,4 +5,9 @@
   > p {
     color: rgba(#fff, 0.6);
   }
+  > .list {
+    > * + * {
+      margin-top: 1rem;
+    }
+  }
 }

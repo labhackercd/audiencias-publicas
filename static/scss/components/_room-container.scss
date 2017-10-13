@@ -1,7 +1,8 @@
 .room-container {
+  $gutter: 1rem;
   display: flex;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: $gutter / 2;
+  padding-right: $gutter / 2;
 
   > .room-questions {
     min-width: 19rem;
@@ -14,8 +15,8 @@
   > .room-questions,
   > .room-main,
   > .room-chat {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: $gutter / 2;
+    padding-right: $gutter / 2;
   }
 
 
