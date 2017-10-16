@@ -80,8 +80,8 @@
             </div>
           {% endif %}
         </ul>
-        <div class="questions__read-more JS-readMoreQuestion"></div>
       </div>
+      <div class="questions__read-more JS-readMoreQuestion"></div>
       {% if object.youtube_status != 2 and user.is_authenticated %}
         <form class="send-form--questions JS-formQuestion" id="questionform">
           <textarea class="send-form__input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
@@ -134,19 +134,19 @@
         </div>
       </div>
 
-      <div class="room-info JS-roomInfo">
+      <div class="room-info -open">
         <h3>Pauta</h3>
         {{object.reunion_object|cut:"  "|linebreaks}}
         <button class="more JS-readMore" href="#">Ler mais</button>
       </div>
 
-      <div class="room-info JS-roomInfo">
+      <div class="room-info -open">
         <h3>Organização</h3>
         <p>{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
         <button class="more JS-readMore" href="#">Ler mais</button>
       </div>
 
-      <div class="room-info JS-roomInfo">
+      <div class="room-info -open">
         <h3>Conteúdo complementar</h3>
         <ul class="list">
           <li>
@@ -156,8 +156,13 @@
             <a href="" target="_blank">Vídeo da campanha de transporte público do estado de São Paulo</a>
           </li> 
         </ul>
-        <button class="more JS-readMore" href="#">Ler mais</button>
+        <button class="aud-button">Adicionar Conteúdo Complementar</button>
+        <button class="more" href="#">Ler mais</button>
       </div>
+
+      <hr>
+
+      <button class="aud-button">Enviar email para os participantes</button>
 
     </main>
 
