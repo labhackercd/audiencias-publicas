@@ -19,6 +19,7 @@
   > .info > span {
     margin-right: 1rem;
     display: inline-block;
+    &.social-share { margin-right: 0; }
   }
 
   > .info > span > .link {
