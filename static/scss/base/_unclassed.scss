@@ -32,3 +32,8 @@ textarea {
 button {
   cursor: pointer;
 }
+
+hr {
+  border-top: 1px solid rgba(#000, 0.4);
+  border-bottom: 1px solid $color-edem-main;
+}

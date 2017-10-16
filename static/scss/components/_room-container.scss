@@ -1,5 +1,5 @@
 .room-container {
-  $gutter: 1rem;
+  $gutter: 1.5rem;
   display: flex;
   padding-left: $gutter / 2;
   padding-right: $gutter / 2;
@@ -18,6 +18,5 @@
     padding-left: $gutter / 2;
     padding-right: $gutter / 2;
   }
-
 
 }
