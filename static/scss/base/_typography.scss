@@ -8,6 +8,11 @@ ul > li,
 ol > li {
   font-size: $font-size-base;
   line-height: 1.5rem;
+  &.-small {
+    font-size: $font-size-deci;
+    line-height: 1rem;
+    font-weight: 300;
+  }
 }
 
 h1 {

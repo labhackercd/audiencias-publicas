@@ -66,6 +66,7 @@
 
     <aside class="room-questions">
       <h2 class="room-h2">Perguntas</h2>
+      <p class="-small">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
       <div class="questions JS-wrapperQuestion">
         <ul class="questions__list JS-questionsList" id="questions">
           {% if questions %}
@@ -80,31 +81,31 @@
           {% endif %}
         </ul>
         <div class="questions__read-more JS-readMoreQuestion"></div>
-        {% if object.youtube_status != 2 and user.is_authenticated %}
-          <form class="send-form--questions JS-formQuestion" id="questionform">
-            <textarea class="send-form__input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
-            <div class="send-form__actions">
-              <div class="actions__character-counter JS-character-counter">
-                <span class="character-counter__actual-length JS-characterCounterAtualLength">0</span>
-                /
-                <span class="character-counter__max-length">300</span>
-              </div>
-              <button class="actions__button">
-                <span class="button__text">Enviar</span>
-                <i class="button__icon icon icon-caret-right"></i>
-              </button>
-            </div>
-          </form>
-        {% elif object.youtube_status != 2 and not user.is_authenticated %}
-          <div class="send-form--unauthenticated">
-            <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
-          </div>
-        {% elif object.youtube_status == 2 %}
-          <div class="send-form--closed">
-            <span>Audiência encerrada para participações.</span>
-          </div>
-        {% endif %}
       </div>
+      {% if object.youtube_status != 2 and user.is_authenticated %}
+        <form class="send-form--questions JS-formQuestion" id="questionform">
+          <textarea class="send-form__input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
+          <div class="send-form__actions">
+            <div class="actions__character-counter JS-character-counter">
+              <span class="character-counter__actual-length JS-characterCounterAtualLength">0</span>
+              /
+              <span class="character-counter__max-length">300</span>
+            </div>
+            <button class="actions__button">
+              <span class="button__text">Enviar</span>
+              <i class="button__icon icon icon-caret-right"></i>
+            </button>
+          </div>
+        </form>
+      {% elif object.youtube_status != 2 and not user.is_authenticated %}
+        <div class="send-form--unauthenticated">
+          <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
+        </div>
+      {% elif object.youtube_status == 2 %}
+        <div class="send-form--closed">
+          <span>Audiência encerrada para participações.</span>
+        </div>
+      {% endif %}
     </aside>
 
     <main class="room-main">
@@ -133,19 +134,19 @@
         </div>
       </div>
 
-      <div class="room-info">
+      <div class="room-info JS-roomInfo">
         <h3>Pauta</h3>
         {{object.reunion_object|cut:"  "|linebreaks}}
-        <button class="more" href="#">Ler mais</button>
+        <button class="more JS-readMore" href="#">Ler mais</button>
       </div>
 
-      <div class="room-info">
+      <div class="room-info JS-roomInfo">
         <h3>Organização</h3>
         <p>{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
-        <button class="more" href="#">Ler mais</button>
+        <button class="more JS-readMore" href="#">Ler mais</button>
       </div>
 
-      <div class="room-info">
+      <div class="room-info JS-roomInfo">
         <h3>Conteúdo complementar</h3>
         <ul class="list">
           <li>
@@ -153,9 +154,9 @@
           </li>
           <li>
             <a href="" target="_blank">Vídeo da campanha de transporte público do estado de São Paulo</a>
-          </li>
+          </li> 
         </ul>
-        <button class="more" href="#">Ler mais</button>
+        <button class="more JS-readMore" href="#">Ler mais</button>
       </div>
 
     </main>
