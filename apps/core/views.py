@@ -3,7 +3,7 @@ from django.http import (Http404, HttpResponseForbidden,
                          HttpResponseBadRequest, HttpResponse)
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
-from apps.core.models import Question, Room, UpDownVote, Message
+from apps.core.models import Question, Room
 from apps.core.utils import encrypt
 from apps.core.templatetags.video_utils import belongs_to_group
 from django.views.generic import DetailView, ListView
@@ -15,41 +15,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
 import json
 from itertools import chain
-from django.contrib.auth import get_user_model
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
-
-
-def send_participants_notification(request, room_id):
-    if request.POST:
-        room = Room.objects.get(id=room_id)
-        questions_id = Question.objects.filter(
-            room=room).values_list('id', flat=True)
-        votes_users = UpDownVote.objects.filter(
-            question_id__in=questions_id).values_list('user_id', flat=True)
-        questions_users = Question.objects.filter(
-            room=room).values_list('user_id', flat=True)
-        messages_users = Message.objects.filter(
-            room=room).values_list('user_id', flat=True)
-        all_users = set(
-            list(votes_users) + list(questions_users) + list(messages_users))
-        users_email = get_user_model().objects.filter(
-            id__in=all_users).values_list('email', flat=True)
-        # Definir template do corpo de email
-        html = render_to_string('email/participants-notification.html',
-                                {'room': room,
-                                 'content': request.POST.get('content')})
-        # Definir assunto do email
-        subject = u'[Audiências Interativas] Notificação'
-
-        for email in users_email:
-            mail = EmailMultiAlternatives(
-                subject, '',
-                settings.EMAIL_HOST_USER,
-                [email]
-            )
-            mail.attach_alternative(html, 'text/html')
-            mail.send()
 
 
 def redirect_to_room(request, cod_reunion):

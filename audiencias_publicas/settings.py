@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS',
 INSTALLED_APPS = (
     'apps.core',
     'apps.accounts',
+    'apps.notification',
 
     'django.contrib.admin',
     'django.contrib.auth',
