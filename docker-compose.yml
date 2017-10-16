@@ -49,6 +49,7 @@ services:
     environment:
       ADMIN_PASSWORD: 123
       ADMIN_EMAIL: admin@admin.com
+      ADMIN_USERNAME: admin
       DATABASE_URL: postgres://root:audiencias@db:5432/audiencias
       DEBUG: 'False'
       REDIS_SERVER: redis
