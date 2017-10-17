@@ -28,10 +28,14 @@
 
       {# Styles #}
       <link rel="stylesheet" href="{% static 'fontastic-labhacker/styles.css' %}" />
+
+      {% block edem_navigation_styles %}
+      {% endblock edem_navigation_styles %}
+
       {% compress css %}
-        <link rel="stylesheet" href="{% static 'edem-navigation/scss/edem.scss' %}" type="text/x-scss" />
         <link rel="stylesheet" href="{% static 'scss/app.scss' %}" type="text/x-scss" />
       {% endcompress %}
+
       {% block extra_css %}
       {% endblock extra_css %}
     </head>
@@ -73,11 +77,14 @@
         <script type="text/javascript" src="{% static 'js/foundation.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/svg-support.js' %}"></script>
         <script type="text/javascript" src="{% static 'js/jquery.inputmask.bundle.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'edem-navigation/js/edem-navigation.js' %}"></script>
       {% endblock foot_js %}
 
       {% block extra_js %}
       {% endblock extra_js %}
+
+      {% block edem_navigation_js %}
+      {% endblock edem_navigation_js %}
+
       {% block websockets %}
       {% endblock %}
       <script>
