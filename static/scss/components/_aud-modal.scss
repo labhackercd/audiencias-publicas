@@ -4,7 +4,21 @@
   bottom: 0;
   right: 0;
   left: 0;
-  > .background {
-    background-color: rgba($color-edem-dark, 0.8);
+  background-color: rgba($color-edem-dark, 0.8);
+  z-index: 9;
+  > .modal {
+    background-color: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    width: calc(20% + 16rem);
+    max-width: 90%;
+    padding-top: 2rem;
+    padding-right: 3rem;
+    padding-left: 3rem;
+    padding-bottom: 1rem;
+    box-shadow: 0 8px 32px rgba(#000, 0.6);
   }
 }
