@@ -1,6 +1,19 @@
 .room-main {
   overflow-y: auto;
   padding-bottom: 2rem;
+  // fixme
+  // position: relative;
+  // &::before {
+  //   content: '';
+  //   background: linear-gradient($color-edem-dark, transparent);
+  //   position: absolute;
+  //   height: 1rem;
+  //   top: 0;
+  //   left: 0;
+  //   right: 0;
+  //   z-index: 1;
+  //   pointer-events: none;
+  // }
   > * + * {
     margin-top: 2rem;
   }

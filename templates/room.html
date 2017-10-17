@@ -208,13 +208,26 @@
     
   </div>
 
-<!--   <div class="aud-modal">
+  <div class="aud-modal">
     
     <div class="modal">
-      <h1>Olá mundo!</h1>
+      <button class="close">Fechar</button>
+      <h4 class="title">Envie um email para os participantes</h4>
+      <form>
+        <label>
+          Assunto
+          <input type="text" name="subject" placeholder="Assunto do email">
+        </label>
+        <label>
+          Mensagem
+          <textarea placeholder="Digite aqui o corpo do email"></textarea>
+        </label>
+        <button class="cancel">Cancelar</button>
+        <button type="submit" class="submit">Enviar</button>
+      </form>
     </div>
 
-  </div> -->
+  </div>
 
 
 {% endblock %}
