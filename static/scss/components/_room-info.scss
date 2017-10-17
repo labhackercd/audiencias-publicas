@@ -1,25 +1,30 @@
 .room-info {
-  max-height: 14rem;
   transition: max-height 0.4s ease;
-  overflow-y: hidden;
   position: relative;
   padding-bottom: 2rem;
 
-  &.-open {
-    max-height: 99rem;
+  &.-large {
+    max-height: 14rem;
+    overflow-y: hidden;
+    &::after {
+      content: '';
+      background: linear-gradient(transparent, $color-edem-dark);
+      position: absolute;
+      top: calc(100% - 5rem);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    &.-open {
+      max-height: 99rem;
+    }
+    > .more {
+      display: block;
+    }
   }
 
-  &::after {
-    content: '';
-    background: linear-gradient(transparent, $color-edem-dark);
-    position: absolute;
-    top: calc(100% - 5rem);
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    pointer-events: none;
-  }
 
   > * + * {
     margin-top: 1rem;
@@ -42,6 +47,7 @@
   }
 
   > .more {
+    display: none;
     color: $color-edem-action;
     cursor: pointer;
     text-align: center;
