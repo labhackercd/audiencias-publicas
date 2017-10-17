@@ -134,19 +134,19 @@
         </div>
       </div>
 
-      <div class="room-info -open">
+      <div class="room-info JS-readMoreLess">
         <h3>Pauta</h3>
         {{object.reunion_object|cut:"  "|linebreaks}}
-        <button class="more JS-readMore" href="#">Ler mais</button>
+        <button class="more JS-toggleDiv">Ler mais</button>
       </div>
 
-      <div class="room-info -open">
+      <div class="room-info JS-readMoreLess">
         <h3>Organização</h3>
         <p>{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
-        <button class="more JS-readMore" href="#">Ler mais</button>
+        <button class="more JS-toggleDiv">Ler mais</button>
       </div>
 
-      <div class="room-info -open">
+      <div class="room-info JS-readMoreLess">
         <h3>Conteúdo complementar</h3>
         <ul class="list">
           <li>
@@ -157,7 +157,7 @@
           </li> 
         </ul>
         <button class="aud-button -add">Adicionar Conteúdo Complementar</button>
-        <button class="more" href="#">Ler mais</button>
+        <button class="more JS-toggleDiv">Ler mais</button>
       </div>
 
       <hr>
@@ -247,6 +247,7 @@
        event.target.playVideo();
     }
   </script>
+  <script type="text/javascript" src="{% static 'js/components/read-more-less.js' %}"></script>
   {% compress js %}
     <script type="text/es6" src="{% static 'js/components/tabs-nav.js' %}"></script>
   {% endcompress %}
