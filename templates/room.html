@@ -215,7 +215,8 @@
     <div class="modal">
       <button type="button" class="close"></button>
       <h4 class="title">Envie um email para os participantes</h4>
-      <form  method="POST" action="{% url 'participants_notification' %}">
+      <form  method="POST" action="{% url 'participants_notification' object.id %}">
+        {% csrf_token %}
         <label>
           Assunto
           <input type="text" name="subject" placeholder="Assunto do email">
