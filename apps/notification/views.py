@@ -42,8 +42,9 @@ def send_participants_notification(request, room_id):
 
         notification = ParticipantNotification()
         notification.room = room
-        notification.emails = users_email
+        notification.emails = ', '.join([str(i) for i in users_email])
         notification.content = content
+        notification.subject = subject
         notification.save()
 
         return redirect('video_room', pk=room_id)
