@@ -1,14 +1,14 @@
 version: '2.3'
 services:
-  # nginx:
-  #   image: nginx
-  #   depends_on:
-  #     - web
-  #   volumes:
-  #     - data:/var/labhacker/audiencias
-  #     - ./config/etc/nginx/conf.d/:/etc/nginx/conf.d/
-  #   ports:
-  #     - "8000:80"
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - web
+    volumes:
+      - data:/var/labhacker/audiencias
+      - ./config/etc/nginx/conf.d/:/etc/nginx/conf.d/:z
+    ports:
+      - "8000:80"
 
   db:
     image: postgres
@@ -21,6 +21,7 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: audiencias
       POSTGRES_DB: audiencias
+
   worker:
     build: .
     command: ./start-worker.sh
@@ -33,10 +34,12 @@ services:
       DATABASE_URL: postgres://root:audiencias@db:5432/audiencias
       DEBUG: 'True'
       REDIS_SERVER: redis
+      WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
     volumes:
       - data:/var/labhacker/audiencias
     depends_on:
       - 'web'
+
   web:
     build: .
     command: ./start-web.sh
@@ -53,15 +56,15 @@ services:
       DATABASE_URL: postgres://root:audiencias@db:5432/audiencias
       DEBUG: 'False'
       REDIS_SERVER: redis
-    ports:
-      - "8000:8000"
-    # expose:
-    #   - "8000"
+      WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
+    expose:
+      - "8000"
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
+
   redis:
     image: redis:alpine
     healthcheck:
