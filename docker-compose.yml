@@ -23,7 +23,7 @@ services:
       POSTGRES_DB: audiencias
 
   worker:
-    build: .
+    image: labhackercd/audiencias-publicas
     command: ./start-worker.sh
     links:
       - redis
@@ -41,7 +41,7 @@ services:
       - 'web'
 
   web:
-    build: .
+    image: labhackercd/audiencias-publicas
     command: ./start-web.sh
     restart: on-failure
     links:
