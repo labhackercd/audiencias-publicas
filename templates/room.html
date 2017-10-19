@@ -33,7 +33,7 @@
     </ul>
   </nav>
 
-  <header class="room-header">
+  <header class="room-header JS-room-wrapper" data-room-id="{{object.id}}">
 
     <a class="logo" href="{% url 'home' %}">
       <img src="{% static 'img/logo-audiencias-h.svg' %}">
@@ -244,6 +244,7 @@
     }
   </script>
   <script type="text/javascript" src="{% static 'js/components/read-more-less.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/components/share-buttons.js' %}"></script>
   {% compress js %}
     <script type="text/es6" src="{% static 'js/components/tabs-nav.js' %}"></script>
   {% endcompress %}

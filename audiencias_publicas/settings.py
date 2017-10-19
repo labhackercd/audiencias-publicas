@@ -59,6 +59,7 @@ INSTALLED_APPS = (
     'compressor_toolkit',
     'channels',
     'channels_presence',
+    'django_js_reverse',
 )
 
 AUTH_USER_MODEL = 'accounts.User'
