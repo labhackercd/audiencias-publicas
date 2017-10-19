@@ -35,6 +35,7 @@ services:
       DEBUG: 'True'
       REDIS_SERVER: redis
       WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
+      COMPRESS_OFFLINE: 'True'
     volumes:
       - data:/var/labhacker/audiencias
     depends_on:
@@ -57,6 +58,7 @@ services:
       DEBUG: 'False'
       REDIS_SERVER: redis
       WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
+      COMPRESS_OFFLINE: 'True'
     expose:
       - "8000"
     depends_on:
