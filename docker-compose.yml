@@ -32,7 +32,7 @@ services:
       ADMIN_PASSWORD: 123
       ADMIN_EMAIL: admin@admin.com
       DATABASE_URL: postgres://root:audiencias@db:5432/audiencias
-      DEBUG: 'True'
+      DEBUG: 'False'
       REDIS_SERVER: redis
       WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
       COMPRESS_OFFLINE: 'True'
