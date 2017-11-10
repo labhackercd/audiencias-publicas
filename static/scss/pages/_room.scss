@@ -1,10 +1,7 @@
 .room-body {
   overflow-x: hidden;
   width: 100vw;
-
-  @include breakpoint(small down) { height: calc(100vh - 6em); }
-  @include breakpoint(medium only) { height: calc(100vh - 7em); }
-  @include breakpoint(large up) { height: calc(100vh - 4em); }
+  min-height: 100%;
 }
 
 .room {
