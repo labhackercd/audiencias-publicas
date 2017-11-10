@@ -31,7 +31,12 @@ services:
     environment:
       ADMIN_PASSWORD: 123
       ADMIN_EMAIL: admin@admin.com
-      DATABASE_URL: postgres://root:audiencias@db:5432/audiencias
+      DATABASE_ENGINE: postgresql_psycopg2
+      DATABASE_NAME: audiencias
+      DATABASE_PASSWORD: audiencias
+      DATABASE_USER: root
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
       DEBUG: 'False'
       REDIS_SERVER: redis
       WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
