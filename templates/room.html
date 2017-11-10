@@ -2,18 +2,19 @@
 {% load staticfiles compress video_utils %}
 
 {% block metadata %}
-  <meta property="og:title" content="{{object.legislative_body_alias}}" />
-  <meta property="og:site_name" content="Audiências Interativas" />
-  <meta property="og:description" content="{{ object.reunion_object }}" />
-  <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/share-image.jpg' %}" />
-  <meta property="og:image:type" content="image/jpg" />
-  <meta property="og:image:width" content="600" />
-  <meta property="og:image:height" content="300" />
-  <meta property="og:type" content="website" />
+  <title>{% block title %}Audiências Interativas{% endblock title%}</title>
+  <meta name="description" content="{{ object.reunion_object }}">
+  <meta property="og:title" content="{{object.legislative_body_alias}}">
+  <meta property="og:site_name" content="Audiências Interativas">
+  <meta property="og:description" content="{{ object.reunion_object }}">
+  <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/share-image.jpg' %}">
+  <meta property="og:image:type" content="image/jpg">
+  <meta property="og:image:width" content="600">
+  <meta property="og:image:height" content="300">
+  <meta property="og:type" content="website">
 {% endblock metadata %}
 
 {% block navigation %}
-  {% include "components/edem-navigation.html" %}
 {% endblock navigation %}
 
 {% block main %}

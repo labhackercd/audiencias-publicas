@@ -51,6 +51,7 @@ INSTALLED_APPS = (
     'crispy_forms',
     'corsheaders',
     'debug_toolbar',
+    'macros',
 
     'djangobower',
     'compressor',
@@ -79,16 +80,16 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     ),
-    'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework.filters.DjangoFilterBackend',
-    ),
-    'PAGE_SIZE': 10
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20
 }
 
 QUESTION_MIN_UPVOTES = config('QUESTION_MIN_UPVOTES', default=3, cast=int)
 GOOGLE_ANALYTICS_ID = config('GOOGLE_ANALYTICS_ID', default='')
 OLARK_ID = config('OLARK_ID', default='')
 WEBSERVICE_URL = config('WEBSERVICE_URL', default='')
+RECAPTCHA_SITE_KEY = config('RECAPTCHA_SITE_KEY', default='')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY', default='')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -131,11 +132,17 @@ WSGI_APPLICATION = 'audiencias_publicas.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = dict(default=config(
-    'DATABASE_URL', cast=db_url,
-    default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'))
-)
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.' + config('DATABASE_ENGINE',
+                                                 default='sqlite3'),
+        'NAME': config('DATABASE_NAME', default='db.sqlite3'),
+        'USER': config('DATABASE_USER', default=''),
+        'PASSWORD': config('DATABASE_PASSWORD', default=''),
+        'HOST': config('DATABASE_HOST', default=''),
+        'PORT': config('DATABASE_PORT', default=''),
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -165,7 +172,12 @@ USE_TZ = False
 
 STATIC_URL = config('STATIC_URL', default='/static/')
 
-STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'static'))
+STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'public'))
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'templates/components/edem-navigation/static'),
+]
 
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
