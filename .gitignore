@@ -87,7 +87,6 @@ CACHE/
 node_modules/
 
 ### Others ###
-
-# Sublime
-*.sublime-workspace
+TODO
 *.sublime-project
+*.sublime-workspace
