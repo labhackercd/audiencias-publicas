@@ -90,6 +90,7 @@ OLARK_ID = config('OLARK_ID', default='')
 WEBSERVICE_URL = config('WEBSERVICE_URL', default='')
 RECAPTCHA_SITE_KEY = config('RECAPTCHA_SITE_KEY', default='')
 RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY', default='')
+SITE_NAME = config('SITE_NAME', default='')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -121,6 +122,7 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'apps.core.processors.analytics',
+                'apps.core.processors.home_customization',
             ],
         },
     },
