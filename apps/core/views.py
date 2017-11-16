@@ -197,7 +197,6 @@ class VideoDetail(DetailView):
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
         context['domain'] = Site.objects.get_current().domain
-        context['domain'] += settings.FORCE_SCRIPT_NAME
         return context
 
 
@@ -216,7 +215,6 @@ class WidgetVideoDetail(DetailView):
                                       key=lambda vote: vote.votes_count,
                                       reverse=True)
         context['domain'] = Site.objects.get_current().domain
-        context['domain'] += settings.FORCE_SCRIPT_NAME
         return context
 
 
