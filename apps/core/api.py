@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django_filters import FilterSet
 from django_filters import rest_framework as django_filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -64,9 +65,21 @@ class QuestionListAPI(generics.ListAPIView):
     ordering_fields = ('up_votes', 'down_votes', 'timestamp')
 
 
+class RoomFilter(FilterSet):
+    class Meta:
+        model = Room
+        fields = {
+            'date': ['lt', 'gte'],
+            'legislative_body_initials': ['exact'],
+            'youtube_id': ['exact'],
+            'cod_reunion': ['exact'],
+        }
+
+
 class RoomListAPI(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    filter_class = RoomFilter
     filter_backends = (
         django_filters.DjangoFilterBackend,
         filters.SearchFilter)
@@ -75,12 +88,6 @@ class RoomListAPI(generics.ListAPIView):
         'legislative_body_initials', 'reunion_type', 'title_reunion',
         'reunion_object', 'reunion_theme', 'legislative_body',
         'reunion_status')
-    filter_fields = (
-        'id', 'cod_reunion', 'online_users', 'youtube_id',
-        'legislative_body_alias', 'legislative_body_initials',
-        'youtube_status', 'is_joint', 'max_online_users', 'is_visible',
-        'reunion_type', 'title_reunion', 'reunion_object', 'reunion_theme',
-        'legislative_body', 'reunion_status')
 
 
 class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
