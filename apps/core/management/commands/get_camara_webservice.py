@@ -48,6 +48,7 @@ class Command(BaseCommand):
                     room, room_created = Room.objects.get_or_create(
                         cod_reunion=item['codReuniao'],
                         youtube_id=item['idYoutube'])
+                room.reunion_theme = item['txtTemaReuniao']
                 room.title_reunion = item['txtTituloReuniao']
                 room.cod_audio = item['codAudio']
                 room.legislative_body_initials = item['txtSiglaOrgao']
