@@ -87,7 +87,7 @@ class RoomListAPI(generics.ListAPIView):
         'cod_reunion', 'youtube_id', 'legislative_body_alias',
         'legislative_body_initials', 'reunion_type', 'title_reunion',
         'reunion_object', 'reunion_theme', 'legislative_body',
-        'reunion_status')
+        'reunion_status', 'location')
 
 
 class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
