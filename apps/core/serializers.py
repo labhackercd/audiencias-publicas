@@ -61,4 +61,4 @@ class RoomSerializer(serializers.ModelSerializer):
                   'youtube_status', 'is_joint', 'max_online_users', 'created',
                   'modified', 'is_visible', 'reunion_type', 'title_reunion',
                   'reunion_object', 'reunion_theme', 'date', 'legislative_body',
-                  'reunion_status')
+                  'reunion_status', 'location')
