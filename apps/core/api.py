@@ -6,27 +6,18 @@ from django_filters import rest_framework as django_filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework import generics, filters, permissions, mixins
+from rest_framework import generics, filters, mixins
 from apps.core.models import Message, Question, UpDownVote, Room
 from apps.core.serializers import (QuestionSerializer, MessageSerializer,
                                    VoteSerializer, UserSerializer,
                                    RoomSerializer)
 
 
-class TokenPermission(permissions.BasePermission):
-    message = "Admin private token is mandatory to perform this action."
-
-    def has_permission(self, request, view):
-        if request.GET.get('api_key') == settings.SECRET_KEY:
-            return True
-        else:
-            return False
-
-
 class UserListAPI(generics.ListAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-    permission_classes = (TokenPermission, )
+    filter_fields = ('id', )
+    search_fields = ('username', 'first_name', 'last_name')
 
 
 class VoteListAPI(generics.ListAPIView):
