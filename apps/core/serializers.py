@@ -9,18 +9,16 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = ('id', 'email', 'username', 'first_name', 'last_name')
 
-    def __init__(self, *args, **kwargs):
-        super(UserSerializer, self).__init__(*args, **kwargs)
-
-        try:
-            request = kwargs.get('context').get('request')
+    def to_representation(self, instance):
+        ret = super(UserSerializer, self).to_representation(instance)
+        request = self.context.get('request', None)
+        if request:
             api_key = request.GET.get('api_key', None)
-
             if api_key != settings.SECRET_KEY:
-                self.fields.pop('email')
-
-        except AttributeError:
-            pass
+                ret.pop('email')
+        else:
+            ret.pop('email')
+        return ret
 
 
 class VoteSerializer(serializers.ModelSerializer):
