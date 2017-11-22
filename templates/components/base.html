@@ -52,24 +52,28 @@
       <body class="{{no_offset_top}}">
     {% endif %}
 
-      {# edem-navigation template #}
-      {% block edem_core %}
-        {% include "components/edem-navigation.html" %}
-      {% endblock edem_core %}
+      <div class="edem-content-wrapper">
 
-      {# Navigation #}
-      {% block navigation %}
-        {% include "components/navigation.html" %}
-      {% endblock navigation %}
+        {# edem-navigation template #}
+        {% block edem_core %}
+          {% include "components/edem-navigation.html" %}
+        {% endblock edem_core %}
 
-      {# Main Content #}
-      {% block main %}
-      {% endblock main %}
+        {# Navigation #}
+        {% block navigation %}
+          {% include "components/navigation.html" %}
+        {% endblock navigation %}
 
-      {# Footer #}
-      {% block footer %}
-        {% include "components/footer.html" %}
-      {% endblock footer %}
+        {# Main Content #}
+        {% block main %}
+        {% endblock main %}
+
+        {# Footer #}
+        {% block footer %}
+          {% include "components/footer.html" %}
+        {% endblock footer %}
+
+      </div>
 
       {# Scripts #}
       {% block foot_js %}
