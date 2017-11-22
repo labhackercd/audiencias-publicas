@@ -23,12 +23,6 @@ class UserSerializer(serializers.ModelSerializer):
             pass
 
 
-class BasicUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = get_user_model()
-        fields = ('id', 'username', 'first_name', 'last_name')
-
-
 class VoteSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
@@ -56,8 +50,6 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
     class Meta:
         model = Room
         fields = ('id', 'cod_reunion', 'online_users', 'youtube_id',
