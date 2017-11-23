@@ -3,7 +3,6 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.template.loader import render_to_string
-from django.core.mail import EmailMultiAlternatives
 from django.utils import timezone
 import datetime
 from channels import Group
@@ -53,9 +52,8 @@ class Room(TimestampedMixin):
                                  null=True, blank=True)
     title_reunion = models.CharField(_('title reunion'), max_length=200,
                                      null=True, blank=True)
-    legislative_body_initials = models.CharField(_('legislative body initials'),
-                                                 max_length=200, null=True,
-                                                 blank=True)
+    legislative_body_initials = models.CharField(
+        _('legislative body initials'), max_length=200, null=True, blank=True)
     legislative_body_alias = models.CharField(_('legislative body alias'),
                                               max_length=200, null=True,
                                               blank=True)
