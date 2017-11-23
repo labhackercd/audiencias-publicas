@@ -15,6 +15,10 @@ from apps.core.serializers import (QuestionSerializer, MessageSerializer,
 class UserListAPI(generics.ListAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+    filter_backends = (
+        django_filters.DjangoFilterBackend,
+        filters.SearchFilter,
+    )
     filter_fields = ('id', )
     search_fields = ('username', 'first_name', 'last_name')
 
