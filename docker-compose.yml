@@ -12,11 +12,6 @@ services:
 
   db:
     image: postgres
-    healthcheck:
-      test: runuser postgres -c "pg_isready"
-      interval: 10s
-      timeout: 10s
-      retries: 5
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: audiencias
@@ -67,18 +62,11 @@ services:
     expose:
       - "8000"
     depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      - db
+      - redis
 
   redis:
     image: redis:alpine
-    healthcheck:
-      test: redis-cli ping
-      interval: 10s
-      timeout: 10s
-      retries: 5
 
 volumes:
   data:
