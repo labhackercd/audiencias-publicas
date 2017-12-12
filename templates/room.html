@@ -7,11 +7,15 @@
   <meta property="og:title" content="{{object.legislative_body_alias}}">
   <meta property="og:site_name" content="Audiências Interativas">
   <meta property="og:description" content="{{ object.reunion_object }}">
-  <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/share-image.jpg' %}">
+  <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/facebook-share-image.jpg' %}">
   <meta property="og:image:type" content="image/jpg">
   <meta property="og:image:width" content="600">
   <meta property="og:image:height" content="300">
   <meta property="og:type" content="website">
+  <meta property="og:type" content="website">
+  <meta property="twitter:image" content="{{request.scheme}}://{{domain}}{% static 'img/facebook-share-image.jpg' %}">
+
+
 {% endblock metadata %}
 
 {% block navigation %}
@@ -112,7 +116,7 @@
 
     <main class="room-main">
 
-      <div class="room-video JS-videoFrame">  
+      <div class="room-video JS-videoFrame">
         {% include "includes/room_video.html" with object=object %}
         <div class="video__status">
           <div class="status__transmission">
@@ -156,11 +160,11 @@
           </li>
           <li>
             <a href="" target="_blank">Vídeo da campanha de transporte público do estado de São Paulo</a>
-          </li> 
+          </li>
         </ul>
         <button class="more JS-toggleDiv">Ler mais</button>
       </div>
-      
+
       <button class="aud-button -add">Adicionar Conteúdo Complementar</button>
 
       <hr>
@@ -207,7 +211,7 @@
         {% endif %}
       </div>
     </aside>
-    
+
   </div>
 
   {% include 'modals/notification_participants.html' with modal_id='JS-emailNotification' title='Envie um email para os participantes' %}

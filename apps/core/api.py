@@ -1,37 +1,33 @@
 # -*- encoding: utf-8 -*-
-from django.conf import settings
 from django.contrib.auth import get_user_model
+from django_filters import FilterSet
+from django_filters import rest_framework as django_filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework import generics, filters, permissions, mixins
+from rest_framework import generics, filters, mixins
 from apps.core.models import Message, Question, UpDownVote, Room
 from apps.core.serializers import (QuestionSerializer, MessageSerializer,
                                    VoteSerializer, UserSerializer,
                                    RoomSerializer)
 
 
-class TokenPermission(permissions.BasePermission):
-    message = "Admin private token is mandatory to perform this action."
-
-    def has_permission(self, request, view):
-        if request.GET.get('api_key') == settings.SECRET_KEY:
-            return True
-        else:
-            return False
-
-
 class UserListAPI(generics.ListAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
-    permission_classes = (TokenPermission, )
+    filter_backends = (
+        django_filters.DjangoFilterBackend,
+        filters.SearchFilter,
+    )
+    filter_fields = ('id', )
+    search_fields = ('username', 'first_name', 'last_name')
 
 
 class VoteListAPI(generics.ListAPIView):
     queryset = UpDownVote.objects.all()
     serializer_class = VoteSerializer
     filter_backends = (
-        filters.DjangoFilterBackend,
+        django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
     filter_fields = ('user', 'vote')
@@ -43,7 +39,7 @@ class MessageListAPI(generics.ListAPIView):
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     filter_backends = (
-        filters.DjangoFilterBackend,
+        django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
     filter_fields = ('id', 'room', 'user', 'message')
@@ -55,7 +51,7 @@ class QuestionListAPI(generics.ListAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     filter_backends = (
-        filters.DjangoFilterBackend,
+        django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
     filter_fields = ('id', 'room', 'user', 'question')
@@ -63,23 +59,29 @@ class QuestionListAPI(generics.ListAPIView):
     ordering_fields = ('up_votes', 'down_votes', 'timestamp')
 
 
+class RoomFilter(FilterSet):
+    class Meta:
+        model = Room
+        fields = {
+            'date': ['lt', 'gte'],
+            'legislative_body_initials': ['exact'],
+            'youtube_id': ['exact'],
+            'cod_reunion': ['exact'],
+        }
+
+
 class RoomListAPI(generics.ListAPIView):
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+    filter_class = RoomFilter
     filter_backends = (
-        filters.DjangoFilterBackend,
+        django_filters.DjangoFilterBackend,
         filters.SearchFilter)
     search_fields = (
         'cod_reunion', 'youtube_id', 'legislative_body_alias',
         'legislative_body_initials', 'reunion_type', 'title_reunion',
         'reunion_object', 'reunion_theme', 'legislative_body',
-        'reunion_status')
-    filter_fields = (
-        'id', 'cod_reunion', 'online_users', 'youtube_id',
-        'legislative_body_alias', 'legislative_body_initials',
-        'youtube_status', 'is_joint', 'max_online_users', 'is_visible',
-        'reunion_type', 'title_reunion', 'reunion_object', 'reunion_theme',
-        'legislative_body', 'reunion_status')
+        'reunion_status', 'location')
 
 
 class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):

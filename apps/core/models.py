@@ -52,9 +52,8 @@ class Room(TimestampedMixin):
                                  null=True, blank=True)
     title_reunion = models.CharField(_('title reunion'), max_length=200,
                                      null=True, blank=True)
-    legislative_body_initials = models.CharField(_('legislative body initials'),
-                                                 max_length=200, null=True,
-                                                 blank=True)
+    legislative_body_initials = models.CharField(
+        _('legislative body initials'), max_length=200, null=True, blank=True)
     legislative_body_alias = models.CharField(_('legislative body alias'),
                                               max_length=200, null=True,
                                               blank=True)
