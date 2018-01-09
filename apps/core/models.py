@@ -229,7 +229,7 @@ def room_post_save(sender, instance, created, **kwargs):
 
 
 def room_pre_save(sender, instance, **kwargs):
-    if instance.reunion_object:
+    if instance.reunion_object and not instance.reunion_theme:
         lines = instance.reunion_object.splitlines()
         lines = list(filter(str.strip, lines))
         theme = ''
