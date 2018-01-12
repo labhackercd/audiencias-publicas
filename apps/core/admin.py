@@ -1,5 +1,5 @@
 from django.contrib import admin
-from apps.core.models import Message, Question, UpDownVote, Room
+from apps.core.models import Message, Question, UpDownVote, Room, RoomAttachment
 
 
 class RoomAdmin(admin.ModelAdmin):
@@ -30,7 +30,14 @@ class UpDownVoteAdmin(admin.ModelAdmin):
     list_filter = ['user', 'question', 'created']
 
 
+class RoomAttachmentAdmin(admin.ModelAdmin):
+    list_display = ('room', 'title', 'url')
+    list_filter = ['room', 'created']
+    search_fields = ['title', 'url']
+
+
 admin.site.register(Room, RoomAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(UpDownVote, UpDownVoteAdmin)
+admin.site.register(RoomAttachment, RoomAttachmentAdmin)
