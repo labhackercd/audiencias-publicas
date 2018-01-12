@@ -89,23 +89,23 @@ function roomComponent(socket) {
       elements.$readMoreQuestion.html(`Há ${newQuestionsCount} novas perguntas disponíveis abaixo`);
     }
 
-    elements.$readMoreQuestion.removeClass('questions__read-more');
-    elements.$readMoreQuestion.addClass('questions__read-more--visible');
+    elements.$readMoreQuestion.removeClass('more');
+    elements.$readMoreQuestion.addClass('more -visible');
   }
 
   function showReadMoreChat() {
-    elements.$readMoreChat.removeClass('chat__read-more');
-    elements.$readMoreChat.addClass('chat__read-more--visible');
+    elements.$readMoreChat.removeClass('more');
+    elements.$readMoreChat.addClass('more -visible');
   }
 
   function hideReadMoreQuestion() {
-    elements.$readMoreQuestion.removeClass('questions__read-more--visible');
-    elements.$readMoreQuestion.addClass('questions__read-more');
+    elements.$readMoreQuestion.removeClass('more -visible');
+    elements.$readMoreQuestion.addClass('more');
   }
 
   function hideReadMoreChat() {
-    elements.$readMoreChat.removeClass('chat__read-more--visible');
-    elements.$readMoreChat.addClass('chat__read-more');
+    elements.$readMoreChat.removeClass('more -visible');
+    elements.$readMoreChat.addClass('more');
   }
 
   function updateVoteBlock($question, data) {

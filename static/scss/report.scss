@@ -89,7 +89,7 @@ body {
       .stats__number {
         margin: 0;
         font-size: 1.5em;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         margin-top: 0.7em;
         @media print {
           font-size: 0.8em
@@ -98,7 +98,7 @@ body {
 
       .stats__text {
         margin: 0;
-        font-weight: 600;
+        font-weight: $font-weight-semi-bold;
         font-size: 1.2em;
         text-align: center;
         @media print {
@@ -131,14 +131,14 @@ body {
           align-items: center;
           .votes__number {
             font-size: 1.2em;
-            font-weight: 700;
+            font-weight: $font-weight-bold;
             @media print {
               font-size: 0.9em;
             }
           }
           .votes__text {
             font-size: 0.7em;
-            font-weight: 600;
+            font-weight: $font-weight-semi-bold;
             @media print {
               font-size: 0.5em;
             }
@@ -154,7 +154,7 @@ body {
             margin-top: 0.5em;
             font-size: 0.7em;
             .author__username {
-              font-weight: 700;
+              font-weight: $font-weight-bold;
             }
             @media print {
               font-size: 0.5em;
@@ -168,7 +168,7 @@ body {
           }
           .question__answer {
             font-size: 0.7em;
-            font-weight: 700;
+            font-weight: $font-weight-bold;
             @media print {
               font-size: 0.5em;
             }
@@ -209,7 +209,7 @@ body {
           .chat-message__author {
             top: 0;
             font-size: 0.7em;
-            font-weight: 700;
+            font-weight: $font-weight-bold;
             @media print {
               font-size: 0.5em;
             }

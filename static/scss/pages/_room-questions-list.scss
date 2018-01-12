@@ -22,7 +22,7 @@
         color: $color-primary-xlight;
         text-transform: uppercase;
         font-size: 0.8em;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         background-color: #fff;
         padding: 0.75rem 1rem;
         border-radius: 2rem;
@@ -41,7 +41,7 @@
   display: flex;
   flex-shrink: 0;
   font-size: 1.4em;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   line-height: 1em;
   text-transform: uppercase;
 
@@ -57,7 +57,7 @@
 
 .room-questions__video-info {
   font-size: 1em;
-  font-weight: 400;
+  font-weight: $font-weight-regular;
   margin-bottom: 0;
 
   .video-info__icon {
@@ -95,7 +95,7 @@
     display: flex;
     flex-basis: 6em;
     flex-direction: column;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     justify-content: center;
 
     @include bp-largeup {
@@ -124,7 +124,7 @@
 .room-questions__empty {
   color: $color-primary-xlight;
   font-size: 1.5em;
-  font-weight: 600;
+  font-weight: $font-weight-semi-bold;
   margin-top: 1em;
   text-align: center;
 }

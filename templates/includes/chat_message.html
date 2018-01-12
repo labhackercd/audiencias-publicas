@@ -1,6 +1,6 @@
-<li class="list__item" data-message-id="{{message.id}}">
-  <span class="item__username">{{message.user}}</span>
-  <span class="item__colon">: </span>
-  <span class="item__text">{{message.message}}</span>
-  <span class="item__timestamp">{{message.created | date:'d/m/Y - H:i'}}</span>
+<li class="item" data-message-id="{{message.id}}">
+  <span class="username">{{message.user}}</span>
+  <span class="colon">: </span>
+  <span class="text">{{message.message}}</span>
+  <span class="timestamp">{{message.created | date:'d/m/Y - H:i'}}</span>
 </li>

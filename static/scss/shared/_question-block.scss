@@ -4,13 +4,13 @@
   margin-bottom: .5em;
 
   .info__username {
-    font-weight: 700;
+    font-weight: $font-weight-bold;
   }
 
   .info__timestamp {
     color: hsl(0, 0, 45%);
     font-size: .7em;
-    font-weight: 400;
+    font-weight: $font-weight-regular;
     margin-right: 0.5em;
   }
 }

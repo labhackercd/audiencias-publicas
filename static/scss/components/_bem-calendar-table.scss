@@ -8,7 +8,7 @@
   padding-top: .7em;
 
   &:first-child {
-    font-weight: 600;
+    font-weight: $font-weight-semi-bold;
     width: 10em;
   }
 
@@ -18,7 +18,7 @@
 }
 
 .calendar-table__event-title {
-  font-weight: 400;
+  font-weight: $font-weight-regular;
 }
 
 .calendar-table__date-wrapper {
@@ -34,7 +34,7 @@
   border-radius: 1em;
   color: #fff;
   font-size: .5em;
-  font-weight: 600;
+  font-weight: $font-weight-semi-bold;
   min-width: 6.5em;
   padding: .3em 0;
   text-align: center;
@@ -51,17 +51,17 @@
 
 .calendar-table__day {
   color: hsl(0, 0, 25%);
-  font-weight: 700;
+  font-weight: $font-weight-bold;
 }
 
 .calendar-table__month {
   color: hsl(0, 0, 25%);
   font-size: .8em;
-  font-weight: 400;
+  font-weight: $font-weight-regular;
 }
 
 .calendar-table__hour {
   font-size: .9em;
-  font-weight: 600;
+  font-weight: $font-weight-semi-bold;
   margin-top: .3em;
 }

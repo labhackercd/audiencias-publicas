@@ -7,10 +7,8 @@ $('.JS-readMoreLess').each(function() {
 $(".JS-toggleDiv").click(function() {
   $(this).parent().toggleClass('-open');
   if ($(this).parent().hasClass('-open')) {
-    $(this).text("Ler menos");
+    $(this).text("Ver menos");
   } else {
-    $(this).text("Ler mais");
+    $(this).text("Ver mais");
   }
 });
-
-

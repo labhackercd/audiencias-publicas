@@ -11,7 +11,7 @@ ol > li {
   &.-small {
     font-size: $font-size-deci;
     line-height: 1rem;
-    font-weight: 300;
+    font-weight: $font-weight-light;
   }
 }
 

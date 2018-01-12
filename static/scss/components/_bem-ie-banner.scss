@@ -26,7 +26,7 @@
 .info-banner__text {
   color: #6c4b0c;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   line-height: 1;
   margin: 0;
   max-width: 570px;
@@ -47,7 +47,7 @@
 .info-banner__link {
   color: #1281a5;
   display: inline-block;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   margin: 0 10px;
 }
 

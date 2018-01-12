@@ -1,4 +1,4 @@
-[class^="send-form--"] {
+[class^="send-form"] {
   background-color: hsl(0, 0, 92%);
   display: flex;
   flex-shrink: 0;
@@ -14,14 +14,14 @@
     z-index: 10;
   }
 
-  .send-form__input {
+  .input {
     font-size: 1em;
     height: 3em;
     margin: 0;
     resize: none;
   }
 
-  .send-form__actions {
+  .actions {
     margin: 0 0 0 .5em;
 
     @include bp-largedown {
@@ -42,7 +42,7 @@
     color: #fff;
     display: flex;
     font-size: .8em;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
     @include bp-largeup {
       align-items: center;
@@ -54,26 +54,26 @@
     }
   }
 
-  .actions__button {
+  .actions > .button {
     background-color: $color-primary-xxlight;
     border: 0;
     color: #fff;
     display: flex;
     font-size: .9em;
-    font-weight: 600;
+    font-weight: $font-weight-semi-bold;
     margin: 0;
     padding: 0 .5em 0 1em;
   }
 }
 
-.send-form--unauthenticated,
-.send-form--closed {
+.unauthenticated,
+.closed {
   align-items: center;
   justify-content: center;
 
   span {
     font-size: 1em;
-    font-weight: 600;
+    font-weight: $font-weight-semi-bold;
     padding: .5em;
   }
 

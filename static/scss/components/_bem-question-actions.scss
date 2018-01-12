@@ -14,7 +14,7 @@
     line-height: 2rem;
     padding-right: 0.5rem;
     padding-left: 0.5rem;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     font-size: 0.8em;
     text-transform: uppercase;
     background-color: rgba(#000, 0.1);
@@ -219,7 +219,7 @@
     color: #fff;
     display: flex;
     flex: 1 0 2.5em;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     justify-content: center;
     position: relative;
     overflow: hidden;
@@ -272,7 +272,7 @@
     background-color: $color-primary-xxlight;
     color: #fff;
     font-size: .7em;
-    font-weight: 600;
+    font-weight: $font-weight-semi-bold;
     justify-content: center;
     line-height: 1.2em;
     text-transform: uppercase;
@@ -316,7 +316,7 @@
 
   .vote-block__vote-label {
     color: $color-primary-xxlight;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
   }
 
   .item__question-block {

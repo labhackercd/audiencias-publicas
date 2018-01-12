@@ -26,7 +26,7 @@
     align-items: center;
     color: white;
     display: flex;
-    font-weight: 600;
+    font-weight: $font-weight-semi-bold;
     line-height: 1;
     text-transform: uppercase;
   }
@@ -44,13 +44,13 @@
 
   .status__counter-text {
     color: white;
-    font-weight: 400;
+    font-weight: $font-weight-regular;
     text-transform: uppercase;
   }
 
   .status__counter-number {
     color: #09a67c;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     margin-right: 0.25em;
   }
 
@@ -65,13 +65,13 @@
     left: 0;
     margin: auto;
     padding: 2em;
-    position: absolute;
+    position: relative;
     right: 0;
     top: 0;
 
     .video--empty__message {
       font-size: 1.5em;
-      font-weight: 400;
+      font-weight: $font-weight-regular;
       text-align: center;
     }
 

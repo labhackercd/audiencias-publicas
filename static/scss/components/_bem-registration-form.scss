@@ -56,7 +56,7 @@
 
     a {
       color: $color-secondary;
-      font-weight: 700;
+      font-weight: $font-weight-bold;
     }
   }
 
@@ -86,7 +86,7 @@
 
     .btn__label {
       font-size: .9em;
-      font-weight: 600;
+      font-weight: $font-weight-semi-bold;
       padding: .85em 1em;
       text-align: center;
       width: 100%;

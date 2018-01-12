@@ -33,7 +33,7 @@
   > p {
     color: rgba(#fff, 0.6);
   }
-  
+
   > .list {
     > * + * {
       margin-top: 1rem;
@@ -41,12 +41,15 @@
     > li > a {
       color: $color-edem-action;
       text-decoration: underline;
+      text-decoration-skip: ink;
       cursor: pointer;
       &:hover { opacity: 0.8; }
     }
   }
 
   > .more {
+    background-color: transparent;
+    text-decoration: underline;
     display: none;
     color: $color-edem-action;
     cursor: pointer;

@@ -88,7 +88,7 @@
     color: #fff;
     display: flex;
     flex: 1 0 2.5em;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     justify-content: center;
     position: relative;
 
@@ -142,7 +142,7 @@
     display: inline-flex;
     flex: 0 1 auto;
     font-size: .7em;
-    font-weight: 600;
+    font-weight: $font-weight-semi-bold;
     justify-content: center;
     line-height: 1.2em;
     min-height: 3.25em;
@@ -188,7 +188,7 @@
 
   .vote-block__vote-label {
     color: $color-primary-xxlight;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
   }
 
   .item__question-block {
@@ -232,7 +232,7 @@
     .answered__time {
       color: $color-primary-xxlight;
       font-size: .9em;
-      font-weight: 600;
+      font-weight: $font-weight-semi-bold;
       margin: 0 .3em;
       transition: $hover-transition;
     }
@@ -287,7 +287,7 @@
   p {
     color: $color-primary-xlight;
     font-size: 1.5em;
-    font-weight: 600;
+    font-weight: $font-weight-semi-bold;
     text-align: center;
   }
 }
@@ -298,7 +298,7 @@
   color: #fff;
   cursor: pointer;
   display: flex;
-  font-weight: 600;
+  font-weight: $font-weight-semi-bold;
   height: 30px;
   justify-content: center;
   position: absolute;

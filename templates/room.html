@@ -22,19 +22,13 @@
 {% endblock navigation %}
 
 {% block main %}
-  <nav class="tabs-nav">
-    <ul class="tabs-nav__list">
-      <li class="list__item">
-        <a class="item__link" data-tab-index="0">Vídeo</a>
-      </li>
-      <li class="list__item">
-        <a class="item__link" data-tab-index="1">Bate-Papo</a>
-      </li>
-      <li class="list__item">
-        <a class="item__link" data-tab-index="2">Perguntas</a>
-      </li>
-      <div class="list__item-marker" data-tab-index="0"></div>
-    </ul>
+  <nav class="room-tabs">
+    <div class="list">
+      <a data-tab-index="0">Vídeo</a>
+      <a data-tab-index="1">Bate-Papo</a>
+      <a data-tab-index="2">Perguntas</a>
+      <div class="marker" data-tab-index="0"></div>
+    </div>
   </nav>
 
   <header class="room-header JS-room-wrapper" data-room-id="{{object.id}}">
@@ -90,25 +84,25 @@
       <div class="questions__read-more JS-readMoreQuestion"></div>
       {% if object.youtube_status != 2 and user.is_authenticated %}
         <form class="send-form--questions JS-formQuestion" id="questionform">
-          <textarea class="send-form__input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
+          <textarea class="input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
           <div class="send-form__actions">
             <div class="actions__character-counter JS-character-counter">
               <span class="character-counter__actual-length JS-characterCounterAtualLength">0</span>
               /
               <span class="character-counter__max-length">300</span>
             </div>
-            <button class="actions__button">
+            <button class="button">
               <span class="button__text">Enviar</span>
               <i class="button__icon icon icon-caret-right"></i>
             </button>
           </div>
         </form>
       {% elif object.youtube_status != 2 and not user.is_authenticated %}
-        <div class="send-form--unauthenticated">
+        <div class="unauthenticated">
           <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
         </div>
       {% elif object.youtube_status == 2 %}
-        <div class="send-form--closed">
+        <div class="closed">
           <span>Audiência encerrada para participações.</span>
         </div>
       {% endif %}
@@ -132,7 +126,7 @@
           </div>
           <div class="status__counter">
             {% if object.youtube_status == 1 %}
-              <span class="status__counter-number" id="online-users">{{object.online_users}}</span> <span class="status__counter-text">assistindo</span>
+              <span class="status__counter-number" id="online-users">{{object.online_users}}</span> <span class="status__counter-text">visitantes</span>
             {% else %}
               <span class="status__counter-number">{{object.views}}</span> <span class="status__counter-text"> visualizações</span>
             {% endif %}
@@ -143,13 +137,13 @@
       <div class="room-info JS-readMoreLess">
         <h3>Pauta</h3>
         {{object.reunion_object|cut:"  "|linebreaks}}
-        <button class="more JS-toggleDiv">Ler mais</button>
+        <button class="more JS-toggleDiv">Ver mais</button>
       </div>
 
       <div class="room-info JS-readMoreLess">
         <h3>Organização</h3>
         <p>{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
-        <button class="more JS-toggleDiv">Ler mais</button>
+        <button class="more JS-toggleDiv">Ver mais</button>
       </div>
 
       <div class="room-info JS-readMoreLess">
@@ -162,7 +156,7 @@
             <a href="" target="_blank">Vídeo da campanha de transporte público do estado de São Paulo</a>
           </li>
         </ul>
-        <button class="more JS-toggleDiv">Ler mais</button>
+        <button class="more JS-toggleDiv">Ver mais</button>
       </div>
 
       <button class="aud-button -add">Adicionar Conteúdo Complementar</button>
@@ -173,44 +167,48 @@
 
     </main>
 
-    <aside class="room-chat">
+    <aside class="room-chat JS-wrapperChat">
       <h2 class="room-h2">Bate-papo</h2>
-      <div class="chat JS-wrapperChat">
-        <div class="chat__messages JS-messages">
-          <ul class="messages__list JS-messagesList" id="chat">
+      <div class="chat">
+        <div class="messages JS-messages">
+          <ul class="list JS-messagesList" id="chat">
             {% if object.messages.all %}
               {% for message in object.messages.all %}
                 {% include "includes/chat_message.html" with message=message %}
               {% endfor %}
             {% elif object.youtube_status != 2 %}
-              <div class="messages__list--empty JS-messagesListEmpty">
+              <div class="list -empty JS-messagesListEmpty">
                 <img src="{% static 'img/chat-bubble.svg' %}" data-fallback="{% static 'img/chat-bubble.png' %}">
                 <p>Nenhuma mensagem foi enviada ainda. Seja o primeiro!</p>
               </div>
             {% endif %}
           </ul>
         </div>
-        <div class="chat__read-more JS-readMoreChat">Há novas mensagens disponíveis abaixo</div>
+      </div>
+      <div class="more JS-readMoreChat">
         {% if object.youtube_status != 2 and user.is_authenticated %}
-          <form class="send-form--chat JS-formChat" id="chatform">
-            <textarea class="send-form__input JS-formInputChat" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required></textarea>
-            <div class="send-form__actions">
-              <button class="actions__button" id="go">
-                <i class="button__icon icon icon-paper-plane"></i>
-              </button>
+          <form class="form JS-formChat" id="chatform">
+            <textarea class="input JS-formInputChat" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required></textarea>
+            <div class="actions">
+              <button class="button" id="go">Enviar</button>
             </div>
           </form>
         {% elif object.youtube_status != 2 and not user.is_authenticated %}
-          <div class="send-form--unauthenticated">
+          <div class="unauthenticated">
             <span><a href="/home/?next={{ request.path }}">Faça Login</a> para participar no chat!</span>
           </div>
         {% elif object.youtube_status == 2 %}
-          <div class="send-form--closed">
+          <div class="closed">
             <span>Audiência encerrada para participações.</span>
           </div>
         {% endif %}
+
+        <p class="info">O bate-papo se encerrará em <span class="time">14:58</span>.</p>
+        <p class="info">Continue esta conversa <a href="#" class="link">aqui</a>.</p>
       </div>
     </aside>
+
+
 
   </div>
 
