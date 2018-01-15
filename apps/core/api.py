@@ -65,7 +65,6 @@ class RoomFilter(FilterSet):
         fields = {
             'date': ['lt', 'gte'],
             'legislative_body_initials': ['exact'],
-            'youtube_id': ['exact'],
             'cod_reunion': ['exact'],
         }
 
@@ -78,7 +77,7 @@ class RoomListAPI(generics.ListAPIView):
         django_filters.DjangoFilterBackend,
         filters.SearchFilter)
     search_fields = (
-        'cod_reunion', 'youtube_id', 'legislative_body_alias',
+        'cod_reunion', 'legislative_body_alias',
         'legislative_body_initials', 'reunion_type', 'title_reunion',
         'reunion_object', 'reunion_theme', 'legislative_body',
         'reunion_status', 'location')

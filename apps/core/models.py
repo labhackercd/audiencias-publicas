@@ -72,8 +72,6 @@ class Room(TimestampedMixin):
     youtube_status = models.IntegerField(_('youtube status'),
                                          choices=YOUTUBE_STATUS_CHOICES,
                                          default=0)
-    youtube_id = models.CharField(_('youtube id'), max_length=200, null=True,
-                                  blank=True)
     date = models.DateTimeField(_('date'), null=True, blank=True)
     online_users = models.IntegerField(_('online users'), default=0)
     max_online_users = models.IntegerField(_('max online users'), default=0)
@@ -247,6 +245,21 @@ class RoomAttachment(TimestampedMixin):
     class Meta:
         verbose_name = _('attachment')
         verbose_name_plural = _('attachments')
+
+    def __str__(self):
+        return self.room.__str__()
+
+
+class Video(TimestampedMixin):
+    room = models.ForeignKey(Room, related_name='videos',
+                             verbose_name=_('room'))
+    video_id = models.CharField(_('youtube id'), max_length=200)
+    title = models.CharField(_('title'), max_length=200, null=True, blank=True)
+    is_attachment = models.BooleanField(_('is_attachment'), default=False)
+
+    class Meta:
+        verbose_name = _('video')
+        verbose_name_plural = _('videos')
 
     def __str__(self):
         return self.room.__str__()
