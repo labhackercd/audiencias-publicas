@@ -177,13 +177,10 @@ def index(request):
         live_videos=Room.objects.filter(
             youtube_status=1,
             is_visible=True).order_by('-date'),
-        agendas=Room.objects.filter(Q(
+        agendas=Room.objects.filter(
             is_visible=True,
             reunion_status__in=[2, 3],
-            youtube_id='') | Q(
-            is_visible=True,
-            reunion_status__in=[2, 3],
-            youtube_id__isnull=True)).order_by('date'),
+            youtube_status=0).order_by('date'),
     ))
 
 
