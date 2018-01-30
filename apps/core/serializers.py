@@ -7,7 +7,8 @@ from django.contrib.auth import get_user_model
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('id', 'email', 'username', 'first_name', 'last_name')
+        fields = ('id', 'email', 'username', 'first_name', 'last_name',
+                  'is_active', 'is_staff', 'is_superuser')
 
     def to_representation(self, instance):
         ret = super(UserSerializer, self).to_representation(instance)
@@ -18,6 +19,11 @@ class UserSerializer(serializers.ModelSerializer):
                 ret.pop('email')
         else:
             ret.pop('email')
+
+        ret.pop('is_active', None)
+        ret.pop('is_staff', None)
+        ret.pop('is_superuser', None)
+
         return ret
 
 
