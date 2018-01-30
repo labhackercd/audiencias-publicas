@@ -1,11 +1,11 @@
 from django.conf.urls import url
 from django.views.decorators.csrf import ensure_csrf_cookie
+from rest_framework.routers import DefaultRouter
 from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              QuestionDetail, index, redirect_to_room,
                              RoomReportView, set_answer_time, set_answered,
                              set_priotity, WidgetVideoDetail)
-from apps.core.api import (api_root, MessageListAPI, QuestionListAPI,
-                           VoteListAPI, UserListAPI, RoomAPI, RoomListAPI)
+from apps.core import api
 
 
 urlpatterns = [
@@ -31,14 +31,14 @@ urlpatterns = [
         name='widget_index'),
 ]
 
+router = DefaultRouter()
+router.register(r'api/user', api.UserViewSet)
+router.register(r'api/message', api.MessageViewSet)
+router.register(r'api/question', api.QuestionViewSet)
+router.register(r'api/room', api.RoomViewSet)
+router.register(r'api/vote', api.VoteViewSet)
+
+urlpatterns += router.urls
 urlpatterns += [
-    url(r'^api/$', api_root),
-    url(r'^api/messages/$', MessageListAPI.as_view(), name='message_list_api'),
-    url(r'^api/question/$', QuestionListAPI.as_view(),
-        name='question_list_api'),
-    url(r'^api/room/$', RoomListAPI.as_view(), name='room_list_api'),
-    url(r'^api/room/(?P<pk>\d+)$', RoomAPI.as_view(),
-        name='room_detail_api'),
-    url(r'^api/vote/$', VoteListAPI.as_view(), name='vote_list_api'),
-    url(r'^api/user/$', UserListAPI.as_view(), name='user_list_api'),
+    url(r'^api/$', api.api_root),
 ]
