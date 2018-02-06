@@ -54,6 +54,9 @@ class MessageSerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
+    questions_count = serializers.SerializerMethodField()
+    messages_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Room
         fields = ('id', 'cod_reunion', 'online_users', 'youtube_id',
@@ -61,4 +64,11 @@ class RoomSerializer(serializers.ModelSerializer):
                   'youtube_status', 'is_joint', 'max_online_users', 'created',
                   'modified', 'is_visible', 'reunion_type', 'title_reunion',
                   'reunion_object', 'reunion_theme', 'date',
-                  'legislative_body', 'reunion_status', 'location')
+                  'legislative_body', 'reunion_status', 'location',
+                  'questions_count', 'messages_count')
+
+    def get_questions_count(self, obj):
+        return obj.questions.count()
+
+    def get_messages_count(self, obj):
+        return obj.messages.count()

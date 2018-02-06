@@ -82,25 +82,14 @@ class RoomViewSet(viewsets.ModelViewSet):
     filter_class = RoomFilter
     filter_backends = (
         django_filters.DjangoFilterBackend,
-        filters.SearchFilter)
+        filters.SearchFilter,
+        filters.OrderingFilter)
     search_fields = (
         'cod_reunion', 'youtube_id', 'legislative_body_alias',
         'legislative_body_initials', 'reunion_type', 'title_reunion',
         'reunion_object', 'reunion_theme', 'legislative_body',
         'reunion_status', 'location')
-
-
-class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
-    allowed_methods = ['get']
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def get_serializer_class(self):
-        return RoomSerializer
-
-    def get_object(self):
-        return Room.objects.get(pk=self.kwargs['pk'])
+    ordering_fields = '__all__'
 
 
 @api_view(['GET'])
