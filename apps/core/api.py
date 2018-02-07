@@ -72,6 +72,8 @@ class RoomFilter(FilterSet):
             'legislative_body_initials': ['exact'],
             'youtube_id': ['exact'],
             'cod_reunion': ['exact'],
+            'is_visible': ['exact'],
+            'youtube_status': ['exact'],
         }
 
 
