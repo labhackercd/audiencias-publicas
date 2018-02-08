@@ -1,57 +1,42 @@
 .room-video {
-  overflow: hidden;
   position: relative;
-  width: 100%;
+  max-height: calc(100vh - 12rem);
+  min-height: 10rem;
 
-  @include bp-mediumdown {
-    width: calc(100% + 2em);
-    margin-left: -1em;
+  > .video {
+    padding-bottom: 56.25%;
+    position: relative;
+
+    > .player {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      max-height: calc(100vh - 12rem);
+      min-height: 10rem;
+    }
   }
 
-  .video {
-    width: 100%;
-    height: 20vw;
-    margin-top: 1rem;
-  }
-
-  .video__status {
+  > .info {
+    position: absolute;
+    top: 100%;
     display: flex;
-    flex-wrap: wrap;
-    font-size: 1em;
     justify-content: space-between;
-    margin-bottom: 2em;
-  }
+    width: 100%;
+    font-size: $font-size-centi;
+    line-height: 1.5rem;
 
-  .status__transmission-text {
-    align-items: center;
-    color: white;
-    display: flex;
-    font-weight: $font-weight-semi-bold;
-    line-height: 1;
-    text-transform: uppercase;
-  }
+    > .status {
+      display: flex;
+      align-items: center;
 
-  .status__live-icon {
-    color: $color-live-blink;
-    margin-right: 0.25em;
-  }
+      > .live-icon {
+        margin-right: 0.25rem;
+      }
+    }
 
-  .status__counter {
-    display: flex;
-    justify-content: center;
-    line-height: 1;
-  }
-
-  .status__counter-text {
-    color: white;
-    font-weight: $font-weight-regular;
-    text-transform: uppercase;
-  }
-
-  .status__counter-number {
-    color: #09a67c;
-    font-weight: $font-weight-bold;
-    margin-right: 0.25em;
+    > .visitors > .numbers {
+      font-weight: $font-weight-bold;
+    }
   }
 
   .video--empty {

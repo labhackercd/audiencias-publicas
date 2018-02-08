@@ -112,27 +112,28 @@
 
       <div class="room-video JS-videoFrame">
         {% include "includes/room_video.html" with object=object %}
-        <div class="video__status">
-          <div class="status__transmission">
-            <span class="status__transmission-text">
-              {% if object.youtube_status == 0 %}
-                Transmissão Prevista
-              {% elif object.youtube_status == 1 %}
-                <i class="status__live-icon icon icon-circle live-blink"></i>Ao Vivo
-              {% else %}
-                Transmissão Encerrada (Gravado)
-              {% endif %}
-            </span>
-          </div>
-          <div class="status__counter">
-            {% if object.youtube_status == 1 %}
-              <span class="status__counter-number" id="online-users">{{object.online_users}}</span> <span class="status__counter-text">visitantes</span>
+        <div class="info">
+          <span class="status">
+            {% if object.youtube_status == 0 %}
+              Transmissão Prevista
+            {% elif object.youtube_status == 1 %}
+              <span class="live-icon"></span> Ao Vivo
             {% else %}
-              <span class="status__counter-number">{{object.views}}</span> <span class="status__counter-text"> visualizações</span>
+              Transmissão Encerrada (Gravado)
             {% endif %}
-          </div>
+          </span>
+
+          <span class="visitors">
+            {% if object.youtube_status == 1 %}
+              <span class="numbers" id="online-users">{{object.online_users}}</span> visitantes
+            {% else %}
+              <span class="numbers">{{object.views}}</span> visualizações
+            {% endif %}
+          </span>
         </div>
       </div>
+
+
 
       <div class="room-info JS-readMoreLess">
         <h3>Pauta</h3>
