@@ -13,7 +13,9 @@
   &.-open {
     opacity: 1;
     pointer-events: auto;
-    > .modal { transform: scale(1) translate(-50%, -50%); }
+    > .modal {
+      transform: scale(1) translate(-50%, -50%);
+    }
   }
 
   > .modal {
@@ -32,13 +34,70 @@
     padding-top: 2rem;
     padding-right: 3rem;
     padding-left: 3rem;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
     box-shadow: 0 8px 32px rgba(#000, 0.6);
+    display: flex;
+    flex-direction: column;
 
-    > .close {
-      @include icon('times');
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      > .title {
+        letter-spacing: .5px;
+        font-size: .8rem;
+        opacity: .5;
+        font-weight: normal;
+        text-transform: uppercase;
+      }
+
+      > .close {
+        @include icon('times');
+        color: rgba(#000, .5);
+        font-size: 1rem;
+      }
     }
 
-  }
+    form {
+      text-align: center;
+      margin-top: 1rem;
 
+      label {
+        display: block;
+        text-align: left;
+        width: 100%;
+        color: $color-edem-action;
+        margin-top: 1rem;
+      }
+
+      input, textarea {
+        width: 100%;
+        background-color: #f2f2f2;
+        padding: 1rem;
+        margin-top: .5rem;
+        font-size: 1rem;
+      }
+
+      textarea {
+        resize: none;
+        min-height: 8rem;
+      }
+
+      button {
+        background-color: $color-edem-action;
+        color: #FFF;
+        padding: 1rem 2.5rem;
+        margin-top: 2rem;
+        margin-right: 1rem;
+        font-size: 1rem;
+        letter-spacing: .5px;
+        font-weight: normal;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
 }

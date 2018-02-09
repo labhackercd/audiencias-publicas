@@ -1,10 +1,11 @@
 <div class="aud-modal" id="{{ modal_id }}">
-    
+
   <div class="modal">
 
-    <button type="button" class="close"></button>
-
-    <h4 class="title">{{ title }}</h4>
+    <header>
+      <h4 class="title">{{ title }}</h4>
+      <button type="button" class="close"></button>
+    </header>
 
     {% block content %}
     {% endblock content %}
