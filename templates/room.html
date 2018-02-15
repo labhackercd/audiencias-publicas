@@ -111,26 +111,50 @@
     <main class="room-main">
 
       <div class="room-video JS-videoFrame">
-        {% include "includes/room_video.html" with object=object %}
-        <div class="info">
-          <span class="status">
-            {% if object.youtube_status == 0 %}
-              Transmissão Prevista
-            {% elif object.youtube_status == 1 %}
-              <span class="live-icon"></span> Ao Vivo
-            {% else %}
-              Transmissão Encerrada (Gravado)
-            {% endif %}
-          </span>
+        <div class="heightwrapper">
+          {% include "includes/room_video.html" with object=object %}
+          <div class="info">
+            <span class="status">
+              {% if object.youtube_status == 0 %}
+                Transmissão Prevista
+              {% elif object.youtube_status == 1 %}
+                <span class="live-icon"></span> Ao Vivo
+              {% else %}
+                Transmissão Encerrada (Gravado)
+              {% endif %}
+            </span>
 
-          <span class="visitors">
-            {% if object.youtube_status == 1 %}
-              <span class="numbers" id="online-users">{{object.online_users}}</span> visitantes
-            {% else %}
-              <span class="numbers">{{object.views}}</span> visualizações
-            {% endif %}
-          </span>
+            <span class="visitors">
+              {% if object.youtube_status == 1 %}
+                <span class="numbers" id="online-users">{{object.online_users}}</span> visitantes
+              {% else %}
+                <span class="numbers">{{object.views}}</span> visualizações
+              {% endif %}
+            </span>
+          </div>
         </div>
+
+        <ul class="extras">
+          <li class="extravideo JS-selectVideo -current">
+            <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
+            <span class="title">Parte 1</span>
+          </li>
+          <li class="extravideo JS-selectVideo">
+            <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
+            <span class="title">Parte 2</span>
+          </li>
+          <li class="extravideo JS-selectVideo">
+            <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
+            <span class="title">Comentários do Deputado Chico Anysio</span>
+          </li>
+          <li class="extravideo JS-selectVideo">
+            <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
+            <span class="title">Comentários do Deputado Chico Anysio</span>
+          </li>
+          <li class="addvideo">
+
+          </li>
+        </ul>
       </div>
 
 
