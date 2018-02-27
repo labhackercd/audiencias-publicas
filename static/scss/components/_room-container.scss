@@ -5,15 +5,17 @@
   padding-right: $gutter / 2;
 
   > .room-questions {
-    flex: 7;
+    min-width: 27.5rem;
+    max-width: 32rem;
   }
 
   > .room-main {
-    flex: 9;
+    min-width: 29.5rem;
   }
 
   > .room-chat {
-    flex: 5;
+    min-width: 21.5rem;
+    max-width: 24rem;
   }
 
   > .room-questions,
@@ -21,6 +23,7 @@
   > .room-chat {
     padding-left: $gutter / 2;
     padding-right: $gutter / 2;
+    flex: 1;
   }
 
 }

@@ -1,57 +1,98 @@
 .room-video {
-  overflow: hidden;
-  position: relative;
-  width: 100%;
 
-  @include bp-mediumdown {
-    width: calc(100% + 2em);
-    margin-left: -1em;
+  > .heightwrapper{
+    position: relative;
+    max-height: calc(100vh - 12rem);
+    min-height: 10rem;
+
+    > .ratiowrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+
+      > .video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        max-height: calc(100vh - 12rem);
+        min-height: 10rem;
+      }
+    }
+
+    > .info {
+      position: absolute;
+      top: 100%;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: $font-size-centi;
+      line-height: 1.5rem;
+
+      > .status {
+        display: flex;
+        align-items: center;
+
+        > .live-icon {
+          margin-right: 0.25rem;
+        }
+      }
+
+      > .visitors > .numbers {
+        font-weight: $font-weight-bold;
+      }
+    }
   }
 
-  .video {
-    width: 100%;
-    height: 20vw;
-    margin-top: 1rem;
-  }
+  > .extras {
+    $outline-width: 2px;
 
-  .video__status {
     display: flex;
-    flex-wrap: wrap;
-    font-size: 1em;
-    justify-content: space-between;
-    margin-bottom: 2em;
-  }
+    align-items: start;
+    margin-top: 2rem;
+    padding: $outline-width;
+    overflow-x: auto;
 
-  .status__transmission-text {
-    align-items: center;
-    color: white;
-    display: flex;
-    font-weight: $font-weight-semi-bold;
-    line-height: 1;
-    text-transform: uppercase;
-  }
+    > * + * {
+      margin-left: 1rem;
+    }
 
-  .status__live-icon {
-    color: $color-live-blink;
-    margin-right: 0.25em;
-  }
+    > .extravideo {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      flex-basis: 0;
+      cursor: pointer;
+      z-index: 2;
 
-  .status__counter {
-    display: flex;
-    justify-content: center;
-    line-height: 1;
-  }
+      &:hover, &:active {
+        > .thumbnail {
+          opacity: 1;
+        }
+      }
 
-  .status__counter-text {
-    color: white;
-    font-weight: $font-weight-regular;
-    text-transform: uppercase;
-  }
+      &.-current {
+        cursor: default;
 
-  .status__counter-number {
-    color: #09a67c;
-    font-weight: $font-weight-bold;
-    margin-right: 0.25em;
+        >.thumbnail {
+          opacity: 1;
+          outline-color: $color-edem-highlight;
+        }
+      }
+
+      > .thumbnail {
+        width: 8rem;
+        height: 5rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.5;
+        outline: $outline-width solid transparent;
+        transition: opacity 0.3s $swift-out,
+                    outline 0.2s ease;
+      }
+
+      > .title {
+        font-size: $font-size-deci;
+        line-height: 1rem;
+      }
+    }
   }
 
   .video--empty {
