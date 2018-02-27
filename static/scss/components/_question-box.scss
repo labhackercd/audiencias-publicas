@@ -2,11 +2,17 @@
   background-color: $color-edem-action;
   padding: 1rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
-  transform: translateX(-100vh);
+  height: 0;
+  transform: translateY(100vh);
 
   @include bp-mediumdown {
     flex-direction: column;
     height: 112px;
+  }
+
+  &.-active {
+    height: auto;
+    transform: translateY(0);
   }
 
   .-closed,
