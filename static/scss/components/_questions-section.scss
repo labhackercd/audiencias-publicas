@@ -1,4 +1,4 @@
-.questions {
+.questions-section {
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -324,55 +324,4 @@
 
 .questions__read-more--visible {
   transform: translateY(-100%);
-}
-
-.questions {
-  [class^="send-form--"] {
-    @include bp-mediumdown {
-      flex-direction: column;
-      height: 112px;
-    }
-  }
-
-  .send-form--questions {
-    background-color: $color-primary-light;
-  }
-
-  .send-form--closed,
-  .send-form--unauthenticated {
-    background-color: $color-primary-light;
-    color: #fff;
-  }
-
-  .send-form__actions {
-    @include bp-mediumdown {
-      display: flex;
-      flex: 1;
-      margin: 0;
-      width: 100%;
-    }
-  }
-
-  .actions__character-counter {
-    @include bp-mediumdown {
-      align-items: center;
-      flex: .5 1 0;
-      justify-content: center;
-    }
-  }
-
-  .actions__button {
-    @include bp-mediumdown {
-      background-color: $color-accent-secondary;
-      display: block;
-      flex: 1 1 0;
-      height: auto;
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-  .button__icon {
-    vertical-align: middle;
-  }
 }
