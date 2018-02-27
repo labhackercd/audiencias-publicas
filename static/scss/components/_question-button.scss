@@ -1,0 +1,20 @@
+.question-button {
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+  cursor: pointer;
+  padding: 1rem 3rem;
+  font-size: 1rem;
+  background-color: $color-edem-action;
+  color: #FFF;
+  font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &-visible {
+    transform: translateY(-100vh);
+  }
+}

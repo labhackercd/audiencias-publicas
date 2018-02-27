@@ -291,37 +291,3 @@
     text-align: center;
   }
 }
-
-[class^="questions__read-more"] {
-  align-items: center;
-  background-color: rgba($color-primary-xxlight, .85);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  font-weight: $font-weight-semi-bold;
-  height: 30px;
-  justify-content: center;
-  position: absolute;
-  transition: $translate-transition;
-  z-index: 1;
-
-  @include bp-mediumdown {
-    bottom: 82px;
-    width: 100vw
-  }
-
-  @include bp-largeup {
-    bottom: 40px;
-    margin: auto;
-    right: 0;
-    left: 2.75em;
-  }
-
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
-.questions__read-more--visible {
-  transform: translateY(-100%);
-}

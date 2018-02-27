@@ -2,6 +2,7 @@
   background-color: $color-edem-action;
   padding: 1rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  transform: translateX(-100vh);
 
   @include bp-mediumdown {
     flex-direction: column;
@@ -76,5 +77,3 @@
     }
   }
 }
-
-.questions__read-more { display: none; }
