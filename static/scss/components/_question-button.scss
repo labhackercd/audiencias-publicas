@@ -9,9 +9,10 @@
   background-color: $color-edem-action;
   color: #FFF;
   font-weight: bold;
+  transition: all .15s ease-in-out;
 
   &:hover {
-    text-decoration: underline;
+    background-color: lighten($color-edem-action, 5%);
   }
 
   &-visible {
