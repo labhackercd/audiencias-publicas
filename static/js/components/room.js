@@ -15,6 +15,7 @@ function roomComponent(socket) {
     $shareListItemLink: $('.JS-shareListItemLink'),
     $readMoreQuestion: $('.JS-readMoreQuestion'),
     $formQuestion: $('.JS-formQuestion'),
+    $closeQuestion: $('.JS-closeQuestion'),
     $formInputQuestion: $('.JS-formInputQuestion'),
     $answeredCheckbox: $('.JS-answeredCheckbox'),
     $wrapperChat: $('.JS-wrapperChat'),
@@ -92,6 +93,18 @@ function roomComponent(socket) {
     elements.$readMoreQuestion.removeClass('more');
     elements.$readMoreQuestion.addClass('more -visible');
   }
+
+  document.querySelectorAll('.JS-readMoreQuestion').forEach(function(openQuestion) {
+    openQuestion.onclick = function() {
+      elements.$formQuestion.addClass('-active');
+    }
+  })
+
+  document.querySelectorAll('.JS-closeQuestion').forEach(function(openQuestion) {
+    openQuestion.onclick = function() {
+      elements.$formQuestion.removeClass('-active');
+    }
+  })
 
   function showReadMoreChat() {
     elements.$readMoreChat.removeClass('more');
