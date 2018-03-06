@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS',
 INSTALLED_APPS = (
     'apps.core',
     'apps.accounts',
+    'apps.notification',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,6 +59,7 @@ INSTALLED_APPS = (
     'compressor_toolkit',
     'channels',
     'channels_presence',
+    'django_js_reverse',
 )
 
 AUTH_USER_MODEL = 'accounts.User'

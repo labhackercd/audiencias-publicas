@@ -1,0 +1,18 @@
+{% extends 'includes/modal.html' %}
+
+{% block content %}
+  <form  method="POST" action="{% url 'participants_notification' object.id %}">
+    {% csrf_token %}
+    <label>
+      Assunto
+      <input type="text" name="subject" placeholder="Assunto do email">
+    </label>
+    <label>
+      Mensagem
+      <textarea name="content" placeholder="Digite aqui o corpo do email"></textarea>
+    </label>
+    <button type="button" class="cancel">Cancelar</button>
+    <button type="submit" class="submit">Enviar</button>
+  </form>
+{% endblock content %}
+

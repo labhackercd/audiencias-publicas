@@ -221,6 +221,20 @@ class Question(TimestampedMixin):
         return self.question
 
 
+class RoomAttachment(TimestampedMixin):
+    room = models.ForeignKey(Room, related_name='attachments',
+                             verbose_name=_('room'))
+    title = models.CharField(_('title'), max_length=200, null=True, blank=True)
+    url = models.URLField(verbose_name=_('link'))
+
+    class Meta:
+        verbose_name = _('attachment')
+        verbose_name_plural = _('attachments')
+
+    def __str__(self):
+        return self.room.__str__()
+
+
 def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
     if instance.youtube_status in [2, 3]:

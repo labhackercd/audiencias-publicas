@@ -43,13 +43,13 @@ def vote_action(question, user):
     elif question.votes.filter(user__username=user).count() > 0:
         html = render_to_string('includes/question_action.html', {
             'extra_classes': 'voted',
-            'question_vote': 'question-vote',
+            'question_vote': 'question-vote JS-voteBtnEnabled',
             'total_votes': question.votes_count,
             'room': question.room,
             'upvote_content': 'Apoiada por você'})
     else:
         html = render_to_string('includes/question_action.html', {
-            'question_vote': 'question-vote',
+            'question_vote': 'question-vote JS-voteBtnEnabled',
             'total_votes': question.votes_count,
             'room': question.room,
             'upvote_content': 'Votar Nesta Pergunta'})

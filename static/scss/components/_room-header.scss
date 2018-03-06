@@ -1,0 +1,30 @@
+.room-header {
+  $logo-height: 5rem;
+  $background: $color-edem-dark;
+  $logo-background: $color-edem-main;
+
+  min-height: $logo-height;
+  display: flex;
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+
+  > .logo {
+    height: $logo-height;
+    background-color: $logo-background;
+    padding: 1rem;
+    padding-right: $logo-height;
+    position: relative;
+    > img { height: 3rem; }
+    &::after {
+      content: '';
+      width: $logo-height;
+      height: $logo-height;
+      background: linear-gradient(-45deg, $background calc(50% - 1px), $logo-background 50%);
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    &:hover { opacity: 0.8; }
+  }
+
+}

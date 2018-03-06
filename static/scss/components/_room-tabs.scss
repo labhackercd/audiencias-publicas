@@ -1,0 +1,49 @@
+.room-tabs {
+  height: 3em;
+  width: 100vw;
+  background-color: $color-primary-light;
+
+  @include bp-largeup {
+    display: none;
+  }
+
+  > .list {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+    margin: 0;
+    list-style: none;
+  }
+
+  > .list > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: #fff;
+    font-weight: $font-weight-semi-bold;
+  }
+
+  > .list > .maker {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: .3em;
+    width: calc(100% / 3);
+    background-color: $color-accent;
+  }
+}
+
+.room,
+.maker {
+  transition: $tab-transition;
+}
+
+@include bp-mediumdown {
+  .room[data-tab-index="1"] { transform: translateX(-100vw); }
+  .room[data-tab-index="2"] { transform: translateX(-200vw); }
+
+  .maker[data-tab-index="1"] { transform: translateX(100%); }
+  .maker[data-tab-index="2"] { transform: translateX(200%); }
+}

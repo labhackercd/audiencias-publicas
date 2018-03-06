@@ -1,0 +1,22 @@
+.aud-button {
+  background-color: $color-edem-main;
+  padding: 0.5rem;
+  box-shadow: 0 2px 4px 0 rgba(#000, 0.2);
+  border-radius: 2px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background-color: mix( $color-edem-main, $color-edem-action, 60%);
+  }
+
+  &:active {
+    background-color: $color-edem-main;
+    box-shadow: 0 1px 2px 0 rgba(#000, 0.4);
+  }
+
+  &::before { margin-right: 0.5rem; }
+
+  &.-mail { @include icon('envelope'); }
+  &.-add { @include icon('plus'); }
+
+}

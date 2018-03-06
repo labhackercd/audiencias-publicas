@@ -4,35 +4,36 @@ import { getCookie } from '../helpers/cookies';
 
 function roomComponent(socket) {
   const elements = {
-    $wrapperQuestion: $('.questions'),
-    $list: $('.questions__list'),
-    $listEmpty: $('.questions__list--empty'),
-    $voteBtnEnabled: $('.question-vote'),
-    $voteBtn: $('.vote-block__upvote-button'),
-    $totalVotes: $('.vote-block__total-votes'),
-    $shareListOpenBtn: $('.question-block__share-button'),
-    $shareListCloseBtn: $('.share-list__close'),
-    $shareListItemLink: $('.question-block__share-list .item__link'),
-    $readMoreQuestion: $('.questions__read-more'),
-    $formQuestion: $('#questionform'),
-    $formInputQuestion: $('#question'),
-    $answeredCheckbox: $('.js-answered-checkbox'),
-    $wrapperChat: $('.chat'),
-    $messages: $('.chat__messages'),
-    $messagesList: $('.messages__list'),
-    $messagesListEmpty: $('.messages__list--empty'),
-    $readMoreChat: $('.chat__read-more'),
-    $formChat: $('#chatform'),
-    $formInputChat: $('#message'),
-    $videoFrame: $('.video__iframe-wrapper'),
-    $priorityCheckbox: $('.js-priority-checkbox'),
-    $answerTimeCheckbox: $('.js-answer-time-checkbox'),
+    $wrapperQuestion: $('.JS-wrapperQuestion'),
+    $questionList: $('.JS-questionsList'),
+    $questionlistEmpty: $('.JS-questionlistEmpty'),
+    $voteBtnEnabled: $('.JS-voteBtnEnabled'),
+    $voteBtn: $('.JS-voteBtn'),
+    $totalVotes: $('.JS-totalVotes'),
+    $shareListOpenBtn: $('.JS-shareListOpenBtn'),
+    $shareListCloseBtn: $('.JS-shareListCloseBtn'),
+    $shareListItemLink: $('.JS-shareListItemLink'),
+    $readMoreQuestion: $('.JS-readMoreQuestion'),
+    $formQuestion: $('.JS-formQuestion'),
+    $closeQuestion: $('.JS-closeQuestion'),
+    $formInputQuestion: $('.JS-formInputQuestion'),
+    $answeredCheckbox: $('.JS-answeredCheckbox'),
+    $wrapperChat: $('.JS-wrapperChat'),
+    $messages: $('.JS-messages'),
+    $messagesList: $('.JS-messagesList'),
+    $messagesListEmpty: $('.JS-messagesListEmpty'),
+    $readMoreChat: $('.JS-readMoreChat'),
+    $formChat: $('.JS-formChat'),
+    $formInputChat: $('.JS-formInputChat'),
+    $videoFrame: $('.JS-videoFrame'),
+    $priorityCheckbox: $('.JS-priorityCheckbox'),
+    $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
   };
 
   const vars = {
-    listHeight: () => elements.$list[0].offsetHeight,
-    listScrollHeight: () => elements.$list[0].scrollHeight,
-    listScrollTop: () => elements.$list[0].scrollTop,
+    listHeight: () => elements.$questionList[0].offsetHeight,
+    listScrollHeight: () => elements.$questionList[0].scrollHeight,
+    listScrollTop: () => elements.$questionList[0].scrollTop,
     wrapperHeight: () => elements.$wrapperQuestion[0].offsetHeight,
     wrapperScrollHeight: () => elements.$wrapperQuestion[0].scrollHeight,
     wrapperScrollTop: () => elements.$wrapperQuestion[0].scrollTop,
@@ -49,7 +50,7 @@ function roomComponent(socket) {
 
   function animateToBottomQuestion() {
     if (window.matchMedia('(min-width: 1024px)').matches) {
-      elements.$list.animate({
+      elements.$questionList.animate({
         scrollTop: vars.listScrollHeight(),
       }, 600, () => {
         isCurrentUserQuestion = false;
@@ -89,28 +90,40 @@ function roomComponent(socket) {
       elements.$readMoreQuestion.html(`Há ${newQuestionsCount} novas perguntas disponíveis abaixo`);
     }
 
-    elements.$readMoreQuestion.removeClass('questions__read-more');
-    elements.$readMoreQuestion.addClass('questions__read-more--visible');
+    elements.$readMoreQuestion.removeClass('more');
+    elements.$readMoreQuestion.addClass('more -visible');
   }
 
+  document.querySelectorAll('.JS-readMoreQuestion').forEach(function(openQuestion) {
+    openQuestion.onclick = function() {
+      elements.$formQuestion.addClass('-active');
+    }
+  })
+
+  document.querySelectorAll('.JS-closeQuestion').forEach(function(openQuestion) {
+    openQuestion.onclick = function() {
+      elements.$formQuestion.removeClass('-active');
+    }
+  })
+
   function showReadMoreChat() {
-    elements.$readMoreChat.removeClass('chat__read-more');
-    elements.$readMoreChat.addClass('chat__read-more--visible');
+    elements.$readMoreChat.removeClass('more');
+    elements.$readMoreChat.addClass('more -visible');
   }
 
   function hideReadMoreQuestion() {
-    elements.$readMoreQuestion.removeClass('questions__read-more--visible');
-    elements.$readMoreQuestion.addClass('questions__read-more');
+    elements.$readMoreQuestion.removeClass('more -visible');
+    elements.$readMoreQuestion.addClass('more');
   }
 
   function hideReadMoreChat() {
-    elements.$readMoreChat.removeClass('chat__read-more--visible');
-    elements.$readMoreChat.addClass('chat__read-more');
+    elements.$readMoreChat.removeClass('more -visible');
+    elements.$readMoreChat.addClass('more');
   }
 
   function updateVoteBlock($question, data) {
-    const $upvoteButton = $question.find('.vote-block__upvote-button');
-    const $totalVotes = $question.find('.vote-block__total-votes');
+    const $upvoteButton = $question.find('.JS-voteBtn');
+    const $totalVotes = $question.find('.JS-totalVotes');
 
     if (data.answered) {
       $upvoteButton.addClass('voted disabled');
@@ -123,7 +136,7 @@ function roomComponent(socket) {
       $upvoteButton.html('Sua Pergunta');
       $totalVotes.addClass('voted disabled');
     } else if ($.inArray(HANDLER, data.voteList) > -1) {
-      $upvoteButton.addClass('voted question-vote');
+      $upvoteButton.addClass('voted question-vote JS-voteBtnEnabled');
       $upvoteButton.removeAttr('disabled');
       $upvoteButton.html('Apoiada por você');
       $upvoteButton.removeClass('disabled');
@@ -132,16 +145,16 @@ function roomComponent(socket) {
     } else {
       $upvoteButton.removeClass('voted disabled');
       $upvoteButton.removeAttr('disabled');
-      $upvoteButton.addClass('question-vote');
+      $upvoteButton.addClass('question-vote JS-voteBtnEnabled');
       $upvoteButton.html('Votar Nesta Pergunta');
       $totalVotes.removeClass('voted');
     }
   }
 
   function evaluateSocketMessage(message) {
-    const listIsEmpty = elements.$listEmpty.length;
+    const questionlistIsEmpty = elements.$questionlistEmpty.length;
     const messagesListIsEmpty = elements.$messagesListEmpty.length;
-    if (listIsEmpty) elements.$listEmpty.remove();
+    if (questionlistIsEmpty) elements.$questionlistEmpty.remove();
     if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
     if (message.data === 'closed') {
@@ -165,7 +178,7 @@ function roomComponent(socket) {
         if (questionExists) {
           $existingQuestion.replaceWith(data.html);
         } else {
-          elements.$list.append(data.html);
+          elements.$questionList.append(data.html);
 
           if (!isScrolledToBottomQuestion() && !isCurrentUserQuestion) {
             newQuestionsCount += 1;
@@ -174,9 +187,9 @@ function roomComponent(socket) {
         }
 
         const $question = $(`[data-question-id=${data.id}]`);
-        const $answeredForm = $question.find('.js-answered-form');
-        const $priorityForm = $question.find('.js-priority-form');
-        const $answerTimeForm = $question.find('.js-answer-time-form');
+        const $answeredForm = $question.find('.JS-answeredForm');
+        const $priorityForm = $question.find('.JS-priorityForm');
+        const $answerTimeForm = $question.find('.JS-answerTimeForm');
 
         if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
           $answeredForm.removeClass('hide');
@@ -192,7 +205,7 @@ function roomComponent(socket) {
 
         updateVoteBlock($question, data);
         bindEventsHandlers.onAdd($question);
-        elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
+        elements.$questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
     } else if (data.chat) {
         if (isScrolledToBottomChat()) {
           elements.$messagesList.append(data.html);
@@ -205,7 +218,7 @@ function roomComponent(socket) {
   }
 
   function mixItUpInit() {
-    elements.$list.mixItUp({
+    elements.$questionList.mixItUp({
       selectors: {
         target: '.question-card',
       },
@@ -383,7 +396,7 @@ function roomComponent(socket) {
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.share);
       elements.$formQuestion.on('submit', events.sendQuestion);
-      elements.$list.on('scroll', events.questionsScroll);
+      elements.$questionList.on('scroll', events.questionsScroll);
       elements.$wrapperQuestion.on('scroll', events.questionsScroll);
       elements.$readMoreQuestion.on('click', events.readMoreClickQuestion);
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);
@@ -398,13 +411,13 @@ function roomComponent(socket) {
     },
 
     onAdd($question) {
-      const $voteBtnEnabled = $question.find('.question-vote');
-      const $shareListOpenBtn = $question.find('.question-block__share-button');
-      const $shareListCloseBtn = $question.find('.share-list__close');
-      const $shareListItemLink = $question.find('.question-block__share-list .item__link');
-      const $answeredCheckbox = $question.find('.js-answered-checkbox');
-      const $priorityCheckbox = $question.find('.js-priority-checkbox');
-      const $answerTimeCheckbox = $question.find('.js-answer-time-checkbox');
+      const $voteBtnEnabled = $question.find('.JS-voteBtnEnabled');
+      const $shareListOpenBtn = $question.find('.JS-shareListOpenBtn');
+      const $shareListCloseBtn = $question.find('.JS-shareListCloseBtn');
+      const $shareListItemLink = $question.find('.JS-shareListItemLink');
+      const $answeredCheckbox = $question.find('.JS-answeredCheckbox');
+      const $priorityCheckbox = $question.find('.JS-priorityCheckbox');
+      const $answerTimeCheckbox = $question.find('.JS-answerTimeCheckbox');
 
       $voteBtnEnabled.on('click', events.vote);
       $shareListOpenBtn.on('click', events.openShareList);

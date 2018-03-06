@@ -3,6 +3,7 @@ import roomComponent from '../components/room';
 import tabsNavComponent from '../components/tabs-nav';
 import characterCounterComponent from '../components/character-counter';
 import onlineUsersComponent from '../components/online-users';
+import roomVideosComponent from '../components/room-videos';
 
 
 const onlineUsers = onlineUsersComponent();
@@ -21,3 +22,5 @@ window.onbeforeunload = () => {
 };
 
 characterCounterComponent();
+
+roomVideosComponent();

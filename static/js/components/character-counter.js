@@ -1,8 +1,8 @@
 function characterCounterComponent() {
   const elements = {
     $input: [],
-    $wrapper: $('[class$="__character-counter"]'),
-    $actualLength: $('.character-counter__actual-length'),
+    $wrapper: $('.JS-character-counter'),
+    $actualLength: $('.JS-characterCounterAtualLength'),
   };
 
   function setElements() {

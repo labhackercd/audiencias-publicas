@@ -1,6 +1,7 @@
 .question-card {
   background-color: #fff;
-  margin: 0.5rem;
+  color: #000;
+  margin: 0.5rem 0;
   position: relative;
   max-width: 960px;
   display: flex;
@@ -18,13 +19,13 @@
     align-items: center;
 
     > .username {
-      font-weight: 700;
+      font-weight: $font-weight-bold;
       margin-right: 0.2em;
     }
     > .timestamp {
       font-size: 0.7em;
       color: hsl(0, 0%, 40%);
-      font-weight: 400;
+      font-weight: $font-weight-regular;
     }
     > .answered {
       position: absolute;
@@ -33,7 +34,7 @@
       color: $color-primary-xxlight;
       font-size: 0.7em;
       text-transform: uppercase;
-      font-weight: 600;
+      font-weight: $font-weight-semi-bold;
       padding-right: 0.75rem;
       padding-left: 0.75rem;
       border-radius: 1rem;

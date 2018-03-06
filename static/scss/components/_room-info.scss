@@ -1,0 +1,67 @@
+.room-info {
+  transition: max-height 0.4s ease;
+  position: relative;
+  padding-bottom: 2rem;
+
+  &.-large {
+    max-height: 14rem;
+    overflow-y: hidden;
+    &:not(.-open)::before {
+      content: '';
+      background: linear-gradient(transparent, $color-edem-dark);
+      position: absolute;
+      top: calc(100% - 5rem);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    &.-open {
+      max-height: 99rem;
+    }
+    > .more {
+      display: block;
+    }
+  }
+
+
+  > * + * {
+    margin-top: 1rem;
+  }
+
+  > p {
+    color: rgba(#fff, 0.6);
+  }
+
+  > .list {
+    > * + * {
+      margin-top: 1rem;
+    }
+    > li > a {
+      color: $color-edem-action;
+      text-decoration: underline;
+      text-decoration-skip: ink;
+      cursor: pointer;
+      &:hover { opacity: 0.8; }
+    }
+  }
+
+  > .more {
+    background-color: transparent;
+    text-decoration: underline;
+    display: none;
+    color: $color-edem-action;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1rem;
+    height: 1rem;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    &:hover { opacity: 0.8; }
+  }
+
+}

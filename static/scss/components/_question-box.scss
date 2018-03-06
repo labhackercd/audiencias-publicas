@@ -1,0 +1,88 @@
+.question-box {
+  position: fixed;
+  bottom: .5rem;
+  width: 100%;
+  background-color: $color-edem-action;
+  padding: 1rem;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  width: 488px;
+  transform: translateY(100vh);
+  transition: all .25s ease-out;
+
+  @include bp-mediumdown {
+    flex-direction: column;
+    height: 112px;
+  }
+
+  &.-active {
+    transform: translateY(0);
+  }
+
+  .-closed,
+  .-unauthenticated {
+    background-color: $color-primary-light;
+    color: #fff;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .input {
+    color: #000;
+    font-size: 1rem;
+    resize: none;
+    height: 110px;
+    width: 100%;
+    margin-top: 1rem;
+    padding: .5rem;
+  }
+
+  .actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+
+    @include bp-mediumdown {
+      display: flex;
+      flex: 1;
+      margin: 0;
+      width: 100%;
+    }
+
+    > * + * {
+      margin-left: 1rem;
+    }
+  }
+
+  .counter {
+    @include bp-mediumdown {
+      align-items: center;
+      flex: .5 1 0;
+      justify-content: center;
+    }
+  }
+
+  .button {
+    font-size: 1rem;
+    color: $color-edem-action;
+    padding: .5rem 1.5rem;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.40);
+    border-radius: 2px;
+    background-color: rgba(#FFF, .9);
+
+    &:hover {
+      background-color: #FFF;
+    }
+
+    @include bp-mediumdown {
+      background-color: $color-accent-secondary;
+      display: block;
+      flex: 1 1 0;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

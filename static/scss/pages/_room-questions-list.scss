@@ -2,7 +2,7 @@
   margin-top: 0;
 }
 
-.room-questions {
+.bem-room-questions {
   background: linear-gradient(45deg, $color-primary-xlight 0%, $color-primary 100%);
   display: flex;
   flex-direction: column;
@@ -22,7 +22,7 @@
         color: $color-primary-xlight;
         text-transform: uppercase;
         font-size: 0.8em;
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         background-color: #fff;
         padding: 0.75rem 1rem;
         border-radius: 2rem;
@@ -37,11 +37,11 @@
 
 .room-questions__title {
   align-items: center;
-  color: $color-white;
+  color: #fff;
   display: flex;
   flex-shrink: 0;
   font-size: 1.4em;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   line-height: 1em;
   text-transform: uppercase;
 
@@ -57,7 +57,7 @@
 
 .room-questions__video-info {
   font-size: 1em;
-  font-weight: 400;
+  font-weight: $font-weight-regular;
   margin-bottom: 0;
 
   .video-info__icon {
@@ -66,7 +66,7 @@
   }
 
   .video-info__text {
-    color: $color-white;
+    color: #fff;
     text-transform: uppercase;
   }
 }
@@ -83,7 +83,7 @@
     margin: .5em 0;
     padding: 0 .5em;
 
-    @include breakpoint(large up) {
+    @include bp-largeup {
       width: 50%;
     }
   }
@@ -91,14 +91,14 @@
   .item__vote-block {
     align-items: center;
     background-color: $color-primary-xxlight;
-    color: $color-white;
+    color: #fff;
     display: flex;
     flex-basis: 6em;
     flex-direction: column;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
     justify-content: center;
 
-    @include breakpoint(large up) {
+    @include bp-largeup {
       font-size: 115%;
     }
   }
@@ -108,14 +108,14 @@
   }
 
   .item__question-block {
-    background-color: $color-white;
+    background-color: #fff;
     display: flex;
     flex: 1;
     flex-direction: column;
     overflow: hidden;
     padding: .75em;
 
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       margin: 0;
     }
   }
@@ -124,7 +124,7 @@
 .room-questions__empty {
   color: $color-primary-xlight;
   font-size: 1.5em;
-  font-weight: 600;
+  font-weight: $font-weight-semi-bold;
   margin-top: 1em;
   text-align: center;
 }

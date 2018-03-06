@@ -1,20 +1,20 @@
 function sendFormHelper($wrapper) {
   const elements = {
     $wrapper,
-    $form: $wrapper.find('form[class^="send-form--"]'),
-    $formInput: $wrapper.find('.send-form__input'),
-    $formBtn: $wrapper.find('.actions__button'),
+    $form: $wrapper.find('form[class^="form"]'),
+    $formInput: $wrapper.find('.input'),
+    $formBtn: $wrapper.find('.button'),
   };
 
   function createClosedFormEl() {
     const closedFormEl = document.createElement('div');
     const closedFormSpanEl = document.createElement('span');
 
-    closedFormEl.className = 'send-form--closed';
+    closedFormEl.className = 'form -closed';
     closedFormSpanEl.innerHTML = 'Audiência encerrada para participações.';
     closedFormEl.appendChild(closedFormSpanEl);
 
-    if(!elements.$wrapper[0].querySelector(".send-form--closed")){
+    if(!elements.$wrapper[0].querySelector(".form -closed")){
       elements.$wrapper[0].appendChild(closedFormEl);
     }
   }

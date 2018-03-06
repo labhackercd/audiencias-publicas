@@ -1,5 +1,5 @@
-<button class="vote-block__upvote-button {{extra_classes}} {{question_vote}}" {{extra_attributes}}>{{upvote_content}}</button>
-<div class="vote-block__total-votes {% if room.youtube_status == 2 %}closed{% endif %} {{extra_classes}}">
+<button class="vote-block__upvote-button JS-voteBtn {{extra_classes}} {{question_vote}}" {{extra_attributes}}>{{upvote_content}}</button>
+<div class="vote-block__total-votes JS-totalVotes {% if room.youtube_status == 2 %}closed{% endif %} {{extra_classes}}">
     <span class="vote-block__total-count">{{total_votes}}</span>
     <i class="vote-block__vote-icon icon icon-chevron-up"></i>
 </div>
