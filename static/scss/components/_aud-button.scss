@@ -18,5 +18,13 @@
 
   &.-mail { @include icon('envelope'); }
   &.-add { @include icon('plus'); }
+  &.-remove {
+    @include icon('trash');
+    background-color: $color-edem-red;
+
+    &:hover {
+      background-color: mix( $color-edem-red, #fff, 80%);
+    }
+  }
 
 }

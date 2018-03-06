@@ -64,7 +64,7 @@
       z-index: 2;
 
       &:hover, &:active {
-        > .thumbnail {
+        > .thumbnail, > .add {
           opacity: 1;
         }
       }
@@ -72,25 +72,55 @@
       &.-current {
         cursor: default;
 
-        >.thumbnail {
+        > .thumbnail, > .add {
           opacity: 1;
           outline-color: $color-edem-highlight;
         }
       }
 
-      > .thumbnail {
+      > .thumbnail, > .add {
         width: 8rem;
         height: 5rem;
         margin-bottom: 0.5rem;
         opacity: 0.5;
-        outline: $outline-width solid transparent;
+        outline-width: $outline-width;
         transition: opacity 0.3s $swift-out,
                     outline 0.2s ease;
+      }
+
+      > .thumbnail {
+        outline-style: solid;
+        outline-color: transparent
+      }
+
+      > .add {
+        outline-style: dashed;
+        outline-color: #fff;
+        font-weight: 700;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        font-size: $font-size-deci;
       }
 
       > .title {
         font-size: $font-size-deci;
         line-height: 1rem;
+      }
+
+      > .aud-button {
+        position: absolute;
+        right: 0.25rem;
+        top: 0.25rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        line-height: 0.5rem;
+        padding: 0;
+
+        &::before {
+          margin: 0;
+        }
       }
     }
   }

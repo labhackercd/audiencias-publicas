@@ -3,11 +3,18 @@
   display: flex;
   flex-direction: column;
 
+  > .aud-button {
+    flex: 0 0 auto;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+  }
+
   > .chat {
     position: relative;
     margin: 0;
     overflow: auto;
     background-color: #fff;
+    flex: 1 1 0;
 
     @include bp-mediumdown {
       margin: 0 0 80px;
