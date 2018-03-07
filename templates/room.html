@@ -183,26 +183,45 @@
       <div class="room-info JS-readMoreLess">
         <h3>Conteúdo complementar</h3>
         <ul class="list">
+          {% for attachment in object.attachments.all %}
           <li>
-            <a href="" target="_blank">Matéria da SECOM sobre transporte público</a>
-            <button class="aud-button -remove"></button>
+            <a href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a>
+            <a href="{% url 'delete_attachment' attachment.id %}" class="aud-button -remove"></a>
           </li>
-          <li>
-            <a href="" target="_blank">Vídeo da campanha de transporte público do estado de São Paulo</a>
-            <button class="aud-button -remove"></button>
-          </li>
+          {% endfor %}
         </ul>
         <button class="more JS-toggleDiv">Ver mais</button>
       </div>
 
       <button class="aud-button -add JS-openModal" data-modal-target="addContent">Adicionar Conteúdo Complementar</button>
 
+
+          <header>
+            <h4 class="title">Adicionar Conteúdo Complementar</h4>
+            <button type="button" class="close JS-closeModal"></button>
+          </header>
+
+          <form method="POST" action="{% url 'create_attachment' object.id %}">
+            {% csrf_token %}
+            <label for="title">Título:</label>
+            <input type="text" name="title" required>
+
+            <label for="link">Link:</label>
+            <input type="text" name="url" required>
+
+            <button type="submit" name="button">Enviar</button>
+          </form>
+
+        </div>
+      </div>
+
+
     </main>
 
     <aside class="room-chat JS-wrapperChat">
       <h2 class="room-h2">Bate-papo</h2>
 
-      <button class="aud-button -mail">Enviar email para os participantes</button>
+      <button class="aud-button -mail JS-openModal" data-modal-target="sendEmail">Enviar email para os participantes</button>
 
       <div class="messageswrapper">
         <div class="messages JS-messages">
@@ -251,7 +270,9 @@
 
   </div>
 
-  {% include 'modals/notification_participants.html' with modal_id='addContent' title='Envie um email para os participantes' %}
+  {% include 'modals/notification_participants.html' with modal_id='sendEmail' title='Envie um email para os participantes' %}
+
+  {% include 'modals/add_content.html' with modal_id='addContent' title='Adicione links complementares' %}
 
 {% endblock %}
 
