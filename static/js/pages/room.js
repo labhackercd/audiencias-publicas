@@ -4,6 +4,7 @@ import tabsNavComponent from '../components/tabs-nav';
 import characterCounterComponent from '../components/character-counter';
 import onlineUsersComponent from '../components/online-users';
 import roomVideosComponent from '../components/room-videos';
+import modalsComponent from '../components/modals';
 
 
 const onlineUsers = onlineUsersComponent();
@@ -24,3 +25,5 @@ window.onbeforeunload = () => {
 characterCounterComponent();
 
 roomVideosComponent();
+
+modalsComponent();

@@ -1,10 +1,10 @@
-<div class="aud-modal" id="{{ modal_id }}">
+<div class="aud-modal JS-modal" data-modal-id="{{ modal_id }}">
 
   <div class="modal">
 
     <header>
       <h4 class="title">{{ title }}</h4>
-      <button type="button" class="close"></button>
+      <button type="button" class="close JS-closeModal"></button>
     </header>
 
     {% block content %}
