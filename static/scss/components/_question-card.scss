@@ -1,11 +1,16 @@
 .question-card {
   background-color: #fff;
   color: #000;
-  margin: 0.5rem 0;
+  margin: 0;
+  margin-bottom: 0.5rem;
   position: relative;
   max-width: 960px;
   display: flex;
   flex-direction: column;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   > .meta {
     margin-top: 1rem;
