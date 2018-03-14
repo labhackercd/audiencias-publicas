@@ -124,6 +124,7 @@
     padding: .5em 1em;
     color: #000;
     line-height: 1.2;
+    font-weight: 300;
 
     &:nth-child(odd) {
       background-color: hsl(0, 0, 95%);
@@ -135,14 +136,13 @@
     }
 
     > .timestamp {
-      font-size: .6em;
+      font-size: .6rem;
       word-break: break-word;
-      opacity: .8;
+      color: hsl(0, 0, 50%);
     }
 
     > .text {
       font-size: .8rem;
-      font-weight: normal;
     }
   }
 }
