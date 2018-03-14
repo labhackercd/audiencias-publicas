@@ -1,16 +1,11 @@
 .question-button {
-  position: relative;
-  left: 50%;
-  bottom: 1rem;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
   padding: 1rem 2rem;
-  width: 200px;
-  flex-basis: 60px;
-  margin-top: 1.5rem;
+  width: 12.5rem;
+  min-height: 3.75rem;
+  align-self: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   font-size: 1rem;
   background-color: $color-edem-action;
   color: #FFF;

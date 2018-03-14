@@ -1,5 +1,6 @@
 .question-box {
   position: fixed;
+  z-index: 9;
   bottom: .5rem;
   width: 100%;
   background-color: $color-edem-action;
@@ -62,6 +63,14 @@
       flex: .5 1 0;
       justify-content: center;
     }
+  }
+
+  .close {
+    @include icon('times');
+    color: #FFF;
+    font-size: 1rem;
+    margin-left: 1rem;
+    background: none;
   }
 
   .button {
