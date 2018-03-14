@@ -122,25 +122,27 @@
 
   .messages .item {
     padding: .5em 1em;
-    color: hsl(0, 0, 45%);
+    color: #000;
+    line-height: 1.2;
 
     &:nth-child(odd) {
-      background-color: hsl(0, 0, 98%);
+      background-color: hsl(0, 0, 95%);
     }
 
     > .username {
       font-weight: 700;
-    }
-
-    > .colon {
-      margin-left: -.2em;
+      font-size: .8rem;
     }
 
     > .timestamp {
-      color: hsl(0, 0, 45%);
-      font-size: .7em;
-      font-weight: 400;
+      font-size: .6em;
       word-break: break-word;
+      opacity: .8;
+    }
+
+    > .text {
+      font-size: .8rem;
+      font-weight: normal;
     }
   }
 }
