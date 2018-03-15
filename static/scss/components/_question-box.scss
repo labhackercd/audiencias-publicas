@@ -1,14 +1,15 @@
 .question-box {
-  position: fixed;
+  position: absolute;
   z-index: 9;
-  bottom: .5rem;
+  bottom: 0.5rem;
   width: 100%;
   background-color: $color-edem-action;
   padding: 1rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
-  width: 488px;
-  transform: translateY(100vh);
-  transition: all .25s ease-out;
+  width: 100%;
+  visibility: hidden;
+  transform: translateY(calc(100% + 0.5rem));
+  transition: all 0.3s $swift-out;
 
   @include bp-mediumdown {
     flex-direction: column;
@@ -16,6 +17,7 @@
   }
 
   &.-active {
+    visibility: visible;
     transform: translateY(0);
   }
 
