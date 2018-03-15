@@ -1,6 +1,11 @@
 /* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
 import sendFormHelper from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
+import characterCounterComponent from './character-counter';
+
+const characterCounter = characterCounterComponent();
+characterCounter.setElements();
+
 
 function roomComponent(socket) {
   const elements = {

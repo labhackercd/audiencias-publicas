@@ -21,6 +21,6 @@ window.onbeforeunload = () => {
   roomSocket.close();
 };
 
-characterCounterComponent();
+characterCounterComponent().init();
 
 roomVideosComponent();

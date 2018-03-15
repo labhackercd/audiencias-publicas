@@ -16,10 +16,16 @@ function characterCounterComponent() {
     elements.$input.on('input', updateCounter);
   }
 
-  (function init() {
+  function init() {
     setElements();
     bindEventsHandlers();
-  }());
+  }
+
+  return {
+    updateCounter,
+    init,
+    setElements,
+  }
 }
 
 export default characterCounterComponent;
