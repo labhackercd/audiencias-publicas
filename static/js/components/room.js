@@ -324,6 +324,7 @@ function roomComponent(socket) {
 
       elements.$formInputQuestion.val('').focus();
       animateToBottomQuestion();
+      closeQuestionForm();
 
       return true;
     },
