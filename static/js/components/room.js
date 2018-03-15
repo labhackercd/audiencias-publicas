@@ -15,7 +15,8 @@ function roomComponent(socket) {
     $shareListItemLink: $('.JS-shareListItemLink'),
     $readMoreQuestion: $('.JS-readMoreQuestion'),
     $formQuestion: $('.JS-formQuestion'),
-    $closeQuestion: $('.JS-closeQuestion'),
+    $openQuestionForm: $('.JS-openQuestionForm'),
+    $closeQuestionForm: $('.JS-closeQuestionForm'),
     $formInputQuestion: $('.JS-formInputQuestion'),
     $answeredCheckbox: $('.JS-answeredCheckbox'),
     $wrapperChat: $('.JS-wrapperChat'),
@@ -47,6 +48,15 @@ function roomComponent(socket) {
   let newQuestionsCount = 0;
   let sendQuestionForm = {};
   let sendChatForm = {};
+
+  function closeQuestionForm() {
+    elements.$formQuestion.removeClass('-active');
+  }
+
+  function openQuestionForm() {
+    elements.$formQuestion.addClass('-active');
+    elements.$formInputQuestion.focus();
+  }
 
   function animateToBottomQuestion() {
     if (window.matchMedia('(min-width: 1024px)').matches) {
@@ -93,18 +103,6 @@ function roomComponent(socket) {
     elements.$readMoreQuestion.removeClass('more');
     elements.$readMoreQuestion.addClass('more -visible');
   }
-
-  document.querySelectorAll('.JS-readMoreQuestion').forEach(function(openQuestion) {
-    openQuestion.onclick = function() {
-      elements.$formQuestion.addClass('-active');
-    }
-  })
-
-  document.querySelectorAll('.JS-closeQuestion').forEach(function(openQuestion) {
-    openQuestion.onclick = function() {
-      elements.$formQuestion.removeClass('-active');
-    }
-  })
 
   function showReadMoreChat() {
     elements.$readMoreChat.removeClass('more');
@@ -267,6 +265,15 @@ function roomComponent(socket) {
       }
     },
 
+    closeQuestionFormClick() {
+      closeQuestionForm();
+    },
+
+    openQuestionFormClick() {
+      openQuestionForm();
+      characterCounter.updateCounter();
+    },
+
     openShareList() {
       const $shareList = $(this).siblings('.question-block__share-list');
       $shareList.removeClass('question-block__share-list');
@@ -397,6 +404,8 @@ function roomComponent(socket) {
       elements.$shareListItemLink.on('click', events.share);
       elements.$formQuestion.on('submit', events.sendQuestion);
       elements.$questionList.on('scroll', events.questionsScroll);
+      elements.$openQuestionForm.on('click', events.openQuestionFormClick);
+      elements.$closeQuestionForm.on('click', events.closeQuestionFormClick);
       elements.$wrapperQuestion.on('scroll', events.questionsScroll);
       elements.$readMoreQuestion.on('click', events.readMoreClickQuestion);
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);

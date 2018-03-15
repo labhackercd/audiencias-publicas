@@ -83,7 +83,7 @@
           {% endif %}
         </ul>
       </div>
-      <button class="question-button JS-readMoreQuestion">Enviar Pegunta</button>
+      <button class="question-button JS-openQuestionForm">Enviar Pegunta</button>
       {% if object.youtube_status != 2 and user.is_authenticated %}
         <form class="question-box JS-formQuestion" id="questionform">
           <div class="header">
@@ -92,14 +92,11 @@
               <span class="actual-length JS-characterCounterAtualLength">0</span>
               /
               <span class="max-length">300</span>
-              <button type="button" class="close JS-closeQuestion"></button>
             </div>
+            <button type="button" class="close JS-closeQuestionForm" title="Cancelar pergunta">Cancelar pergunta</button>
           </div>
           <textarea class="input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
           <div class="actions">
-            <!-- <button class="button JS-closeQuestion">
-              <span class="text">Cancelar</span>
-            </button> -->
             <button class="button submit">
               <span class="text">Enviar</span>
             </button>
