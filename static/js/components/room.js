@@ -59,19 +59,12 @@ function roomComponent(socket) {
   }
 
   function animateToBottomQuestion() {
-    if (window.matchMedia('(min-width: 1024px)').matches) {
-      elements.$questionList.animate({
+      elements.$wrapperQuestion.animate({
         scrollTop: vars.listScrollHeight(),
       }, 600, () => {
         isCurrentUserQuestion = false;
       });
-    } else {
-      elements.$wrapperQuestion.animate({
-        scrollTop: vars.wrapperScrollHeight(),
-      }, 600, () => {
-        isCurrentUserQuestion = false;
-      });
-    }
+
   }
 
   function animateToBottomChat() {
@@ -404,7 +397,6 @@ function roomComponent(socket) {
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.share);
       elements.$formQuestion.on('submit', events.sendQuestion);
-      elements.$questionList.on('scroll', events.questionsScroll);
       elements.$openQuestionForm.on('click', events.openQuestionFormClick);
       elements.$closeQuestionForm.on('click', events.closeQuestionFormClick);
       elements.$wrapperQuestion.on('scroll', events.questionsScroll);
