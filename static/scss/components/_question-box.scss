@@ -28,6 +28,24 @@
   .header {
     display: flex;
     justify-content: space-between;
+
+    > .counter {
+      margin-left: auto;
+
+      &.-limitreached {
+        animation: limitCharacter 0.15s ease-in-out 2;
+
+        > .actual-length {
+          color: mix(#fff, $color-edem-red, 25%);
+          font-weight: 700;
+        }
+      }
+
+      > .actual-length {
+        display: inline-flex;
+        transition: color 0.2s;
+      }
+    }
   }
 
   .input {
@@ -54,14 +72,6 @@
 
     > * + * {
       margin-left: 1rem;
-    }
-  }
-
-  .counter {
-    @include bp-mediumdown {
-      align-items: center;
-      flex: .5 1 0;
-      justify-content: center;
     }
   }
 

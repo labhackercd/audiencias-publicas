@@ -14,3 +14,10 @@ $translate-transition: transform .3s $swift-out;
   50% { opacity: 1; }
   100% { opacity: 0; }
 }
+
+@keyframes limitCharacter {
+  0% {transform: translateX(0)}
+  33.3% {transform: translateX(3px)}
+  66.6% {transform: translateX(-6px)}
+  100% {transform: translateX(0px)}
+}
