@@ -1,6 +1,11 @@
 /* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
 import sendFormHelper from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
+import characterCounterComponent from './character-counter';
+
+const characterCounter = characterCounterComponent();
+characterCounter.setElements();
+
 
 function roomComponent(socket) {
   const elements = {
@@ -15,6 +20,8 @@ function roomComponent(socket) {
     $shareListItemLink: $('.JS-shareListItemLink'),
     $readMoreQuestion: $('.JS-readMoreQuestion'),
     $formQuestion: $('.JS-formQuestion'),
+    $openQuestionForm: $('.JS-openQuestionForm'),
+    $closeQuestionForm: $('.JS-closeQuestionForm'),
     $formInputQuestion: $('.JS-formInputQuestion'),
     $answeredCheckbox: $('.JS-answeredCheckbox'),
     $wrapperChat: $('.JS-wrapperChat'),
@@ -47,20 +54,22 @@ function roomComponent(socket) {
   let sendQuestionForm = {};
   let sendChatForm = {};
 
+  function closeQuestionForm() {
+    elements.$formQuestion.removeClass('-active');
+  }
+
+  function openQuestionForm() {
+    elements.$formQuestion.addClass('-active');
+    elements.$formInputQuestion.focus();
+  }
+
   function animateToBottomQuestion() {
-    if (window.matchMedia('(min-width: 1024px)').matches) {
-      elements.$questionList.animate({
+      elements.$wrapperQuestion.animate({
         scrollTop: vars.listScrollHeight(),
       }, 600, () => {
         isCurrentUserQuestion = false;
       });
-    } else {
-      elements.$wrapperQuestion.animate({
-        scrollTop: vars.wrapperScrollHeight(),
-      }, 600, () => {
-        isCurrentUserQuestion = false;
-      });
-    }
+
   }
 
   function animateToBottomChat() {
@@ -254,6 +263,15 @@ function roomComponent(socket) {
       }
     },
 
+    closeQuestionFormClick() {
+      closeQuestionForm();
+    },
+
+    openQuestionFormClick() {
+      openQuestionForm();
+      characterCounter.updateCounter();
+    },
+
     openShareList() {
       const $shareList = $(this).siblings('.question-block__share-list');
       $shareList.removeClass('question-block__share-list');
@@ -304,6 +322,7 @@ function roomComponent(socket) {
 
       elements.$formInputQuestion.val('').focus();
       animateToBottomQuestion();
+      closeQuestionForm();
 
       return true;
     },
@@ -383,7 +402,8 @@ function roomComponent(socket) {
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.share);
       elements.$formQuestion.on('submit', events.sendQuestion);
-      elements.$questionList.on('scroll', events.questionsScroll);
+      elements.$openQuestionForm.on('click', events.openQuestionFormClick);
+      elements.$closeQuestionForm.on('click', events.closeQuestionFormClick);
       elements.$wrapperQuestion.on('scroll', events.questionsScroll);
       elements.$readMoreQuestion.on('click', events.readMoreClickQuestion);
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);

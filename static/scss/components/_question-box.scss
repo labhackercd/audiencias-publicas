@@ -1,0 +1,112 @@
+.question-box {
+  position: absolute;
+  z-index: 9;
+  bottom: 0.5rem;
+  width: 100%;
+  background-color: $color-edem-action;
+  padding: 1rem;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  width: 100%;
+  visibility: hidden;
+  transform: translateY(calc(100% + 0.5rem));
+  transition: all 0.3s $swift-out;
+
+  @include bp-mediumdown {
+    flex-direction: column;
+    height: 112px;
+  }
+
+  &.-active {
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .-closed,
+  .-unauthenticated {
+    background-color: $color-primary-light;
+    color: #fff;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    > .counter {
+      margin-left: auto;
+
+      &.-limitreached {
+        animation: limitCharacter 0.15s ease-in-out 2;
+
+        > .actual-length {
+          color: mix(#fff, $color-edem-red, 25%);
+          font-weight: 700;
+        }
+      }
+
+      > .actual-length {
+        display: inline-flex;
+        transition: color 0.2s;
+      }
+    }
+  }
+
+  .input {
+    color: #000;
+    font-size: 1rem;
+    resize: none;
+    height: 110px;
+    width: 100%;
+    margin-top: 1rem;
+    padding: .5rem;
+  }
+
+  .actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+
+    @include bp-mediumdown {
+      display: flex;
+      flex: 1;
+      margin: 0;
+      width: 100%;
+    }
+
+    > * + * {
+      margin-left: 1rem;
+    }
+  }
+
+  .close {
+    @include icon('times');
+    color: #FFF;
+    font-size: 1rem;
+    margin-left: 1rem;
+    width: 1rem;
+    height: 1rem;
+    overflow: hidden;
+    background: none;
+  }
+
+  .button {
+    font-size: 1rem;
+    color: $color-edem-action;
+    padding: .5rem 1.5rem;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,0.40);
+    border-radius: 2px;
+    background-color: rgba(#FFF, .9);
+
+    &:hover {
+      background-color: #FFF;
+    }
+
+    @include bp-mediumdown {
+      background-color: $color-accent-secondary;
+      display: block;
+      flex: 1 1 0;
+      height: auto;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}

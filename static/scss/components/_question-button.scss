@@ -1,0 +1,23 @@
+.question-button {
+  cursor: pointer;
+  padding: 1rem 2rem;
+  width: 12.5rem;
+  min-height: 3.75rem;
+  align-self: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background-color: $color-edem-action;
+  color: #FFF;
+  font-weight: bold;
+  transition: all .15s ease-in-out;
+  user-select: none;
+
+  &:hover {
+    background-color: lighten($color-edem-action, 5%);
+  }
+
+  &-visible {
+    transform: translateY(-100vh);
+  }
+}
