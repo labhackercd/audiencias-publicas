@@ -194,28 +194,6 @@
       </div>
 
       <button class="aud-button -add JS-openModal" data-modal-target="addContent">Adicionar Conteúdo Complementar</button>
-
-
-          <header>
-            <h4 class="title">Adicionar Conteúdo Complementar</h4>
-            <button type="button" class="close JS-closeModal"></button>
-          </header>
-
-          <form method="POST" action="{% url 'create_attachment' object.id %}">
-            {% csrf_token %}
-            <label for="title">Título:</label>
-            <input type="text" name="title" required>
-
-            <label for="link">Link:</label>
-            <input type="text" name="url" required>
-
-            <button type="submit" name="button">Enviar</button>
-          </form>
-
-        </div>
-      </div>
-
-
     </main>
 
     <aside class="room-chat JS-wrapperChat">
@@ -266,13 +244,10 @@
       </div>
     </aside>
 
+    {% include 'modals/notification_participants.html' with modal_id='sendEmail' title='Envie um email para os participantes' %}
 
-
+    {% include 'modals/add_content.html' with modal_id='addContent' title='Adicione links complementares' %}
   </div>
-
-  {% include 'modals/notification_participants.html' with modal_id='sendEmail' title='Envie um email para os participantes' %}
-
-  {% include 'modals/add_content.html' with modal_id='addContent' title='Adicione links complementares' %}
 
 {% endblock %}
 
