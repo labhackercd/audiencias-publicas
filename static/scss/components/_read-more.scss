@@ -1,0 +1,20 @@
+.read-more {
+  position: absolute;
+  bottom: 0;
+  visibility: hidden;
+  width: 100%;
+  height: 2rem;
+  background-color: rgba($color-primary-xxlight, .85);
+  transform: translateY(100%);
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.-visible {
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
