@@ -34,6 +34,10 @@ function roomComponent(socket) {
     $videoFrame: $('.JS-videoFrame'),
     $priorityCheckbox: $('.JS-priorityCheckbox'),
     $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
+    $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
+    $addLinks: $('.JS-addLinks'),
+    $linkModal: $('.JS-linkModal'),
+    $closeModal: $('.JS-closeModal'),
   };
 
   const vars = {
@@ -48,6 +52,18 @@ function roomComponent(socket) {
     messagesScrollTop: () => elements.$messages[0].scrollTop,
     messagesListHeight: () => elements.$messagesList[0].offsetHeight,
   };
+
+  document.querySelectorAll('.JS-addLinks').forEach(function(openLinkModal) {
+    openLinkModal.onclick = function() {
+      elements.$linkModal.addClass('-open');
+    }
+  });
+
+  document.querySelectorAll('.JS-closeModal').forEach(function(openLinkModal) {
+    openLinkModal.onclick = function() {
+      elements.$linkModal.removeClass('-open');
+    }
+  });
 
   let isCurrentUserQuestion = false;
   let newQuestionsCount = 0;

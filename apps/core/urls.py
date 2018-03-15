@@ -3,7 +3,8 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              QuestionDetail, index, redirect_to_room,
                              RoomReportView, set_answer_time, set_answered,
-                             set_priotity, WidgetVideoDetail)
+                             set_priotity, WidgetVideoDetail, create_attachment,
+                             delete_attachment)
 from apps.core.api import (api_root, MessageListAPI, QuestionListAPI,
                            VoteListAPI, UserListAPI, RoomAPI, RoomListAPI)
 
@@ -19,6 +20,10 @@ urlpatterns = [
     url(r'^pergunta/(?P<question_id>\d+)/prioritaria/?$', set_priotity,
         name='set_question_priotity'),
     url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
+    url(r'^sala/(?P<room_id>\d+)/anexo/adicionar/?$', create_attachment,
+        name='create_attachment'),
+    url(r'^anexo/(?P<attachment_id>\d+)/deletar/?$', delete_attachment,
+        name='delete_attachment'),
     url(r'^sala/(?P<pk>\d+)/relatorio/?$', RoomReportView.as_view(),
         name='room_report'),
     url(r'^sala/reuniao/(?P<cod_reunion>\d+)/?$', redirect_to_room,

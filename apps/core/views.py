@@ -3,7 +3,7 @@ from django.http import (Http404, HttpResponseForbidden,
                          HttpResponseBadRequest, HttpResponse)
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
-from apps.core.models import Question, Room
+from apps.core.models import Question, Room, RoomAttachment
 from apps.core.utils import encrypt
 from apps.core.templatetags.video_utils import belongs_to_group
 from django.views.generic import DetailView, ListView
@@ -15,6 +15,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
 import json
 from itertools import chain
+from apps.core.forms import RoomAttachmentForm
 
 
 def redirect_to_room(request, cod_reunion):
@@ -181,6 +182,36 @@ def index(request):
             reunion_status__in=[2, 3],
             youtube_id__isnull=True)).order_by('date'),
     ))
+
+
+def create_attachment(request, room_id):
+    if request.user.is_authenticated() and request.method == 'POST':
+        room = Room.objects.get(pk=room_id)
+        group_name = room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            form = RoomAttachmentForm(request.POST)
+            if form.is_valid():
+                attachment = form.save(commit=False)
+                attachment.room = room
+                attachment.save()
+            return redirect('video_room', pk=room.id)
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+
+def delete_attachment(request, attachment_id):
+    if request.user.is_authenticated():
+        attachment = RoomAttachment.objects.get(pk=attachment_id)
+        group_name = attachment.room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            attachment.delete()
+            return redirect('video_room', pk=attachment.room.id)
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
 
 
 class VideoDetail(DetailView):
