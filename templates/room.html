@@ -201,26 +201,24 @@
 
       <button class="aud-button -mail JS-openModal" data-modal-target="sendEmail">Enviar email para os participantes</button>
 
-      <div class="messageswrapper">
-        <div class="messages JS-messages">
+      <div class="messages">
 
-          <ul class="list JS-messagesList" id="chat">
-            {% if object.messages.all %}
-              {% for message in object.messages.all %}
-                {% include "includes/chat_message.html" with message=message %}
-              {% endfor %}
-            {% elif object.youtube_status != 2 %}
-              <div class="list -empty JS-messagesListEmpty">
-                <img src="{% static 'img/chat-bubble.svg' %}" data-fallback="{% static 'img/chat-bubble.png' %}">
-                <p>Nenhuma mensagem foi enviada ainda. Seja o primeiro!</p>
-              </div>
-            {% endif %}
-          </ul>
-
-        </div>
-
+        <ul class="list JS-messagesList" id="chat">
+          {% if object.messages.all %}
+            {% for message in object.messages.all %}
+              {% include "includes/chat_message.html" with message=message %}
+            {% endfor %}
+          {% elif object.youtube_status != 2 %}
+            <div class="list -empty JS-messagesListEmpty">
+              <img src="{% static 'img/chat-bubble.svg' %}" data-fallback="{% static 'img/chat-bubble.png' %}">
+              <p>Nenhuma mensagem foi enviada ainda. Seja o primeiro!</p>
+            </div>
+          {% endif %}
+        </ul>
         <button class="read-more JS-readMoreChat">Há novas mensagens disponíveis abaixo</button>
+
       </div>
+
       <div class="controls">
         {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="form JS-formChat" id="chatform">

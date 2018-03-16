@@ -76,70 +76,66 @@
     background-color: $color-edem-action;
   }
 
-  > .messageswrapper {
+  > .messages {
     position: relative;
     display: flex;
     flex: 1 1 0;
+  }
 
-    > .messages {
-      overflow-y: auto;
-      background-color: #fff;
-      flex-grow: 1;
+  .messages > .list {
+    overflow-y: auto;
+    background-color: #fff;
+    flex-grow: 1;
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: 0;
+    word-break: break-word;
+  }
+
+  .messages > .list > .empty {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 2em;
+    flex-direction: column;
+
+    > img {
+      margin-bottom: 1em;
     }
 
-    .messages > .list {
-      list-style: none;
-      margin-bottom: 0;
-      margin-left: 0;
-      word-break: break-word;
-    }
-
-    .messages > .list > .empty {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-      margin: 2em;
-      flex-direction: column;
-
-      > img {
-        margin-bottom: 1em;
-      }
-
-      p {
-        color: hsl(0, 0, 84%);
-        font-size: 1em;
-        line-height: 1.2;
-        text-align: center;
-      }
-    }
-
-    .messages .item {
-      padding: .5em 1em;
-      color: #000;
+    p {
+      color: hsl(0, 0, 84%);
+      font-size: 1em;
       line-height: 1.2;
-      font-weight: 300;
-
-      &:nth-child(odd) {
-        background-color: hsl(0, 0, 95%);
-      }
-
-      > .username {
-        font-weight: 700;
-        font-size: .8rem;
-      }
-
-      > .timestamp {
-        font-size: .6rem;
-        word-break: break-word;
-        color: hsl(0, 0, 50%);
-      }
-
-      > .text {
-        font-size: .8rem;
-      }
+      text-align: center;
     }
   }
 
+  .messages .item {
+    padding: .5em 1em;
+    color: #000;
+    line-height: 1.2;
+    font-weight: 300;
+
+    &:nth-child(odd) {
+      background-color: hsl(0, 0, 95%);
+    }
+
+    > .username {
+      font-weight: 700;
+      font-size: .8rem;
+    }
+
+    > .timestamp {
+      font-size: .6rem;
+      word-break: break-word;
+      color: hsl(0, 0, 50%);
+    }
+
+    > .text {
+      font-size: .8rem;
+    }
+  }
 }
 
 [class^="form"] {

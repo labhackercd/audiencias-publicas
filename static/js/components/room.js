@@ -47,10 +47,9 @@ function roomComponent(socket) {
     wrapperHeight: () => elements.$wrapperQuestion[0].offsetHeight,
     wrapperScrollHeight: () => elements.$wrapperQuestion[0].scrollHeight,
     wrapperScrollTop: () => elements.$wrapperQuestion[0].scrollTop,
-    messagesHeight: () => elements.$messages[0].offsetHeight,
-    messagesScrollHeight: () => elements.$messages[0].scrollHeight,
-    messagesScrollTop: () => elements.$messages[0].scrollTop,
     messagesListHeight: () => elements.$messagesList[0].offsetHeight,
+    messagesListScrollHeight: () => elements.$messagesList[0].scrollHeight,
+    messagesListScrollTop: () => elements.$messagesList[0].scrollTop,
   };
 
   document.querySelectorAll('.JS-addLinks').forEach(function(openLinkModal) {
@@ -89,7 +88,7 @@ function roomComponent(socket) {
   }
 
   function animateToBottomChat() {
-    elements.$messages.animate({ scrollTop: vars.messagesListHeight() }, 'slow');
+    elements.$messagesList.animate({ scrollTop: vars.messagesListScrollHeight() }, 'slow');
   }
 
   function isScrolledToBottomQuestion() {
@@ -97,11 +96,11 @@ function roomComponent(socket) {
   }
 
   function isScrolledToBottomChat() {
-    return vars.messagesScrollTop() === (vars.messagesScrollHeight() - vars.messagesHeight());
+    return vars.messagesListScrollTop() === (vars.messagesListScrollHeight() - vars.messagesListHeight());
   }
 
   function scrollToBottomChat() {
-    elements.$messages[0].scrollTop = vars.messagesListHeight();
+    elements.$messagesList[0].scrollTop = vars.messagesListScrollHeight();
   }
 
   function showReadMoreQuestion() {
@@ -258,7 +257,7 @@ function roomComponent(socket) {
       }
     },
 
-    messagesScroll() {
+    messagesListScroll() {
       if (isScrolledToBottomChat()) hideReadMoreChat();
     },
 
@@ -420,7 +419,7 @@ function roomComponent(socket) {
       elements.$questionList.on('scroll', events.questionsScroll);
       elements.$readMoreQuestion.on('click', events.readMoreClickQuestion);
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);
-      elements.$messages.on('scroll', events.messagesScroll);
+      elements.$messagesList.on('scroll', events.messagesListScroll);
       elements.$readMoreChat.on('click', events.readMoreClickChat);
       elements.$formChat.on('submit', events.sendMessage);
       setInterval(function() {
