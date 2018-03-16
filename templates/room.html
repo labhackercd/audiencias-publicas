@@ -83,11 +83,10 @@
           </ul>
           <button class="read-more JS-readMoreQuestion"></button>
         </div>
-        <button class="question-button JS-openQuestionForm">Enviar Pegunta</button>
+        <button class="question-button JS-openQuestionForm">Fazer uma pergunta</button>
         {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="question-box JS-formQuestion" id="questionform">
             <div class="header">
-              <label class="label">Enviar pergunta:</label>
               <div class="counter JS-character-counter">
                 <span class="actual-length JS-characterCounterAtualLength">0</span>
                 /
@@ -95,10 +94,10 @@
               </div>
               <button type="button" class="close JS-closeQuestionForm" title="Cancelar pergunta">Cancelar pergunta</button>
             </div>
-            <textarea class="input JS-formInputQuestion" id="question" name="question" placeholder="Envie uma pergunta" maxlength="300" autocomplete="off" required=""></textarea>
+            <textarea class="input JS-formInputQuestion" id="question" name="question" placeholder="Digite aqui sua pergunta" maxlength="300" autocomplete="off" required=""></textarea>
             <div class="actions">
               <button class="button submit">
-                <span class="text">Enviar</span>
+                <span class="text">Enviar pergunta</span>
               </button>
             </div>
           </form>
