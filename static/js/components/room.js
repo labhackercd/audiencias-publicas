@@ -80,7 +80,7 @@ function roomComponent(socket) {
   }
 
   function animateToBottomQuestion() {
-      elements.$wrapperQuestion.animate({
+      elements.$questionList.animate({
         scrollTop: vars.listScrollHeight(),
       }, 600, () => {
         isCurrentUserQuestion = false;
@@ -93,10 +93,7 @@ function roomComponent(socket) {
   }
 
   function isScrolledToBottomQuestion() {
-    if (window.matchMedia('(min-width: 1024px)').matches) {
-      return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
-    }
-    return vars.wrapperScrollTop() === (vars.wrapperScrollHeight() - vars.wrapperHeight());
+    return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
   }
 
   function isScrolledToBottomChat() {
@@ -420,7 +417,7 @@ function roomComponent(socket) {
       elements.$formQuestion.on('submit', events.sendQuestion);
       elements.$openQuestionForm.on('click', events.openQuestionFormClick);
       elements.$closeQuestionForm.on('click', events.closeQuestionFormClick);
-      elements.$wrapperQuestion.on('scroll', events.questionsScroll);
+      elements.$questionList.on('scroll', events.questionsScroll);
       elements.$readMoreQuestion.on('click', events.readMoreClickQuestion);
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);
       elements.$messages.on('scroll', events.messagesScroll);

@@ -4,45 +4,15 @@
   flex: 1;
   flex-direction: column;
   width: 100%;
-
-  @include bp-mediumdown {
-    margin-bottom: 112px;
-    overflow-y: auto;
-    padding: 0 1em;
-  }
-
-  @include bp-largedown {
-    flex: 1 0 auto;
-  }
-
-  @include bp-largeonly {
-    overflow-y: hidden;
-    padding: 0;
-  }
-
-  @include bp-largeup {
-    position: relative;
-  }
-
-  .questions {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
+  overflow: hidden;
 }
 
 .questions__list {
   list-style: none;
   margin: 0;
-  padding: 0 .5em;
-  width: calc(100% + 1em);
-  margin-left: -.5em;
-
-  @include bp-largeup {
-    flex: 1 auto;
-    height: 100%;
-    overflow-y: auto;
-  }
+  flex: 1 auto;
+  height: 100%;
+  overflow-y: auto;
 
   .list__item {
     display: flex;
