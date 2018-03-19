@@ -3,8 +3,9 @@
 {% block content %}
   <form  method="POST" action="{% url 'participants_notification' object.id %}">
     {% csrf_token %}
-    <button type="button" class="cancel">Cancelar</button>
-    <button type="submit" class="submit">Sim</button>
+    <h4>Deseja mesmo remover este conteúdo complementar?</h4>
+    <button type="button" class="button JS-closeModal">Não</button>
+    <a href="" class="button -negative JS-dialogAction">Sim</a>
   </form>
 {% endblock content %}
 
