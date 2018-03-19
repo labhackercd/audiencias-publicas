@@ -24,6 +24,11 @@ function modalsComponent() {
       const $modal = getModalById(modalTarget);
 
       $modal.addClass('-open');
+
+      if ($(this).attr('data-dialog-action')) {
+        const dialogAction = $(this).data('dialogAction');
+        $modal.find('.JS-dialogAction').attr('href', dialogAction);
+      }
     },
 
     closeModal() {
