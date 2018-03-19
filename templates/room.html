@@ -139,28 +139,28 @@
         </div>
 
         <ul class="extras">
-          <li class="extravideo">
+          <li class="extravideo JS-openModal" data-modal-target="addVideo">
             <div class="add">Adicionar Vídeo</div>
           </li>
           <li class="extravideo JS-selectVideo -current">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Parte 1</span>
-            <button class="aud-button -icon -remove"></button>
+            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo1"></button>
           </li>
           <li class="extravideo JS-selectVideo">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Parte 2</span>
-            <button class="aud-button -icon -remove"></button>
+            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo2"></button>
           </li>
           <li class="extravideo JS-selectVideo">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Comentários do Deputado Chico Anysio</span>
-            <button class="aud-button -icon -remove"></button>
+            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo3"></button>
           </li>
           <li class="extravideo JS-selectVideo">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Comentários do Deputado Chico Anysio</span>
-            <button class="aud-button -icon -remove"></button>
+            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo4"></button>
           </li>
         </ul>
       </div>
@@ -185,7 +185,7 @@
           {% for attachment in object.attachments.all %}
           <li>
             <a class="link" href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a>
-            <a class="aud-button -icon -remove" href="{% url 'delete_attachment' attachment.id %}"></a>
+            <a class="aud-button -icon -remove JS-openModal" data-modal-target="addContentDialog" data-dialog-action="{% url 'delete_attachment' attachment.id %}"></a>
           </li>
           {% endfor %}
         </ul>
