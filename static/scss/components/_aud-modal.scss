@@ -54,6 +54,7 @@
 
       > .close {
         @include icon('times');
+        margin-left: auto;
         color: rgba(#000, .5);
         font-size: 1rem;
       }

@@ -3,7 +3,9 @@
   <div class="modal">
 
     <header>
-      <h4 class="title">{{ title }}</h4>
+      {% if title %}
+        <h4 class="title">{{ title }}</h4>
+      {% endif %}
       <button type="button" class="close JS-closeModal"></button>
     </header>
 
