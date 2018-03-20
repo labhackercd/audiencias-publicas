@@ -31,6 +31,18 @@
     > .time {
       color: $color-edem-main;
       font-weight: $font-weight-bold;
+
+      &.-halfway {
+        color: $color-countdown-halfway;
+      }
+
+      &.-finishing {
+        color: $color-countdown-finishing;
+      }
+
+      &.-done {
+        color: inherit;
+      }
     }
 
     > .link {

@@ -5,6 +5,7 @@ import characterCounterComponent from '../components/character-counter';
 import onlineUsersComponent from '../components/online-users';
 import roomVideosComponent from '../components/room-videos';
 import modalsComponent from '../components/modals';
+import countdownTimerComponent from '../components/countdown-timer';
 
 
 const onlineUsers = onlineUsersComponent();
@@ -27,3 +28,5 @@ characterCounterComponent().init();
 roomVideosComponent();
 
 modalsComponent();
+
+countdownTimerComponent();
