@@ -18,6 +18,7 @@ function roomComponent(socket) {
     $shareListOpenBtn: $('.JS-shareListOpenBtn'),
     $shareListCloseBtn: $('.JS-shareListCloseBtn'),
     $shareListItemLink: $('.JS-shareListItemLink'),
+    $shareRoom: $('.JS-shareRoom'),
     $readMoreQuestion: $('.JS-readMoreQuestion'),
     $formQuestion: $('.JS-formQuestion'),
     $openQuestionForm: $('.JS-openQuestionForm'),
@@ -296,7 +297,14 @@ function roomComponent(socket) {
       $shareList.addClass('question-block__share-list');
     },
 
-    share() {
+    shareRoom(event) {
+      event.preventDefault();
+
+      const windowOptions = 'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes';
+      window.open($(this).attr('href'), 'popUpWindow', windowOptions);
+    },
+
+    shareQuestion() {
       const socialNetwork = $(this).data('social');
 
       const $question = $(this).closest('.question-card');
@@ -412,7 +420,8 @@ function roomComponent(socket) {
       elements.$voteBtnEnabled.on('click', events.vote);
       elements.$shareListOpenBtn.on('click', events.openShareList);
       elements.$shareListCloseBtn.on('click', events.closeShareList);
-      elements.$shareListItemLink.on('click', events.share);
+      elements.$shareListItemLink.on('click', events.shareQuestion);
+      elements.$shareRoom.on('click', events.shareRoom);
       elements.$formQuestion.on('submit', events.sendQuestion);
       elements.$openQuestionForm.on('click', events.openQuestionFormClick);
       elements.$closeQuestionForm.on('click', events.closeQuestionFormClick);
