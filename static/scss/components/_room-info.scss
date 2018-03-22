@@ -38,22 +38,19 @@
     > * + * {
       margin-top: 1rem;
     }
-    > li > a {
-      color: $color-edem-action;
-      text-decoration: underline;
-      text-decoration-skip: ink;
-      cursor: pointer;
-      &:hover { opacity: 0.8; }
-    }
+    > li {
+      display: flex;
 
-    > li > .aud-button {
-      text-decoration: none;
-      padding: .25rem .5rem;
+      > .link {
+        color: $color-edem-action;
+        text-decoration: underline;
+        text-decoration-skip: ink;
+        cursor: pointer;
+        &:hover { opacity: 0.8; }
+      }
 
-      &::before {
-        margin: 0;
-        color: #FFF;
-        font-size: .8rem;
+      > .aud-button {
+        margin-left: 0.5rem;
       }
     }
   }

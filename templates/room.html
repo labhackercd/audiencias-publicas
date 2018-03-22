@@ -145,22 +145,22 @@
           <li class="extravideo JS-selectVideo -current">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Parte 1</span>
-            <button class="aud-button -remove"></button>
+            <button class="aud-button -icon -remove"></button>
           </li>
           <li class="extravideo JS-selectVideo">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Parte 2</span>
-            <button class="aud-button -remove"></button>
+            <button class="aud-button -icon -remove"></button>
           </li>
           <li class="extravideo JS-selectVideo">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Comentários do Deputado Chico Anysio</span>
-            <button class="aud-button -remove"></button>
+            <button class="aud-button -icon -remove"></button>
           </li>
           <li class="extravideo JS-selectVideo">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Comentários do Deputado Chico Anysio</span>
-            <button class="aud-button -remove"></button>
+            <button class="aud-button -icon -remove"></button>
           </li>
         </ul>
       </div>
@@ -184,8 +184,8 @@
         <ul class="list">
           {% for attachment in object.attachments.all %}
           <li>
-            <a href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a>
-            <a href="{% url 'delete_attachment' attachment.id %}" class="aud-button -remove"></a>
+            <a class="link" href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a>
+            <a class="aud-button -icon -remove" href="{% url 'delete_attachment' attachment.id %}"></a>
           </li>
           {% endfor %}
         </ul>

@@ -1,12 +1,14 @@
 .aud-button {
   background-color: $color-edem-main;
+  color: #fff;
   padding: 0.5rem;
   box-shadow: 0 2px 4px 0 rgba(#000, 0.2);
+  text-decoration: none;
   border-radius: 2px;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
-    background-color: mix( $color-edem-main, $color-edem-action, 60%);
+    background-color: mix($color-edem-main, $color-edem-action, 60%);
   }
 
   &:active {
@@ -16,7 +18,19 @@
 
   &::before { margin-right: 0.5rem; }
 
+  &.-icon {
+    display: flex;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 14px;
+    padding: 0;
+    text-align: center;
+    &::before { margin-right: 0; }
+  }
+
   &.-mail { @include icon('envelope'); }
+  &.-discussion { @include icon('comments'); }
   &.-add { @include icon('plus'); }
   &.-remove {
     @include icon('trash');
