@@ -22,9 +22,22 @@
     }
   }
 
-  > .controls > .info {
+  > .controls > * + * {
+    margin-top: 0.5rem;
+  }
+
+  > .controls > .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > .aud-button {
+      margin-left: 0.5rem;
+    }
+  }
+
+  > .controls > .info, > .controls > .wrapper > .info {
     display: block;
-    margin-top: .5em;
     font-size: 0.8em;
     color: hsl(0, 0%, 40%);
 
