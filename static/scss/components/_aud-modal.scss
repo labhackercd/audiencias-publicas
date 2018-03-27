@@ -54,6 +54,7 @@
 
       > .close {
         @include icon('times');
+        margin-left: auto;
         color: rgba(#000, .5);
         font-size: 1rem;
       }
@@ -84,7 +85,7 @@
         min-height: 8rem;
       }
 
-      button {
+      .button {
         background-color: $color-edem-action;
         color: #FFF;
         padding: 1rem 2.5rem;
@@ -92,7 +93,11 @@
         margin-right: 1rem;
         font-size: 1rem;
         letter-spacing: .5px;
-        font-weight: normal;
+        font-weight: $font-weight-bold;
+
+        &.-negative {
+          background-color: $color-edem-red;
+        }
 
         &:last-child {
           margin-right: 0;
