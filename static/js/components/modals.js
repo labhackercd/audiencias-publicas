@@ -31,7 +31,7 @@ function modalsComponent() {
       }
     },
 
-    closeModal() {
+    closeModal(event) {
       if ($(event.target).is('.JS-modal') || $(event.target).is('.JS-closeModal')) {
         $(this).removeClass('-open')
       }
