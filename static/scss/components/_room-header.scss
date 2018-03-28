@@ -8,6 +8,10 @@
   flex-shrink: 0;
   margin-bottom: 1rem;
 
+  @include bp-largedown {
+    display: none;
+  }
+
   > .logo {
     height: $logo-height;
     background-color: $logo-background;
