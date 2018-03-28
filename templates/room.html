@@ -23,12 +23,10 @@
 
 {% block main %}
   <nav class="room-tabs">
-    <div class="list">
-      <a data-tab-index="0">Vídeo</a>
-      <a data-tab-index="1">Bate-Papo</a>
-      <a data-tab-index="2">Perguntas</a>
-      <div class="marker" data-tab-index="0"></div>
-    </div>
+    <a class="JS-setTab" data-tab-index="0">Vídeo</a>
+    <a class="JS-setTab" data-tab-index="1">Bate-Papo</a>
+    <a class="JS-setTab" data-tab-index="2">Perguntas</a>
+    <div class="marker JS-marker" data-tab-index="0"></div>
   </nav>
 
   <header class="room-header JS-room-wrapper" data-room-id="{{object.id}}">
@@ -62,7 +60,7 @@
     </div>
   </header>
 
-  <div class="room-container">
+  <div class="room-container JS-room" data-tab-index="0">
 
     <aside class="room-questions JS-wrapperQuestion">
       <h2 class="room-h2">Perguntas</h2>
