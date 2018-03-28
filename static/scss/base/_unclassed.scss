@@ -1,21 +1,15 @@
 html {
   height: 100%;
-  overflow: hidden;
   background-color: $color-edem-dark;
   color: #fff;
   box-sizing: border-box;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
 body {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  min-height: 100%;
+  overflow: hidden;
 }
 
 table {
@@ -36,4 +30,10 @@ button {
 hr {
   border-top: 1px solid rgba(#000, 0.4);
   border-bottom: 1px solid $color-edem-main;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }

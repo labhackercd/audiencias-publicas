@@ -1,6 +1,10 @@
 .room-container {
   $gutter: 1.5rem;
   display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  min-height: 0; // Needed for Firefox
   padding-left: $gutter / 2;
   padding-right: $gutter / 2;
 
@@ -23,7 +27,6 @@
   > .room-chat {
     padding-left: $gutter / 2;
     padding-right: $gutter / 2;
-    flex: 1;
   }
 
 }

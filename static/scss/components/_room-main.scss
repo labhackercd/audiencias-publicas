@@ -1,5 +1,6 @@
 .room-main {
   overflow-y: auto;
+  flex-grow: 1;
   padding-bottom: 2rem;
   position: relative;
   &::before {

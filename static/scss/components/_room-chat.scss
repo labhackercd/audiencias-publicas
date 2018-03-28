@@ -1,6 +1,6 @@
 .room-chat {
-  position: relative;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
 
   > .aud-button {
@@ -79,13 +79,19 @@
   > .messages {
     position: relative;
     display: flex;
-    flex: 1 1 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+    min-height: 0; // Needed for Firefox
   }
 
   .messages > .list {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
     overflow-y: auto;
     background-color: #fff;
-    flex-grow: 1;
     list-style: none;
     margin-bottom: 0;
     margin-left: 0;

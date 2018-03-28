@@ -1,18 +1,21 @@
 .questions-section {
   position: relative;
   display: flex;
-  flex: 1;
   flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
   width: 100%;
   overflow: hidden;
 }
 
 .questions__list {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-direction: column;
   list-style: none;
-  margin: 0;
-  flex: 1 auto;
-  height: 100%;
   overflow-y: auto;
+  margin: 0;
 
   .list__item {
     display: flex;
