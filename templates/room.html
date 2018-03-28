@@ -276,6 +276,7 @@
   <script type="text/javascript" src="{% static 'js/components/share-buttons.js' %}"></script>
   {% compress js %}
     <script type="text/es6" src="{% static 'js/components/tabs-nav.js' %}"></script>
+    {# XXX for the love of god Ericonan, why is this being called here? #}
   {% endcompress %}
 {% endblock extra_js %}
 
