@@ -169,12 +169,6 @@
   }
 }
 
-[class^="form"] {
-  @include bp-mediumdown {
-    transform: translateY(100%);
-  }
-}
-
 .chat__floating-header {
   background-color: $color-primary-xlight;
   transform: none;

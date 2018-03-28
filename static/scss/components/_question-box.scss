@@ -10,11 +10,6 @@
   transform: translateY(calc(100% + 0.5rem));
   transition: all 0.3s $swift-out;
 
-  @include bp-mediumdown {
-    flex-direction: column;
-    height: 112px;
-  }
-
   &.-active {
     visibility: visible;
     transform: translateY(0);
@@ -64,13 +59,6 @@
     display: flex;
     justify-content: center;
 
-    @include bp-mediumdown {
-      display: flex;
-      flex: 1;
-      margin: 0;
-      width: 100%;
-    }
-
     > * + * {
       margin-left: 1rem;
     }
@@ -97,15 +85,6 @@
 
     &:hover {
       background-color: #FFF;
-    }
-
-    @include bp-mediumdown {
-      background-color: $color-accent-secondary;
-      display: block;
-      flex: 1 1 0;
-      height: auto;
-      margin: 0;
-      padding: 0;
     }
   }
 }
