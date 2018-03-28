@@ -8,6 +8,25 @@
   padding-left: $gutter / 2;
   padding-right: $gutter / 2;
 
+  @include bp-largedown {
+    padding-left: 0;
+    padding-right: 0;
+    width: 300vw;
+    transition: transform 0.4s $swift-out;
+
+    &[data-tab-index="0"] {
+      transform: translateX(0);
+    }
+
+    &[data-tab-index="1"] {
+      transform: translateX(-100vw);
+    }
+
+    &[data-tab-index="2"] {
+      transform: translateX(-200vw);
+    }
+  }
+
   > .room-questions {
     min-width: 27.5rem;
     max-width: 32rem;
@@ -27,6 +46,12 @@
   > .room-chat {
     padding-left: $gutter / 2;
     padding-right: $gutter / 2;
+
+    @include bp-largedown {
+      flex: 1 0 100%;
+      min-width: 100vw;
+      max-width: 100vw;
+    }
   }
 
 }

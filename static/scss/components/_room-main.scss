@@ -19,6 +19,10 @@
       height: 0.75rem;
     }
   }
+
+  @include bp-largedown {
+    order: 1;
+  }
   > * + * {
     margin-top: 2rem;
   }

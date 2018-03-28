@@ -3,10 +3,18 @@
   flex-grow: 1;
   flex-direction: column;
 
+  @include bp-largedown {
+    order: 2;
+  }
+
   > .aud-button {
     flex: 0 0 auto;
     margin-bottom: 1rem;
     align-self: flex-start;
+
+    @include bp-largedown {
+      margin-top: 1rem;
+    }
   }
 
   > .controls {
