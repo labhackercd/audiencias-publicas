@@ -9,7 +9,18 @@
   margin-bottom: 1rem;
 
   @include bp-largedown {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 0;
+    height: 2.5rem;
+    background-color: $logo-background;
+    margin: 0;
+    padding: 0 0.75rem;
+
+    > .room-title {
+      display: none;
+    }
   }
 
   > .logo {
@@ -18,7 +29,14 @@
     padding: 1rem;
     padding-right: $logo-height;
     position: relative;
-    > img { height: 3rem; }
+
+    @include bp-largedown {
+      display: flex;
+      height: auto;
+      padding: 0;
+      padding-right: 0.5rem;
+    }
+
     &::after {
       content: '';
       width: $logo-height;
@@ -27,8 +45,28 @@
       position: absolute;
       right: 0;
       top: 0;
+
+      @include bp-largedown {
+        display: none;
+      }
     }
     &:hover { opacity: 0.8; }
+
+    > img {
+      height: 3rem;
+
+      @include bp-largedown {
+        height: 1.5rem;
+      }
+    }
+  }
+
+  > .social-share {
+    display: none;
+
+    @include bp-largedown {
+      display: flex;
+    }
   }
 
 }

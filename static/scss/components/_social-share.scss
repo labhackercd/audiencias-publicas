@@ -1,4 +1,9 @@
 .social-share {
+  display: flex;
+
+  > * + * {
+    margin-left: 0.5rem;
+  }
 
   > .button {
     $bottom: 2px;
@@ -9,7 +14,6 @@
     border-radius: 2px;
       box-shadow: 0 -#{$bottom} 0 0 rgba(#000, 0.2) inset,
                   0 0 0 2rem transparent inset;
-    margin-right: 0.5rem;
     cursor: pointer;
     background-color: $color-edem-action;
 
@@ -39,7 +43,7 @@
         display: none;
       }
     }
-    
+
     &.-facebook,
     &.-twitter,
     &.-whatsapp {

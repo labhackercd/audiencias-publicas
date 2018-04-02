@@ -22,18 +22,18 @@
 {% endblock navigation %}
 
 {% block main %}
-  <nav class="room-tabs">
-    <a class="JS-setTab" data-tab-index="0">Vídeo</a>
-    <a class="JS-setTab" data-tab-index="1">Bate-Papo</a>
-    <a class="JS-setTab" data-tab-index="2">Perguntas</a>
-    <div class="marker JS-marker" data-tab-index="0"></div>
-  </nav>
 
   <header class="room-header JS-room-wrapper" data-room-id="{{object.id}}">
 
     <a class="logo" href="{% url 'home' %}">
       <img src="{% static 'img/logo-audiencias-h.svg' %}">
     </a>
+
+    <span class="social-share">
+      <a class="button -facebook JS-share-lnk" data-social="facebook" title="Facebook"></a>
+      <a class="button -twitter JS-share-lnk" data-social="twitter" title="Twitter"></a>
+      <a class="button -whatsapp JS-share-lnk" data-social="whatsapp" title="Whatsapp"></a>
+    </span>
 
     <div class="room-title">
       <h1 class="title">
@@ -59,6 +59,13 @@
       </div>
     </div>
   </header>
+
+  <nav class="room-tabs">
+    <a class="JS-setTab" data-tab-index="0">Vídeo</a>
+    <a class="JS-setTab" data-tab-index="1">Bate-Papo</a>
+    <a class="JS-setTab" data-tab-index="2">Perguntas</a>
+    <div class="marker JS-marker" data-tab-index="0"></div>
+  </nav>
 
   <div class="room-container JS-room" data-tab-index="0">
 
