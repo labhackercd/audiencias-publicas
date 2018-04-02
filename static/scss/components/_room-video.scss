@@ -1,5 +1,28 @@
 .room-video {
 
+  > .room-title {
+    padding: 0;
+    margin-bottom: 0.75rem;
+
+    @include bp-largeup {
+      display: none;
+    }
+
+    > .title {
+      font-size: $font-size-deci;
+      line-height: 1.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    > .info {
+      font-size: $font-size-centi;
+      line-height: 1em;
+      text-transform: none;
+    }
+
+  }
+
   > .heightwrapper{
     position: relative;
     max-height: calc(100vh - 12rem);
@@ -107,6 +130,10 @@
       > .title {
         font-size: $font-size-deci;
         line-height: 1rem;
+
+        @include bp-largedown {
+          font-size: $font-size-deci
+        }
       }
 
       > .aud-button {

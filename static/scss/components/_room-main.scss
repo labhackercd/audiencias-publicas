@@ -23,7 +23,12 @@
   @include bp-largedown {
     order: 1;
   }
+
   > * + * {
     margin-top: 2rem;
+
+    @include bp-largedown {
+      margin-top: 1rem;
+    }
   }
 }

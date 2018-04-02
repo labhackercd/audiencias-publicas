@@ -3,6 +3,10 @@
   position: relative;
   padding-bottom: 2rem;
 
+  @include bp-largedown {
+    padding-bottom: 1rem;
+  }
+
   &.-large {
     max-height: 14rem;
     overflow-y: hidden;
@@ -28,10 +32,25 @@
 
   > * + * {
     margin-top: 1rem;
+
+    @include bp-largedown {
+      margin-top: 0.5rem;
+    }
+  }
+
+  > h3 {
+    @include bp-largedown {
+      font-size: $font-size-deci;
+    }
   }
 
   > p {
     color: rgba(#fff, 0.6);
+
+    @include bp-largedown {
+      font-size: $font-size-deci;
+      line-height: 1.2em;
+    }
   }
 
   > .list {

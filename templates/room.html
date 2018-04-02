@@ -120,6 +120,23 @@
     <main class="room-main">
 
       <div class="room-video JS-videoFrame">
+        <div class="room-title">
+          <h1 class="title">
+            {% if object.reunion_theme %}
+              {{object.reunion_theme}}
+            {% else %}
+              {% if object.is_joint %}
+                {{object.title_reunion}}
+              {% else %}
+                {{object.legislative_body_alias}}
+              {% endif %}
+            {% endif %}
+          </h1>
+          <div class="info">
+            <span>{{object.reunion_type}}</span>
+            <span>{{object.date}}</span>
+          </div>
+        </div>
         <div class="heightwrapper">
           {% include "includes/room_video.html" with object=object %}
           <div class="info">
