@@ -237,13 +237,26 @@
         {% endif %}
 
         <p class="info">O bate-papo se encerrará em <span class="time JS-countdownTimer"><span class="JS-countdownMinutes">00</span>:<span class="JS-countdownSeconds">00</span></span>.</p>
-        <p class="info">Continue esta conversa <a href="#" class="link">aqui</a>.</p>
+
+        <button class="aud-button -discussion JS-openModal" data-modal-target="addDiscussionLink">Adicionar link para continuar a discussão</button>
+
+        <div class="wrapper">
+          <p class="info">Continue esta conversa <a href="#" class="link">aqui</a>.</p>
+          <button class="aud-button -icon -edit JS-openModal" data-modal-target="editDiscussionLink"></button>
+          <button class="aud-button -icon -remove JS-openModal" data-modal-target="addDiscussionLinkDialog" data-dialog-action="AcaoLinkDiscussão"></button>
+        </div>
       </div>
     </aside>
 
     {% include 'modals/notification_participants.html' with modal_id='sendEmail' title='Envie um email para os participantes' %}
 
     {% include 'modals/add_content.html' with modal_id='addContent' title='Adicione links complementares' %}
+
+    {% include 'modals/add_discussion_link.html' with modal_id='addDiscussionLink' title='Adicione um link para continuar a discussão fora do Audiências Interativas' %}
+
+    {% include 'modals/add_discussion_link.html' with modal_id='editDiscussionLink' title='Altere o link que dá continuidade à discussão fora do Audiências Interativas' %}
+
+    {% include 'modals/add_discussion_link_dialog.html' with modal_id='addDiscussionLinkDialog' %}
 
     {% include 'modals/add_content_dialog.html' with modal_id='addContentDialog' %}
 

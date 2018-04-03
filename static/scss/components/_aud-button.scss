@@ -30,7 +30,7 @@
   }
 
   &.-mail { @include icon('envelope'); }
-  &.-discussion { @include icon('comments'); }
+  &.-discussion { @include icon('link'); }
   &.-add { @include icon('plus'); }
   &.-remove {
     @include icon('trash');
@@ -38,6 +38,15 @@
 
     &:hover {
       background-color: mix( $color-edem-red, #fff, 80%);
+    }
+  }
+
+  &.-edit {
+    @include icon('pencil');
+    background-color: $color-edem-action;
+
+    &:hover {
+      background-color: lighten($color-edem-action, 5%);
     }
   }
 }
