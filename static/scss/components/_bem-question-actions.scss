@@ -119,6 +119,12 @@
     }
   }
 
+  .share-button__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   [class^="question-block__share-list"] {
     align-items: center;
     background-color: #fff;

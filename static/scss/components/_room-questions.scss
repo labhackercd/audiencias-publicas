@@ -6,6 +6,12 @@
 
   > p {
     margin-bottom: 0.5rem;
+
+    @include bp-largedown {
+      margin-top: 0.75rem;
+      font-size: $font-size-centi;
+      line-height: 1.2em;
+    }
   }
 
   > .link {

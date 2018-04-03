@@ -3,8 +3,10 @@
 <li class="question-card" data-question-priority="{{question.is_priority}}" data-question-id="{{question.id}}" data-question-votes="{{question.votes_count}}" data-question-answered="{{question.answered}}" data-question-author="{{author}}" data-question-path="{% url 'question_detail' pk=question.id %}">
 
   <div class="meta">
-    <span class="username">{{question.user}}</span>
-    <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
+    <div class="wrapper">
+      <span class="username">{{question.user}}</span>
+      <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
+    </div>
     {% if page == "room" and question.answer_time %}
       <a class="answered" onclick="player.seekTo({{question.answer_time}});">Assistir resposta</a>
     {% endif %}
@@ -13,9 +15,9 @@
   <p class="question">{{question.question}}</p>
 
   <div class="question-actions">
-  
+
     {% with user|belongs_to_group:question.room.legislative_body_initials as hide %}
-    
+
       {% if question.room.youtube_status != 0 %}
         <form class="action -checkbox JS-answeredForm {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_answered' question_id=question.pk %}">
           <input class="checkbox JS-answeredCheckbox" type="checkbox" name="answered" {% if question.answered %}checked{% endif %}>
@@ -39,7 +41,7 @@
 
     {% endwith %}
 
-  
+
     {% if page == "room" %}
     <span class="question-block__share-button JS-shareListOpenBtn" role="button" title="Compartilhar esta pergunta">
       <i class="share-button__icon icon icon-share-alt"></i>
@@ -70,11 +72,11 @@
     </ul>
 
     {% endif %}
-    
+
     <div class="item__vote-block {% if page == 'question-panel' %}-viewonly{% endif %}">
-      {% vote_action question user.username %} 
+      {% vote_action question user.username %}
     </div>
-  
+
 
   </div>
 
