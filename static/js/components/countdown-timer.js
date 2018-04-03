@@ -42,7 +42,7 @@ function countdownTimerComponent() {
     var timeinterval = setInterval(updateClock, 1000);
   }
 
-  var totalTimeInSeconds = 5.1   * 60;
+  var totalTimeInSeconds = 15 * 60;
 
   (function init() {
     initializeClock(totalTimeInSeconds);
