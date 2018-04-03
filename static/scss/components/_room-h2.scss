@@ -15,4 +15,8 @@
     z-index: -1;
     background-color: $color-edem-main;
   }
+
+  @include bp-largedown {
+    display: none;
+  }
 }

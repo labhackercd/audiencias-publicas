@@ -4,6 +4,10 @@
   flex-direction: column;
   flex-grow: 1;
 
+  @include bp-largedown {
+    order: 3;
+  }
+
   > p {
     margin-bottom: 0.5rem;
 
