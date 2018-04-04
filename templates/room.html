@@ -53,7 +53,6 @@
           <a class="button -twitter JS-shareRoom" data-social="twitter" title="Twitter" href="http://twitter.com/share?text=Eu já estou participando, participe você também!&url={{request.build_absolute_uri}}" target="_blank" rel="noopener"></a>
           <a class="button -whatsapp JS-shareRoom" data-social="whatsapp" title="Whatsapp" href="whatsapp://send?text=Eu já estou participando, participe você também!&{{request.build_absolute_uri}}" target="_blank" rel="noopener"></a>
         </span>
-        <span><a class="link" href="{{request.path}}/relatorio">Ver relatório </a></span>
         <span>{{object.reunion_type}}</span>
         <span>{{object.date}}</span>
       </div>
@@ -220,12 +219,23 @@
       </div>
 
       <button class="aud-button -add JS-openModal" data-modal-target="addContent">Adicionar Conteúdo Complementar</button>
+
+      <hr>
+
+      <button class="aud-button -mail JS-openModal" data-modal-target="sendEmail">Enviar email para os participantes</button>
+
+      <div class="room-info">
+        <ul class="list">
+          <li>
+            <a class="link" href="{{request.path}}/relatorio">Ir para a página de relatório</a>
+          </li>
+        </ul>
+      </div>
+
     </main>
 
     <aside class="room-chat JS-wrapperChat">
       <h2 class="room-h2">Bate-papo</h2>
-
-      <button class="aud-button -mail JS-openModal" data-modal-target="sendEmail">Enviar email para os participantes</button>
 
       <div class="messages">
 
