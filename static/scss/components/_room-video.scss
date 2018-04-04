@@ -138,8 +138,35 @@
 
       > .aud-button {
         position: absolute;
-        right: 0.25rem;
-        top: 0.25rem;
+        margin: 0.25rem;
+        transform: translateY(-2rem);
+        transition: transform 0.4s $swift-out;
+
+        &.-active {
+          transform: translateY(0);
+        }
+
+        &.-remove {
+          right: 0;
+          top: 0;
+        }
+
+        &.-edit {
+          left: 0;
+          top: 0;
+        }
+
+        &.-left {
+          left: 0;
+          top: 0;
+        }
+
+        &.-right {
+          right: 0;
+          top: 0;
+        }
+
+
       }
     }
   }

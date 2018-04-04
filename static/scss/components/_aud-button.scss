@@ -18,6 +18,14 @@
 
   &::before { margin-right: 0.5rem; }
 
+  &.-mail { @include icon('envelope'); }
+  &.-discussion { @include icon('link'); }
+  &.-order { @include icon('arrows-h'); }
+  &.-left { @include icon('long-arrow-left'); }
+  &.-right { @include icon('long-arrow-right'); }
+  &.-complete { @include icon('check'); }
+  &.-add { @include icon('plus'); }
+
   &.-icon {
     display: flex;
     justify-content: center;
@@ -29,9 +37,11 @@
     &::before { margin-right: 0; }
   }
 
-  &.-mail { @include icon('envelope'); }
-  &.-discussion { @include icon('link'); }
-  &.-add { @include icon('plus'); }
+  &.-toggled {
+    background-color: mix($color-edem-main, $color-edem-action, 60%);
+    box-shadow: 0 1px 2px 0 rgba(#000, 0.4);
+  }
+
   &.-remove {
     @include icon('trash');
     background-color: $color-edem-red;
@@ -49,4 +59,5 @@
       background-color: lighten($color-edem-action, 5%);
     }
   }
+
 }

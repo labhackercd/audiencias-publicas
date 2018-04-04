@@ -166,25 +166,30 @@
           </li>
           <li class="extravideo JS-selectVideo -current">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
-            <span class="title">Parte 1</span>
-            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo1"></button>
+            <span class="title">Transmissão<br>Parte 1</span>
           </li>
           <li class="extravideo JS-selectVideo">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
-            <span class="title">Parte 2</span>
-            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo2"></button>
-          </li>
-          <li class="extravideo JS-selectVideo">
-            <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
-            <span class="title">Comentários do Deputado Chico Anysio</span>
-            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo3"></button>
+            <span class="title">Transmissão<br>Parte 2</span>
           </li>
           <li class="extravideo JS-selectVideo">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Comentários do Deputado Chico Anysio</span>
-            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo4"></button>
+            <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo1"></button>
+            <button class="aud-button -icon -edit -active JS-openModal" data-modal-target="editVideo"></button>
+            <button class="aud-button -icon -left"></button>
+            <button class="aud-button -icon -right"></button>
+          </li>
+          <li class="extravideo JS-selectVideo">
+            <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
+            <span class="title">Comentários do Deputado Chico Anysio</span>
+            <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo1"></button>
+            <button class="aud-button -icon -edit -active JS-openModal" data-modal-target="editVideo"></button>
+            <button class="aud-button -icon -left"></button>
+            <button class="aud-button -icon -right"></button>
           </li>
         </ul>
+        <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
       </div>
 
 

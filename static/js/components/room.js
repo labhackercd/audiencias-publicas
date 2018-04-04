@@ -39,6 +39,8 @@ function roomComponent(socket) {
     $addLinks: $('.JS-addLinks'),
     $linkModal: $('.JS-linkModal'),
     $closeModal: $('.JS-closeModal'),
+    $selectVideo: $('.JS-selectVideo'),
+    $orderVideos: $('.JS-orderVideos'),
   };
 
   const vars = {
@@ -285,6 +287,10 @@ function roomComponent(socket) {
       characterCounter.updateCounter();
     },
 
+    clickToggleButton() {
+      elements.$selectVideo.find('.aud-button').toggleClass('-active');
+    },
+
     openShareList() {
       const $shareList = $(this).siblings('.question-block__share-list');
       $shareList.removeClass('question-block__share-list');
@@ -431,6 +437,7 @@ function roomComponent(socket) {
       elements.$messagesList.on('scroll', events.messagesListScroll);
       elements.$readMoreChat.on('click', events.readMoreClickChat);
       elements.$formChat.on('submit', events.sendMessage);
+      elements.$orderVideos.on('click', events.clickToggleButton)
       setInterval(function() {
         socket.send(JSON.stringify({heartbeat: true}));
       }, 3000);

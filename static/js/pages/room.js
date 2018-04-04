@@ -6,6 +6,7 @@ import onlineUsersComponent from '../components/online-users';
 import roomVideosComponent from '../components/room-videos';
 import modalsComponent from '../components/modals';
 import countdownTimerComponent from '../components/countdown-timer';
+import toggleAudButtonComponent from '../components/toggle-aud-button';
 
 
 const onlineUsers = onlineUsersComponent();
@@ -30,3 +31,5 @@ roomVideosComponent();
 modalsComponent();
 
 countdownTimerComponent();
+
+toggleAudButtonComponent();
