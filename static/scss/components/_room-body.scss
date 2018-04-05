@@ -2,4 +2,11 @@
 .room-body {
   overflow: hidden;
   height: 100%;
+
+  a:not(.aud-button):not(.button) {
+    color: $color-room-link;
+    text-decoration: underline;
+    cursor: pointer;
+    &:hover { opacity: 0.8; }
+  }
 }

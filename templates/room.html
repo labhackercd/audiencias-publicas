@@ -258,9 +258,9 @@
       <div class="controls">
         {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="form JS-formChat" id="chatform">
-            <textarea class="input JS-formInputChat" id="message" name="message" placeholder="Envie uma mensagem" autocomplete="off" required></textarea>
+            <textarea class="input JS-formInputChat" id="message" name="message" placeholder="Digite mensagens do bate-papo aqui" autocomplete="off" required></textarea>
             <div class="actions">
-              <button class="button" id="go">Enviar</button>
+              <button class="button" id="go" title="Enviar">Enviar</button>
             </div>
           </form>
         {% elif object.youtube_status != 2 and not user.is_authenticated %}

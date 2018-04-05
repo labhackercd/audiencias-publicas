@@ -30,6 +30,7 @@
   &.-right { @include icon('long-arrow-right'); }
   &.-complete { @include icon('check'); }
   &.-add { @include icon('files-o'); }
+  &.-edit { @include icon('pencil'); }
 
   &.-icon {
     display: flex;
@@ -55,14 +56,4 @@
       background-color: mix( $color-edem-red, #fff, 80%);
     }
   }
-
-  &.-edit {
-    @include icon('pencil');
-    background-color: $color-edem-action;
-
-    &:hover {
-      background-color: lighten($color-edem-action, 5%);
-    }
-  }
-
 }

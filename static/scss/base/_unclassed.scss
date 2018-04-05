@@ -17,15 +17,12 @@ table {
   }
 }
 
-textarea {
-  min-height: 35px;
+textarea, input {
+  font-family: $font-family-base;
 }
 
-a:not('.button') {
-  color: $color-link;
-  text-decoration: underline;
-  cursor: pointer;
-  &:hover { opacity: 0.8; }
+textarea {
+  min-height: 35px;
 }
 
 button {

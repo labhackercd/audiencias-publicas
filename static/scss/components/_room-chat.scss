@@ -21,8 +21,8 @@
     position: relative;
     bottom: 0;
     width: 100%;
-    background-color: hsl(0, 0%, 80%);
-    padding: 0.5em;
+    background-color: $color-edem-action;
+    padding: 1em;
     text-align: center;
 
     &.-visible {
@@ -46,11 +46,11 @@
 
   > .controls > .info, > .controls > .wrapper > .info {
     display: block;
-    font-size: $font-size-base;
-    color: hsl(0, 0%, 40%);
+    font-size: $font-size-deca;
+    color: #fff;
 
     > .time {
-      color: $color-edem-main;
+    color: #fff;
       font-weight: $font-weight-bold;
 
       &.-halfway {
@@ -68,12 +68,11 @@
 
     > .link {
       cursor: pointer;
-      color: $color-edem-action;
+      color: rgba(#fff, 0.9);
       text-decoration: underline;
-      text-decoration-skip: ink;
 
       &:hover {
-        color: darken($color-edem-action, 10%);
+        color: #fff;
       }
     }
   }
@@ -85,13 +84,13 @@
   > .controls > .form > .input {
     display: flex;
     align-items: center;
+    font-size: $font-size-deci;
+    line-height: 1.5em;
     width: 100%;
-    font-size: 0.8em;
-    height: 3em;
+    height: 4.5em;
     min-height: 0;
-    padding: 0.75em 1.25em;
+    padding: 0.75em;
     color: $color-edem-dark;
-    border: 1px solid hsl(0, 0%, 70%);
     resize: none;
 
     &::placeholder {
@@ -100,13 +99,31 @@
   }
 
   > .controls > .form > .actions > .button {
+    @include icon('paper-plane');
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     height: 100%;
-    padding: 1em .8em;
-    border-top-right-radius: .25em;
-    border-bottom-right-radius: .25em;
-    font-weight: $font-weight-medium;
-    color: #FFF;
-    background-color: $color-edem-action;
+    width: 3.5rem;
+    color: $color-edem-action;
+    font-size: $font-size-hecto;
+    background-color: rgba(#fff, 0.9);
+    margin-left: 1px;
+    overflow: hidden;
+
+    &::before {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      flex: 1 0 auto;
+      padding-right: 3px;
+    }
+
+    &:hover {
+      background-color: #fff;
+    }
   }
 
   > .messages {
