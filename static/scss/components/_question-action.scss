@@ -1,0 +1,27 @@
+.question-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 auto;
+  padding: 1rem;
+  background-color: $color-edem-action;
+
+  > button {
+    cursor: pointer;
+    padding: 0 2rem;
+    height: 3rem;
+    font-size: $font-size-deca;
+    background-color: rgba(#fff, 0.9);
+    color: $color-edem-action;
+    transition: all .15s ease-in-out;
+    user-select: none;
+
+    @include bp-largedown {
+      font-size: $font-size-base;
+    }
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
+}

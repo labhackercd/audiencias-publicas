@@ -1,7 +1,7 @@
 .question-box {
   position: absolute;
   z-index: 9;
-  bottom: 0.5rem;
+  bottom: 0;
   width: calc(100% - 1.5rem);
   background-color: $color-edem-action;
   padding: 1rem;
@@ -49,10 +49,10 @@
     font-size: $font-size-base;
     line-height: 1.5em;
     resize: none;
-    height: 6rem;
+    height: 8.5em;
     width: 100%;
     margin-top: 1rem;
-    padding: .5rem;
+    padding: 0.5em;
   }
 
   .actions {

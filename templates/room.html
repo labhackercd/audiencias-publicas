@@ -88,7 +88,9 @@
           <button class="read-more JS-readMoreQuestion"></button>
         </div>
         {% if object.youtube_status != 2 and user.is_authenticated %}
-          <button class="question-button JS-openQuestionForm">Fazer uma pergunta</button>
+          <div class="question-action">
+            <button class="JS-openQuestionForm">Fazer uma pergunta</button>
+          </div>
           <form class="question-box JS-formQuestion" id="questionform">
             <div class="header">
               <div class="counter JS-character-counter">
