@@ -8,12 +8,11 @@
   }
 
   > .info {
-    color: $color-edem-highlight;
+    color: hsl(0, 0%, 80%);
     font-size: $font-size-base;
     line-height: 1rem;
     font-weight: $font-weight-regular;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
   }
 
   > .info > span {
