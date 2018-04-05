@@ -21,6 +21,13 @@ textarea {
   min-height: 35px;
 }
 
+a:not('.button') {
+  color: $color-link;
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover { opacity: 0.8; }
+}
+
 button {
   cursor: pointer;
 }

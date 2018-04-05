@@ -60,14 +60,6 @@
     > li {
       display: flex;
 
-      > .link {
-        color: $color-edem-action;
-        text-decoration: underline;
-        text-decoration-skip: ink;
-        cursor: pointer;
-        &:hover { opacity: 0.8; }
-      }
-
       > .aud-button {
         margin-left: 0.5rem;
       }
