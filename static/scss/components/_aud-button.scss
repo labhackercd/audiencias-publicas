@@ -25,11 +25,11 @@
 
   &.-mail { @include icon('envelope'); }
   &.-discussion { @include icon('link'); }
-  &.-order { @include icon('arrows-h'); }
+  &.-order { @include icon('exchange'); }
   &.-left { @include icon('long-arrow-left'); }
   &.-right { @include icon('long-arrow-right'); }
   &.-complete { @include icon('check'); }
-  &.-add { @include icon('plus'); }
+  &.-add { @include icon('files-o'); }
 
   &.-icon {
     display: flex;
