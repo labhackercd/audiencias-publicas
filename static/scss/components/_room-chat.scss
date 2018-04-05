@@ -46,7 +46,7 @@
 
   > .controls > .info, > .controls > .wrapper > .info {
     display: block;
-    font-size: 0.8em;
+    font-size: $font-size-base;
     color: hsl(0, 0%, 40%);
 
     > .time {
@@ -151,9 +151,10 @@
   }
 
   .messages .item {
-    padding: .5em 1em;
+    padding: 1.05em 1.5em;
     color: #000;
-    line-height: 1.2;
+    line-height: 1.75em;
+    font-size: $font-size-deci;
     font-weight: 300;
 
     &:nth-child(odd) {
@@ -162,17 +163,12 @@
 
     > .username {
       font-weight: 700;
-      font-size: .8rem;
     }
 
     > .timestamp {
-      font-size: .6rem;
+      font-size: $font-size-centi;
       word-break: break-word;
       color: hsl(0, 0, 50%);
-    }
-
-    > .text {
-      font-size: .8rem;
     }
   }
 }

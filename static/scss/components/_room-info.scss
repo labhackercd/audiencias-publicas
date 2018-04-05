@@ -40,7 +40,7 @@
 
   > h3 {
     @include bp-largedown {
-      font-size: $font-size-deci;
+      font-size: $font-size-base;
     }
   }
 

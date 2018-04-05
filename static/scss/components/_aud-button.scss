@@ -1,11 +1,16 @@
 .aud-button {
   background-color: $color-edem-main;
+  font-size: $font-size-base;
   color: #fff;
-  padding: 0.5rem;
+  padding: 0.75em;
   box-shadow: 0 2px 4px 0 rgba(#000, 0.2);
   text-decoration: none;
   border-radius: 2px;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  @include bp-largedown {
+    font-size: $font-size-deci;
+  }
 
   &:hover {
     background-color: mix($color-edem-main, $color-edem-action, 60%);
@@ -16,7 +21,7 @@
     box-shadow: 0 1px 2px 0 rgba(#000, 0.4);
   }
 
-  &::before { margin-right: 0.5rem; }
+  &::before { margin-right: 0.5em; }
 
   &.-mail { @include icon('envelope'); }
   &.-discussion { @include icon('link'); }

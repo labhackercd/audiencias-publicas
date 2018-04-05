@@ -10,23 +10,24 @@
 
   > p {
     margin-bottom: 0.5rem;
+    line-height: 1.2em;
+    font-weight: $font-weight-light;
 
     @include bp-largedown {
       margin-top: 0.75rem;
       font-size: $font-size-centi;
-      line-height: 1.2em;
     }
   }
 
   > .link {
-    font-size: $font-size-deci;
-    line-height: 1.5rem;
+    font-size: $font-size-base;
+    line-height: 1.5em;
     margin-bottom: 0.5rem;
     color: $color-edem-action;
     text-decoration: underline;
 
     @include bp-largedown {
-      font-size: $font-size-centi;
+      font-size: $font-size-deci;
     }
   }
 }

@@ -50,7 +50,7 @@
       &::before {
         text-align: center;
         color: #fff;
-        font-size: $font-size-centi;
+        font-size: $font-size-deci;
         line-height: 1rem;
         transform: translateY(calc(-#{$bottom} / 2));
         display: block;

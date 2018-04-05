@@ -1,15 +1,19 @@
 .question-button {
   cursor: pointer;
-  padding: 1rem 2rem;
+  padding: 0 2rem;
   min-height: 3rem;
   align-self: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  font-size: 1rem;
+  font-size: $font-size-deca;
   background-color: $color-edem-action;
   color: #FFF;
   transition: all .15s ease-in-out;
   user-select: none;
+
+  @include bp-largedown {
+    font-size: $font-size-base;
+  }
 
   &:hover {
     background-color: lighten($color-edem-action, 5%);
