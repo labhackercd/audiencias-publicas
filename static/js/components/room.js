@@ -15,6 +15,9 @@ function roomComponent(socket) {
     $voteBtnEnabled: $('.JS-voteBtnEnabled'),
     $voteBtn: $('.JS-voteBtn'),
     $totalVotes: $('.JS-totalVotes'),
+    $openQuestionManaging: $('.JS-openQuestionManaging'),
+    $closeQuestionManaging: $('.JS-closeQuestionManaging'),
+    $questionManagingList: $('.JS-questionManagingList'),
     $shareListOpenBtn: $('.JS-shareListOpenBtn'),
     $shareListCloseBtn: $('.JS-shareListCloseBtn'),
     $shareListItemLink: $('.JS-shareListItemLink'),
@@ -291,6 +294,14 @@ function roomComponent(socket) {
       elements.$selectVideo.find('.aud-button').toggleClass('-active');
     },
 
+    openQuestionManaging() {
+      $(this).parent().siblings('.JS-questionManagingList').addClass('-active');
+    },
+
+    closeQuestionManaging() {
+      $(this).closest('.JS-questionManagingList').removeClass('-active');
+    },
+
     openShareList() {
       const $shareList = $(this).siblings('.question-block__share-list');
       $shareList.removeClass('question-block__share-list');
@@ -424,6 +435,8 @@ function roomComponent(socket) {
     onPageLoad() {
       socket.onmessage = evaluateSocketMessage;
       elements.$voteBtnEnabled.on('click', events.vote);
+      elements.$openQuestionManaging.on('click', events.openQuestionManaging);
+      elements.$closeQuestionManaging.on('click', events.closeQuestionManaging);
       elements.$shareListOpenBtn.on('click', events.openShareList);
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.shareQuestion);
@@ -447,6 +460,8 @@ function roomComponent(socket) {
 
     onAdd($question) {
       const $voteBtnEnabled = $question.find('.JS-voteBtnEnabled');
+      const $openQuestionManaging = $question.find('.JS-openQuestionManaging');
+      const $closeQuestionManaging = $question.find('.JS-closeQuestionManaging');
       const $shareListOpenBtn = $question.find('.JS-shareListOpenBtn');
       const $shareListCloseBtn = $question.find('.JS-shareListCloseBtn');
       const $shareListItemLink = $question.find('.JS-shareListItemLink');
@@ -455,6 +470,8 @@ function roomComponent(socket) {
       const $answerTimeCheckbox = $question.find('.JS-answerTimeCheckbox');
 
       $voteBtnEnabled.on('click', events.vote);
+      $openQuestionManaging.on('click', events.openQuestionManaging);
+      $closeQuestionManaging.on('click', events.closeQuestionManaging);
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
       $shareListItemLink.on('click', events.share);

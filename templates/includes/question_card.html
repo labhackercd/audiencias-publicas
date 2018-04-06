@@ -14,18 +14,17 @@
 
   <p class="question">{{question.question}}</p>
 
-  <div class="question-actions">
-
-    {% with user|belongs_to_group:question.room.legislative_body_initials as hide %}
+  {% if user|belongs_to_group:question.room.legislative_body_initials %}
+    <div class="question-managing JS-questionManagingList {% if question_managing %}-active{% endif %}">
 
       {% if question.room.youtube_status != 0 %}
-        <form class="action -checkbox JS-answeredForm {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_answered' question_id=question.pk %}">
+        <form class="action -checkbox JS-answeredForm" method="POST" action="{% url 'set_question_answered' question_id=question.pk %}">
           <input class="checkbox JS-answeredCheckbox" type="checkbox" name="answered" {% if question.answered %}checked{% endif %}>
           <span class="label">Pergunta Respondida</span>
         </form>
 
         {% if page == "room" and question.answered %}
-          <form class="action -checkbox JS-answerTimeForm {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_answer_time' question_id=question.pk %}">
+          <form class="action -checkbox JS-answerTimeForm" method="POST" action="{% url 'set_question_answer_time' question_id=question.pk %}">
             <input class="checkbox JS-answerTimeCheckbox" type="checkbox" name="answer_time" {% if question.answer_time %}checked{% endif %}>
             <span class="label">Marcar tempo de resposta</span>
           </form>
@@ -33,19 +32,30 @@
       {% endif %}
 
       {% if question.room.youtube_status != 2 %}
-        <form class="action -checkbox JS-priorityForm {% if not hide %}hide{% endif %}" method="POST" action="{% url 'set_question_priotity' question_id=question.pk %}">
+        <form class="action -checkbox JS-priorityForm" method="POST" action="{% url 'set_question_priotity' question_id=question.pk %}">
           <input class="checkbox JS-priorityCheckbox" type="checkbox" name="priority" {% if question.is_priority %}checked{% endif %}>
           <span class="label">Prioridade</span>
         </form>
       {% endif %}
 
-    {% endwith %}
+      <button class="close JS-closeQuestionManaging"></button>
 
+    </div>
+  {% endif %}
+
+  <div class="question-actions">
 
     {% if page == "room" %}
+      {% if user|belongs_to_group:question.room.legislative_body_initials %}
+        <span class="question-block__share-button JS-openQuestionManaging" role="button" title="Opções de gestão da pergunta">
+          <i class="share-button__icon icon icon-list"></i>
+        </span>
+      {% endif %}
+
     <span class="question-block__share-button JS-shareListOpenBtn" role="button" title="Compartilhar esta pergunta">
       <i class="share-button__icon icon icon-share-alt"></i>
     </span>
+
 
     <ul class="question-block__share-list">
       <span class="share-list__close JS-shareListCloseBtn" role="button" title="Cancelar">
