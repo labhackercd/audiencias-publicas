@@ -162,9 +162,6 @@
         </div>
 
         <ul class="extras">
-          <li class="extravideo JS-openModal" data-modal-target="addVideo">
-            <div class="add">Adicionar Vídeo</div>
-          </li>
           <li class="extravideo JS-selectVideo -current">
             <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
             <span class="title">Transmissão<br>Parte 1</span>
@@ -190,6 +187,7 @@
             <button class="aud-button -icon -right"></button>
           </li>
         </ul>
+        <button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
         <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
       </div>
 

@@ -25,6 +25,7 @@
 
   &.-mail { @include icon('envelope'); }
   &.-discussion { @include icon('link'); }
+  &.-video { @include icon('youtube-play'); }
   &.-order { @include icon('exchange'); }
   &.-left { @include icon('long-arrow-left'); }
   &.-right { @include icon('long-arrow-right'); }
