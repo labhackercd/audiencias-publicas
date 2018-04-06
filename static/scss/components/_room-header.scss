@@ -72,9 +72,21 @@
     justify-content: flex-end;
     align-items: center;
 
+    @include bp-largedown {
+      margin: 0;
+      padding: 0;
+      align-self: center;
+    }
+
+
     > span {
       display: flex;
       margin-bottom: 0.25rem;
+
+      @include bp-largedown {
+        display: none;
+      }
+
     }
   }
 
