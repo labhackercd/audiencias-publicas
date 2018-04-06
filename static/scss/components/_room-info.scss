@@ -63,6 +63,13 @@
       > .aud-button {
         margin-left: 0.5rem;
       }
+
+      > .link {
+        color: $color-room-link;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover { opacity: 0.8; }
+      }
     }
   }
 
