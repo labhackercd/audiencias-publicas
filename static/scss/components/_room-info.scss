@@ -1,10 +1,10 @@
 .room-info {
   transition: max-height 0.4s ease;
   position: relative;
-  padding-bottom: 2rem;
+  padding-bottom: 1.5rem;
 
   @include bp-largedown {
-    padding-bottom: 1rem;
+    padding-bottom: 0.75rem;
   }
 
   &.-large {
