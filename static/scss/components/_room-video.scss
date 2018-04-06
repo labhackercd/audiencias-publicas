@@ -66,12 +66,11 @@
   }
 
   > .extras {
-    $outline-width: 2px;
-
     display: flex;
     align-items: start;
     margin-top: 2rem;
-    padding: $outline-width;
+    padding: 1rem;
+    background-color: $color-edem-main;
     overflow-x: auto;
 
     > * + * {
@@ -82,12 +81,13 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      flex-basis: 0;
+      width: 8rem;
+      min-width: 8rem;
       cursor: pointer;
       z-index: 2;
 
       &:hover, &:active {
-        > .thumbnail, > .add {
+        > .wrapper > .thumbnail, > .add {
           opacity: 1;
         }
       }
@@ -95,51 +95,52 @@
       &.-current {
         cursor: default;
 
-        > .thumbnail, > .add {
-          opacity: 1;
+        > .wrapper {
           outline-color: $color-edem-highlight;
+
+          > .thumbnail {
+            opacity: 1;
+          }
         }
       }
 
-      > .thumbnail, > .add {
-        width: 8rem;
-        height: 5rem;
-        margin-bottom: 0.5rem;
-        opacity: 0.5;
-        outline-width: $outline-width;
-        transition: opacity 0.3s $swift-out,
-                    outline 0.2s ease;
-      }
-
-      > .thumbnail {
-        outline-style: solid;
-        outline-color: transparent
-      }
-
-      > .add {
-        outline-style: dashed;
-        outline-color: #fff;
-        font-weight: 700;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
+      > .wrapper {
+        position: relative;
         display: flex;
-        font-size: $font-size-deci;
+        overflow: hidden;
+        outline-style: solid;
+        outline-color: transparent;
+        outline-width: 2px;
+        margin-bottom: 0.25rem;
+        transition: 0.2s outline ease;
       }
 
-      > .title {
-        font-size: $font-size-deci;
-        line-height: 1rem;
+      > .wrapper > .thumbnail {
+          opacity: 0.5;
+          transition: 0.3s opacity $swift-out;
+        }
 
-        @include bp-largedown {
-          font-size: $font-size-deci
+      > .wrapper > .label {
+        position: absolute;
+        display: flex;
+        bottom: 0;
+        height: 2rem;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        font-size: $font-size-deci;
+        background-color: rgba(#000, 0.5);
+        @include icon('wifi');
+
+        &::before {
+          margin-right: 0.5rem;
         }
       }
 
-      > .aud-button {
+      > .wrapper > .aud-button {
         position: absolute;
-        margin: 0.25rem;
-        transform: translateY(-2rem);
+        margin: 0.5rem;
+        transform: translateY(-2.5rem);
         transition: transform 0.4s $swift-out;
 
         &.-active {
@@ -165,8 +166,15 @@
           right: 0;
           top: 0;
         }
+      }
 
+      > .title {
+        font-size: $font-size-deci;
+        line-height: 1rem;
 
+        @include bp-largedown {
+          font-size: $font-size-deci
+        }
       }
     }
   }
