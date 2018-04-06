@@ -62,10 +62,19 @@
   }
 
   > .social-share {
-    display: none;
+    display: flex;
+    margin-left: auto;
+    margin-right: 1.75rem;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+    max-width: 8rem;
+    align-self: flex-start;
+    justify-content: flex-end;
+    align-items: center;
 
-    @include bp-largedown {
+    > span {
       display: flex;
+      margin-bottom: 0.25rem;
     }
   }
 
