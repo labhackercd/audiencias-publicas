@@ -19,8 +19,14 @@
 
   > .controls {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    align-items: center;
+    justify-content: center;
     bottom: 0;
     width: 100%;
+    min-height: 5rem;
     background-color: $color-edem-action;
     padding: 1em;
     text-align: center;
@@ -48,6 +54,10 @@
     display: block;
     font-size: $font-size-deca;
     color: #fff;
+
+    @include bp-largedown {
+      font-size: $font-size-base;
+    }
 
     > .time {
     color: #fff;

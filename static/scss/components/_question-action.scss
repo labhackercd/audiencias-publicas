@@ -3,8 +3,28 @@
   justify-content: center;
   align-items: center;
   flex: 1 0 auto;
+  text-align: center;
+  min-height: 5rem;
   padding: 1rem;
   background-color: $color-edem-action;
+
+  > span {
+    font-size: $font-size-deca;
+
+    @include bp-largedown {
+      font-size: $font-size-base;
+    }
+
+    > a {
+      cursor: pointer;
+      color: rgba(#fff, 0.9);
+      text-decoration: underline;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
 
   > button {
     cursor: pointer;
