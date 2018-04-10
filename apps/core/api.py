@@ -5,14 +5,16 @@ from django_filters import rest_framework as django_filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework import generics, filters, mixins
+from rest_framework import generics, filters, mixins, viewsets
 from apps.core.models import Message, Question, UpDownVote, Room
 from apps.core.serializers import (QuestionSerializer, MessageSerializer,
                                    VoteSerializer, UserSerializer,
                                    RoomSerializer)
 
 
-class UserListAPI(generics.ListAPIView):
+class UserViewSet(viewsets.ModelViewSet):
+    allowed_methods = ['get', 'put', 'delete']
+    lookup_field = 'username'
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
     filter_backends = (
@@ -23,7 +25,8 @@ class UserListAPI(generics.ListAPIView):
     search_fields = ('username', 'first_name', 'last_name')
 
 
-class VoteListAPI(generics.ListAPIView):
+class VoteViewSet(viewsets.ModelViewSet):
+    allowed_methods = ['get']
     queryset = UpDownVote.objects.all()
     serializer_class = VoteSerializer
     filter_backends = (
@@ -35,7 +38,8 @@ class VoteListAPI(generics.ListAPIView):
     ordering_fields = ('user', 'vote')
 
 
-class MessageListAPI(generics.ListAPIView):
+class MessageViewSet(viewsets.ModelViewSet):
+    allowed_methods = ['get']
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
     filter_backends = (
@@ -47,7 +51,8 @@ class MessageListAPI(generics.ListAPIView):
     ordering_fields = ('timestamp', 'user', 'room')
 
 
-class QuestionListAPI(generics.ListAPIView):
+class QuestionViewSet(viewsets.ModelViewSet):
+    allowed_methods = ['get']
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     filter_backends = (
@@ -67,46 +72,39 @@ class RoomFilter(FilterSet):
             'legislative_body_initials': ['exact'],
             'youtube_id': ['exact'],
             'cod_reunion': ['exact'],
+            'is_visible': ['exact'],
+            'youtube_status': ['exact'],
         }
 
 
-class RoomListAPI(generics.ListAPIView):
+class RoomViewSet(viewsets.ModelViewSet):
+    allowed_methods = ['get']
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
     filter_class = RoomFilter
     filter_backends = (
         django_filters.DjangoFilterBackend,
-        filters.SearchFilter)
+        filters.SearchFilter,
+        filters.OrderingFilter)
     search_fields = (
         'cod_reunion', 'youtube_id', 'legislative_body_alias',
         'legislative_body_initials', 'reunion_type', 'title_reunion',
         'reunion_object', 'reunion_theme', 'legislative_body',
         'reunion_status', 'location')
-
-
-class RoomAPI(generics.GenericAPIView, mixins.RetrieveModelMixin):
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
-
-    def get_serializer_class(self):
-        return RoomSerializer
-
-    def get_object(self):
-        return Room.objects.get(pk=self.kwargs['pk'])
+    ordering_fields = '__all__'
 
 
 @api_view(['GET'])
 def api_root(request, format=None):
     return Response({
-        'rooms': reverse('room_list_api',
+        'rooms': reverse('room-list',
                          request=request, format=format),
-        'messages': reverse('message_list_api',
+        'messages': reverse('message-list',
                             request=request, format=format),
-        'questions': reverse('question_list_api',
+        'questions': reverse('question-list',
                              request=request, format=format),
-        'votes': reverse('vote_list_api',
+        'votes': reverse('updownvote-list',
                          request=request, format=format),
-        'users': reverse('user_list_api',
+        'users': reverse('user-list',
                          request=request, format=format),
     })
