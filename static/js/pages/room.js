@@ -33,3 +33,5 @@ modalsComponent();
 countdownTimerComponent();
 
 toggleAudButtonComponent();
+
+tabsNavComponent();

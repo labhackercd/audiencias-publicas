@@ -1,7 +1,6 @@
 {% load staticfiles %}
 
-<div class="ratiowrapper">
-  {% if object.youtube_id %}
+{% if object.youtube_id %}
     <div class="video" id="player"></div>
     {# TODO FIXME #}
     <script type="text/javascript">
@@ -35,4 +34,3 @@
       <p class="video--empty__message">Transmissão prevista para <span class="video--empty__date">{{object.date}}</span>.</p>
     </div>
   {% endif %}
-</div>

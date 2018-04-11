@@ -116,7 +116,7 @@
 
     <main class="room-main">
 
-      <div class="room-video JS-videoFrame">
+      <div class="room-video">
         <div class="room-title">
           <h1 class="title">
             {% if object.reunion_theme %}
@@ -135,25 +135,27 @@
           </div>
         </div>
         <div class="heightwrapper">
-          {% include "includes/room_video.html" with object=object %}
-          <div class="info">
-            <span class="status">
-              {% if object.youtube_status == 0 %}
-                Transmissão Prevista
-              {% elif object.youtube_status == 1 %}
-                <span class="live-icon"></span> Ao Vivo
-              {% else %}
-                Transmissão Encerrada (Gravado)
-              {% endif %}
-            </span>
+          <div class="ratiowrapper JS-videoFrame">
+            {% include "includes/room_video.html" with object=object %}
+            <div class="info">
+              <span class="status">
+                {% if object.youtube_status == 0 %}
+                  Transmissão Prevista
+                {% elif object.youtube_status == 1 %}
+                  <span class="live-icon"></span> Ao Vivo
+                {% else %}
+                  Transmissão Encerrada (Gravado)
+                {% endif %}
+              </span>
 
-            <span class="visitors">
-              {% if object.youtube_status == 1 %}
-                <span class="numbers" id="online-users">{{object.online_users}}</span> visitantes
-              {% else %}
-                <span class="numbers">{{object.views}}</span> pessoas na sala
-              {% endif %}
-            </span>
+              <span class="visitors">
+                {% if object.youtube_status == 1 %}
+                  <span class="numbers" id="online-users">{{object.online_users}}</span> visitantes
+                {% else %}
+                  <span class="numbers">{{object.views}}</span> pessoas na sala
+                {% endif %}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -316,10 +318,6 @@
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/components/read-more-less.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/components/share-buttons.js' %}"></script>
-  {% compress js %}
-    <script type="text/es6" src="{% static 'js/components/tabs-nav.js' %}"></script>
-    {# XXX for the love of god Ericonan, why is this being called here? #}
-  {% endcompress %}
 {% endblock extra_js %}
 
 {% block websockets %}
