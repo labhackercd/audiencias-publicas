@@ -217,6 +217,34 @@ def delete_attachment(request, attachment_id):
         return HttpResponseForbidden()
 
 
+def add_external_link(request, room_id):
+    if request.user.is_authenticated() and request.method == 'POST':
+        room = Room.objects.get(pk=room_id)
+        group_name = room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            room.external_link = request.POST.get('link', '')
+            room.save()
+            return redirect('video_room', pk=room.id)
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+
+def remove_external_link(request, room_id):
+    if request.user.is_authenticated():
+        room = Room.objects.get(pk=room_id)
+        group_name = room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            room.external_link = ''
+            room.save()
+            return redirect('video_room', pk=room.id)
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+
 class VideoDetail(DetailView):
     model = Room
     template_name = 'room.html'

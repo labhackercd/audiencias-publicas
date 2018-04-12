@@ -4,7 +4,8 @@ from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              QuestionDetail, index, redirect_to_room,
                              RoomReportView, set_answer_time, set_answered,
                              set_priotity, WidgetVideoDetail, create_attachment,
-                             delete_attachment)
+                             delete_attachment, add_external_link,
+                             remove_external_link)
 from apps.core.api import (api_root, MessageListAPI, QuestionListAPI,
                            VoteListAPI, UserListAPI, RoomAPI, RoomListAPI)
 
@@ -24,6 +25,10 @@ urlpatterns = [
         name='create_attachment'),
     url(r'^anexo/(?P<attachment_id>\d+)/deletar/?$', delete_attachment,
         name='delete_attachment'),
+    url(r'^sala/(?P<room_id>\d+)/link/adicionar/?$', add_external_link,
+        name='add_external_link'),
+    url(r'^sala/(?P<room_id>\d+)/link/deletar/?$', remove_external_link,
+        name='remove_external_link'),
     url(r'^sala/(?P<pk>\d+)/relatorio/?$', RoomReportView.as_view(),
         name='room_report'),
     url(r'^sala/reuniao/(?P<cod_reunion>\d+)/?$', redirect_to_room,

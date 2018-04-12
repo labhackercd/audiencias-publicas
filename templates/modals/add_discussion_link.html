@@ -1,10 +1,10 @@
 {% extends 'includes/modal.html' %}
 
 {% block content %}
-<form method="POST" action="{% url 'create_attachment' object.id %}">
+<form method="POST" action="{% url 'add_external_link' object.id %}">
   {% csrf_token %}
   <label for="link">Link:</label>
-  <input type="url" name="url" required>
+  <input type="url" name="link" required>
 
   <button class="button" type="submit" name="button">Enviar</button>
 </form>
