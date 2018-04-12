@@ -280,14 +280,21 @@
         {% endif %}
 
         <p class="info">O bate-papo se encerrará em <span class="time JS-countdownTimer"><span class="JS-countdownMinutes">00</span>:<span class="JS-countdownSeconds">00</span></span>.</p>
-
+        {% if object.external_link %}
+          {% if user|belongs_to_group:object.legislative_body_initials %}
+          <div class="wrapper">
+            <p class="info">Continue esta conversa <a href="{{object.external_link}}" class="link">aqui</a>.</p>
+            <button class="aud-button -icon -edit JS-openModal" data-modal-target="editDiscussionLink"></button>
+            <button class="aud-button -icon -remove JS-openModal" data-modal-target="addDiscussionLinkDialog" data-dialog-action="{% url 'remove_external_link' object.id %}"></button>
+          </div>
+          {% elif object.youtube_status == 2 %}
+            <div class="wrapper">
+              <p class="info">Continue esta conversa <a href="{{object.external_link}}" class="link">aqui</a>.</p>
+            </div>
+          {% endif %}
+        {% elif user|belongs_to_group:object.legislative_body_initials %}
         <button class="aud-button -discussion JS-openModal" data-modal-target="addDiscussionLink">Adicionar link para continuar a discussão</button>
-
-        <div class="wrapper">
-          <p class="info">Continue esta conversa <a href="#" class="link">aqui</a>.</p>
-          <button class="aud-button -icon -edit JS-openModal" data-modal-target="editDiscussionLink"></button>
-          <button class="aud-button -icon -remove JS-openModal" data-modal-target="addDiscussionLinkDialog" data-dialog-action="{% url 'remove_external_link' object.id %}"></button>
-        </div>
+        {% endif %}
       </div>
     </aside>
 
