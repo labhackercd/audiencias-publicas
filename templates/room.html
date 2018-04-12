@@ -137,7 +137,8 @@
         <div class="heightwrapper">
           <div class="ratiowrapper JS-videoFrame">
             {% include "includes/room_video.html" with object=object %}
-            <div class="info">
+          </div>
+          <div class="info">
               <span class="status">
                 {% if object.youtube_status == 0 %}
                   Transmissão Prevista
@@ -156,7 +157,6 @@
                 {% endif %}
               </span>
             </div>
-          </div>
         </div>
 
         <ul class="extras">
