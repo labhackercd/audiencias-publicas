@@ -286,7 +286,7 @@
         <div class="wrapper">
           <p class="info">Continue esta conversa <a href="#" class="link">aqui</a>.</p>
           <button class="aud-button -icon -edit JS-openModal" data-modal-target="editDiscussionLink"></button>
-          <button class="aud-button -icon -remove JS-openModal" data-modal-target="addDiscussionLinkDialog" data-dialog-action="AcaoLinkDiscussão"></button>
+          <button class="aud-button -icon -remove JS-openModal" data-modal-target="addDiscussionLinkDialog" data-dialog-action="{% url 'remove_external_link' object.id %}"></button>
         </div>
       </div>
     </aside>

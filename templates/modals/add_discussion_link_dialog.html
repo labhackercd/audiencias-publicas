@@ -1,8 +1,7 @@
 {% extends 'includes/modal.html' %}
 
 {% block content %}
-  <form  method="POST" action="{% url 'participants_notification' object.id %}">
-    {% csrf_token %}
+  <form>
     <h4>Deseja mesmo remover o link que dará continuidade à discussão do Bate-Papo?</h4>
     <button type="button" class="button JS-closeModal">Não</button>
     <a href="" class="button -negative JS-dialogAction">Sim</a>

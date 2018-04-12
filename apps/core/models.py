@@ -79,6 +79,8 @@ class Room(TimestampedMixin):
     max_online_users = models.IntegerField(_('max online users'), default=0)
     views = models.IntegerField(_('views'), default=0)
     is_visible = models.BooleanField(_('is visible'), default=False)
+    external_link = models.URLField(verbose_name=_('link'), null=True,
+                                    blank=True)
 
     class Meta:
         verbose_name = _('room')
