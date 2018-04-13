@@ -85,8 +85,16 @@
     background-color: $color-edem-main;
     overflow-x: auto;
 
+    @include bp-largedown {
+      padding: 0.75rem;
+    }
+
     > * + * {
       margin-left: 1rem;
+
+      @include bp-largedown {
+        margin-left: 0.75rem;
+      }
     }
 
     > .extravideo {

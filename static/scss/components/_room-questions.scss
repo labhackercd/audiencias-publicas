@@ -29,7 +29,7 @@
     margin-bottom: 0.5rem;
 
     @include bp-largedown {
-      font-size: $font-size-deci;
+      font-size: $font-size-centi;
     }
   }
 }
