@@ -65,23 +65,3 @@
     padding: 0 .5em 0 1em;
   }
 }
-
-.unauthenticated,
-.closed {
-  display: flex;
-  flex: 1 0 5rem;
-  height: 5rem;
-  align-items: center;
-  justify-content: center;
-  background-color: $color-primary;
-
-  span {
-    font-size: 1em;
-    font-weight: $font-weight-semi-bold;
-    padding: .5em;
-  }
-
-  a {
-    color: $color-primary-xxlight;
-  }
-}

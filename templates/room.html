@@ -108,7 +108,7 @@
             <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
           </div>
         {% elif object.youtube_status == 2 %}
-          <div class="closed">
+          <div class="question-action">
             <span>Audiência encerrada para participações.</span>
           </div>
         {% endif %}
@@ -274,9 +274,7 @@
         {% elif object.youtube_status != 2 and not user.is_authenticated %}
           <p class="info"><a class="link" href="/home/?next={{ request.path }}">Faça Login</a> para participar no chat!</p>
         {% elif object.youtube_status == 2 %}
-          <div class="closed">
-            <span>Audiência encerrada para participações.</span>
-          </div>
+          <p class="info">Audiência encerrada para participações.</p>
         {% endif %}
 
         <p class="info">O bate-papo se encerrará em <span class="time JS-countdownTimer"><span class="JS-countdownMinutes">00</span>:<span class="JS-countdownSeconds">00</span></span>.</p>
