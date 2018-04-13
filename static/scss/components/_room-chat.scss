@@ -31,6 +31,10 @@
     padding: 1em;
     text-align: center;
 
+    &.-closed {
+      background-color: hsl(0,0,50%);
+    }
+
     &.-visible {
       transform: translateY(-100%);
     }

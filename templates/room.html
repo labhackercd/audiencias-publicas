@@ -84,32 +84,32 @@
           <button class="read-more JS-readMoreQuestion"></button>
         </div>
         {% if object.youtube_status != 2 and user.is_authenticated %}
-          <div class="question-action">
+          <div class="action-footer">
             <button class="JS-openQuestionForm">Fazer uma pergunta</button>
-          </div>
-          <form class="question-box JS-formQuestion" id="questionform">
-            <div class="header">
-              <div class="counter JS-character-counter">
-                <span class="actual-length JS-characterCounterAtualLength">0</span>
-                /
-                <span class="max-length">300</span>
+            <form class="question-box JS-formQuestion" id="questionform">
+              <div class="header">
+                <div class="counter JS-character-counter">
+                  <span class="actual-length JS-characterCounterAtualLength">0</span>
+                  /
+                  <span class="max-length">300</span>
+                </div>
+                <button type="button" class="close JS-closeQuestionForm" title="Cancelar pergunta">Cancelar pergunta</button>
               </div>
-              <button type="button" class="close JS-closeQuestionForm" title="Cancelar pergunta">Cancelar pergunta</button>
-            </div>
-            <textarea class="input JS-formInputQuestion" id="question" name="question" placeholder="Digite aqui sua pergunta" maxlength="300" autocomplete="off" required=""></textarea>
-            <div class="actions">
-              <button class="button submit">
-                <span class="text">Enviar pergunta</span>
-              </button>
-            </div>
-          </form>
+              <textarea class="input JS-formInputQuestion" id="question" name="question" placeholder="Digite aqui sua pergunta" maxlength="300" autocomplete="off" required=""></textarea>
+              <div class="actions">
+                <button class="button submit">
+                  <span class="text">Enviar pergunta</span>
+                </button>
+              </div>
+            </form>
+          </div>
         {% elif object.youtube_status != 2 and not user.is_authenticated %}
-          <div class="question-action">
+          <div class="action-footer">
             <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
           </div>
         {% elif object.youtube_status == 2 %}
-          <div class="question-action">
-            <span>Audiência encerrada para participações.</span>
+          <div class="action-footer -closed">
+            <p class="info">Audiência encerrada para participações.</p>
           </div>
         {% endif %}
     </aside>
@@ -263,7 +263,7 @@
 
       </div>
 
-      <div class="controls">
+      <div class="action-footer {% if object.youtube_status == 2 %}-closed{% endif %}">
         {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="form JS-formChat" id="chatform">
             <textarea class="input JS-formInputChat" id="message" name="message" placeholder="Digite mensagens do bate-papo aqui" autocomplete="off" required></textarea>
