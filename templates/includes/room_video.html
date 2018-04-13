@@ -29,8 +29,7 @@
         }
       </script>
   {% else %}
-    <div class="video--empty">
-      <img class="video--empty__icon" src="{% static 'img/calendar-book.svg' %}" data-fallback="{% static 'img/calendar-book.png' %}">
-      <p class="video--empty__message">Transmissão prevista para <span class="video--empty__date">{{object.date}}</span>.</p>
+    <div class="video -empty">
+      <p>Transmissão prevista para <span class="date">{{object.date}}</span>.</p>
     </div>
   {% endif %}
