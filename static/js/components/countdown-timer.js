@@ -1,9 +1,10 @@
-function countdownTimerComponent() {
-
+function countdownTimerComponent(closeForm) {
+  
   const elements = {
     $countdownTimer: $('.JS-countdownTimer'),
     $countdownMinutes: $('.JS-countdownMinutes'),
-    $countdownSeconds: $('.JS-countdownSeconds')
+    $countdownSeconds: $('.JS-countdownSeconds'),
+    $countdown: $('.JS-countdown')
   }
 
   function getTimeRemaining(totalTimeInSeconds) {
@@ -29,6 +30,8 @@ function countdownTimerComponent() {
       if (t.total <= 0) {
         elements.$countdownTimer.removeClass('-finishing').addClass('-done')
         clearInterval(timeinterval);
+        closeForm();
+        elements.$countdown.removeClass('-show');
 
       } else if (t.total <= 60) {
         elements.$countdownTimer.removeClass('-halfway').addClass('-finishing');

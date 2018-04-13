@@ -84,7 +84,7 @@
           <button class="read-more JS-readMoreQuestion"></button>
         </div>
         {% if object.youtube_status != 2 and user.is_authenticated %}
-          <div class="action-footer">
+          <div class="action-footer JS-questionAction">
             <button class="JS-openQuestionForm">Fazer uma pergunta</button>
             <form class="question-box JS-formQuestion" id="questionform">
               <div class="header">
@@ -104,11 +104,11 @@
             </form>
           </div>
         {% elif object.youtube_status != 2 and not user.is_authenticated %}
-          <div class="action-footer">
+          <div class="action-footer JS-questionAction">
             <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
           </div>
         {% elif object.youtube_status == 2 %}
-          <div class="action-footer -closed">
+          <div class="action-footer -closed JS-questionAction">
             <p class="info">Audiência encerrada para participações.</p>
           </div>
         {% endif %}
@@ -277,7 +277,7 @@
           <p class="info">Audiência encerrada para participações.</p>
         {% endif %}
 
-        <p class="info">O bate-papo se encerrará em <span class="time JS-countdownTimer"><span class="JS-countdownMinutes">00</span>:<span class="JS-countdownSeconds">00</span></span>.</p>
+        <p class="countdown info JS-countdown">O bate-papo se encerrará em <span class="time JS-countdownTimer"><span class="JS-countdownMinutes">00</span>:<span class="JS-countdownSeconds">00</span></span>.</p>
         {% if object.external_link %}
           {% if user|belongs_to_group:object.legislative_body_initials %}
           <div class="wrapper">

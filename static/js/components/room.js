@@ -1,5 +1,5 @@
 /* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
-import sendFormHelper from '../helpers/send-form';
+import {sendQuestionFormHelper, sendChatFormHelper} from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 import characterCounterComponent from './character-counter';
 
@@ -243,8 +243,8 @@ function roomComponent(socket) {
   }
 
   function sendFormHelperInit() {
-    sendQuestionForm = sendFormHelper(elements.$wrapperQuestion);
-    sendChatForm = sendFormHelper(elements.$wrapperChat);
+    sendQuestionForm = sendQuestionFormHelper(elements.$wrapperQuestion);
+    sendChatForm = sendChatFormHelper(elements.$wrapperChat);
   }
 
   const events = {

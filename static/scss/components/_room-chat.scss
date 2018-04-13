@@ -63,6 +63,24 @@
       font-size: $font-size-base;
     }
 
+    > .link {
+      cursor: pointer;
+      color: rgba(#fff, 0.9);
+      text-decoration: underline;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  > .controls > .countdown {
+    display: none;
+
+    &.-show {
+      display: block;
+    }
+
     > .time {
     color: #fff;
       font-weight: $font-weight-bold;
@@ -77,16 +95,6 @@
 
       &.-done {
         color: inherit;
-      }
-    }
-
-    > .link {
-      cursor: pointer;
-      color: rgba(#fff, 0.9);
-      text-decoration: underline;
-
-      &:hover {
-        color: #fff;
       }
     }
   }
