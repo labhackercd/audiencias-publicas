@@ -210,9 +210,6 @@
 </main>
 {% endblock %}
 
-{% block footer %}
-{% endblock footer %}
-
 {% block extra_js %}
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
   <script type="text/javascript">
@@ -263,7 +260,7 @@
         {% endfor %}
       ]
       var HANDLER_ADMIN = {{user.profile.is_admin|lower|default:'false'}};
-      
+
       function loginRedirect() {
         var next = "{{request.path}}";
         var login_url = "/widget/login/";
