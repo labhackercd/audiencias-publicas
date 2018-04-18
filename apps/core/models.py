@@ -81,6 +81,7 @@ class Room(TimestampedMixin):
     is_visible = models.BooleanField(_('is visible'), default=False)
     external_link = models.URLField(verbose_name=_('link'), null=True,
                                     blank=True)
+    closed_time = models.DateTimeField(_('closed time'), null=True, blank=True)
 
     class Meta:
         verbose_name = _('room')
@@ -242,6 +243,9 @@ def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
     if instance.youtube_status in [2, 3]:
         is_closed = True
+        if not instance.closed_time:
+            instance.closed_time = timezone.now()
+            instance.save()
     instance.send_notification(is_closed=is_closed)
 
 
