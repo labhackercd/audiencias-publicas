@@ -171,8 +171,10 @@ function roomComponent(socket) {
     if (questionlistIsEmpty) elements.$questionlistEmpty.remove();
     if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
-    if (message.data === 'closed') {
-      sendChatForm.close();
+    const data = JSON.parse(message.data);
+    
+    if (data.closed) {
+      sendChatForm.close(data.time_to_close);
       sendQuestionForm.close();
       elements.$shareListOpenBtn.remove();
       elements.$voteBtn.addClass('disabled');
@@ -180,8 +182,6 @@ function roomComponent(socket) {
       elements.$totalVotes.addClass('voted disabled');
       return;
     }
-
-    const data = JSON.parse(message.data);
 
     if (data.video) {
         elements.$videoFrame.html(data.html);

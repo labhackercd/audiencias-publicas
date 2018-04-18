@@ -259,18 +259,18 @@
 
       </div>
 
-      <div class="action-footer {% if object.youtube_status == 2 %}-closed{% endif %} JS-chatFooter">
-        {% if object.youtube_status != 2 and user.is_authenticated %}
+      <div class="action-footer {% if object.youtube_status == 2 and not object.time_to_close %}-closed{% endif %} JS-chatFooter">
+        {% if object.youtube_status != 2 and user.is_authenticated or object.youtube_status == 2 and object.time_to_close > 0 and user.is_authenticated %}
           <form class="form JS-formChat" id="chatform">
             <textarea class="input JS-formInputChat" id="message" name="message" placeholder="Digite mensagens do bate-papo aqui" autocomplete="off" required></textarea>
             <div class="actions">
               <button class="button" id="go" title="Enviar">Enviar</button>
             </div>
           </form>
-        {% elif object.youtube_status != 2 and not user.is_authenticated %}
-          <p class="info"><a class="link" href="/home/?next={{ request.path }}">Faça Login</a> para participar no chat!</p>
-        {% elif object.youtube_status == 2 %}
+        {% elif object.youtube_status == 2 and not object.time_to_close %}
           <p class="info">Audiência encerrada.</p>
+        {% elif not user.is_authenticated %}
+          <p class="info"><a class="link" href="/home/?next={{ request.path }}">Faça Login</a> para participar no chat!</p>
         {% endif %}
 
         <p class="countdown info JS-countdown">O bate-papo se encerrará em <span class="time JS-countdownTimer"><span class="JS-countdownMinutes">00</span>:<span class="JS-countdownSeconds">00</span></span>.</p>
@@ -322,7 +322,6 @@
 {% endblock extra_js %}
 
 {% block websockets %}
-  {% if object.youtube_status != 2 or user|belongs_to_group:object.legislative_body_initials %}
     <script>
       var HANDLER = "{{handler|default:''}}";
       var HANDLER_GROUPS = [
@@ -340,8 +339,7 @@
 
       var roomApiUrl = "{% url 'room_detail_api' pk=object.id %}";
     </script>
-    {% compress js %}
-      <script type="text/es6" src="{% static 'js/pages/room.js' %}"></script>
-    {% endcompress %}
-  {% endif %}
+  {% compress js %}
+    <script type="text/es6" src="{% static 'js/pages/room.js' %}"></script>
+  {% endcompress %}
 {% endblock %}

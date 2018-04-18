@@ -16,13 +16,15 @@ function sendChatFormHelper($wrapper) {
   }
 
   function closeForm(){
-    createClosedFormEl();
-    elements.$form.remove();
+    if(!elements.$chatFooter.hasClass('-closed')){
+      createClosedFormEl();
+      elements.$form.remove();
+    }
   }
 
-  function showCountdown(){
+  function showCountdown(time){
     elements.$countdown.addClass('-show');
-    countdownTimerComponent(closeForm);
+    countdownTimerComponent(time, closeForm);
   }
 
   function formIsBlank() {
@@ -67,8 +69,10 @@ function sendQuestionFormHelper($wrapper) {
   }
 
   function closeForm() {
-    createClosedFormEl();
-    elements.$form.remove();
+    if(!elements.$questionFooter.hasClass('-closed')){  
+      createClosedFormEl();
+      elements.$form.remove();
+    }
   }
 
   function formIsBlank() {

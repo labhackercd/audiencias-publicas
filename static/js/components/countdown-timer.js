@@ -1,4 +1,4 @@
-function countdownTimerComponent(closeForm) {
+function countdownTimerComponent(time, closeForm) {
   
   const elements = {
     $countdownTimer: $('.JS-countdownTimer'),
@@ -7,25 +7,25 @@ function countdownTimerComponent(closeForm) {
     $countdown: $('.JS-countdown')
   }
 
-  function getTimeRemaining(totalTimeInSeconds) {
-    var seconds = Math.floor(totalTimeInSeconds % 60);
-    var minutes = Math.floor(totalTimeInSeconds / 60);
+  function getTimeRemaining(time) {
+    var seconds = Math.floor(time % 60);
+    var minutes = Math.floor(time / 60);
     return {
-      'total' : totalTimeInSeconds,
+      'total' : time,
       'minutes': minutes,
       'seconds': seconds
     };
   }
 
-  function initializeClock(totalTimeInSeconds) {
+  function initializeClock(time) {
 
     function updateClock() {
-      var t = getTimeRemaining(totalTimeInSeconds);
+      var t = getTimeRemaining(time);
 
       elements.$countdownMinutes.html(('0' + t.minutes).slice(-2));
       elements.$countdownSeconds.html(('0' + t.seconds).slice(-2));
 
-      totalTimeInSeconds--
+      time--
 
       if (t.total <= 0) {
         elements.$countdownTimer.removeClass('-finishing').addClass('-done')
@@ -45,10 +45,8 @@ function countdownTimerComponent(closeForm) {
     var timeinterval = setInterval(updateClock, 1000);
   }
 
-  var totalTimeInSeconds = 0.1 * 60;
-
   (function init() {
-    initializeClock(totalTimeInSeconds);
+    initializeClock(time);
   }());
 }
 
