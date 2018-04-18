@@ -83,8 +83,8 @@
           </ul>
           <button class="read-more JS-readMoreQuestion"></button>
         </div>
-        {% if object.youtube_status != 2 and user.is_authenticated %}
-          <div class="action-footer JS-questionAction">
+        <div class="action-footer {% if object.youtube_status == 2 %}-closed{% endif %} JS-questionFooter">
+          {% if object.youtube_status != 2 and user.is_authenticated %}
             <button class="JS-openQuestionForm">Fazer uma pergunta</button>
             <form class="question-box JS-formQuestion" id="questionform">
               <div class="header">
@@ -102,16 +102,12 @@
                 </button>
               </div>
             </form>
-          </div>
         {% elif object.youtube_status != 2 and not user.is_authenticated %}
-          <div class="action-footer JS-questionAction">
-            <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
-          </div>
+          <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
         {% elif object.youtube_status == 2 %}
-          <div class="action-footer -closed JS-questionAction">
-            <p class="info">Audiência encerrada para participações.</p>
-          </div>
+          <p class="info">Audiência encerrada para participações.</p>
         {% endif %}
+        </div>
     </aside>
 
     <main class="room-main">
@@ -263,7 +259,7 @@
 
       </div>
 
-      <div class="action-footer {% if object.youtube_status == 2 %}-closed{% endif %}">
+      <div class="action-footer {% if object.youtube_status == 2 %}-closed{% endif %} JS-chatFooter">
         {% if object.youtube_status != 2 and user.is_authenticated %}
           <form class="form JS-formChat" id="chatform">
             <textarea class="input JS-formInputChat" id="message" name="message" placeholder="Digite mensagens do bate-papo aqui" autocomplete="off" required></textarea>
@@ -274,7 +270,7 @@
         {% elif object.youtube_status != 2 and not user.is_authenticated %}
           <p class="info"><a class="link" href="/home/?next={{ request.path }}">Faça Login</a> para participar no chat!</p>
         {% elif object.youtube_status == 2 %}
-          <p class="info">Audiência encerrada para participações.</p>
+          <p class="info">Audiência encerrada.</p>
         {% endif %}
 
         <p class="countdown info JS-countdown">O bate-papo se encerrará em <span class="time JS-countdownTimer"><span class="JS-countdownMinutes">00</span>:<span class="JS-countdownSeconds">00</span></span>.</p>

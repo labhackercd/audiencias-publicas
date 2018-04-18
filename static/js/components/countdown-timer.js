@@ -45,7 +45,7 @@ function countdownTimerComponent(closeForm) {
     var timeinterval = setInterval(updateClock, 1000);
   }
 
-  var totalTimeInSeconds = 15 * 60;
+  var totalTimeInSeconds = 0.1 * 60;
 
   (function init() {
     initializeClock(totalTimeInSeconds);

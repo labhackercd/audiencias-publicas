@@ -7,19 +7,12 @@ function sendChatFormHelper($wrapper) {
     $formInput: $wrapper.find('.input'),
     $formBtn: $wrapper.find('.button'),
     $countdown: $wrapper.find('.JS-countdown'),
+    $chatFooter: $wrapper.find('.JS-chatFooter'),
   };
 
   function createClosedFormEl() {
-    const closedFormEl = document.createElement('div');
-    const closedFormSpanEl = document.createElement('span');
-
-    closedFormEl.className = 'closed';
-    closedFormSpanEl.innerHTML = 'Audiência encerrada para participações.';
-    closedFormEl.appendChild(closedFormSpanEl);
-
-    if(!elements.$wrapper[0].querySelector(".closed")){
-      elements.$wrapper[0].appendChild(closedFormEl);
-    }
+    elements.$chatFooter.addClass('-closed');
+    elements.$chatFooter.prepend('<p class="info">Audiência encerrada.</p>');
   }
 
   function closeForm(){
@@ -65,26 +58,17 @@ function sendQuestionFormHelper($wrapper) {
     $form: $wrapper.find('.JS-formQuestion'),
     $formInput: $wrapper.find('.send-form__input'),
     $formBtn: $wrapper.find('.actions__button'),
-    $questionAction: $wrapper.find('.JS-questionAction'),
+    $questionFooter: $wrapper.find('.JS-questionFooter'),
   };
 
   function createClosedFormEl() {
-    const closedFormEl = document.createElement('div');
-    const closedFormSpanEl = document.createElement('span');
-
-    closedFormEl.className = 'closed';
-    closedFormSpanEl.innerHTML = 'Audiência encerrada para participações.';
-    closedFormEl.appendChild(closedFormSpanEl);
-
-    if(!elements.$wrapper[0].querySelector(".closed")){
-      elements.$wrapper[0].appendChild(closedFormEl);
-    }
+    elements.$questionFooter.addClass('-closed');
+    elements.$questionFooter.html('<p class="info">Audiência encerrada.</p>');
   }
 
   function closeForm() {
     createClosedFormEl();
     elements.$form.remove();
-    elements.$questionAction.remove();
   }
 
   function formIsBlank() {
