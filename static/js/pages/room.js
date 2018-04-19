@@ -5,7 +5,6 @@ import characterCounterComponent from '../components/character-counter';
 import onlineUsersComponent from '../components/online-users';
 import roomVideosComponent from '../components/room-videos';
 import modalsComponent from '../components/modals';
-import countdownTimerComponent from '../components/countdown-timer';
 import toggleAudButtonComponent from '../components/toggle-aud-button';
 
 
@@ -29,8 +28,6 @@ characterCounterComponent().init();
 roomVideosComponent();
 
 modalsComponent();
-
-countdownTimerComponent();
 
 toggleAudButtonComponent();
 

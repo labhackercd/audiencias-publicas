@@ -1,5 +1,5 @@
 /* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
-import sendFormHelper from '../helpers/send-form';
+import {sendQuestionFormHelper, sendChatFormHelper} from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 import characterCounterComponent from './character-counter';
 
@@ -171,8 +171,10 @@ function roomComponent(socket) {
     if (questionlistIsEmpty) elements.$questionlistEmpty.remove();
     if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
-    if (message.data === 'closed') {
-      sendChatForm.close();
+    const data = JSON.parse(message.data);
+    
+    if (data.closed) {
+      sendChatForm.close(data.time_to_close);
       sendQuestionForm.close();
       elements.$shareListOpenBtn.remove();
       elements.$voteBtn.addClass('disabled');
@@ -180,8 +182,6 @@ function roomComponent(socket) {
       elements.$totalVotes.addClass('voted disabled');
       return;
     }
-
-    const data = JSON.parse(message.data);
 
     if (data.video) {
         elements.$videoFrame.html(data.html);
@@ -243,8 +243,8 @@ function roomComponent(socket) {
   }
 
   function sendFormHelperInit() {
-    sendQuestionForm = sendFormHelper(elements.$wrapperQuestion);
-    sendChatForm = sendFormHelper(elements.$wrapperChat);
+    sendQuestionForm = sendQuestionFormHelper(elements.$wrapperQuestion);
+    sendChatForm = sendChatFormHelper(elements.$wrapperChat);
   }
 
   const events = {

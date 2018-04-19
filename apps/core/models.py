@@ -81,6 +81,7 @@ class Room(TimestampedMixin):
     is_visible = models.BooleanField(_('is visible'), default=False)
     external_link = models.URLField(verbose_name=_('link'), null=True,
                                     blank=True)
+    closed_time = models.DateTimeField(_('closed time'), null=True, blank=True)
 
     class Meta:
         verbose_name = _('room')
@@ -105,6 +106,15 @@ class Room(TimestampedMixin):
             return True
         return False
 
+    def time_to_close(self):
+        if self.closed_time:
+            time = self.closed_time + datetime.timedelta(minutes=15)
+            time_to_close = time - timezone.now()
+            total_seconds = time_to_close.total_seconds()
+            if total_seconds >= 0:
+                return total_seconds
+        return False
+
     def get_absolute_url(self):
         return "%s/sala/%i" % (settings.FORCE_SCRIPT_NAME, self.pk)
 
@@ -122,7 +132,11 @@ class Room(TimestampedMixin):
             'is_closed': is_closed
         }
         if is_closed:
-            Group(self.group_room_name).send({'text': 'closed'})
+            text = {
+                'closed': True,
+                'time_to_close': self.time_to_close(),
+            }
+            Group(self.group_room_name).send({'text': json.dumps(text)})
         Group('home').send({'text': json.dumps(notification)})
 
     def send_video(self):
@@ -242,6 +256,9 @@ def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
     if instance.youtube_status in [2, 3]:
         is_closed = True
+        if not instance.closed_time:
+            instance.closed_time = timezone.now()
+            instance.save()
     instance.send_notification(is_closed=is_closed)
 
 
