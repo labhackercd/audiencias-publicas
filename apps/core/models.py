@@ -302,9 +302,10 @@ def room_pre_save(sender, instance, **kwargs):
                 instance.reunion_theme = theme
 
 
-def video_pre_save(sender, instance, **kwargs):
+def video_post_save(sender, instance, **kwargs):
     if not instance.is_attachment:
         instance.room.send_video()
+        instance.room.send_notification(is_closed=False)
 
 
 def vote_post_save(sender, instance, **kwargs):
@@ -319,4 +320,4 @@ models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
 models.signals.pre_save.connect(room_pre_save, sender=Room)
 models.signals.post_save.connect(room_post_save, sender=Room)
-models.signals.post_save.connect(video_pre_save, sender=Video)
+models.signals.post_save.connect(video_post_save, sender=Video)
