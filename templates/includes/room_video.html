@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-{% if object.youtube_id %}
+{% if object.latest_video %}
     <div class="video" id="player"></div>
     {# TODO FIXME #}
     <script type="text/javascript">
@@ -16,7 +16,7 @@
           player = new YT.Player('player', {
               height: '',
               width: '',
-              videoId: '{{object.youtube_id}}',
+              videoId: '{{object.latest_video.video_id}}',
               playerVars: {'rel': 0},
               events: {
                 'onReady': onPlayerReady

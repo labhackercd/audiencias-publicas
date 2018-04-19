@@ -113,6 +113,12 @@ class Room(TimestampedMixin):
                 return total_seconds
         return False
 
+    def latest_video(self):
+        if self.videos:
+            latest = self.videos.latest('created')
+            return latest
+        return False
+
     def get_absolute_url(self):
         return "%s/sala/%i" % (settings.FORCE_SCRIPT_NAME, self.pk)
 
@@ -293,14 +299,12 @@ def room_pre_save(sender, instance, **kwargs):
                     theme = re.findall(r'“(.*?)”', theme)[0]
                 elif theme.startswith("'"):
                     theme = re.findall(r"'(.*?)'", theme)[0]
-
                 instance.reunion_theme = theme
-    try:
-        obj = sender.objects.get(pk=instance.pk)
-        if instance.youtube_id != obj.youtube_id:
-            instance.send_video()
-    except sender.DoesNotExist:
-        pass
+
+
+def video_pre_save(sender, instance, **kwargs):
+    if not instance.is_attachment:
+        instance.room.send_video()
 
 
 def vote_post_save(sender, instance, **kwargs):
@@ -315,3 +319,4 @@ models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
 models.signals.pre_save.connect(room_pre_save, sender=Room)
 models.signals.post_save.connect(room_post_save, sender=Room)
+models.signals.post_save.connect(video_pre_save, sender=Video)

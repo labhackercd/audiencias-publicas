@@ -3,6 +3,10 @@ from apps.core.models import (Message, Question, UpDownVote, Room,
                               RoomAttachment, Video)
 
 
+class VideoInline(admin.TabularInline):
+    model = Video
+
+
 class RoomAdmin(admin.ModelAdmin):
     list_display = (
         'title_reunion', 'legislative_body_alias',
@@ -12,6 +16,7 @@ class RoomAdmin(admin.ModelAdmin):
     search_fields = (
         'title_reunion', 'legislative_body_initials', 'legislative_body_alias',
         'legislative_body', 'location', 'cod_reunion', 'reunion_object')
+    inlines = (VideoInline, )
 
 
 class MessageAdmin(admin.ModelAdmin):

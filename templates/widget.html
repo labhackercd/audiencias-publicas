@@ -228,7 +228,7 @@
       player = new YT.Player('player', {
           height: '',
           width: '',
-          videoId: '{{object.youtube_id}}',
+          videoId: '{{object.latest_video.video_id}}',
           events: {
             'onReady': onPlayerReady
           }

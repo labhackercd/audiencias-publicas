@@ -1,9 +1,9 @@
 {% load video_utils %}
 
-{% if room.is_visible and room.youtube_id %}
+{% if room.is_visible and room.latest_video %}
   <li class="list__video" data-video-id="{{room.id}}">
 		<a class="video__link" href="{{room.get_absolute_url}}">
-		  <img class="video__thumbnail" src="https://i.ytimg.com/vi/{{room.youtube_id}}/mqdefault_live.jpg">
+		  <img class="video__thumbnail" src="https://i.ytimg.com/vi/{{room.latest_video.video_id}}/mqdefault_live.jpg">
 		</a>
 		  <a class="title__link" href="{{room.get_absolute_url}}">
 			  {% if room.reunion_theme %}
