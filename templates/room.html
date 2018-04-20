@@ -319,6 +319,23 @@
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/components/read-more-less.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/components/share-buttons.js' %}"></script>
+  <script src='https://www.youtube.com/iframe_api' async></script>
+  <script>
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '',
+          width: '',
+          videoId: '{{object.latest_video.video_id}}',
+          events: {
+            'onReady': onPlayerReady,
+          }
+        });
+      }
+      function onPlayerReady(event) {
+       event.target.playVideo();
+      }
+  </script>
 {% endblock extra_js %}
 
 {% block websockets %}

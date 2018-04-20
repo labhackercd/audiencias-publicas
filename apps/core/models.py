@@ -143,15 +143,6 @@ class Room(TimestampedMixin):
             Group(self.group_room_name).send({'text': json.dumps(text)})
         Group('home').send({'text': json.dumps(notification)})
 
-    def send_video(self):
-        text = {
-            'video': True,
-            'html': self.html_room_video(),
-        }
-        Group(self.group_room_name).send(
-            {'text': json.dumps(text)}
-        )
-
     @property
     def group_room_name(self):
         return "room-%s" % self.id
@@ -270,6 +261,17 @@ class Video(TimestampedMixin):
     def __str__(self):
         return self.room.__str__()
 
+    def send_video(self):
+        text = {
+            'video': True,
+            'is_attachment': self.is_attachment,
+            'video_id': self.video_id,
+            'html': self.room.html_room_video(),
+        }
+        Group(self.room.group_room_name).send(
+            {'text': json.dumps(text)}
+        )
+
 
 def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
@@ -309,7 +311,7 @@ def video_post_save(sender, instance, **kwargs):
             'html': instance.room.html_body(),
         }
         Group('home').send({'text': json.dumps(notification)})
-        instance.room.send_video()
+        instance.send_video()
 
 
 def vote_post_save(sender, instance, **kwargs):

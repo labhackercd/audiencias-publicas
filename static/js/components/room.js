@@ -165,6 +165,22 @@ function roomComponent(socket) {
     }
   }
 
+  function playYoutubeVideo(video_id){
+    var player = new YT.Player('player', {
+        height: '',
+        width: '',
+        videoId: video_id,
+        playerVars: {'rel': 0},
+        events: {
+          'onReady': onPlayerReady
+        }
+    });
+
+    function onPlayerReady(event) {
+       event.target.playVideo();
+    }
+  }
+
   function evaluateSocketMessage(message) {
     const questionlistIsEmpty = elements.$questionlistEmpty.length;
     const messagesListIsEmpty = elements.$messagesListEmpty.length;
@@ -185,6 +201,9 @@ function roomComponent(socket) {
 
     if (data.video) {
         elements.$videoFrame.html(data.html);
+        if(!data.is_attachment) {
+          playYoutubeVideo(data.video_id);
+        }
     } else if (data.question) {
         const $existingQuestion = $(`[data-question-id=${data.id}]`);
         const questionExists = $existingQuestion.length;
