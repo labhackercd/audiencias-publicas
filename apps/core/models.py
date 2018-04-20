@@ -304,8 +304,12 @@ def room_pre_save(sender, instance, **kwargs):
 
 def video_post_save(sender, instance, **kwargs):
     if not instance.is_attachment:
+        notification = {
+            'id': instance.room.id,
+            'html': instance.room.html_body(),
+        }
+        Group('home').send({'text': json.dumps(notification)})
         instance.room.send_video()
-        instance.room.send_notification(is_closed=False)
 
 
 def vote_post_save(sender, instance, **kwargs):
