@@ -115,9 +115,15 @@ class Room(TimestampedMixin):
 
     def latest_video(self):
         if self.videos:
-            latest = self.videos.latest('created')
+            latest = self.videos.filter(is_attachment=False).latest('created')
             return latest
         return False
+
+    def get_main_videos(self):
+        return self.videos.filter(is_attachment=False)
+
+    def get_attachment_videos(self):
+        return self.videos.filter(is_attachment=True)
 
     def get_absolute_url(self):
         return "%s/sala/%i" % (settings.FORCE_SCRIPT_NAME, self.pk)
@@ -280,6 +286,7 @@ def room_post_save(sender, instance, created, **kwargs):
         if not instance.closed_time:
             instance.closed_time = timezone.now()
             instance.save()
+        instance.latest_video().send_video()
     instance.send_notification(is_closed=is_closed)
 
 
@@ -305,13 +312,13 @@ def room_pre_save(sender, instance, **kwargs):
 
 
 def video_post_save(sender, instance, **kwargs):
+    notification = {
+        'id': instance.room.id,
+        'html': instance.room.html_body(),
+    }
+    instance.send_video()
     if not instance.is_attachment:
-        notification = {
-            'id': instance.room.id,
-            'html': instance.room.html_body(),
-        }
         Group('home').send({'text': json.dumps(notification)})
-        instance.send_video()
 
 
 def vote_post_save(sender, instance, **kwargs):

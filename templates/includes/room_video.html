@@ -1,9 +1,77 @@
 {% load staticfiles %}
 
-{% if object.latest_video %}
-  <div class="video" id="player"></div>
-{% else %}
-  <div class="video -empty">
-    <p>Transmissão prevista para <span class="date">{{object.date}}</span>.</p>
+<div class="room-title">
+  <h1 class="title">
+    {% if object.reunion_theme %}
+      {{object.reunion_theme}}
+    {% else %}
+      {% if object.is_joint %}
+        {{object.title_reunion}}
+      {% else %}
+        {{object.legislative_body_alias}}
+      {% endif %}
+    {% endif %}
+  </h1>
+  <div class="info">
+    <span>{{object.reunion_type}}</span>
+    <span>{{object.date}}</span>
   </div>
-{% endif %}
+</div>
+
+<div class="heightwrapper">
+  <div class="ratiowrapper">
+    {% if object.latest_video %}
+      <div class="video" id="player"></div>
+    {% else %}
+      <div class="video -empty">
+        <p>Transmissão prevista para <span class="date">{{object.date}}</span>.</p>
+      </div>
+    {% endif %}
+  </div>
+  <div class="info">
+    <span class="status">
+      {% if object.youtube_status == 0 %}
+        Transmissão Prevista
+      {% elif object.youtube_status == 1 %}
+        <span class="live-icon"></span> Ao Vivo
+      {% else %}
+        Transmissão Encerrada (Gravado)
+      {% endif %}
+    </span>
+
+    <span class="visitors">
+      {% if object.youtube_status == 1 %}
+        <span class="numbers" id="online-users">{{object.online_users}}</span> pessoas na sala
+      {% else %}
+        <span class="numbers">{{object.views}}</span> visitantes
+      {% endif %}
+    </span>
+  </div>
+</div>
+
+<ul class="extras">
+  {% for main_video in object.get_main_videos %}
+    <li class="extravideo JS-selectVideo -current">
+      <div class="wrapper">
+        <img class="thumbnail" src="https://i.ytimg.com/vi/{{main_video.video_id}}/default.jpg">
+        <span class="label">Transmissão</span>
+      </div>
+      <span class="title">{{main_video.title|default_if_none:""}}</span>
+    </li>
+  {% endfor %}
+  {% for attachment_video in object.get_attachment_videos %}
+    <li class="extravideo JS-selectVideo">
+      <div class="wrapper">
+        <img class="thumbnail" src="https://i.ytimg.com/vi/{{attachment_video.video_id}}/default.jpg">
+        <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo1"></button>
+        <button class="aud-button -icon -edit -active JS-openModal" data-modal-target="editVideo"></button>
+        <button class="aud-button -icon -left"></button>
+        <button class="aud-button -icon -right"></button>
+      </div>
+      <span class="title">{{attachment_video.title|default_if_none:""}}</span>
+    </li>
+  {% endfor %}
+</ul>
+
+<button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
+<button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
