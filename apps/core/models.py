@@ -325,6 +325,16 @@ def video_post_save(sender, instance, **kwargs):
         Group('home').send({'text': json.dumps(notification)})
 
 
+def video_post_delete(sender, instance, **kwargs):
+    text = {
+        'video': True,
+        'thumbs_html': instance.room.html_room_thumbnails(),
+    }
+    Group(instance.room.group_room_name).send(
+        {'text': json.dumps(text)}
+    )
+
+
 def vote_post_save(sender, instance, **kwargs):
     instance.question.send_notification(instance.user)
 
@@ -338,3 +348,4 @@ models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
 models.signals.pre_save.connect(room_pre_save, sender=Room)
 models.signals.post_save.connect(room_post_save, sender=Room)
 models.signals.post_save.connect(video_post_save, sender=Video)
+models.signals.post_delete.connect(video_post_delete, sender=Video)
