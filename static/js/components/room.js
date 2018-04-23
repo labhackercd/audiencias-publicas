@@ -36,6 +36,7 @@ function roomComponent(socket) {
     $formChat: $('.JS-formChat'),
     $formInputChat: $('.JS-formInputChat'),
     $videoFrame: $('.JS-videoFrame'),
+    $thumbList: $('.JS-thumbList'),
     $priorityCheckbox: $('.JS-priorityCheckbox'),
     $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
     $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
@@ -200,10 +201,11 @@ function roomComponent(socket) {
     }
 
     if (data.video) {
-        elements.$videoFrame.html(data.html);
-        if(!data.is_attachment) {
-          playYoutubeVideo(data.video_id);
-        }
+      if(!data.is_attachment) {
+        elements.$videoFrame.html(data.video_html);
+        playYoutubeVideo(data.video_id);
+      }
+      elements.$thumbList.html(data.thumbs_html);
     } else if (data.question) {
         const $existingQuestion = $(`[data-question-id=${data.id}]`);
         const questionExists = $existingQuestion.length;

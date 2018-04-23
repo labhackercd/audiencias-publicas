@@ -112,8 +112,56 @@
 
     <main class="room-main">
 
-      <div class="room-video JS-videoFrame">
-        {% include "includes/room_video.html" with object=object %}
+      <div class="room-video">
+        <div class="room-title">
+          <h1 class="title">
+            {% if object.reunion_theme %}
+              {{object.reunion_theme}}
+            {% else %}
+              {% if object.is_joint %}
+                {{object.title_reunion}}
+              {% else %}
+                {{object.legislative_body_alias}}
+              {% endif %}
+            {% endif %}
+          </h1>
+          <div class="info">
+            <span>{{object.reunion_type}}</span>
+            <span>{{object.date}}</span>
+          </div>
+        </div>
+
+        <div class="heightwrapper">
+          <div class="ratiowrapper JS-videoFrame">
+            {% include "includes/room_video.html" with object=object %}
+          </div>
+          <div class="info">
+            <span class="status">
+              {% if object.youtube_status == 0 %}
+                Transmissão Prevista
+              {% elif object.youtube_status == 1 %}
+                <span class="live-icon"></span> Ao Vivo
+              {% else %}
+                Transmissão Encerrada (Gravado)
+              {% endif %}
+            </span>
+
+            <span class="visitors">
+              {% if object.youtube_status == 1 %}
+                <span class="numbers" id="online-users">{{object.online_users}}</span> pessoas na sala
+              {% else %}
+                <span class="numbers">{{object.views}}</span> visitantes
+              {% endif %}
+            </span>
+          </div>
+        </div>
+
+        <ul class="extras JS-thumbList">
+          {% include "includes/room_thumbs.html" with object=object %}
+        </ul>
+
+        <button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
+        <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
       </div>
       
       <div class="room-info JS-readMoreLess">
@@ -246,6 +294,7 @@
           height: '',
           width: '',
           videoId: '{{object.latest_video.video_id}}',
+          playerVars: {'rel': 0},
           events: {
             'onReady': onPlayerReady,
           }

@@ -1,0 +1,21 @@
+{% for main_video in object.get_main_videos %}
+  <li class="extravideo JS-selectVideo -current">
+    <div class="wrapper">
+      <img class="thumbnail" src="https://i.ytimg.com/vi/{{main_video.video_id}}/default.jpg">
+      <span class="label">Transmissão</span>
+    </div>
+    <span class="title">{{main_video.title|default_if_none:""}}</span>
+  </li>
+{% endfor %}
+{% for attachment_video in object.get_attachment_videos %}
+  <li class="extravideo JS-selectVideo">
+    <div class="wrapper">
+      <img class="thumbnail" src="https://i.ytimg.com/vi/{{attachment_video.video_id}}/default.jpg">
+      <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo1"></button>
+      <button class="aud-button -icon -edit -active JS-openModal" data-modal-target="editVideo"></button>
+      <button class="aud-button -icon -left"></button>
+      <button class="aud-button -icon -right"></button>
+    </div>
+    <span class="title">{{attachment_video.title|default_if_none:""}}</span>
+  </li>
+{% endfor %}

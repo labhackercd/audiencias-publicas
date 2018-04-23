@@ -120,7 +120,7 @@ class Room(TimestampedMixin):
         return False
 
     def get_main_videos(self):
-        return self.videos.filter(is_attachment=False)
+        return self.videos.filter(is_attachment=False).order_by('-created')
 
     def get_attachment_videos(self):
         return self.videos.filter(is_attachment=True)
@@ -133,6 +133,9 @@ class Room(TimestampedMixin):
 
     def html_room_video(self):
         return render_to_string('includes/room_video.html', {'object': self})
+
+    def html_room_thumbnails(self):
+        return render_to_string('includes/room_thumbs.html', {'object': self})
 
     def send_notification(self, deleted=False, is_closed=False):
         notification = {
@@ -272,7 +275,8 @@ class Video(TimestampedMixin):
             'video': True,
             'is_attachment': self.is_attachment,
             'video_id': self.video_id,
-            'html': self.room.html_room_video(),
+            'video_html': self.room.html_room_video(),
+            'thumbs_html': self.room.html_room_thumbnails(),
         }
         Group(self.room.group_room_name).send(
             {'text': json.dumps(text)}
