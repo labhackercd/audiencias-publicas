@@ -2,7 +2,7 @@
 {% load staticfiles compress %}
 
 {% block metadata %}
-  <meta property="og:title" content="{{object.legislative_body_alias}}" />
+  <meta property="og:title" content="{{object.title_reunion}}" />
   <meta property="og:site_name" content="Audiências Interativas" />
   <meta property="og:description" content="{{ object.reunion_object }}" />
   <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/share-image.jpg' %}" />
@@ -112,11 +112,7 @@
             {% if object.reunion_theme %}
               {{object.reunion_theme}}
             {% else %}
-              {% if obcject.is_joint %}
-                {{object.title_reunion}}
-              {% else %}
-                {{object.legislative_body_alias}}
-              {% endif %}
+              {{object.title_reunion}}
             {% endif %}
           </h1>
         </div>

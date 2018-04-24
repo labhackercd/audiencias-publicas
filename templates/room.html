@@ -4,7 +4,7 @@
 {% block metadata %}
   <title>{% block title %}Audiências Interativas{% endblock title%}</title>
   <meta name="description" content="{{ object.reunion_object }}">
-  <meta property="og:title" content="{{object.legislative_body_alias}}">
+  <meta property="og:title" content="{{object.title_reunion}}">
   <meta property="og:site_name" content="Audiências Interativas">
   <meta property="og:description" content="{{ object.reunion_object }}">
   <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/facebook-share-image.jpg' %}">
@@ -34,11 +34,7 @@
         {% if object.reunion_theme %}
           {{object.reunion_theme}}
         {% else %}
-          {% if object.is_joint %}
-            {{object.title_reunion}}
-          {% else %}
-            {{object.legislative_body_alias}}
-          {% endif %}
+          {{object.title_reunion}}
         {% endif %}
       </h1>
       <div class="info">
@@ -118,11 +114,7 @@
             {% if object.reunion_theme %}
               {{object.reunion_theme}}
             {% else %}
-              {% if object.is_joint %}
-                {{object.title_reunion}}
-              {% else %}
-                {{object.legislative_body_alias}}
-              {% endif %}
+              {{object.title_reunion}}
             {% endif %}
           </h1>
           <div class="info">
@@ -155,10 +147,11 @@
             </span>
           </div>
         </div>
-
+        {% if object.videos.all %}
         <ul class="extras JS-thumbList">
           {% include "includes/room_thumbs.html" with object=object %}
         </ul>
+        {% endif %}
 
         <button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
         <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
@@ -272,7 +265,7 @@
     {% include 'modals/add_content_dialog.html' with modal_id='addContentDialog' %}
 
     {% include 'modals/add_video.html' with modal_id='addVideo' title='Adicione um vídeo complementar do Youtube' %}
-    
+
     {% include 'modals/add_video_dialog.html' with modal_id='addVideoDialog' %}
   </div>
 

@@ -29,17 +29,6 @@ class TimestampedMixin(models.Model):
 
 
 class Room(TimestampedMixin):
-    STATUS_CHOICES = (
-        (1, 'Não Confirmada'),
-        (2, 'Convocada'),
-        (3, 'Em Andamento'),
-        (4, 'Encerrada'),
-        (5, 'Cancelada'),
-        (6, 'Suspensa'),
-        (7, 'Encerrada (Termo)'),
-        (8, 'Encerrada (Final)'),
-        (9, 'Encerrada(Comunicado)')
-    )
     YOUTUBE_STATUS_CHOICES = (
         (0, 'Sem transmissão'),
         (1, 'Em andamento'),
@@ -48,19 +37,12 @@ class Room(TimestampedMixin):
     )
     cod_reunion = models.CharField(_('code reunion'), max_length=200,
                                    null=True, blank=True)
-    cod_audio = models.CharField(_('code audio'), max_length=200,
-                                 null=True, blank=True)
     title_reunion = models.CharField(_('title reunion'), max_length=200,
                                      null=True, blank=True)
     legislative_body_initials = models.CharField(
         _('legislative body initials'), max_length=200, null=True, blank=True)
-    legislative_body_alias = models.CharField(_('legislative body alias'),
-                                              max_length=200, null=True,
-                                              blank=True)
     legislative_body = models.TextField(_('legislative body'), null=True,
                                         blank=True)
-    reunion_status = models.IntegerField(_('reunion status'),
-                                         choices=STATUS_CHOICES, default=1)
     reunion_type = models.CharField(_('reunion type'), max_length=200,
                                     null=True, blank=True)
     reunion_object = models.TextField(_('reunion object'), null=True,
@@ -68,7 +50,6 @@ class Room(TimestampedMixin):
     reunion_theme = models.TextField(_('reunion theme'), null=True, blank=True)
     location = models.CharField(_('location'), max_length=200, null=True,
                                 blank=True)
-    is_joint = models.BooleanField(_('is joint'), default=False)
     youtube_status = models.IntegerField(_('youtube status'),
                                          choices=YOUTUBE_STATUS_CHOICES,
                                          default=0)
@@ -86,9 +67,7 @@ class Room(TimestampedMixin):
         verbose_name_plural = _('rooms')
 
     def __str__(self):
-        if self.legislative_body_alias:
-            return self.legislative_body_alias
-        elif self.title_reunion:
+        if self.title_reunion:
             return self.title_reunion
         else:
             return _('room')

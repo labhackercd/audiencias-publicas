@@ -179,7 +179,6 @@ def index(request):
             is_visible=True).order_by('-date'),
         agendas=Room.objects.filter(
             is_visible=True,
-            reunion_status__in=[2, 3],
             youtube_status=0).order_by('date'),
     ))
 
@@ -335,7 +334,6 @@ class ClosedVideos(ListView):
             object_list = object_list.filter(Q(
                 title_reunion__icontains=q) | Q(
                 legislative_body_initials__icontains=q) | Q(
-                legislative_body_alias__icontains=q) | Q(
                 legislative_body__icontains=q) | Q(
                 reunion_type__icontains=q) | Q(
                 reunion_object__icontains=q) | Q(
