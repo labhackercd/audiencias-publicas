@@ -1,13 +1,13 @@
 {% extends 'includes/modal.html' %}
 
 {% block content %}
-<form method="POST" action="{% url 'create_attachment' object.id %}">
+<form method="POST" action="{% url 'create_video_attachment' object.id %}">
   {% csrf_token %}
   <label for="title">Título:</label>
   <input type="text" name="title" required>
 
-  <label for="link">Link de vídeo do Youtube:</label>
-  <input type="url" name="url" pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$" required oninvalid="this.setCustomValidity('Insira um link válido do Youtube')">
+  <label for="video_id">Código do vídeo do Youtube:</label>
+  <input type="text" name="video_id" required>
 
   <button class="button" type="submit" name="button">Enviar</button>
 </form>
