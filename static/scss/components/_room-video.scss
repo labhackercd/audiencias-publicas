@@ -153,9 +153,17 @@
         font-size: $font-size-deci;
         background-color: rgba(#000, 0.5);
         @include icon('wifi');
+        @include icon('wifi', after);
 
         &::before {
-          margin-right: 0.5rem;
+          margin-right: 0.75rem;
+          transform: rotate(-90deg);
+        }
+
+        &::after {
+          position: absolute;
+          left: 2.3em;
+          transform: rotate(90deg);
         }
       }
 
