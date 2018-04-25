@@ -4,7 +4,7 @@
       <img class="thumbnail" src="https://i.ytimg.com/vi/{{main_video.video_id}}/default.jpg">
       <span class="label">Transmissão</span>
     </div>
-    <span class="title">{{main_video.title|default_if_none:""}}</span>
+    <span class="title">Transmissão - Parte {{ forloop.revcounter }}</span>
   </li>
 {% endfor %}
 {% for attachment_video in object.get_attachment_videos %}
