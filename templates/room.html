@@ -81,7 +81,7 @@
         </div>
         <div class="action-footer {% if object.youtube_status == 2 %}-closed{% endif %} JS-questionFooter">
           {% if object.youtube_status != 2 and user.is_authenticated %}
-            <button class="JS-openQuestionForm">Fazer uma pergunta</button>
+            <button class="action JS-openQuestionForm">Fazer uma pergunta</button>
             <form class="question-box JS-formQuestion" id="questionform">
               <div class="header">
                 <div class="counter JS-character-counter">
@@ -156,7 +156,7 @@
         <button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
         <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
       </div>
-      
+
       <div class="room-info JS-readMoreLess">
         <h3>Pauta</h3>
         {{object.reunion_object|cut:"  "|linebreaks}}
