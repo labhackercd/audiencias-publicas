@@ -2,6 +2,8 @@
 import {sendQuestionFormHelper, sendChatFormHelper} from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 import characterCounterComponent from './character-counter';
+import playVideoById from './play-video';
+import roomVideosComponent from './room-videos';
 
 const characterCounter = characterCounterComponent();
 characterCounter.setElements();
@@ -166,22 +168,6 @@ function roomComponent(socket) {
     }
   }
 
-  function playYoutubeVideo(video_id){
-    var player = new YT.Player('player', {
-        height: '',
-        width: '',
-        videoId: video_id,
-        playerVars: {'rel': 0},
-        events: {
-          'onReady': onPlayerReady
-        }
-    });
-
-    function onPlayerReady(event) {
-       event.target.playVideo();
-    }
-  }
-
   function evaluateSocketMessage(message) {
     const questionlistIsEmpty = elements.$questionlistEmpty.length;
     const messagesListIsEmpty = elements.$messagesListEmpty.length;
@@ -203,9 +189,10 @@ function roomComponent(socket) {
     if (data.video) {
       if(!data.is_attachment) {
         elements.$videoFrame.html(data.video_html);
-        playYoutubeVideo(data.video_id);
+        playVideoById(data.video_id);
       }
       elements.$thumbList.html(data.thumbs_html);
+      roomVideosComponent();
     } else if (data.question) {
         const $existingQuestion = $(`[data-question-id=${data.id}]`);
         const questionExists = $existingQuestion.length;

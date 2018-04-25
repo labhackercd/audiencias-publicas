@@ -1,6 +1,9 @@
+import playVideoById from './play-video';
+
 function roomVideosComponent() {
   const elements = {
     $selectVideo: $('.JS-selectVideo'),
+    $videoFrame: $('.JS-videoFrame'),
   };
 
   const events = {
@@ -10,6 +13,8 @@ function roomVideosComponent() {
 
       $videoElements.removeClass('-current');
       $currentVideo.addClass('-current');
+      elements.$videoFrame.html('<div class="video" id="player"></div>')
+      playVideoById($currentVideo.attr('data-video-id'));
     }
   };
 
