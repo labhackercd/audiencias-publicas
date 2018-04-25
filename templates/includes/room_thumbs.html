@@ -1,7 +1,7 @@
 {% for main_video in object.get_main_videos %}
   <li class="extravideo JS-selectVideo {% if forloop.first %}-current{% endif %}" data-video-id="{{main_video.video_id}}">
     <div class="wrapper">
-      <img class="thumbnail" src="https://i.ytimg.com/vi/{{main_video.video_id}}/default.jpg">
+      <img class="thumbnail" src="https://i.ytimg.com/vi/{{main_video.video_id}}/mqdefault.jpg">
       <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="{% url 'delete_video' main_video.id %}"></button>
       <span class="label">Transmissão</span>
     </div>
@@ -11,7 +11,7 @@
 {% for attachment_video in object.get_attachment_videos %}
   <li class="extravideo JS-selectVideo" data-video-id="{{attachment_video.video_id}}">
     <div class="wrapper">
-      <img class="thumbnail" src="https://i.ytimg.com/vi/{{attachment_video.video_id}}/default.jpg">
+      <img class="thumbnail" src="https://i.ytimg.com/vi/{{attachment_video.video_id}}/mqdefault.jpg">
       <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="{% url 'delete_video' attachment_video.id %}"></button>
       <button class="aud-button -icon -left"></button>
       <button class="aud-button -icon -right"></button>
