@@ -3,7 +3,7 @@
     <div class="wrapper">
       <img class="thumbnail" src="https://i.ytimg.com/vi/{{main_video.video_id}}/mqdefault.jpg">
       <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="{% url 'delete_video' main_video.id %}"></button>
-      <span class="label">Transmissão</span>
+      <span class="label">Transmitido</span>
     </div>
     <span class="title">Transmissão - Parte {{ forloop.revcounter }}</span>
   </li>
