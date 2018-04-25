@@ -5,7 +5,7 @@
       <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="{% url 'delete_video' main_video.id %}"></button>
       <span class="label">Transmitido</span>
     </div>
-    <span class="title">Transmissão - Parte {{ forloop.revcounter }}</span>
+    <span class="title">Parte {{ forloop.revcounter }}</span>
   </li>
 {% endfor %}
 {% for attachment_video in object.get_attachment_videos %}
