@@ -40,7 +40,8 @@ class AudienciasRemoteUser(RemoteUserMiddleware):
             # User is valid.  Set request.user and persist user in the session
             # by logging the user in.
             user_data = json.loads(request.META['HTTP_REMOTE_USER_DATA'])
-            user.first_name = user_data['name']
+            user.first_name = user_data['first_name']
+            user.last_name = user_data['last_name']
             user.username = username
             if not hasattr(user, 'profile'):
                 profile = UserProfile()
