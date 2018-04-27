@@ -1,5 +1,5 @@
 function playVideoById(video_id) {
-  var player = new YT.Player('player', {
+  window.player = new YT.Player('player', {
     height: '',
     width: '',
     videoId: video_id,
