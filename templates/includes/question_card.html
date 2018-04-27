@@ -8,7 +8,7 @@
       <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
     </div>
     {% if page == "room" and question.answer_time %}
-      <a class="answered" onclick="player.loadVideoById({videoId:'{{question.video_id}}',startSeconds:{{question.answer_time}}});">Assistir resposta</a>
+      <a class="answered JS-answeredButton" data-youtube-id="{{question.video_id}}" data-answer-time="{{question.answer_time}}">Assistir resposta</a>
     {% endif %}
   </div>
 

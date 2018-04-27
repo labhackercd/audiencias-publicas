@@ -48,6 +48,7 @@ function roomComponent(socket) {
     $closeModal: $('.JS-closeModal'),
     $selectVideo: $('.JS-selectVideo'),
     $orderVideos: $('.JS-orderVideos'),
+    $answeredButton: $('.JS-answeredButton'),
   };
 
   const vars = {
@@ -438,6 +439,15 @@ function roomComponent(socket) {
       $.post(event.target.form.action, {
         is_priority: event.target.checked
       })
+    },
+
+    setCurrentVideo() {
+      player.loadVideoById({
+        videoId:$(this).attr('data-youtube-id'),
+        startSeconds:$(this).attr('data-answer-time')
+      });
+      $('.JS-selectVideo').removeClass('-current');
+      $(`[data-video-id=${$(this).attr('data-youtube-id')}]`).addClass('-current');
     }
   };
 
@@ -467,6 +477,7 @@ function roomComponent(socket) {
       }, 3000);
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
       elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
+      elements.$answeredButton.on('click', events.setCurrentVideo);
     },
 
     onAdd($question) {
