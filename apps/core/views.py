@@ -31,6 +31,7 @@ def redirect_to_room(request, cod_reunion):
 def set_answer_time(request, question_id):
     if request.user.is_authenticated() and request.method == 'POST':
         answer_time = request.POST.get('answer_time')
+        video_id = request.POST.get('video_id')
         if answer_time:
             question = Question.objects.get(pk=question_id)
             group_name = question.room.legislative_body_initials
@@ -41,6 +42,7 @@ def set_answer_time(request, question_id):
                 else:
                     question.answer_time = answer_time
                     question.answered = True
+                    question.video_id = video_id
                 question.save()
                 vote_list = []
                 for vote in question.votes.all():

@@ -418,7 +418,8 @@ function roomComponent(socket) {
         answer_time = player.getCurrentTime();
       };
       $.post(event.target.form.action, {
-          answer_time: answer_time
+          answer_time: answer_time,
+          video_id: player.getVideoData().video_id
       })
     },
 

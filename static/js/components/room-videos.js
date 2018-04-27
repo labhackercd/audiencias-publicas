@@ -13,8 +13,12 @@ function roomVideosComponent() {
 
       $videoElements.removeClass('-current');
       $currentVideo.addClass('-current');
-      elements.$videoFrame.html('<div class="video" id="player"></div>')
-      playVideoById($currentVideo.attr('data-video-id'));
+      if (elements.$videoFrame.find('.video').hasClass('-empty')) {
+        elements.$videoFrame.html('<div class="video" id="player"></div>')
+        playVideoById($currentVideo.attr('data-video-id'));
+      } else {
+        player.loadVideoById($currentVideo.attr('data-video-id'));
+      }
     }
   };
 
