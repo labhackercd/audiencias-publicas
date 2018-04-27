@@ -261,7 +261,7 @@ def create_video_attachment(request, room_id):
         return HttpResponseForbidden()
 
 
-def delete_video_attachment(request, video_id):
+def delete_video(request, video_id):
     if request.user.is_authenticated():
         video = Video.objects.get(pk=video_id)
         group_name = video.room.legislative_body_initials

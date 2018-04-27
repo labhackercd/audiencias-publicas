@@ -4,6 +4,7 @@ import { getCookie } from '../helpers/cookies';
 import characterCounterComponent from './character-counter';
 import playVideoById from './play-video';
 import roomVideosComponent from './room-videos';
+import modalsComponent from '../components/modals';
 
 const characterCounter = characterCounterComponent();
 characterCounter.setElements();
@@ -193,6 +194,7 @@ function roomComponent(socket) {
       }
       elements.$thumbList.html(data.thumbs_html);
       roomVideosComponent();
+      modalsComponent();
     } else if (data.question) {
         const $existingQuestion = $(`[data-question-id=${data.id}]`);
         const questionExists = $existingQuestion.length;

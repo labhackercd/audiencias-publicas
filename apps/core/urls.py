@@ -6,7 +6,7 @@ from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              set_priotity, WidgetVideoDetail, create_attachment,
                              delete_attachment, add_external_link,
                              remove_external_link, create_video_attachment,
-                             delete_video_attachment)
+                             delete_video)
 from apps.core.api import (api_root, MessageListAPI, QuestionListAPI,
                            VoteListAPI, UserListAPI, RoomAPI, RoomListAPI)
 
@@ -28,8 +28,8 @@ urlpatterns = [
         name='delete_attachment'),
     url(r'^sala/(?P<room_id>\d+)/video/adicionar/?$', create_video_attachment,
         name='create_video_attachment'),
-    url(r'^video/(?P<video_id>\d+)/deletar/?$', delete_video_attachment,
-        name='delete_video_attachment'),
+    url(r'^video/(?P<video_id>\d+)/deletar/?$', delete_video,
+        name='delete_video'),
     url(r'^sala/(?P<room_id>\d+)/link/adicionar/?$', add_external_link,
         name='add_external_link'),
     url(r'^sala/(?P<room_id>\d+)/link/deletar/?$', remove_external_link,
