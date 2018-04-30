@@ -4,6 +4,7 @@ function roomVideosComponent() {
   const elements = {
     $selectVideo: $('.JS-selectVideo'),
     $videoFrame: $('.JS-videoFrame'),
+    $deleteBtn: $('.JS-deleteVideo'),
   };
 
   const events = {
@@ -19,12 +20,25 @@ function roomVideosComponent() {
       } else {
         player.loadVideoById($currentVideo.attr('data-video-id'));
       }
+    },
+    showDeleteBtn() {
+      const $deleteBtn = $('.JS-deleteVideo');
+      const $groupName = $('.JS-groupName');
+
+      if ($.inArray($groupName.attr('data-room-group'), HANDLER_GROUPS) > -1) {
+        $deleteBtn.removeClass('hide');
+      } else if (HANDLER_ADMIN) {
+        $deleteBtn.removeClass('hide');
+      } else {
+        $deleteBtn.addClass('hide');
+      }
     }
   };
 
   const bindEventsHandlers = {
     onPageLoad() {
       elements.$selectVideo.on('click', events.selectVideo);
+      events.showDeleteBtn();
     }
   };
 

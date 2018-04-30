@@ -149,7 +149,7 @@
         </div>
         {% if object.videos.all %}
         <ul class="extras JS-thumbList">
-          {% include "includes/room_thumbs.html" with object=object %}
+          {% include "includes/room_thumbs.html" with object=object user=request.user %}
         </ul>
         {% endif %}
 
@@ -165,7 +165,7 @@
 
       <div class="room-info JS-readMoreLess">
         <h3>Organização</h3>
-        <p>{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
+        <p class="JS-groupName" data-room-group="{{object.legislative_body_initials}}">{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
         <button class="more JS-toggleDiv">Ver mais</button>
       </div>
 
