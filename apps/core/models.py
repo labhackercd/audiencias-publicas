@@ -177,13 +177,41 @@ class Message(TimestampedMixin):
                                 {'message': self})
 
 
+class Video(TimestampedMixin):
+    room = models.ForeignKey(Room, related_name='videos',
+                             verbose_name=_('room'))
+    video_id = models.CharField(_('youtube id'), max_length=200)
+    title = models.CharField(_('title'), max_length=200, null=True, blank=True)
+    is_attachment = models.BooleanField(_('is_attachment'), default=False)
+
+    class Meta:
+        verbose_name = _('video')
+        verbose_name_plural = _('videos')
+
+    def __str__(self):
+        return self.video_id
+
+    def send_video(self):
+        text = {
+            'video': True,
+            'is_attachment': self.is_attachment,
+            'video_id': self.video_id,
+            'video_html': self.room.html_room_video(),
+            'thumbs_html': self.room.html_room_thumbnails(),
+        }
+        Group(self.room.group_room_name).send(
+            {'text': json.dumps(text)}
+        )
+
+
 class Question(TimestampedMixin):
     room = models.ForeignKey(Room, related_name='questions', null=True,
                              verbose_name=_('room'))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
     question = models.TextField(_('question'), max_length=300)
-    video_id = models.CharField(_('video id'), max_length=200, null=True,
-                                blank=True)
+    video = models.ForeignKey(Video, verbose_name=_('video'), null=True,
+                              related_name='questions',
+                              on_delete=models.SET_NULL)
     answer_time = models.CharField(_('answer time'), max_length=200,
                                    null=True, blank=True)
     answered = models.BooleanField(_('answered'), default=False)
@@ -235,33 +263,6 @@ class RoomAttachment(TimestampedMixin):
 
     def __str__(self):
         return self.room.__str__()
-
-
-class Video(TimestampedMixin):
-    room = models.ForeignKey(Room, related_name='videos',
-                             verbose_name=_('room'))
-    video_id = models.CharField(_('youtube id'), max_length=200)
-    title = models.CharField(_('title'), max_length=200, null=True, blank=True)
-    is_attachment = models.BooleanField(_('is_attachment'), default=False)
-
-    class Meta:
-        verbose_name = _('video')
-        verbose_name_plural = _('videos')
-
-    def __str__(self):
-        return self.room.__str__()
-
-    def send_video(self):
-        text = {
-            'video': True,
-            'is_attachment': self.is_attachment,
-            'video_id': self.video_id,
-            'video_html': self.room.html_room_video(),
-            'thumbs_html': self.room.html_room_thumbnails(),
-        }
-        Group(self.room.group_room_name).send(
-            {'text': json.dumps(text)}
-        )
 
 
 def room_post_save(sender, instance, created, **kwargs):

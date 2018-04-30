@@ -40,9 +40,10 @@ def set_answer_time(request, question_id):
                     question.answer_time = None
                     question.answered = False
                 else:
+                    video = Video.objects.filter(video_id=video_id).first()
                     question.answer_time = answer_time
                     question.answered = True
-                    question.video_id = video_id
+                    question.video = video
                 question.save()
                 vote_list = []
                 for vote in question.votes.all():

@@ -7,8 +7,8 @@
       <span class="username">{{question.user}}</span>
       <span class="timestamp">{{question.created | date:'H:i d/m/Y'}}</span>
     </div>
-    {% if page == "room" and question.answer_time %}
-      <a class="answered JS-answeredButton" data-youtube-id="{{question.video_id}}" data-answer-time="{{question.answer_time}}">Assistir resposta</a>
+    {% if page == "room" and question.answer_time and question.video %}
+      <a class="answered JS-answeredButton" data-youtube-id="{{question.video.video_id}}" data-answer-time="{{question.answer_time}}">Assistir resposta</a>
     {% endif %}
   </div>
 

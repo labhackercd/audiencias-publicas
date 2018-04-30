@@ -490,6 +490,7 @@ function roomComponent(socket) {
       const $answeredCheckbox = $question.find('.JS-answeredCheckbox');
       const $priorityCheckbox = $question.find('.JS-priorityCheckbox');
       const $answerTimeCheckbox = $question.find('.JS-answerTimeCheckbox');
+      const $answeredButton = $question.find('.JS-answeredButton');
 
       $voteBtnEnabled.on('click', events.vote);
       $openQuestionManaging.on('click', events.openQuestionManaging);
@@ -500,6 +501,7 @@ function roomComponent(socket) {
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
       $answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
+      $answeredButton.on('click', events.setCurrentVideo);
     },
   };
 
