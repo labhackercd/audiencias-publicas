@@ -3,6 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import django.db.models.deletion
 
 
 def add_video_id(apps, schema_editor):
@@ -10,7 +11,7 @@ def add_video_id(apps, schema_editor):
 
     for question in Question.objects.all():
         if question.room.videos.all():
-            question.video_id = question.room.videos.last().video_id
+            question.video = question.room.videos.last()
             question.save()
 
 
@@ -23,8 +24,8 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='question',
-            name='video_id',
-            field=models.CharField(blank=True, max_length=200, null=True, verbose_name='video id'),
+            name='video',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='questions', to='core.Video', verbose_name='video'),
         ),
         migrations.AlterField(
             model_name='question',
