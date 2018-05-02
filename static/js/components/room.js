@@ -228,6 +228,10 @@ function roomComponent(socket) {
           $answerTimeForm.addClass('hide');
         }
 
+        if (data.handlerAction == HANDLER) {
+          $question.find('.JS-questionManagingList').addClass('-active');
+        }
+
         updateVoteBlock($question, data);
         bindEventsHandlers.onAdd($question);
         elements.$questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
@@ -448,7 +452,17 @@ function roomComponent(socket) {
       });
       $('.JS-selectVideo').removeClass('-current');
       $(`[data-video-id=${$(this).attr('data-youtube-id')}]`).addClass('-current');
-    }
+    },
+
+    showAdminBtns() {
+      if ($.inArray($('.JS-groupName').attr('data-room-group'), HANDLER_GROUPS) > -1) {
+        $('.JS-openQuestionManaging').removeClass('hide');
+      } else if (HANDLER_ADMIN) {
+        $('.JS-openQuestionManaging').removeClass('hide');
+      } else {
+        $('.JS-openQuestionManaging').addClass('hide');
+      }
+    },
   };
 
 
@@ -478,6 +492,7 @@ function roomComponent(socket) {
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
       elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
       elements.$answeredButton.on('click', events.setCurrentVideo);
+      events.showAdminBtns();
     },
 
     onAdd($question) {
@@ -502,6 +517,7 @@ function roomComponent(socket) {
       $priorityCheckbox.on('change', events.sendPriorityForm);
       $answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
       $answeredButton.on('click', events.setCurrentVideo);
+      events.showAdminBtns();
     },
   };
 

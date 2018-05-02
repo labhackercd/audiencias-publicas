@@ -221,13 +221,12 @@ class Question(TimestampedMixin):
     def votes_count(self):
         return self.votes.filter(vote=True).count()
 
-    def html_question_body(self, user, page=None, question_managing=False):
+    def html_question_body(self, user, page=None):
         return render_to_string(
             'includes/question_card.html',
             {'question': self,
              'user': user,
              'page': page,
-             'question_managing': question_managing,
              'author': encrypt(str(self.user.id).rjust(10))}
         )
 

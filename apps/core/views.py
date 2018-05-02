@@ -49,8 +49,7 @@ def set_answer_time(request, question_id):
                 for vote in question.votes.all():
                     vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
-                html = question.html_question_body(request.user, 'room',
-                                                   question_managing=True)
+                html = question.html_question_body(request.user, 'room')
                 text = {
                     'question': True,
                     'html': html,
@@ -58,13 +57,14 @@ def set_answer_time(request, question_id):
                     'voteList': vote_list,
                     'answered': question.answered,
                     'groupName': group_name,
+                    'handlerAction': encrypt(str(request.user.id).rjust(10)),
                 }
                 Group(question.room.group_room_name).send(
                     {'text': json.dumps(text)}
                 )
 
                 html_question_panel = question.html_question_body(
-                    request.user, 'question-panel', question_managing=True)
+                    request.user, 'question-panel')
                 text_question_panel = {
                     'html': html_question_panel,
                     'id': question.id
@@ -97,8 +97,7 @@ def set_answered(request, question_id):
             for vote in question.votes.all():
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
-            html = question.html_question_body(request.user, 'room',
-                                               question_managing=True)
+            html = question.html_question_body(request.user, 'room')
             text = {
                 'question': True,
                 'html': html,
@@ -106,13 +105,14 @@ def set_answered(request, question_id):
                 'voteList': vote_list,
                 'answered': question.answered,
                 'groupName': group_name,
+                'handlerAction': encrypt(str(request.user.id).rjust(10)),
             }
             Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
 
             html_question_panel = question.html_question_body(
-                request.user, 'question-panel', question_managing=True)
+                request.user, 'question-panel')
             text_question_panel = {
                 'html': html_question_panel,
                 'id': question.id
@@ -143,8 +143,7 @@ def set_priotity(request, question_id):
             vote_list = []
             for vote in question.votes.all():
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
-            html = question.html_question_body(request.user, 'room',
-                                               question_managing=True)
+            html = question.html_question_body(request.user, 'room')
             text = {
                 'question': True,
                 'html': html,
@@ -152,12 +151,13 @@ def set_priotity(request, question_id):
                 'voteList': vote_list,
                 'answered': question.answered,
                 'groupName': group_name,
+                'handlerAction': encrypt(str(request.user.id).rjust(10)),
             }
             Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
             html_question_panel = question.html_question_body(
-                request.user, 'question-panel', question_managing=True)
+                request.user, 'question-panel')
             text_question_panel = {
                 'html': html_question_panel,
                 'id': question.id
