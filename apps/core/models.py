@@ -101,7 +101,8 @@ class Room(TimestampedMixin):
         return self.videos.filter(is_attachment=False).order_by('-created')
 
     def get_attachment_videos(self):
-        return self.videos.filter(is_attachment=True)
+        return self.videos.filter(is_attachment=True).order_by('order',
+                                                               'created')
 
     def get_absolute_url(self):
         return "%s/sala/%i" % (settings.FORCE_SCRIPT_NAME, self.pk)
@@ -182,6 +183,7 @@ class Video(TimestampedMixin):
     video_id = models.CharField(_('youtube id'), max_length=200)
     title = models.CharField(_('title'), max_length=200, null=True, blank=True)
     is_attachment = models.BooleanField(_('is_attachment'), default=False)
+    order = models.IntegerField(_('order'), default=0)
 
     class Meta:
         verbose_name = _('video')

@@ -254,6 +254,7 @@ def create_video_attachment(request, room_id):
                 video = form.save(commit=False)
                 video.room = room
                 video.is_attachment = True
+                video.order = room.get_attachment_videos().count() + 1
                 video.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
