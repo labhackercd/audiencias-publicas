@@ -8,17 +8,27 @@ function roomVideosComponent() {
   };
 
   const events = {
-    selectVideo() {
+    selectVideo(event) {
       const $videoElements = elements.$selectVideo;
       const $currentVideo = $(this);
 
-      $videoElements.removeClass('-current');
-      $currentVideo.addClass('-current');
-      if (elements.$videoFrame.find('.video').hasClass('-empty')) {
-        elements.$videoFrame.html('<div class="video" id="player"></div>')
-        playVideoById($currentVideo.attr('data-video-id'));
-      } else {
-        player.loadVideoById($currentVideo.attr('data-video-id'));
+      console.log($(event.target));
+
+      if (!($(event.target).hasClass('aud-button') || $currentVideo.hasClass('-current'))) {
+
+        $videoElements.removeClass('-current');
+        $currentVideo.addClass('-current');
+
+        if (elements.$videoFrame.find('.video').hasClass('-empty')) {
+
+          elements.$videoFrame.html('<div class="video" id="player"></div>')
+          playVideoById($currentVideo.attr('data-video-id'));
+
+        } else {
+
+          player.loadVideoById($currentVideo.attr('data-video-id'));
+
+        }
       }
     },
     showDeleteBtn() {
@@ -41,6 +51,13 @@ function roomVideosComponent() {
       events.showDeleteBtn();
     }
   };
+
+  $('.header').click(function(e){
+       //Do nothing if .header was not directly clicked
+       if(e.target !== e.currentTarget) return;
+
+       $(this).children(".children").toggle();
+  });
 
   (function init() {
     bindEventsHandlers.onPageLoad();
