@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from apps.core.models import Room
+from apps.core.models import Room, Video
 import requests
 import json
 from django.contrib.sites.models import Site
@@ -25,40 +25,23 @@ class Command(BaseCommand):
         data = json.loads(response.text)
         allowed_rooms = []
         for item in data:
-            room_created = False
-            has_video = item['idYoutube'] != ""
             if item['codReuniao'] == item['codReuniaoPrincipal']:
-                rooms = Room.objects.filter(cod_reunion=item['codReuniao'])
-                if rooms.count() == 0:
-                    room = Room.objects.create(
-                        cod_reunion=item['codReuniao'],
-                        youtube_id=item['idYoutube'])
-                    room_created = True
-                elif rooms.count() == 1:
-                    room = rooms.latest('id')
-                    if room.youtube_id != item['idYoutube'] and has_video:
-                        if room.youtube_id == "" or room.youtube_id is None or \
-                                room.cod_audio == str(item['codAudio']):
-                            room.youtube_id = item['idYoutube']
-                        else:
-                            room, room_created = Room.objects.get_or_create(
-                                cod_reunion=item['codReuniao'],
-                                youtube_id=item['idYoutube'])
+                room, room_created = Room.objects.get_or_create(
+                    cod_reunion=item['codReuniao'])
+                room_videos = room.videos.values_list('video_id', flat=True)
+                if item['idYoutube'] and not item['idYoutube'] in room_videos:
+                    Video.objects.create(room=room, video_id=item['idYoutube'])
+                    room.closed_time = None
+                if item['bolReuniaoConjunta']:
+                    room.title_reunion = item['txtTituloReuniao']
                 else:
-                    room, room_created = Room.objects.get_or_create(
-                        cod_reunion=item['codReuniao'],
-                        youtube_id=item['idYoutube'])
+                    room.title_reunion = item['txtApelido']
                 room.reunion_theme = item['txtTemaReuniao']
-                room.title_reunion = item['txtTituloReuniao']
-                room.cod_audio = item['codAudio']
                 room.legislative_body_initials = item['txtSiglaOrgao']
-                room.legislative_body_alias = item['txtApelido']
                 room.legislative_body = item['txtNomeOrgao']
-                room.reunion_status = item['codEstadoReuniao']
                 room.reunion_type = item['txtTipoReuniao']
                 room.reunion_object = item['txtObjeto']
                 room.location = item['txtLocal']
-                room.is_joint = item['bolReuniaoConjunta']
                 room.is_visible = item['bolHabilitarEventoInterativo']
                 room.youtube_status = item['codEstadoTransmissaoYoutube']
                 if item['datSisAudio'] == "":

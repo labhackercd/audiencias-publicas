@@ -2,6 +2,9 @@
 import {sendQuestionFormHelper, sendChatFormHelper} from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 import characterCounterComponent from './character-counter';
+import playVideoById from './play-video';
+import roomVideosComponent from './room-videos';
+import modalsComponent from '../components/modals';
 
 const characterCounter = characterCounterComponent();
 characterCounter.setElements();
@@ -36,6 +39,7 @@ function roomComponent(socket) {
     $formChat: $('.JS-formChat'),
     $formInputChat: $('.JS-formInputChat'),
     $videoFrame: $('.JS-videoFrame'),
+    $thumbList: $('.JS-thumbList'),
     $priorityCheckbox: $('.JS-priorityCheckbox'),
     $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
     $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
@@ -44,6 +48,7 @@ function roomComponent(socket) {
     $closeModal: $('.JS-closeModal'),
     $selectVideo: $('.JS-selectVideo'),
     $orderVideos: $('.JS-orderVideos'),
+    $answeredButton: $('.JS-answeredButton'),
   };
 
   const vars = {
@@ -184,7 +189,13 @@ function roomComponent(socket) {
     }
 
     if (data.video) {
-        elements.$videoFrame.html(data.html);
+      if(!data.is_attachment) {
+        elements.$videoFrame.html(data.video_html);
+        playVideoById(data.video_id);
+      }
+      elements.$thumbList.html(data.thumbs_html);
+      roomVideosComponent();
+      modalsComponent();
     } else if (data.question) {
         const $existingQuestion = $(`[data-question-id=${data.id}]`);
         const questionExists = $existingQuestion.length;
@@ -215,6 +226,10 @@ function roomComponent(socket) {
           $answeredForm.addClass('hide');
           $priorityForm.addClass('hide');
           $answerTimeForm.addClass('hide');
+        }
+
+        if (data.handlerAction == HANDLER) {
+          $question.find('.JS-questionManagingList').addClass('-active');
         }
 
         updateVoteBlock($question, data);
@@ -410,7 +425,8 @@ function roomComponent(socket) {
         answer_time = player.getCurrentTime();
       };
       $.post(event.target.form.action, {
-          answer_time: answer_time
+          answer_time: answer_time,
+          video_id: player.getVideoData().video_id
       })
     },
 
@@ -427,7 +443,26 @@ function roomComponent(socket) {
       $.post(event.target.form.action, {
         is_priority: event.target.checked
       })
-    }
+    },
+
+    setCurrentVideo() {
+      player.loadVideoById({
+        videoId:$(this).attr('data-youtube-id'),
+        startSeconds:$(this).attr('data-answer-time')
+      });
+      $('.JS-selectVideo').removeClass('-current');
+      $(`[data-video-id=${$(this).attr('data-youtube-id')}]`).addClass('-current');
+    },
+
+    showAdminBtns() {
+      if ($.inArray($('.JS-groupName').attr('data-room-group'), HANDLER_GROUPS) > -1) {
+        $('.JS-openQuestionManaging').removeClass('hide');
+      } else if (HANDLER_ADMIN) {
+        $('.JS-openQuestionManaging').removeClass('hide');
+      } else {
+        $('.JS-openQuestionManaging').addClass('hide');
+      }
+    },
   };
 
 
@@ -456,6 +491,8 @@ function roomComponent(socket) {
       }, 3000);
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
       elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
+      elements.$answeredButton.on('click', events.setCurrentVideo);
+      events.showAdminBtns();
     },
 
     onAdd($question) {
@@ -468,6 +505,7 @@ function roomComponent(socket) {
       const $answeredCheckbox = $question.find('.JS-answeredCheckbox');
       const $priorityCheckbox = $question.find('.JS-priorityCheckbox');
       const $answerTimeCheckbox = $question.find('.JS-answerTimeCheckbox');
+      const $answeredButton = $question.find('.JS-answeredButton');
 
       $voteBtnEnabled.on('click', events.vote);
       $openQuestionManaging.on('click', events.openQuestionManaging);
@@ -478,6 +516,8 @@ function roomComponent(socket) {
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
       $answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
+      $answeredButton.on('click', events.setCurrentVideo);
+      events.showAdminBtns();
     },
   };
 

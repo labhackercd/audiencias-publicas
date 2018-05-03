@@ -9,7 +9,7 @@ class ParticipantNotificationAdmin(admin.ModelAdmin):
         'room', 'created']
     search_fields = (
         'room__title_reunion', 'room__legislative_body_initials',
-        'room__legislative_body_alias', 'room__legislative_body',
+        'room__legislative_body',
         'room__location', 'room__cod_reunion', 'room__reunion_object',
         'emails', 'content')
 

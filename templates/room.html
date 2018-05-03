@@ -4,7 +4,7 @@
 {% block metadata %}
   <title>{% block title %}Audiências Interativas{% endblock title%}</title>
   <meta name="description" content="{{ object.reunion_object }}">
-  <meta property="og:title" content="{{object.legislative_body_alias}}">
+  <meta property="og:title" content="{{object.title_reunion}}">
   <meta property="og:site_name" content="Audiências Interativas">
   <meta property="og:description" content="{{ object.reunion_object }}">
   <meta property="og:image" content="{{request.scheme}}://{{domain}}{% static 'img/facebook-share-image.jpg' %}">
@@ -34,11 +34,7 @@
         {% if object.reunion_theme %}
           {{object.reunion_theme}}
         {% else %}
-          {% if object.is_joint %}
-            {{object.title_reunion}}
-          {% else %}
-            {{object.legislative_body_alias}}
-          {% endif %}
+          {{object.title_reunion}}
         {% endif %}
       </h1>
       <div class="info">
@@ -85,7 +81,7 @@
         </div>
         <div class="action-footer {% if object.youtube_status == 2 %}-closed{% endif %} JS-questionFooter">
           {% if object.youtube_status != 2 and user.is_authenticated %}
-            <button class="JS-openQuestionForm">Fazer uma pergunta</button>
+            <button class="action JS-openQuestionForm">Fazer uma pergunta</button>
             <form class="question-box JS-formQuestion" id="questionform">
               <div class="header">
                 <div class="counter JS-character-counter">
@@ -118,11 +114,7 @@
             {% if object.reunion_theme %}
               {{object.reunion_theme}}
             {% else %}
-              {% if object.is_joint %}
-                {{object.title_reunion}}
-              {% else %}
-                {{object.legislative_body_alias}}
-              {% endif %}
+              {{object.title_reunion}}
             {% endif %}
           </h1>
           <div class="info">
@@ -130,72 +122,40 @@
             <span>{{object.date}}</span>
           </div>
         </div>
+
         <div class="heightwrapper">
           <div class="ratiowrapper JS-videoFrame">
             {% include "includes/room_video.html" with object=object %}
           </div>
           <div class="info">
-              <span class="status">
-                {% if object.youtube_status == 0 %}
-                  Transmissão Prevista
-                {% elif object.youtube_status == 1 %}
-                  <span class="live-icon"></span> Ao Vivo
-                {% else %}
-                  Transmissão Encerrada (Gravado)
-                {% endif %}
-              </span>
+            <span class="status">
+              {% if object.youtube_status == 0 %}
+                Transmissão Prevista
+              {% elif object.youtube_status == 1 %}
+                <span class="live-icon"></span> Ao Vivo
+              {% else %}
+                Transmissão Encerrada (Gravado)
+              {% endif %}
+            </span>
 
-              <span class="visitors">
-                {% if object.youtube_status == 1 %}
-                  <span class="numbers" id="online-users">{{object.online_users}}</span> visitantes
-                {% else %}
-                  <span class="numbers">{{object.views}}</span> pessoas na sala
-                {% endif %}
-              </span>
-            </div>
+            <span class="visitors">
+              {% if object.youtube_status == 1 %}
+                <span class="numbers" id="online-users">{{object.online_users}}</span> pessoas na sala
+              {% else %}
+                <span class="numbers">{{object.views}}</span> visitantes
+              {% endif %}
+            </span>
+          </div>
         </div>
-
-        <ul class="extras">
-          <li class="extravideo JS-selectVideo -current">
-            <div class="wrapper">
-              <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
-              <span class="label">Transmissão</span>
-            </div>
-            <span class="title">Parte 1</span>
-          </li>
-          <li class="extravideo JS-selectVideo">
-            <div class="wrapper">
-              <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
-              <span class="label">Transmissão</span>
-            </div>
-            <span class="title">Parte 2</span>
-          </li>
-          <li class="extravideo JS-selectVideo">
-            <div class="wrapper">
-              <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
-              <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo1"></button>
-              <button class="aud-button -icon -edit -active JS-openModal" data-modal-target="editVideo"></button>
-              <button class="aud-button -icon -left"></button>
-              <button class="aud-button -icon -right"></button>
-            </div>
-            <span class="title">Comentários do Deputado Chico Anysio</span>
-          </li>
-          <li class="extravideo JS-selectVideo">
-            <div class="wrapper">
-              <img class="thumbnail" src="{% static 'img/default-thumbnail.svg' %}">
-              <button class="aud-button -icon -remove -active JS-openModal" data-modal-target="addVideoDialog" data-dialog-action="acaovideo1"></button>
-              <button class="aud-button -icon -edit -active JS-openModal" data-modal-target="editVideo"></button>
-              <button class="aud-button -icon -left"></button>
-              <button class="aud-button -icon -right"></button>
-            </div>
-            <span class="title">Comentários do Deputado Chico Anysio</span>
-          </li>
+        {% if object.videos.all %}
+        <ul class="extras JS-thumbList">
+          {% include "includes/room_thumbs.html" with object=object user=request.user %}
         </ul>
+        {% endif %}
+
         <button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
         <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
       </div>
-
-
 
       <div class="room-info JS-readMoreLess">
         <h3>Pauta</h3>
@@ -205,7 +165,7 @@
 
       <div class="room-info JS-readMoreLess">
         <h3>Organização</h3>
-        <p>{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
+        <p class="JS-groupName" data-room-group="{{object.legislative_body_initials}}">{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
         <button class="more JS-toggleDiv">Ver mais</button>
       </div>
 
@@ -305,7 +265,6 @@
     {% include 'modals/add_content_dialog.html' with modal_id='addContentDialog' %}
 
     {% include 'modals/add_video.html' with modal_id='addVideo' title='Adicione um vídeo complementar do Youtube' %}
-    {% include 'modals/add_video.html' with modal_id='editVideo' title='Altere este vídeo complementar do Youtube' %}
 
     {% include 'modals/add_video_dialog.html' with modal_id='addVideoDialog' %}
   </div>
@@ -319,6 +278,26 @@
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/components/read-more-less.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/components/share-buttons.js' %}"></script>
+  <script src='https://www.youtube.com/iframe_api' async></script>
+  {% if object.latest_video %}
+    <script>
+        var player;
+        function onYouTubeIframeAPIReady() {
+          player = new YT.Player('player', {
+            height: '',
+            width: '',
+            videoId: '{{object.latest_video.video_id}}',
+            playerVars: {'rel': 0},
+            events: {
+              'onReady': onPlayerReady,
+            }
+          });
+        }
+        function onPlayerReady(event) {
+         event.target.playVideo();
+        }
+    </script>
+  {% endif %}
 {% endblock extra_js %}
 
 {% block websockets %}

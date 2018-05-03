@@ -27,6 +27,7 @@
     position: relative;
     max-height: calc(100vh - 26.5rem);
     min-height: 10rem;
+    margin-bottom: 1rem;
 
     > .ratiowrapper {
       position: relative;
@@ -138,6 +139,7 @@
       > .wrapper > .thumbnail {
           opacity: 0.5;
           transition: 0.3s opacity $swift-out;
+          height: 4.5rem;
         }
 
       > .wrapper > .label {
@@ -151,9 +153,17 @@
         font-size: $font-size-deci;
         background-color: rgba(#000, 0.5);
         @include icon('wifi');
+        @include icon('wifi', after);
 
         &::before {
-          margin-right: 0.5rem;
+          margin-right: 0.75rem;
+          transform: rotate(-90deg);
+        }
+
+        &::after {
+          position: absolute;
+          left: 2.3em;
+          transform: rotate(90deg);
         }
       }
 
@@ -200,6 +210,8 @@
   }
 
   > .aud-button {
+    position: relative;
     margin-top: 1rem;
+    z-index: 2;
   }
 }

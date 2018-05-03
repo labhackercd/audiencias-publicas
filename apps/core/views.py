@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.http import (Http404, HttpResponseForbidden,
+from django.http import (Http404, HttpResponseForbidden, HttpResponseRedirect,
                          HttpResponseBadRequest, HttpResponse)
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
-from apps.core.models import Question, Room, RoomAttachment
+from apps.core.models import Question, Room, RoomAttachment, Video
 from apps.core.utils import encrypt
 from apps.core.templatetags.video_utils import belongs_to_group
 from django.views.generic import DetailView, ListView
@@ -15,7 +15,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
 import json
 from itertools import chain
-from apps.core.forms import RoomAttachmentForm
+from apps.core.forms import RoomAttachmentForm, VideoForm
 
 
 def redirect_to_room(request, cod_reunion):
@@ -31,6 +31,7 @@ def redirect_to_room(request, cod_reunion):
 def set_answer_time(request, question_id):
     if request.user.is_authenticated() and request.method == 'POST':
         answer_time = request.POST.get('answer_time')
+        video_id = request.POST.get('video_id')
         if answer_time:
             question = Question.objects.get(pk=question_id)
             group_name = question.room.legislative_body_initials
@@ -39,15 +40,16 @@ def set_answer_time(request, question_id):
                     question.answer_time = None
                     question.answered = False
                 else:
+                    video = Video.objects.filter(video_id=video_id).first()
                     question.answer_time = answer_time
                     question.answered = True
+                    question.video = video
                 question.save()
                 vote_list = []
                 for vote in question.votes.all():
                     vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
-                html = question.html_question_body(request.user, 'room',
-                                                   question_managing=True)
+                html = question.html_question_body(request.user, 'room')
                 text = {
                     'question': True,
                     'html': html,
@@ -55,13 +57,14 @@ def set_answer_time(request, question_id):
                     'voteList': vote_list,
                     'answered': question.answered,
                     'groupName': group_name,
+                    'handlerAction': encrypt(str(request.user.id).rjust(10)),
                 }
                 Group(question.room.group_room_name).send(
                     {'text': json.dumps(text)}
                 )
 
                 html_question_panel = question.html_question_body(
-                    request.user, 'question-panel', question_managing=True)
+                    request.user, 'question-panel')
                 text_question_panel = {
                     'html': html_question_panel,
                     'id': question.id
@@ -94,8 +97,7 @@ def set_answered(request, question_id):
             for vote in question.votes.all():
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
 
-            html = question.html_question_body(request.user, 'room',
-                                               question_managing=True)
+            html = question.html_question_body(request.user, 'room')
             text = {
                 'question': True,
                 'html': html,
@@ -103,13 +105,14 @@ def set_answered(request, question_id):
                 'voteList': vote_list,
                 'answered': question.answered,
                 'groupName': group_name,
+                'handlerAction': encrypt(str(request.user.id).rjust(10)),
             }
             Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
 
             html_question_panel = question.html_question_body(
-                request.user, 'question-panel', question_managing=True)
+                request.user, 'question-panel')
             text_question_panel = {
                 'html': html_question_panel,
                 'id': question.id
@@ -140,8 +143,7 @@ def set_priotity(request, question_id):
             vote_list = []
             for vote in question.votes.all():
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
-            html = question.html_question_body(request.user, 'room',
-                                               question_managing=True)
+            html = question.html_question_body(request.user, 'room')
             text = {
                 'question': True,
                 'html': html,
@@ -149,12 +151,13 @@ def set_priotity(request, question_id):
                 'voteList': vote_list,
                 'answered': question.answered,
                 'groupName': group_name,
+                'handlerAction': encrypt(str(request.user.id).rjust(10)),
             }
             Group(question.room.group_room_name).send(
                 {'text': json.dumps(text)}
             )
             html_question_panel = question.html_question_body(
-                request.user, 'question-panel', question_managing=True)
+                request.user, 'question-panel')
             text_question_panel = {
                 'html': html_question_panel,
                 'id': question.id
@@ -177,13 +180,9 @@ def index(request):
         live_videos=Room.objects.filter(
             youtube_status=1,
             is_visible=True).order_by('-date'),
-        agendas=Room.objects.filter(Q(
+        agendas=Room.objects.filter(
             is_visible=True,
-            reunion_status__in=[2, 3],
-            youtube_id='') | Q(
-            is_visible=True,
-            reunion_status__in=[2, 3],
-            youtube_id__isnull=True)).order_by('date'),
+            youtube_status=0).order_by('date'),
     ))
 
 
@@ -239,6 +238,37 @@ def remove_external_link(request, room_id):
             room.external_link = ''
             room.save()
             return redirect('video_room', pk=room.id)
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+
+def create_video_attachment(request, room_id):
+    if request.user.is_authenticated() and request.method == 'POST':
+        room = Room.objects.get(pk=room_id)
+        group_name = room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            form = VideoForm(request.POST)
+            if form.is_valid():
+                video = form.save(commit=False)
+                video.room = room
+                video.is_attachment = True
+                video.save()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+
+def delete_video(request, video_id):
+    if request.user.is_authenticated():
+        video = Video.objects.get(pk=video_id)
+        group_name = video.room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            video.delete()
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
             return HttpResponseForbidden()
     else:
@@ -307,7 +337,6 @@ class ClosedVideos(ListView):
             object_list = object_list.filter(Q(
                 title_reunion__icontains=q) | Q(
                 legislative_body_initials__icontains=q) | Q(
-                legislative_body_alias__icontains=q) | Q(
                 legislative_body__icontains=q) | Q(
                 reunion_type__icontains=q) | Q(
                 reunion_object__icontains=q) | Q(

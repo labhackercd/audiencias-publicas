@@ -1,16 +1,19 @@
 from django.contrib import admin
-from apps.core.models import Message, Question, UpDownVote, Room, RoomAttachment
+from apps.core.models import (Message, Question, UpDownVote, Room,
+                              RoomAttachment, Video)
+
+
+class VideoInline(admin.TabularInline):
+    model = Video
 
 
 class RoomAdmin(admin.ModelAdmin):
-    list_display = (
-        'title_reunion', 'legislative_body_alias', 'youtube_id',
-        'date', 'is_visible')
-    list_filter = [
-        'reunion_status', 'date']
+    list_display = ('title_reunion', 'date', 'is_visible')
+    list_filter = ['youtube_status', 'date']
     search_fields = (
-        'title_reunion', 'legislative_body_initials', 'legislative_body_alias',
-        'legislative_body', 'location', 'cod_reunion', 'reunion_object')
+        'title_reunion', 'legislative_body_initials', 'legislative_body',
+        'location', 'cod_reunion', 'reunion_object')
+    inlines = (VideoInline, )
 
 
 class MessageAdmin(admin.ModelAdmin):
@@ -36,8 +39,15 @@ class RoomAttachmentAdmin(admin.ModelAdmin):
     search_fields = ['title', 'url']
 
 
+class VideoAdmin(admin.ModelAdmin):
+    list_display = ('room', 'title', 'video_id', 'is_attachment')
+    list_filter = ['room', 'created']
+    search_fields = ['title', 'video_id']
+
+
 admin.site.register(Room, RoomAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(UpDownVote, UpDownVoteAdmin)
 admin.site.register(RoomAttachment, RoomAttachmentAdmin)
+admin.site.register(Video, VideoAdmin)
