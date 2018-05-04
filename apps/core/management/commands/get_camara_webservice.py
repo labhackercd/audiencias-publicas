@@ -9,6 +9,7 @@ from django.contrib.sites.models import Site
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
+import re
 
 
 class Command(BaseCommand):
@@ -51,6 +52,35 @@ class Command(BaseCommand):
                     date = datetime.strptime(item['datSisAudio'],
                                              '%d/%m/%Y %H:%M:%S')
                 room.date = date
+                if room.reunion_object:
+                    lines = room.reunion_object.splitlines()
+                    lines = list(filter(str.strip, lines))
+                    for i, line in enumerate(lines):
+                        if line.startswith('ORGANIZADO POR:'):
+                            try:
+                                names = lines[i + 1].split('-')
+                                room.legislative_body_initials = names[0].strip()
+                                room.legislative_body = names[1].strip()
+                            except IndexError:
+                                pass
+                    if not room.reunion_theme:
+                        lines = room.reunion_object.splitlines()
+                        lines = list(filter(str.strip, lines))
+                        theme = ''
+                        for i, line in enumerate(lines):
+                            line = line.upper()
+                            if line == 'TEMA' or line == 'TEMA:':
+                                theme = lines[i + 1].upper()
+                            elif 'TEMA:' in line:
+                                theme = re.sub(r'.*TEMA:', '', line).strip()
+                            if theme is not '':
+                                if theme.startswith('"'):
+                                    theme = re.findall(r'"(.*?)"', theme)[0]
+                                elif theme.startswith('“'):
+                                    theme = re.findall(r'“(.*?)”', theme)[0]
+                                elif theme.startswith("'"):
+                                    theme = re.findall(r"'(.*?)'", theme)[0]
+                                room.reunion_theme = theme
                 room.save()
                 Group.objects.get_or_create(
                     name=room.legislative_body_initials

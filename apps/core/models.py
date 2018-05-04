@@ -8,7 +8,6 @@ import datetime
 from channels import Group
 from apps.core.utils import encrypt
 import json
-import re
 
 
 class TimestampedMixin(models.Model):
@@ -275,27 +274,6 @@ def room_post_save(sender, instance, created, **kwargs):
     instance.send_notification(is_closed=is_closed)
 
 
-def room_pre_save(sender, instance, **kwargs):
-    if instance.reunion_object and not instance.reunion_theme:
-        lines = instance.reunion_object.splitlines()
-        lines = list(filter(str.strip, lines))
-        theme = ''
-        for i, line in enumerate(lines):
-            line = line.upper()
-            if line == 'TEMA' or line == 'TEMA:':
-                theme = lines[i + 1].upper()
-            elif 'TEMA:' in line:
-                theme = re.sub(r'.*TEMA:', '', line).strip()
-            if theme is not '':
-                if theme.startswith('"'):
-                    theme = re.findall(r'"(.*?)"', theme)[0]
-                elif theme.startswith('“'):
-                    theme = re.findall(r'“(.*?)”', theme)[0]
-                elif theme.startswith("'"):
-                    theme = re.findall(r"'(.*?)'", theme)[0]
-                instance.reunion_theme = theme
-
-
 def video_post_save(sender, instance, **kwargs):
     notification = {
         'id': instance.room.id,
@@ -326,7 +304,6 @@ def vote_post_delete(sender, instance, **kwargs):
 
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
-models.signals.pre_save.connect(room_pre_save, sender=Room)
 models.signals.post_save.connect(room_post_save, sender=Room)
 models.signals.post_save.connect(video_post_save, sender=Video)
 models.signals.post_delete.connect(video_post_delete, sender=Video)
