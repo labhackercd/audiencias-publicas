@@ -1,13 +1,12 @@
 function tabsNavComponent() {
   const elements = {
-    $room: $('.room'),
-    $wrapper: $('.tabs-nav'),
-    $itemMarker: $('.tabs-nav .list__item-marker'),
-    $links: $('.tabs-nav__list .item__link'),
+    $room: $('.JS-room'),
+    $marker: $('.JS-marker'),
+    $setTab: $('.JS-setTab'),
   };
 
   const tabs = {
-    count: elements.$links.length,
+    count: elements.$setTab.length,
     activeDataTabIndex: () => parseInt(elements.$room.attr('data-tab-index'), 10),
   };
 
@@ -24,7 +23,7 @@ function tabsNavComponent() {
   };
 
   function updateActiveTab(dataTabIndex) {
-    elements.$itemMarker.attr('data-tab-index', dataTabIndex);
+    elements.$marker.attr('data-tab-index', dataTabIndex);
     elements.$room.attr('data-tab-index', dataTabIndex);
   }
 
@@ -76,7 +75,7 @@ function tabsNavComponent() {
   };
 
   function bindEventsHandlers() {
-    elements.$links.on('click', events.changeTab);
+    elements.$setTab.on('click', events.changeTab);
     window.addEventListener('touchstart', events.touchStart);
     window.addEventListener('touchend', events.touchEnd);
     window.addEventListener('touchmove', events.touchMove);
@@ -87,4 +86,4 @@ function tabsNavComponent() {
   }());
 }
 
-tabsNavComponent();
+export default tabsNavComponent;

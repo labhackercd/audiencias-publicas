@@ -36,6 +36,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS',
 INSTALLED_APPS = (
     'apps.core',
     'apps.accounts',
+    'apps.notification',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,6 +59,7 @@ INSTALLED_APPS = (
     'compressor_toolkit',
     'channels',
     'channels_presence',
+    'django_js_reverse',
 )
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -215,6 +217,20 @@ COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
 COMPRESS_OFFLINE = config('COMPRESS_OFFLINE', default=False)
 
 LIBSASS_SOURCEMAPS = 'DEBUG'
+
+if DEBUG:
+    COMPRESS_SCSS_COMPILER_CMD = '{node_sass_bin}' \
+                                 ' --source-map true' \
+                                 ' --source-map-embed true' \
+                                 ' --source-map-contents true' \
+                                 ' --output-style expanded' \
+                                 ' {paths} "{infile}" "{outfile}"' \
+                                 ' &&' \
+                                 ' {postcss_bin}' \
+                                 ' --use "{node_modules}/autoprefixer"' \
+                                 ' --autoprefixer.browsers' \
+                                 ' "{autoprefixer_browsers}"' \
+                                 ' -r "{outfile}"'
 
 # Authentication stuffs
 

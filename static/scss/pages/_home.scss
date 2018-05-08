@@ -1,13 +1,15 @@
 .home {
+  color: #000;
+
   .section-top {
     background: linear-gradient(45deg, $color-primary-xlight 0%, $color-primary 100%);
   }
 
   .section-bottom {
-    background-color: $color-gray-90;
+    background-color: hsl(0, 0, 90%);
     padding: 1em 2em;
 
-    @include breakpoint(medium down) {
+    @include bp-mediumdown {
       padding: 1em;
     }
   }
@@ -63,7 +65,7 @@
 
     .show-more a {
       color: #3798c8;
-      font-weight: 600;
+      font-weight: $font-weight-semi-bold;
     }
   }
 }

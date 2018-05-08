@@ -1,12 +1,12 @@
 [class^="registration--"] {
   align-items: center;
-  background: $color-gray-96;
+  background: hsl(0, 0, 96%);
   display: flex;
   flex: 1;
   flex-direction: column;
   padding: 2.5em 0;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     padding: 1em 1em 2em;
   }
 }
@@ -19,17 +19,17 @@
   width: 100%;
   z-index: 10;
 
-  @include breakpoint(small down) {
+  @include bp-smallonly {
     top: 3em;
   }
 
   .close-button:hover {
-    color: $color-white;
+    color: #fff;
   }
 
   h5,
   li {
-    color: $color-white;
+    color: #fff;
     margin: 0;
   }
 
@@ -40,7 +40,7 @@
 }
 
 .registration-wrapper {
-  @include breakpoint(medium up) {
+  @include bp-mediumup {
     max-width: 30em;
     min-width: 20em;
   }
@@ -50,7 +50,7 @@
 .registration__title {
   color: $color-primary;
   font-size: 2.5em;
-  font-weight: 700;
+  font-weight: $font-weight-bold;
   margin: 0;
   padding-bottom: .2em;
   position: relative;
@@ -69,6 +69,6 @@
 
 .registration__text {
   font-size: 1em;
-  font-weight: 500;
+  font-weight: $font-weight-medium;
   margin: 1em 0 0;
 }

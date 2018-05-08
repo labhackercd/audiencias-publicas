@@ -1,9 +1,12 @@
 /// Google swift out cubic-bezier pattern for transitions and animations
 $swift-out: cubic-bezier(.55, 0, .1, 1);
 
-$tab-transition: transform .2s linear;
 $hover-transition: background-color .3s $swift-out, color .3s $swift-out;
 $translate-transition: transform .3s $swift-out;
+
+@mixin transition-default($property) {
+  transition: $property 0.3s $swift-out;
+}
 
 @keyframes blink {
   0% { opacity: 1; }
@@ -11,10 +14,9 @@ $translate-transition: transform .3s $swift-out;
   100% { opacity: 0; }
 }
 
-.live-blink {
-  animation: blink ease-in-out 1.2s infinite both alternate;
-}
-
-@mixin transition-default($property) {
-  transition: $property 0.3s $swift-out;
+@keyframes limitCharacter {
+  0% {transform: translateX(0)}
+  33.3% {transform: translateX(3px)}
+  66.6% {transform: translateX(-6px)}
+  100% {transform: translateX(0px)}
 }

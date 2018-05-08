@@ -1,85 +1,117 @@
 /* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
-import sendFormHelper from '../helpers/send-form';
+import {sendQuestionFormHelper, sendChatFormHelper} from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
+import characterCounterComponent from './character-counter';
+import playVideoById from './play-video';
+import roomVideosComponent from './room-videos';
+import modalsComponent from '../components/modals';
+
+const characterCounter = characterCounterComponent();
+characterCounter.setElements();
+
 
 function roomComponent(socket) {
   const elements = {
-    $wrapperQuestion: $('.questions'),
-    $list: $('.questions__list'),
-    $listEmpty: $('.questions__list--empty'),
-    $voteBtnEnabled: $('.question-vote'),
-    $voteBtn: $('.vote-block__upvote-button'),
-    $totalVotes: $('.vote-block__total-votes'),
-    $shareListOpenBtn: $('.question-block__share-button'),
-    $shareListCloseBtn: $('.share-list__close'),
-    $shareListItemLink: $('.question-block__share-list .item__link'),
-    $readMoreQuestion: $('.questions__read-more'),
-    $formQuestion: $('#questionform'),
-    $formInputQuestion: $('#question'),
-    $answeredCheckbox: $('.js-answered-checkbox'),
-    $wrapperChat: $('.chat'),
-    $messages: $('.chat__messages'),
-    $messagesList: $('.messages__list'),
-    $messagesListEmpty: $('.messages__list--empty'),
-    $readMoreChat: $('.chat__read-more'),
-    $formChat: $('#chatform'),
-    $formInputChat: $('#message'),
-    $videoFrame: $('.video__iframe-wrapper'),
-    $priorityCheckbox: $('.js-priority-checkbox'),
-    $answerTimeCheckbox: $('.js-answer-time-checkbox'),
+    $wrapperQuestion: $('.JS-wrapperQuestion'),
+    $questionList: $('.JS-questionsList'),
+    $questionlistEmpty: $('.JS-questionlistEmpty'),
+    $voteBtnEnabled: $('.JS-voteBtnEnabled'),
+    $voteBtn: $('.JS-voteBtn'),
+    $totalVotes: $('.JS-totalVotes'),
+    $openQuestionManaging: $('.JS-openQuestionManaging'),
+    $closeQuestionManaging: $('.JS-closeQuestionManaging'),
+    $questionManagingList: $('.JS-questionManagingList'),
+    $shareListOpenBtn: $('.JS-shareListOpenBtn'),
+    $shareListCloseBtn: $('.JS-shareListCloseBtn'),
+    $shareListItemLink: $('.JS-shareListItemLink'),
+    $shareRoom: $('.JS-shareRoom'),
+    $readMoreQuestion: $('.JS-readMoreQuestion'),
+    $formQuestion: $('.JS-formQuestion'),
+    $openQuestionForm: $('.JS-openQuestionForm'),
+    $closeQuestionForm: $('.JS-closeQuestionForm'),
+    $formInputQuestion: $('.JS-formInputQuestion'),
+    $answeredCheckbox: $('.JS-answeredCheckbox'),
+    $wrapperChat: $('.JS-wrapperChat'),
+    $messages: $('.JS-messages'),
+    $messagesList: $('.JS-messagesList'),
+    $messagesListEmpty: $('.JS-messagesListEmpty'),
+    $readMoreChat: $('.JS-readMoreChat'),
+    $formChat: $('.JS-formChat'),
+    $formInputChat: $('.JS-formInputChat'),
+    $videoFrame: $('.JS-videoFrame'),
+    $thumbList: $('.JS-thumbList'),
+    $priorityCheckbox: $('.JS-priorityCheckbox'),
+    $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
+    $answerTimeCheckbox: $('.JS-answerTimeCheckbox'),
+    $addLinks: $('.JS-addLinks'),
+    $linkModal: $('.JS-linkModal'),
+    $closeModal: $('.JS-closeModal'),
+    $selectVideo: $('.JS-selectVideo'),
+    $orderVideos: $('.JS-orderVideos'),
+    $answeredButton: $('.JS-answeredButton'),
   };
 
   const vars = {
-    listHeight: () => elements.$list[0].offsetHeight,
-    listScrollHeight: () => elements.$list[0].scrollHeight,
-    listScrollTop: () => elements.$list[0].scrollTop,
+    listHeight: () => elements.$questionList[0].offsetHeight,
+    listScrollHeight: () => elements.$questionList[0].scrollHeight,
+    listScrollTop: () => elements.$questionList[0].scrollTop,
     wrapperHeight: () => elements.$wrapperQuestion[0].offsetHeight,
     wrapperScrollHeight: () => elements.$wrapperQuestion[0].scrollHeight,
     wrapperScrollTop: () => elements.$wrapperQuestion[0].scrollTop,
-    messagesHeight: () => elements.$messages[0].offsetHeight,
-    messagesScrollHeight: () => elements.$messages[0].scrollHeight,
-    messagesScrollTop: () => elements.$messages[0].scrollTop,
     messagesListHeight: () => elements.$messagesList[0].offsetHeight,
+    messagesListScrollHeight: () => elements.$messagesList[0].scrollHeight,
+    messagesListScrollTop: () => elements.$messagesList[0].scrollTop,
   };
+
+  document.querySelectorAll('.JS-addLinks').forEach(function(openLinkModal) {
+    openLinkModal.onclick = function() {
+      elements.$linkModal.addClass('-open');
+    }
+  });
+
+  document.querySelectorAll('.JS-closeModal').forEach(function(openLinkModal) {
+    openLinkModal.onclick = function() {
+      elements.$linkModal.removeClass('-open');
+    }
+  });
 
   let isCurrentUserQuestion = false;
   let newQuestionsCount = 0;
   let sendQuestionForm = {};
   let sendChatForm = {};
 
+  function closeQuestionForm() {
+    elements.$formQuestion.removeClass('-active');
+  }
+
+  function openQuestionForm() {
+    elements.$formQuestion.addClass('-active');
+    elements.$formInputQuestion.focus();
+  }
+
   function animateToBottomQuestion() {
-    if (window.matchMedia('(min-width: 1024px)').matches) {
-      elements.$list.animate({
+      elements.$questionList.animate({
         scrollTop: vars.listScrollHeight(),
       }, 600, () => {
         isCurrentUserQuestion = false;
       });
-    } else {
-      elements.$wrapperQuestion.animate({
-        scrollTop: vars.wrapperScrollHeight(),
-      }, 600, () => {
-        isCurrentUserQuestion = false;
-      });
-    }
+
   }
 
   function animateToBottomChat() {
-    elements.$messages.animate({ scrollTop: vars.messagesListHeight() }, 'slow');
+    elements.$messagesList.animate({ scrollTop: vars.messagesListScrollHeight() }, 'slow');
   }
 
   function isScrolledToBottomQuestion() {
-    if (window.matchMedia('(min-width: 1024px)').matches) {
-      return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
-    }
-    return vars.wrapperScrollTop() === (vars.wrapperScrollHeight() - vars.wrapperHeight());
+    return vars.listScrollTop() === (vars.listScrollHeight() - vars.listHeight());
   }
 
   function isScrolledToBottomChat() {
-    return vars.messagesScrollTop() === (vars.messagesScrollHeight() - vars.messagesHeight());
+    return vars.messagesListScrollTop() === (vars.messagesListScrollHeight() - vars.messagesListHeight());
   }
 
   function scrollToBottomChat() {
-    elements.$messages[0].scrollTop = vars.messagesListHeight();
+    elements.$messagesList[0].scrollTop = vars.messagesListScrollHeight();
   }
 
   function showReadMoreQuestion() {
@@ -89,28 +121,28 @@ function roomComponent(socket) {
       elements.$readMoreQuestion.html(`Há ${newQuestionsCount} novas perguntas disponíveis abaixo`);
     }
 
-    elements.$readMoreQuestion.removeClass('questions__read-more');
-    elements.$readMoreQuestion.addClass('questions__read-more--visible');
+    elements.$readMoreQuestion.removeClass('more');
+    elements.$readMoreQuestion.addClass('more -visible');
   }
 
   function showReadMoreChat() {
-    elements.$readMoreChat.removeClass('chat__read-more');
-    elements.$readMoreChat.addClass('chat__read-more--visible');
+    elements.$readMoreChat.removeClass('more');
+    elements.$readMoreChat.addClass('more -visible');
   }
 
   function hideReadMoreQuestion() {
-    elements.$readMoreQuestion.removeClass('questions__read-more--visible');
-    elements.$readMoreQuestion.addClass('questions__read-more');
+    elements.$readMoreQuestion.removeClass('more -visible');
+    elements.$readMoreQuestion.addClass('more');
   }
 
   function hideReadMoreChat() {
-    elements.$readMoreChat.removeClass('chat__read-more--visible');
-    elements.$readMoreChat.addClass('chat__read-more');
+    elements.$readMoreChat.removeClass('more -visible');
+    elements.$readMoreChat.addClass('more');
   }
 
   function updateVoteBlock($question, data) {
-    const $upvoteButton = $question.find('.vote-block__upvote-button');
-    const $totalVotes = $question.find('.vote-block__total-votes');
+    const $upvoteButton = $question.find('.JS-voteBtn');
+    const $totalVotes = $question.find('.JS-totalVotes');
 
     if (data.answered) {
       $upvoteButton.addClass('voted disabled');
@@ -123,7 +155,7 @@ function roomComponent(socket) {
       $upvoteButton.html('Sua Pergunta');
       $totalVotes.addClass('voted disabled');
     } else if ($.inArray(HANDLER, data.voteList) > -1) {
-      $upvoteButton.addClass('voted question-vote');
+      $upvoteButton.addClass('voted question-vote JS-voteBtnEnabled');
       $upvoteButton.removeAttr('disabled');
       $upvoteButton.html('Apoiada por você');
       $upvoteButton.removeClass('disabled');
@@ -132,20 +164,22 @@ function roomComponent(socket) {
     } else {
       $upvoteButton.removeClass('voted disabled');
       $upvoteButton.removeAttr('disabled');
-      $upvoteButton.addClass('question-vote');
+      $upvoteButton.addClass('question-vote JS-voteBtnEnabled');
       $upvoteButton.html('Votar Nesta Pergunta');
       $totalVotes.removeClass('voted');
     }
   }
 
   function evaluateSocketMessage(message) {
-    const listIsEmpty = elements.$listEmpty.length;
+    const questionlistIsEmpty = elements.$questionlistEmpty.length;
     const messagesListIsEmpty = elements.$messagesListEmpty.length;
-    if (listIsEmpty) elements.$listEmpty.remove();
+    if (questionlistIsEmpty) elements.$questionlistEmpty.remove();
     if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
-    if (message.data === 'closed') {
-      sendChatForm.close();
+    const data = JSON.parse(message.data);
+    
+    if (data.closed) {
+      sendChatForm.close(data.time_to_close);
       sendQuestionForm.close();
       elements.$shareListOpenBtn.remove();
       elements.$voteBtn.addClass('disabled');
@@ -154,10 +188,14 @@ function roomComponent(socket) {
       return;
     }
 
-    const data = JSON.parse(message.data);
-
     if (data.video) {
-        elements.$videoFrame.html(data.html);
+      if(!data.is_attachment) {
+        elements.$videoFrame.html(data.video_html);
+        playVideoById(data.video_id);
+      }
+      elements.$thumbList.html(data.thumbs_html);
+      roomVideosComponent();
+      modalsComponent();
     } else if (data.question) {
         const $existingQuestion = $(`[data-question-id=${data.id}]`);
         const questionExists = $existingQuestion.length;
@@ -165,7 +203,7 @@ function roomComponent(socket) {
         if (questionExists) {
           $existingQuestion.replaceWith(data.html);
         } else {
-          elements.$list.append(data.html);
+          elements.$questionList.append(data.html);
 
           if (!isScrolledToBottomQuestion() && !isCurrentUserQuestion) {
             newQuestionsCount += 1;
@@ -174,9 +212,9 @@ function roomComponent(socket) {
         }
 
         const $question = $(`[data-question-id=${data.id}]`);
-        const $answeredForm = $question.find('.js-answered-form');
-        const $priorityForm = $question.find('.js-priority-form');
-        const $answerTimeForm = $question.find('.js-answer-time-form');
+        const $answeredForm = $question.find('.JS-answeredForm');
+        const $priorityForm = $question.find('.JS-priorityForm');
+        const $answerTimeForm = $question.find('.JS-answerTimeForm');
 
         if ($.inArray(data.groupName, HANDLER_GROUPS) > -1) {
           $answeredForm.removeClass('hide');
@@ -190,9 +228,13 @@ function roomComponent(socket) {
           $answerTimeForm.addClass('hide');
         }
 
+        if (data.handlerAction == HANDLER) {
+          $question.find('.JS-questionManagingList').addClass('-active');
+        }
+
         updateVoteBlock($question, data);
         bindEventsHandlers.onAdd($question);
-        elements.$list.mixItUp('sort', 'question-votes:desc question-id:asc');
+        elements.$questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
     } else if (data.chat) {
         if (isScrolledToBottomChat()) {
           elements.$messagesList.append(data.html);
@@ -205,7 +247,7 @@ function roomComponent(socket) {
   }
 
   function mixItUpInit() {
-    elements.$list.mixItUp({
+    elements.$questionList.mixItUp({
       selectors: {
         target: '.question-card',
       },
@@ -216,8 +258,8 @@ function roomComponent(socket) {
   }
 
   function sendFormHelperInit() {
-    sendQuestionForm = sendFormHelper(elements.$wrapperQuestion);
-    sendChatForm = sendFormHelper(elements.$wrapperChat);
+    sendQuestionForm = sendQuestionFormHelper(elements.$wrapperQuestion);
+    sendChatForm = sendChatFormHelper(elements.$wrapperChat);
   }
 
   const events = {
@@ -236,7 +278,7 @@ function roomComponent(socket) {
       }
     },
 
-    messagesScroll() {
+    messagesListScroll() {
       if (isScrolledToBottomChat()) hideReadMoreChat();
     },
 
@@ -254,6 +296,27 @@ function roomComponent(socket) {
       }
     },
 
+    closeQuestionFormClick() {
+      closeQuestionForm();
+    },
+
+    openQuestionFormClick() {
+      openQuestionForm();
+      characterCounter.updateCounter();
+    },
+
+    clickToggleButton() {
+      elements.$selectVideo.find('.aud-button').toggleClass('-active');
+    },
+
+    openQuestionManaging() {
+      $(this).parent().siblings('.JS-questionManagingList').addClass('-active');
+    },
+
+    closeQuestionManaging() {
+      $(this).closest('.JS-questionManagingList').removeClass('-active');
+    },
+
     openShareList() {
       const $shareList = $(this).siblings('.question-block__share-list');
       $shareList.removeClass('question-block__share-list');
@@ -266,7 +329,14 @@ function roomComponent(socket) {
       $shareList.addClass('question-block__share-list');
     },
 
-    share() {
+    shareRoom(event) {
+      event.preventDefault();
+
+      const windowOptions = 'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes';
+      window.open($(this).attr('href'), 'popUpWindow', windowOptions);
+    },
+
+    shareQuestion() {
       const socialNetwork = $(this).data('social');
 
       const $question = $(this).closest('.question-card');
@@ -304,6 +374,7 @@ function roomComponent(socket) {
 
       elements.$formInputQuestion.val('').focus();
       animateToBottomQuestion();
+      closeQuestionForm();
 
       return true;
     },
@@ -354,7 +425,8 @@ function roomComponent(socket) {
         answer_time = player.getCurrentTime();
       };
       $.post(event.target.form.action, {
-          answer_time: answer_time
+          answer_time: answer_time,
+          video_id: player.getVideoData().video_id
       })
     },
 
@@ -371,7 +443,26 @@ function roomComponent(socket) {
       $.post(event.target.form.action, {
         is_priority: event.target.checked
       })
-    }
+    },
+
+    setCurrentVideo() {
+      player.loadVideoById({
+        videoId:$(this).attr('data-youtube-id'),
+        startSeconds:$(this).attr('data-answer-time')
+      });
+      $('.JS-selectVideo').removeClass('-current');
+      $(`[data-video-id=${$(this).attr('data-youtube-id')}]`).addClass('-current');
+    },
+
+    showAdminBtns() {
+      if ($.inArray($('.JS-groupName').attr('data-room-group'), HANDLER_GROUPS) > -1) {
+        $('.JS-openQuestionManaging').removeClass('hide');
+      } else if (HANDLER_ADMIN) {
+        $('.JS-openQuestionManaging').removeClass('hide');
+      } else {
+        $('.JS-openQuestionManaging').addClass('hide');
+      }
+    },
   };
 
 
@@ -379,40 +470,54 @@ function roomComponent(socket) {
     onPageLoad() {
       socket.onmessage = evaluateSocketMessage;
       elements.$voteBtnEnabled.on('click', events.vote);
+      elements.$openQuestionManaging.on('click', events.openQuestionManaging);
+      elements.$closeQuestionManaging.on('click', events.closeQuestionManaging);
       elements.$shareListOpenBtn.on('click', events.openShareList);
       elements.$shareListCloseBtn.on('click', events.closeShareList);
-      elements.$shareListItemLink.on('click', events.share);
+      elements.$shareListItemLink.on('click', events.shareQuestion);
+      elements.$shareRoom.on('click', events.shareRoom);
       elements.$formQuestion.on('submit', events.sendQuestion);
-      elements.$list.on('scroll', events.questionsScroll);
-      elements.$wrapperQuestion.on('scroll', events.questionsScroll);
+      elements.$openQuestionForm.on('click', events.openQuestionFormClick);
+      elements.$closeQuestionForm.on('click', events.closeQuestionFormClick);
+      elements.$questionList.on('scroll', events.questionsScroll);
       elements.$readMoreQuestion.on('click', events.readMoreClickQuestion);
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);
-      elements.$messages.on('scroll', events.messagesScroll);
+      elements.$messagesList.on('scroll', events.messagesListScroll);
       elements.$readMoreChat.on('click', events.readMoreClickChat);
       elements.$formChat.on('submit', events.sendMessage);
+      elements.$orderVideos.on('click', events.clickToggleButton)
       setInterval(function() {
         socket.send(JSON.stringify({heartbeat: true}));
       }, 3000);
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
       elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
+      elements.$answeredButton.on('click', events.setCurrentVideo);
+      events.showAdminBtns();
     },
 
     onAdd($question) {
-      const $voteBtnEnabled = $question.find('.question-vote');
-      const $shareListOpenBtn = $question.find('.question-block__share-button');
-      const $shareListCloseBtn = $question.find('.share-list__close');
-      const $shareListItemLink = $question.find('.question-block__share-list .item__link');
-      const $answeredCheckbox = $question.find('.js-answered-checkbox');
-      const $priorityCheckbox = $question.find('.js-priority-checkbox');
-      const $answerTimeCheckbox = $question.find('.js-answer-time-checkbox');
+      const $voteBtnEnabled = $question.find('.JS-voteBtnEnabled');
+      const $openQuestionManaging = $question.find('.JS-openQuestionManaging');
+      const $closeQuestionManaging = $question.find('.JS-closeQuestionManaging');
+      const $shareListOpenBtn = $question.find('.JS-shareListOpenBtn');
+      const $shareListCloseBtn = $question.find('.JS-shareListCloseBtn');
+      const $shareListItemLink = $question.find('.JS-shareListItemLink');
+      const $answeredCheckbox = $question.find('.JS-answeredCheckbox');
+      const $priorityCheckbox = $question.find('.JS-priorityCheckbox');
+      const $answerTimeCheckbox = $question.find('.JS-answerTimeCheckbox');
+      const $answeredButton = $question.find('.JS-answeredButton');
 
       $voteBtnEnabled.on('click', events.vote);
+      $openQuestionManaging.on('click', events.openQuestionManaging);
+      $closeQuestionManaging.on('click', events.closeQuestionManaging);
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
       $shareListItemLink.on('click', events.share);
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
       $answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
+      $answeredButton.on('click', events.setCurrentVideo);
+      events.showAdminBtns();
     },
   };
 

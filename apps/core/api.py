@@ -5,7 +5,7 @@ from django_filters import rest_framework as django_filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework import generics, filters, mixins, viewsets
+from rest_framework import filters, viewsets
 from apps.core.models import Message, Question, UpDownVote, Room
 from apps.core.serializers import (QuestionSerializer, MessageSerializer,
                                    VoteSerializer, UserSerializer,
@@ -70,7 +70,6 @@ class RoomFilter(FilterSet):
         fields = {
             'date': ['lt', 'gte'],
             'legislative_body_initials': ['exact'],
-            'youtube_id': ['exact'],
             'cod_reunion': ['exact'],
             'is_visible': ['exact'],
             'youtube_status': ['exact'],
@@ -87,10 +86,9 @@ class RoomViewSet(viewsets.ModelViewSet):
         filters.SearchFilter,
         filters.OrderingFilter)
     search_fields = (
-        'cod_reunion', 'youtube_id', 'legislative_body_alias',
-        'legislative_body_initials', 'reunion_type', 'title_reunion',
-        'reunion_object', 'reunion_theme', 'legislative_body',
-        'reunion_status', 'location')
+        'cod_reunion', 'legislative_body_initials', 'reunion_type',
+        'title_reunion', 'reunion_object', 'reunion_theme', 'legislative_body',
+        'location')
     ordering_fields = '__all__'
 
 

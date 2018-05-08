@@ -5,7 +5,7 @@
 {% endblock navigation %}
 
 {% block main %}
-  <main class="room-questions">
+  <main class="bem-room-questions">
 
     <div class="wrapper">
 
@@ -20,11 +20,7 @@
           {% if object.reunion_theme %}
             {{object.reunion_theme}}
           {% else %}
-            {% if object.is_joint %}
-              {{object.title_reunion}}
-            {% else %}
-              {{object.legislative_body_alias}}
-            {% endif %}
+            {{object.title_reunion}}
           {% endif %}
         </h1>
       </div>

@@ -3,6 +3,9 @@ import roomComponent from '../components/room';
 import tabsNavComponent from '../components/tabs-nav';
 import characterCounterComponent from '../components/character-counter';
 import onlineUsersComponent from '../components/online-users';
+import roomVideosComponent from '../components/room-videos';
+import modalsComponent from '../components/modals';
+import toggleAudButtonComponent from '../components/toggle-aud-button';
 
 
 const onlineUsers = onlineUsersComponent();
@@ -20,4 +23,12 @@ window.onbeforeunload = () => {
   roomSocket.close();
 };
 
-characterCounterComponent();
+characterCounterComponent().init();
+
+roomVideosComponent();
+
+modalsComponent();
+
+toggleAudButtonComponent();
+
+tabsNavComponent();

@@ -1,12 +1,12 @@
-[class^="send-form--"] {
-  background-color: $color-gray-92;
+[class^="send-form"] {
+  background-color: hsl(0, 0, 92%);
   display: flex;
   flex-shrink: 0;
   height: 5em;
   padding: 1em;
   z-index: 1;
 
-  @include breakpoint(medium down) {
+  @include bp-mediumdown {
     bottom: 0;
     left: 0;
     position: absolute;
@@ -14,37 +14,37 @@
     z-index: 10;
   }
 
-  .send-form__input {
+  .input {
     font-size: 1em;
     height: 3em;
     margin: 0;
     resize: none;
   }
 
-  .send-form__actions {
+  .actions {
     margin: 0 0 0 .5em;
 
-    @include breakpoint(large down) {
+    @include bp-largedown {
       height: 100%;
     }
 
-    @include breakpoint(large only) {
+    @include bp-largeonly {
       align-items: center;
     }
 
-    @include breakpoint(large up) {
+    @include bp-largeup {
       display: flex;
       flex: 1 0 auto;
     }
   }
 
   .actions__character-counter {
-    color: $color-white;
+    color: #fff;
     display: flex;
     font-size: .8em;
-    font-weight: 700;
+    font-weight: $font-weight-bold;
 
-    @include breakpoint(large up) {
+    @include bp-largeup {
       align-items: center;
       padding: 0 1em 0 .5em;
     }
@@ -54,30 +54,14 @@
     }
   }
 
-  .actions__button {
+  .actions > .button {
     background-color: $color-primary-xxlight;
     border: 0;
-    color: $color-white;
+    color: #fff;
     display: flex;
     font-size: .9em;
-    font-weight: 600;
+    font-weight: $font-weight-semi-bold;
     margin: 0;
     padding: 0 .5em 0 1em;
-  }
-}
-
-.send-form--unauthenticated,
-.send-form--closed {
-  align-items: center;
-  justify-content: center;
-
-  span {
-    font-size: 1em;
-    font-weight: 600;
-    padding: .5em;
-  }
-
-  a {
-    color: $color-primary-xxlight;
   }
 }

@@ -1,0 +1,67 @@
+.calendar-table {
+  font-size: 1.2em;
+  margin-bottom: 0;
+}
+
+.calendar-table__column {
+  padding-bottom: .6em;
+  padding-top: .7em;
+
+  &:first-child {
+    font-weight: $font-weight-semi-bold;
+    width: 10em;
+  }
+
+  &:last-child {
+    padding-right: 3em;
+  }
+}
+
+.calendar-table__event-title {
+  font-weight: $font-weight-regular;
+}
+
+.calendar-table__date-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 4em;
+}
+
+.calendar-table__weekday {
+  background-color: $color-calendar-weekday-default;
+  border-radius: 1em;
+  color: #fff;
+  font-size: .5em;
+  font-weight: $font-weight-semi-bold;
+  min-width: 6.5em;
+  padding: .3em 0;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.calendar-table__weekday--today {
+  background-color: $color-calendar-weekday-today;
+}
+
+.calendar-table__weekday--tomorrow {
+  background-color: $color-calendar-weekday-tomorrow;
+}
+
+.calendar-table__day {
+  color: hsl(0, 0, 25%);
+  font-weight: $font-weight-bold;
+}
+
+.calendar-table__month {
+  color: hsl(0, 0, 25%);
+  font-size: .8em;
+  font-weight: $font-weight-regular;
+}
+
+.calendar-table__hour {
+  font-size: .9em;
+  font-weight: $font-weight-semi-bold;
+  margin-top: .3em;
+}

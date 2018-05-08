@@ -1,0 +1,41 @@
+html {
+  height: 100%;
+  background-color: $color-edem-dark;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+table {
+  @include bp-smallonly {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+textarea, input {
+  font-family: $font-family-base;
+}
+
+textarea {
+  min-height: 35px;
+}
+
+button {
+  cursor: pointer;
+}
+
+hr {
+  border-top: 1px solid rgba(#000, 0.4);
+  border-bottom: 1px solid $color-edem-main;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}

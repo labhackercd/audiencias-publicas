@@ -1,0 +1,50 @@
+.room-tabs {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  height: 2.5rem;
+  flex-shrink: 0;
+  width: 100%;
+  background-color: rgba($color-primary-light, 0.5);
+  border-bottom: 0.25rem solid rgba($color-accent, 0.25);
+
+  @include bp-largeup {
+    display: none;
+  }
+
+  > .list {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+    margin: 0;
+    list-style: none;
+  }
+
+  > a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    font-size: $font-size-deci;
+    color: #fff;
+    font-weight: $font-weight-semi-bold;
+    z-index: 1;
+  }
+
+  > .marker {
+    position: absolute;
+    left: 0;
+    bottom: -0.25rem;
+    height: calc(100% + 0.25rem);
+    width: calc(100% / 3);
+    background-color: $color-primary-light;
+    border-bottom: 0.25rem solid $color-accent;
+    transition: transform 0.4s $swift-out;
+    z-index: 0;
+
+    &[data-tab-index="1"] { transform: translateX(100%); }
+    &[data-tab-index="2"] { transform: translateX(200%); }
+  }
+}

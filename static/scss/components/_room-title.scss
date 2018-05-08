@@ -1,0 +1,30 @@
+.room-title {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  > .title {
+    line-height: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  > .info {
+    color: hsl(0, 0%, 80%);
+    font-size: $font-size-base;
+    line-height: 1rem;
+    font-weight: $font-weight-regular;
+    letter-spacing: 0.1em;
+  }
+
+  > .info > span {
+    margin-right: 1rem;
+    display: inline-block;
+  }
+
+  > .info > span > .link {
+    text-decoration: underline;
+    &:hover {
+      color: mix(#fff, $color-edem-highlight, 30%);
+    }
+  }
+
+}

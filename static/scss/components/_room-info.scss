@@ -1,0 +1,97 @@
+.room-info {
+  transition: max-height 0.4s ease;
+  position: relative;
+  padding-bottom: 1.5rem;
+
+  @include bp-largedown {
+    padding-bottom: 0.75rem;
+  }
+
+  &.-large {
+    max-height: 14rem;
+    overflow-y: hidden;
+    &:not(.-open)::before {
+      content: '';
+      background: linear-gradient(transparent, $color-edem-dark);
+      position: absolute;
+      top: calc(100% - 5rem);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+    &.-open {
+      max-height: 99rem;
+    }
+    > .more {
+      display: block;
+    }
+  }
+
+
+  > * + * {
+    margin-top: 1rem;
+
+    @include bp-largedown {
+      margin-top: 0.5rem;
+    }
+  }
+
+  > h3 {
+    @include bp-largedown {
+      font-size: $font-size-base;
+    }
+  }
+
+  > p {
+    color: rgba(#fff, 0.6);
+
+    @include bp-largedown {
+      font-size: $font-size-deci;
+      line-height: 1.2em;
+    }
+  }
+
+  > .list {
+    > * + * {
+      margin-top: 1rem;
+    }
+    > li {
+      display: flex;
+
+      > .aud-button {
+        margin-left: 0.5rem;
+      }
+
+      > .link {
+        color: $color-room-link;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover { opacity: 0.8; }
+
+        @include bp-largedown {
+          font-size: $font-size-deci;
+        }
+      }
+    }
+  }
+
+  > .more {
+    background-color: transparent;
+    text-decoration: underline;
+    display: none;
+    color: $color-edem-action;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1rem;
+    height: 1rem;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    &:hover { opacity: 0.8; }
+  }
+
+}
