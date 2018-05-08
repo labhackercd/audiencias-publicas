@@ -5,7 +5,20 @@ function roomVideosComponent() {
     $selectVideo: $('.JS-selectVideo'),
     $videoFrame: $('.JS-videoFrame'),
     $deleteBtn: $('.JS-deleteVideo'),
+    $changeOrder: $('.JS-changeOrder'),
+    $thumbList: $('.JS-thumbList')
   };
+
+  function mixItUpInit() {
+    elements.$thumbList.mixItUp({
+      selectors: {
+        target: '.JS-selectVideo',
+      },
+      layout: {
+        display: 'flex',
+      },
+    });
+  }
 
   const events = {
     selectVideo(event) {
@@ -31,6 +44,7 @@ function roomVideosComponent() {
         }
       }
     },
+
     showDeleteBtn() {
       const $deleteBtn = $('.JS-deleteVideo');
       const $groupName = $('.JS-groupName');
@@ -42,12 +56,30 @@ function roomVideosComponent() {
       } else {
         $deleteBtn.addClass('hide');
       }
+    },
+
+    changeOrder() {
+      const selectedVideo = $(this).closest('.JS-selectVideo');
+      const selectedVideoOrder = selectedVideo.attr('data-video-order');
+
+      console.log(selectedVideo);
+      console.log(selectedVideoOrder);
+      if ($(this).hasClass('-left')) {
+        selectedVideo.attr('data-video-order', selectedVideo.prev().attr('data-video-order'));
+        selectedVideo.prev().attr('data-video-order', selectedVideoOrder);
+      } else if ($(this).hasClass('-right')) {
+        selectedVideo.attr('data-video-order', selectedVideo.next().attr('data-video-order'));
+        selectedVideo.next().attr('data-video-order', selectedVideoOrder);
+      }
+
+      elements.$thumbList.mixItUp('sort', 'video-order:asc');
     }
   };
 
   const bindEventsHandlers = {
     onPageLoad() {
       elements.$selectVideo.on('click', events.selectVideo);
+      elements.$changeOrder.on('click', events.changeOrder);
       events.showDeleteBtn();
     }
   };
@@ -61,6 +93,7 @@ function roomVideosComponent() {
 
   (function init() {
     bindEventsHandlers.onPageLoad();
+    mixItUpInit();
   }());
 }
 

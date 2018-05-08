@@ -177,7 +177,7 @@ function roomComponent(socket) {
     if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
 
     const data = JSON.parse(message.data);
-    
+
     if (data.closed) {
       sendChatForm.close(data.time_to_close);
       sendQuestionForm.close();
