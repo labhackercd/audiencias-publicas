@@ -46,6 +46,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'constance',
+    'constance.backends.database',
     'rest_framework',
     'rest_framework.authtoken',
     'django_filters',
@@ -121,6 +123,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'constance.context_processors.config',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'apps.core.processors.analytics',
@@ -307,3 +310,21 @@ NOTIFICATION_EMAIL_LIST = config(
     cast=Csv(lambda x: x.strip().strip(',').strip()),
     default=''
 )
+
+# EDITABLE SETTINGS
+CONSTANCE_CONFIG = {
+    'HOME_DESCRIPTION': ('Acompanhe ao vivo e participe enviando perguntas aos '
+                         'deputados!', 'Descrição que acompanha a logo', str),
+    'QUESTIONS_DESCRIPTION': ('Faça sua pergunta ou apoie outra já feita. As '
+                              'perguntas mais votadas serão encaminhadas à '
+                              'Mesa para serem respondidas.', 'Descrição da '
+                              'aba de perguntas', str),
+    'ROOM_OBJECT': ('Pauta', 'Título do objeto da reunião', str),
+}
+
+CONSTANCE_CONFIG_FIELDSETS = {
+    'Página inicial': ('HOME_DESCRIPTION', ),
+    'Página de sala': ('QUESTIONS_DESCRIPTION', 'ROOM_OBJECT'),
+}
+
+CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'

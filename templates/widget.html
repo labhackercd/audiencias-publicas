@@ -53,7 +53,7 @@
       <div class="questions JS-wrapperQuestion">
         <div class="questions__header">
           <h1 class="header__title">Pergunte aos Deputados</h1>
-          <p class="header__text">Faça sua pergunta ou apoie outra já feita. As perguntas mais votadas serão encaminhadas à Mesa para serem respondidas.</p>
+          <p class="header__text">{{ config.QUESTIONS_DESCRIPTION }}</p>
         </div>
 
         <ul class="questions__list JS-questionsList" id="questions">
@@ -143,7 +143,7 @@
 
         <div class="video__main-infos">
           <div class="video__info--description">
-            <h3 class="video__info-header">Pauta</h3>
+            <h3 class="video__info-header">{{ config.ROOM_OBJECT }}</h3>
             <div class="video__info-text">{{object.reunion_object|linebreaks}}</div>
           </div>
 
