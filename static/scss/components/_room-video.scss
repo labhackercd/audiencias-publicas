@@ -125,6 +125,18 @@
         }
       }
 
+      &.-main+.-attached {
+        > .wrapper > .aud-button.-left {
+          transform: translateY(-2.5rem);
+        }
+      }
+
+      &.-attached:last-of-type {
+        > .wrapper > .aud-button.-right{
+          transform: translateY(-2.5rem);
+        }
+      }
+
       > .wrapper {
         position: relative;
         display: flex;
