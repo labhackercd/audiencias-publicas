@@ -58,8 +58,8 @@ function sendQuestionFormHelper($wrapper) {
   const elements = {
     $wrapper,
     $form: $wrapper.find('.JS-formQuestion'),
-    $formInput: $wrapper.find('.send-form__input'),
-    $formBtn: $wrapper.find('.actions__button'),
+    $formInput: $wrapper.find('.JS-formInputQuestion'),
+    $formBtn: $wrapper.find('.button'),
     $questionFooter: $wrapper.find('.JS-questionFooter'),
   };
 
