@@ -154,7 +154,7 @@
         {% endif %}
         {% if user|belongs_to_group:object.legislative_body_initials %}
         <button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
-        {# <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button> #}
+        <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
         {% endif %}
       </div>
 
@@ -170,7 +170,7 @@
         <button class="more JS-toggleDiv">Ver mais</button>
       </div>
 
-      {% if object.attachments.all %} 
+      {% if object.attachments.all %}
       <div class="room-info JS-readMoreLess">
         <h3>Conteúdo complementar</h3>
         <ul class="list">
@@ -184,7 +184,7 @@
         <button class="more JS-toggleDiv">Ver mais</button>
       </div>
       {% endif %}
-      
+
       {% if user|belongs_to_group:object.legislative_body_initials %}
       <button class="aud-button -add JS-openModal" data-modal-target="addContent">Adicionar conteúdo complementar</button>
 
