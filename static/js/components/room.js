@@ -48,6 +48,7 @@ function roomComponent(socket) {
     $closeModal: $('.JS-closeModal'),
     $selectVideo: $('.JS-selectVideo'),
     $orderVideos: $('.JS-orderVideos'),
+    $roomVideo: $('.JS-roomVideo'),
     $answeredButton: $('.JS-answeredButton'),
   };
 
@@ -307,6 +308,7 @@ function roomComponent(socket) {
 
     clickToggleButton() {
       elements.$selectVideo.find('.aud-button').toggleClass('-active');
+      elements.$roomVideo.toggleClass('-ordering');
     },
 
     openQuestionManaging() {
