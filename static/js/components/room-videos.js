@@ -62,8 +62,6 @@ function roomVideosComponent() {
       const selectedVideo = $(this).closest('.JS-selectVideo');
       const selectedVideoOrder = selectedVideo.attr('data-video-order');
 
-      console.log(selectedVideo);
-      console.log(selectedVideoOrder);
       if ($(this).hasClass('-left')) {
         selectedVideo.attr('data-video-order', selectedVideo.prev().attr('data-video-order'));
         selectedVideo.prev().attr('data-video-order', selectedVideoOrder);
