@@ -9,7 +9,7 @@
   </li>
 {% endfor %}
 {% for attachment_video in object.get_attachment_videos %}
-  <li class="extravideo -attached JS-selectVideo" data-video-id="{{attachment_video.video_id}}" data-video-order="{{ attachment_video.order }}">
+  <li class="extravideo -attached JS-selectVideo" data-video-id="{{attachment_video.video_id}}" data-id="{{ attachment_video.id }}" data-video-order="{{ attachment_video.order }}">
     <div class="wrapper">
       <img class="thumbnail" src="https://i.ytimg.com/vi/{{attachment_video.video_id}}/mqdefault.jpg">
       <button class="aud-button -icon -remove -active hide JS-openModal JS-deleteVideo" data-modal-target="addVideoDialog" data-dialog-action="{% url 'delete_video' attachment_video.id %}"></button>

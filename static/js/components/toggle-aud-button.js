@@ -1,6 +1,30 @@
+import { getCookie } from '../helpers/cookies';
+
 function toggleAudButtonComponent() {
   const elements = {
     $toggleAudButton: $('.JS-toggleAudButton'),
+  };
+
+  function sendOrderedVideos() {
+    const url = window.location.pathname + '/ordered-videos/';
+    const csrftoken = getCookie('csrftoken');
+    const videos = new Array(); 
+
+    $('.JS-selectVideo[data-video-order]').each(function() {
+      videos.push({'id': $(this).attr('data-id'),
+                   'order': $(this).attr('data-video-order')});
+    });
+
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      }
+    });
+
+    $.post(url, {
+      data: JSON.stringify(videos),
+      success: location.reload(),
+    })
   };
 
   const events = {
@@ -15,6 +39,7 @@ function toggleAudButtonComponent() {
 
       if ($(this).hasClass('-toggled')) {
         $(this).text(data.untoggledText).removeClass(data.toggledIcon).removeClass('-toggled').addClass(data.untoggledIcon)
+        sendOrderedVideos();
       } else {
         $(this).text(data.toggledText).removeClass(data.untoggledIcon).addClass(data.toggledIcon).addClass('-toggled');
       }
