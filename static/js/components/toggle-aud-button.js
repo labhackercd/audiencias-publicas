@@ -23,7 +23,6 @@ function toggleAudButtonComponent() {
 
     $.post(url, {
       data: JSON.stringify(videos),
-      success: location.reload(),
     })
   };
 

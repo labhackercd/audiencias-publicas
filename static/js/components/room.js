@@ -263,6 +263,11 @@ function roomComponent(socket) {
     sendChatForm = sendChatFormHelper(elements.$wrapperChat);
   }
 
+  function clickToggleButton() {
+      $('.JS-selectVideo').find('.aud-button').toggleClass('-active');
+      $('.JS-roomVideo').toggleClass('-ordering');
+  }
+
   const events = {
     readMoreClickQuestion() {
       animateToBottomQuestion();
@@ -304,11 +309,6 @@ function roomComponent(socket) {
     openQuestionFormClick() {
       openQuestionForm();
       characterCounter.updateCounter();
-    },
-
-    clickToggleButton() {
-      elements.$selectVideo.find('.aud-button').toggleClass('-active');
-      elements.$roomVideo.toggleClass('-ordering');
     },
 
     openQuestionManaging() {
@@ -487,10 +487,7 @@ function roomComponent(socket) {
       elements.$messagesList.on('scroll', events.messagesListScroll);
       elements.$readMoreChat.on('click', events.readMoreClickChat);
       elements.$formChat.on('submit', events.sendMessage);
-      elements.$orderVideos.on('click', events.clickToggleButton)
-      setInterval(function() {
-        socket.send(JSON.stringify({heartbeat: true}));
-      }, 3000);
+      elements.$orderVideos.on('click', clickToggleButton);
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
       elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
       elements.$answeredButton.on('click', events.setCurrentVideo);
@@ -528,6 +525,9 @@ function roomComponent(socket) {
     mixItUpInit();
     sendFormHelperInit(); // defined in room.html
     bindEventsHandlers.onPageLoad();
+    setInterval(function() {
+      socket.send(JSON.stringify({heartbeat: true}));
+    }, 3000);
   }());
 }
 
