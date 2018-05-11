@@ -71,10 +71,11 @@
                 {% include "includes/question_card.html" with page="room" %}
               {% endfor %}
             {% elif object.youtube_status != 2 %}
-              <div class="questions__list--empty JS-questionlistEmpty">
-                <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
-                <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
-              </div>
+              <p class="empty JS-questionlistEmpty">
+                Nenhuma pergunta foi feita ainda.
+                <br>
+                Seja o primeiro!
+              </p>
             {% endif %}
           </ul>
           <button class="read-more JS-readMoreQuestion"></button>
@@ -197,10 +198,11 @@
               {% include "includes/chat_message.html" with message=message %}
             {% endfor %}
           {% elif object.youtube_status != 2 %}
-            <div class="list -empty JS-messagesListEmpty">
-              <img src="{% static 'img/chat-bubble.svg' %}" data-fallback="{% static 'img/chat-bubble.png' %}">
-              <p>Nenhuma mensagem foi enviada ainda. Seja o primeiro!</p>
-            </div>
+            <p class="empty JS-messagesListEmpty">
+              Nenhuma mensagem foi enviada ainda.
+              <br>
+              Seja o primeiro!
+            </p>
           {% endif %}
         </ul>
         <button class="read-more JS-readMoreChat">Há novas mensagens disponíveis abaixo</button>
