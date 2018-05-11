@@ -1,0 +1,19 @@
+<div class="info">
+  <span class="status">
+    {% if object.youtube_status == 0 %}
+      Transmissão Prevista
+    {% elif object.youtube_status == 1 %}
+      <span class="live-icon"></span> Ao Vivo
+    {% else %}
+      Transmissão Encerrada (Gravado)
+    {% endif %}
+  </span>
+
+  <span class="visitors">
+    {% if object.youtube_status == 1 %}
+      <span class="numbers" id="online-users">{{object.online_users}}</span> pessoas na sala
+    {% else %}
+      <span class="numbers">{{object.views}}</span> visitantes
+    {% endif %}
+  </span>
+</div>
