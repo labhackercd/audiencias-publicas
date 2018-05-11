@@ -172,11 +172,6 @@ function roomComponent(socket) {
   }
 
   function evaluateSocketMessage(message) {
-    const questionlistIsEmpty = elements.$questionlistEmpty.length;
-    const messagesListIsEmpty = elements.$messagesListEmpty.length;
-    if (questionlistIsEmpty) elements.$questionlistEmpty.remove();
-    if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
-
     const data = JSON.parse(message.data);
 
     if (data.closed) {
@@ -206,6 +201,8 @@ function roomComponent(socket) {
     } else if (data.question) {
         const $existingQuestion = $(`[data-question-id=${data.id}]`);
         const questionExists = $existingQuestion.length;
+        const questionlistIsEmpty = elements.$questionlistEmpty.length;
+        if (questionlistIsEmpty) elements.$questionlistEmpty.remove();
 
         if (questionExists) {
           $existingQuestion.replaceWith(data.html);
@@ -243,6 +240,8 @@ function roomComponent(socket) {
         bindEventsHandlers.onAdd($question);
         elements.$questionList.mixItUp('sort', 'question-votes:desc question-id:asc');
     } else if (data.chat) {
+        const messagesListIsEmpty = elements.$messagesListEmpty.length;
+        if (messagesListIsEmpty) elements.$messagesListEmpty.remove();
         if (isScrolledToBottomChat()) {
           elements.$messagesList.append(data.html);
           animateToBottomChat();
