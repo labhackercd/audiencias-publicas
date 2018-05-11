@@ -63,7 +63,9 @@
     <aside class="room-questions JS-wrapperQuestion">
       <h2 class="room-h2">Perguntas</h2>
       <p>{{ config.QUESTIONS_DESCRIPTION }}</p>
+      {% if user|belongs_to_group:object.legislative_body_initials %}
       <a class="link" href="{{request.path}}/perguntas">Ir para a página de perguntas</a>
+      {% endif %}
         <div class="questions-section ">
           <ul class="questions__list JS-questionsList" id="questions">
             {% if questions %}
