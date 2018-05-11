@@ -31,4 +31,21 @@
       margin-top: 0.75rem;
     }
   }
+
+  .alert {
+    position: sticky;
+    display: flex;
+    background-color: #339966;
+    padding: 1rem;
+    top: 0rem;
+    z-index: 11;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23);
+    align-items: center;
+    justify-content: center;
+    font-size: $font-size-base;
+
+    > .aud-button {
+      margin-left: 1rem;
+    }
+  }
 }
