@@ -3,7 +3,11 @@
     <div class="wrapper">
       <img class="thumbnail" src="https://i.ytimg.com/vi/{{main_video.video_id}}/mqdefault.jpg">
       <button class="aud-button -icon -remove -active hide JS-openModal JS-deleteVideo" data-modal-target="addVideoDialog" data-dialog-action="{% url 'delete_video' main_video.id %}"></button>
-      <span class="label">Transmitido</span>
+      {% if forloop.first and object.youtube_status == 1 %}
+        <span class="label"><span class="live-icon"></span>Ao Vivo</span>
+      {% else %}
+        <span class="label -transmited">Transmitido</span>
+      {% endif %}
     </div>
     <span class="title">Parte {{ forloop.revcounter }}</span>
   </li>
