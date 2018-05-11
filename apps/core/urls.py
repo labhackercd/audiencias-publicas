@@ -7,7 +7,7 @@ from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              set_priotity, WidgetVideoDetail, create_attachment,
                              delete_attachment, add_external_link,
                              remove_external_link, create_video_attachment,
-                             delete_video)
+                             delete_video, order_videos)
 from apps.core import api
 
 
@@ -40,6 +40,8 @@ urlpatterns = [
         name='video_reunion_room'),
     url(r'^sala/(?P<pk>\d+)/perguntas/?$', RoomQuestionList.as_view(),
         name='questions_list'),
+    url(r'^sala/(?P<room_id>\d+)/ordered-videos/?$', order_videos,
+        name='order_videos'),
     url(r'^fechadas/?$', ClosedVideos.as_view(), name='video_list'),
     url(r'^widget/(?P<pk>\d+)/?$',
         ensure_csrf_cookie(WidgetVideoDetail.as_view()),

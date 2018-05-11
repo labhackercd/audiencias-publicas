@@ -254,6 +254,7 @@ def create_video_attachment(request, room_id):
                 video = form.save(commit=False)
                 video.room = room
                 video.is_attachment = True
+                video.order = room.get_attachment_videos().count() + 1
                 video.save()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
         else:
@@ -269,6 +270,29 @@ def delete_video(request, video_id):
         if belongs_to_group(request.user, group_name):
             video.delete()
             return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        else:
+            return HttpResponseForbidden()
+    else:
+        return HttpResponseForbidden()
+
+
+def order_videos(request, room_id):
+    if request.user.is_authenticated() and request.method == 'POST':
+        room = Room.objects.get(pk=room_id)
+        group_name = room.legislative_body_initials
+        if belongs_to_group(request.user, group_name):
+            videos = json.loads(request.POST['data'])
+            for video in videos:
+                Video.objects.filter(
+                    id=video['id']).update(order=video['order'])
+            text = {
+                'video': True,
+                'thumbs_html': room.html_room_thumbnails(),
+            }
+            Group(room.group_room_name).send(
+                {'text': json.dumps(text)}
+            )
+            return HttpResponse(status=200)
         else:
             return HttpResponseForbidden()
     else:

@@ -1,5 +1,32 @@
 .room-video {
 
+  &::after {
+    content: '';
+    position: fixed;
+    background-color: rgba($color-edem-dark, 0.8);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000000;
+    transition: opacity 0.3s ease;
+  }
+
+  &.-ordering {
+    &::after {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    >.extras .extravideo.-attached {
+      z-index: 1000001;
+      transition: z-index 0s 0s ease; // Used to avoid flashing overlay when ordering videos
+    }
+  }
+
   > .room-title {
     padding: 0;
     margin-bottom: 0.75rem;
@@ -78,6 +105,15 @@
     }
   }
 
+  .aud-button {
+    transition: z-index 0s 0.3s ease; // Used to avoid flashing overlay when ordering videos
+
+    &.-toggled {
+      z-index: 1000001;
+      transition: z-index 0s 0s ease; // Used to avoid flashing overlay when ordering videos
+    }
+  }
+
   > .extras {
     display: flex;
     align-items: start;
@@ -85,6 +121,7 @@
     padding: 1rem;
     background-color: $color-edem-main;
     overflow-x: auto;
+    perspective: none !important; // Necessary to override mixitup inline styles when animating.
 
     @include bp-largedown {
       padding: 0.75rem;
@@ -106,6 +143,7 @@
       min-width: 8rem;
       cursor: pointer;
       z-index: 2;
+      transition: z-index 0s 0.3s ease; // Used to avoid flashing overlay when ordering videos
 
       &:hover, &:active {
         > .wrapper > .thumbnail, > .add {
@@ -122,6 +160,18 @@
           > .thumbnail {
             opacity: 1;
           }
+        }
+      }
+
+      &.-main+.-attached {
+        > .wrapper > .aud-button.-left {
+          transform: translateY(-2.5rem);
+        }
+      }
+
+      &.-attached:last-of-type {
+        > .wrapper > .aud-button.-right{
+          transform: translateY(-2.5rem);
         }
       }
 

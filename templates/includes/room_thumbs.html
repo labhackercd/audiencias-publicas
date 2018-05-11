@@ -1,5 +1,5 @@
 {% for main_video in object.get_main_videos %}
-  <li class="extravideo JS-selectVideo {% if forloop.first %}-current{% endif %}" data-video-id="{{main_video.video_id}}">
+  <li class="extravideo -main JS-selectVideo {% if forloop.first %}-current{% endif %}" data-video-id="{{main_video.video_id}}">
     <div class="wrapper">
       <img class="thumbnail" src="https://i.ytimg.com/vi/{{main_video.video_id}}/mqdefault.jpg">
       <button class="aud-button -icon -remove -active hide JS-openModal JS-deleteVideo" data-modal-target="addVideoDialog" data-dialog-action="{% url 'delete_video' main_video.id %}"></button>
@@ -9,12 +9,12 @@
   </li>
 {% endfor %}
 {% for attachment_video in object.get_attachment_videos %}
-  <li class="extravideo JS-selectVideo" data-video-id="{{attachment_video.video_id}}">
+  <li class="extravideo -attached JS-selectVideo" data-video-id="{{attachment_video.video_id}}" data-id="{{ attachment_video.id }}" data-video-order="{{ attachment_video.order }}">
     <div class="wrapper">
       <img class="thumbnail" src="https://i.ytimg.com/vi/{{attachment_video.video_id}}/mqdefault.jpg">
       <button class="aud-button -icon -remove -active hide JS-openModal JS-deleteVideo" data-modal-target="addVideoDialog" data-dialog-action="{% url 'delete_video' attachment_video.id %}"></button>
-      <button class="aud-button -icon -left"></button>
-      <button class="aud-button -icon -right"></button>
+      <button class="aud-button -icon -left JS-changeOrder"></button>
+      <button class="aud-button -icon -right JS-changeOrder"></button>
     </div>
     <span class="title">{{attachment_video.title|default_if_none:""}}</span>
   </li>
