@@ -6,6 +6,8 @@
   box-shadow: 0 2px 4px 0 rgba(#000, 0.2);
   text-decoration: none;
   border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 
   @include bp-largedown {
