@@ -50,6 +50,7 @@ function roomComponent(socket) {
     $orderVideos: $('.JS-orderVideos'),
     $roomVideo: $('.JS-roomVideo'),
     $answeredButton: $('.JS-answeredButton'),
+    $roomMain: $('.JS-roomMain'),
   };
 
   const vars = {
@@ -191,8 +192,12 @@ function roomComponent(socket) {
 
     if (data.video) {
       if(!data.is_attachment) {
-        elements.$videoFrame.html(data.video_html);
-        playVideoById(data.video_id);
+        if (typeof player !== 'undefined' && !data.deleted) {
+          elements.$roomMain.prepend(`<div class="alert">Transmissão ao vivo na sala em andamento. <button class="aud-button" onclick="player.loadVideoById('${data.video_id}');parentNode.parentNode.removeChild(parentNode);">Assistir</button></div>`);
+        } else {
+          elements.$videoFrame.html(data.video_html);
+          playVideoById(data.video_id);
+        }
       }
       elements.$thumbList.html(data.thumbs_html);
       roomVideosComponent();
