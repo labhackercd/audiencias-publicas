@@ -11,6 +11,7 @@ function playVideoById(video_id) {
 
   function onPlayerReady(event) {
     event.target.playVideo();
+    $(`.JS-selectVideo[data-video-id=${video_id}]`).addClass('-current');
   }
 }
 

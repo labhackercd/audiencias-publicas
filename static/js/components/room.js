@@ -50,7 +50,6 @@ function roomComponent(socket) {
     $orderVideos: $('.JS-orderVideos'),
     $roomVideo: $('.JS-roomVideo'),
     $answeredButton: $('.JS-answeredButton'),
-    $roomMain: $('.JS-roomMain'),
   };
 
   const vars = {
@@ -191,15 +190,17 @@ function roomComponent(socket) {
     }
 
     if (data.video) {
+      elements.$thumbList.html(data.thumbs_html);
       if(!data.is_attachment) {
-        if (typeof player !== 'undefined' && !data.deleted) {
-          elements.$roomMain.prepend(`<div class="alert">Transmissão ao vivo na sala em andamento. <button class="aud-button" onclick="player.loadVideoById('${data.video_id}');parentNode.parentNode.removeChild(parentNode);">Assistir</button></div>`);
+        if (typeof player !== 'undefined') {
+          $('.JS-roomAlert').removeClass('hide');
+          $('.JS-alertPlayBtn').attr('data-video-id', data.video_id);
+          $(`.JS-selectVideo[data-video-id=${player.getVideoData().video_id}]`).addClass('-current');
         } else {
           elements.$videoFrame.html(data.video_html);
           playVideoById(data.video_id);
         }
       }
-      elements.$thumbList.html(data.thumbs_html);
       roomVideosComponent();
       modalsComponent();
     } else if (data.question) {
@@ -470,6 +471,14 @@ function roomComponent(socket) {
         $('.JS-openQuestionManaging').addClass('hide');
       }
     },
+
+    alertPlayBtn(){
+      const video_id = $('.JS-alertPlayBtn').attr('data-video-id')
+      player.loadVideoById(video_id);
+      $('.JS-roomAlert').addClass('hide');
+      $('.JS-selectVideo').removeClass('-current');
+      $(`.JS-selectVideo[data-video-id=${video_id}]`).addClass('-current');
+    },
   };
 
 
@@ -496,6 +505,8 @@ function roomComponent(socket) {
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
       elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
       elements.$answeredButton.on('click', events.setCurrentVideo);
+      elements.$answeredButton.on('click', events.setCurrentVideo);
+      $('.JS-alertPlayBtn').on('click', events.alertPlayBtn);
       events.showAdminBtns();
     },
 

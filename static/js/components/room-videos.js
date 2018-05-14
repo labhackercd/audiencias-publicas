@@ -40,6 +40,10 @@ function roomVideosComponent() {
         } else {
 
           player.loadVideoById($currentVideo.attr('data-video-id'));
+          
+          if ($currentVideo.attr('data-video-id') == $('.JS-alertPlayBtn').attr('data-video-id')) {
+            $('.JS-roomAlert').addClass('hide');
+          }
 
         }
       }
