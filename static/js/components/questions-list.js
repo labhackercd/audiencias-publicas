@@ -7,6 +7,9 @@ function questionsListComponent(socket) {
     $answeredCheckbox: $('.JS-answeredCheckbox'),
     $priorityCheckbox: $('.JS-priorityCheckbox'),
     $numberOfQuestions: $('.numberofquestions'),
+    $openQuestionManaging: $('.JS-openQuestionManaging'),
+    $closeQuestionManaging: $('.JS-closeQuestionManaging'),
+    $questionManagingList: $('.JS-questionManagingList'),
   };
 
   function evaluateSocketMessage(message) {
@@ -78,7 +81,25 @@ function questionsListComponent(socket) {
       $.post(event.target.form.action, {
         is_priority: event.target.checked
       })
-    }
+    },
+
+    openQuestionManaging() {
+      $(this).parent().siblings('.JS-questionManagingList').addClass('-active');
+    },
+
+    closeQuestionManaging() {
+      $(this).closest('.JS-questionManagingList').removeClass('-active');
+    },
+
+    showAdminBtns() {
+      if ($.inArray($('.JS-groupName').attr('data-room-group'), HANDLER_GROUPS) > -1) {
+        $('.JS-openQuestionManaging').removeClass('hide');
+      } else if (HANDLER_ADMIN) {
+        $('.JS-openQuestionManaging').removeClass('hide');
+      } else {
+        $('.JS-openQuestionManaging').addClass('hide');
+      }
+    },
   };
 
   const bindEventsHandlers = {
@@ -86,13 +107,21 @@ function questionsListComponent(socket) {
       socket.onmessage = evaluateSocketMessage;
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
+      elements.$openQuestionManaging.on('click', events.openQuestionManaging);
+      elements.$closeQuestionManaging.on('click', events.closeQuestionManaging);
+      events.showAdminBtns();
     },
     onAdd($question) {
       const $answeredCheckbox = $question.find('.JS-answeredCheckbox');
       const $priorityCheckbox = $question.find('.JS-priorityCheckbox');
+      const $openQuestionManaging = $question.find('.JS-openQuestionManaging');
+      const $closeQuestionManaging = $question.find('.JS-closeQuestionManaging');
 
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
+      $openQuestionManaging.on('click', events.openQuestionManaging);
+      $closeQuestionManaging.on('click', events.closeQuestionManaging);
+      events.showAdminBtns();
     },
   };
 
