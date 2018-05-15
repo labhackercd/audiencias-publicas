@@ -272,7 +272,6 @@ def room_post_save(sender, instance, created, **kwargs):
         if not instance.closed_time:
             instance.closed_time = timezone.now()
             instance.save()
-        instance.latest_video().send_video()
     instance.send_notification(is_closed=is_closed)
 
 
