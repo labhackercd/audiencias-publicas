@@ -396,6 +396,8 @@ class RoomQuestionList(DetailView):
         context['counter'] = self.object.questions.count()
         if self.request.user.is_authenticated():
             context['handler'] = encrypt(str(self.request.user.id).rjust(10))
+            context['groups'] = list(self.request.user.groups.all()
+                                     .values_list('name', flat=True))
         return context
 
     def get_queryset(self):
