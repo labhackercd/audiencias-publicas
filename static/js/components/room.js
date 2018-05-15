@@ -459,6 +459,7 @@ function roomComponent(socket) {
       });
       $('.JS-selectVideo').removeClass('-current');
       $(`[data-video-id=${$(this).attr('data-youtube-id')}]`).addClass('-current');
+      $('.JS-videoStatus').text($(`.JS-selectVideo[data-video-id=${$(this).attr('data-youtube-id')}]`).attr('data-video-title'));
     },
 
     showAdminBtns() {
@@ -477,6 +478,7 @@ function roomComponent(socket) {
       $('.JS-roomAlert').addClass('hide');
       $('.JS-selectVideo').removeClass('-current');
       $(`.JS-selectVideo[data-video-id=${video_id}]`).addClass('-current');
+      $('.JS-videoStatus').text($(`.JS-selectVideo[data-video-id=${video_id}]`).attr('data-video-title'));
     },
   };
 
