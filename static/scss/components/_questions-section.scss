@@ -222,6 +222,14 @@
       transition: $hover-transition;
     }
   }
+
+  > .empty {
+    margin: auto;
+    padding-bottom: 2em;
+    line-height: 1.2em;
+    font-weight: 300;
+    text-align: center;
+  }
 }
 
 .question-block__answered-form {
@@ -253,21 +261,21 @@
   }
 }
 
-.questions__list--empty {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  margin: 0 1em;
-  flex-direction: column;
+// .questions__list--empty {
+//   align-items: center;
+//   display: flex;
+//   justify-content: center;
+//   margin: 0 1em;
+//   flex-direction: column;
 
-  img {
-    margin-bottom: 1em;
-  }
+//   img {
+//     margin-bottom: 1em;
+//   }
 
-  p {
-    color: $color-primary-xlight;
-    font-size: 1.5em;
-    font-weight: $font-weight-semi-bold;
-    text-align: center;
-  }
-}
+//   p {
+//     color: $color-primary-xlight;
+//     font-size: 1.5em;
+//     font-weight: $font-weight-semi-bold;
+//     text-align: center;
+//   }
+// }

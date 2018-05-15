@@ -11,7 +11,12 @@ function playVideoById(video_id) {
 
   function onPlayerReady(event) {
     event.target.playVideo();
-    $(`.JS-selectVideo[data-video-id=${video_id}]`).addClass('-current');
+    const currentVideo = $(`.JS-selectVideo[data-video-id=${video_id}]`);
+    currentVideo.addClass('-current');
+    $('.JS-videoStatus').text(currentVideo.attr('data-video-title'));
+    if (currentVideo.attr('data-live-video') == "true") {
+      $('.JS-videoStatus').prepend('<span class="live-icon"></span>');
+    }
   }
 }
 

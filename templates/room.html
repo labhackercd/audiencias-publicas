@@ -40,6 +40,7 @@
       <div class="info">
         <span>{{object.reunion_type}}</span>
         <span>{{object.date}}</span>
+        <span>{{object.get_youtube_status_display}}</span>
       </div>
     </div>
 
@@ -63,7 +64,9 @@
     <aside class="room-questions JS-wrapperQuestion">
       <h2 class="room-h2">Perguntas</h2>
       <p>{{ config.QUESTIONS_DESCRIPTION }}</p>
+      {% if user|belongs_to_group:object.legislative_body_initials %}
       <a class="link" href="{{request.path}}/perguntas">Ir para a página de perguntas</a>
+      {% endif %}
         <div class="questions-section ">
           <ul class="questions__list JS-questionsList" id="questions">
             {% if questions %}
@@ -71,10 +74,11 @@
                 {% include "includes/question_card.html" with page="room" %}
               {% endfor %}
             {% elif object.youtube_status != 2 %}
-              <div class="questions__list--empty JS-questionlistEmpty">
-                <img src="{% static 'img/question-hand.svg' %}" data-fallback="{% static 'img/question-hand.png' %}">
-                <p>Nenhuma pergunta foi feita ainda. Seja o primeiro!</p>
-              </div>
+              <p class="empty JS-questionlistEmpty">
+                Nenhuma pergunta foi feita ainda.
+                <br>
+                Seja o primeiro!
+              </p>
             {% endif %}
           </ul>
           <button class="read-more JS-readMoreQuestion"></button>
@@ -120,6 +124,7 @@
           <div class="info">
             <span>{{object.reunion_type}}</span>
             <span>{{object.date}}</span>
+            <span>{{object.get_youtube_status_display}}</span>
           </div>
         </div>
 
@@ -127,25 +132,23 @@
           <div class="ratiowrapper JS-videoFrame">
             {% include "includes/room_video.html" with object=object %}
           </div>
-          <div class="info">
-            <span class="status">
-              {% if object.youtube_status == 0 %}
-                Transmissão Prevista
-              {% elif object.youtube_status == 1 %}
-                <span class="live-icon"></span> Ao Vivo
-              {% else %}
-                Transmissão Encerrada (Gravado)
-              {% endif %}
-            </span>
+            <div class="info">
+              <span class="status JS-videoStatus">
+                  {% if object.latest_video and object.youtube_status == 1 %}
+                    <span class="live-icon"></span> Parte {{ object.get_main_videos|length }}
+                  {% elif object.youtube_status == 0 %}
+                    Transmissão Prevista
+                  {% endif %}
+              </span>
 
-            <span class="visitors">
-              {% if object.youtube_status == 1 %}
-                <span class="numbers" id="online-users">{{object.online_users}}</span> pessoas na sala
-              {% else %}
-                <span class="numbers">{{object.views}}</span> visitantes
-              {% endif %}
-            </span>
-          </div>
+              <span class="visitors">
+                {% if object.youtube_status == 1 %}
+                  <span class="numbers" id="online-users">{{object.online_users}}</span> pessoas na sala
+                {% else %}
+                  <span class="numbers">{{object.views}}</span> visitantes
+                {% endif %}
+              </span>
+            </div>
         </div>
         {% if object.videos.all %}
         <ul class="extras JS-thumbList">
@@ -154,7 +157,9 @@
         {% endif %}
         {% if user|belongs_to_group:object.legislative_body_initials %}
         <button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
-        <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
+          {% if object.get_attachment_videos.count > 1 %}
+            <button class="aud-button -order JS-toggleAudButton JS-orderVideos" data-untoggled-text="Reordenar vídeos" data-untoggled-icon="-order" data-toggled-text="Finalizar reordenação" data-toggled-icon="-complete">Reordenar vídeos</button>
+          {% endif %}
         {% endif %}
       </div>
 
@@ -213,10 +218,11 @@
               {% include "includes/chat_message.html" with message=message %}
             {% endfor %}
           {% elif object.youtube_status != 2 %}
-            <div class="list -empty JS-messagesListEmpty">
-              <img src="{% static 'img/chat-bubble.svg' %}" data-fallback="{% static 'img/chat-bubble.png' %}">
-              <p>Nenhuma mensagem foi enviada ainda. Seja o primeiro!</p>
-            </div>
+            <p class="empty JS-messagesListEmpty">
+              Nenhuma mensagem foi enviada ainda.
+              <br>
+              Seja o primeiro!
+            </p>
           {% endif %}
         </ul>
         <button class="read-more JS-readMoreChat">Há novas mensagens disponíveis abaixo</button>

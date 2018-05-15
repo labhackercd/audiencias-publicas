@@ -25,26 +25,23 @@ function roomVideosComponent() {
       const $videoElements = elements.$selectVideo;
       const $currentVideo = $(this);
 
-      console.log($(event.target));
-
       if (!($(event.target).hasClass('aud-button') || $currentVideo.hasClass('-current'))) {
 
         $videoElements.removeClass('-current');
         $currentVideo.addClass('-current');
 
         if (elements.$videoFrame.find('.video').hasClass('-empty')) {
-
           elements.$videoFrame.html('<div class="video" id="player"></div>')
           playVideoById($currentVideo.attr('data-video-id'));
-
         } else {
-
           player.loadVideoById($currentVideo.attr('data-video-id'));
-          
           if ($currentVideo.attr('data-video-id') == $('.JS-alertPlayBtn').attr('data-video-id')) {
             $('.JS-roomAlert').addClass('hide');
           }
-
+        }
+        $('.JS-videoStatus').html($currentVideo.attr('data-video-title'));
+        if ($currentVideo.attr('data-live-video') == "true") {
+          $('.JS-videoStatus').prepend('<span class="live-icon"></span>');
         }
       }
     },
