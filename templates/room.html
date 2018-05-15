@@ -107,7 +107,7 @@
     </aside>
 
     <main class="room-main">
-
+      <div class="alert hide JS-roomAlert">Transmissão ao vivo na sala em andamento. <button class="aud-button JS-alertPlayBtn">Assistir</button></div>
       <div class="room-video JS-roomVideo">
         <div class="room-title">
           <h1 class="title">
@@ -296,6 +296,7 @@
         }
         function onPlayerReady(event) {
          event.target.playVideo();
+         $(".JS-selectVideo[data-video-id={{object.latest_video.video_id}}]").addClass('-current');
         }
     </script>
   {% endif %}
