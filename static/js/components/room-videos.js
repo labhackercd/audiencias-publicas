@@ -39,8 +39,10 @@ function roomVideosComponent() {
             $('.JS-roomAlert').addClass('hide');
           }
         }
-        $('.JS-videoStatus').text($currentVideo.attr('data-video-title'));
-
+        $('.JS-videoStatus').html($currentVideo.attr('data-video-title'));
+        if ($currentVideo.attr('data-live-video') == "true") {
+          $('.JS-videoStatus').prepend('<span class="live-icon"></span>');
+        }
       }
     },
 

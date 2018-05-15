@@ -133,7 +133,7 @@
             <div class="info">
               <span class="status JS-videoStatus">
                   {% if object.latest_video and object.youtube_status == 1 %}
-                    Parte {{ object.get_main_videos|length }}
+                    <span class="live-icon"></span> Parte {{ object.get_main_videos|length }}
                   {% elif object.youtube_status == 0 %}
                     Transmissão Prevista
                   {% endif %}

@@ -457,9 +457,13 @@ function roomComponent(socket) {
         videoId:$(this).attr('data-youtube-id'),
         startSeconds:$(this).attr('data-answer-time')
       });
+      const currentVideo = $(`.JS-selectVideo[data-video-id=${$(this).attr('data-youtube-id')}]`)
       $('.JS-selectVideo').removeClass('-current');
-      $(`[data-video-id=${$(this).attr('data-youtube-id')}]`).addClass('-current');
-      $('.JS-videoStatus').text($(`.JS-selectVideo[data-video-id=${$(this).attr('data-youtube-id')}]`).attr('data-video-title'));
+      currentVideo.addClass('-current');
+      $('.JS-videoStatus').text(currentVideo.attr('data-video-title'));
+      if (currentVideo.attr('data-live-video') == "true") {
+        $('.JS-videoStatus').prepend('<span class="live-icon"></span>');
+      }
     },
 
     showAdminBtns() {
@@ -474,11 +478,15 @@ function roomComponent(socket) {
 
     alertPlayBtn(){
       const video_id = $('.JS-alertPlayBtn').attr('data-video-id')
+      const currentVideo = $(`.JS-selectVideo[data-video-id=${video_id}]`)
       player.loadVideoById(video_id);
       $('.JS-roomAlert').addClass('hide');
       $('.JS-selectVideo').removeClass('-current');
-      $(`.JS-selectVideo[data-video-id=${video_id}]`).addClass('-current');
-      $('.JS-videoStatus').text($(`.JS-selectVideo[data-video-id=${video_id}]`).attr('data-video-title'));
+      currentVideo.addClass('-current');
+      $('.JS-videoStatus').text(currentVideo.attr('data-video-title'));
+      if (currentVideo.attr('data-live-video') == "true") {
+        $('.JS-videoStatus').prepend('<span class="live-icon"></span>');
+      }
     },
   };
 
