@@ -316,6 +316,13 @@ class VideoDetail(DetailView):
         context['domain'] = Site.objects.get_current().domain
         return context
 
+    def get_object(self, queryset=None):
+        obj = super(VideoDetail, self).get_object(queryset=queryset)
+        if obj.is_visible:
+            return obj
+        else:
+            raise Http404()
+
 
 @method_decorator(xframe_options_exempt, name='dispatch')
 class WidgetVideoDetail(DetailView):
