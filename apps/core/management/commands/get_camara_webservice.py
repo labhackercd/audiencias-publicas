@@ -44,6 +44,8 @@ class Command(BaseCommand):
                 room.reunion_object = item['txtObjeto']
                 room.location = item['txtLocal']
                 room.is_visible = item['bolHabilitarEventoInterativo']
+                if item['codEstadoReuniao'] in [5, 6]:
+                    room.is_visible = False
                 room.youtube_status = item['codEstadoTransmissaoYoutube']
                 if item['datSisAudio'] == "":
                     date = datetime.strptime(item['datReuniaoString'],
