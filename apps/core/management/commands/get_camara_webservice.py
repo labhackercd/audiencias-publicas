@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group
-from datetime import datetime
+from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from apps.core.models import Room, Video
 import requests
@@ -14,8 +14,8 @@ import re
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        today = datetime.today()
-        final_date = datetime.today() + relativedelta(months=3)
+        today = date.today()
+        final_date = today + relativedelta(months=3)
         params = {'dataInicial': today.strftime('%d/%m/%Y'),
                   'dataFinal': final_date.strftime('%d/%m/%Y'),
                   'codComissao': '0',
@@ -49,12 +49,12 @@ class Command(BaseCommand):
                     room.is_visible = False
                 room.youtube_status = item['codEstadoTransmissaoYoutube']
                 if item['datSisAudio'] == "":
-                    date = datetime.strptime(item['datReuniaoString'],
-                                             '%d/%m/%Y %H:%M:%S')
+                    reunion_date = datetime.strptime(item['datReuniaoString'],
+                                                     '%d/%m/%Y %H:%M:%S')
                 else:
-                    date = datetime.strptime(item['datSisAudio'],
-                                             '%d/%m/%Y %H:%M:%S')
-                room.date = date
+                    reunion_date = datetime.strptime(item['datSisAudio'],
+                                                     '%d/%m/%Y %H:%M:%S')
+                room.date = reunion_date
                 if room.reunion_object:
                     lines = room.reunion_object.splitlines()
                     lines = list(filter(str.strip, lines))
@@ -105,4 +105,4 @@ class Command(BaseCommand):
             date__gte=today).exclude(cod_reunion__in=allowed_rooms).exclude(
             cod_reunion='').exclude(cod_reunion__isnull=True).exclude(
             youtube_status=2)
-        rooms_without_interaction.update(is_visible=False)
+        rooms_without_interaction.update(is_visible=False, is_active=False)
