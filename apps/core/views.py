@@ -182,7 +182,8 @@ def index(request):
             is_visible=True).order_by('-date'),
         agendas=Room.objects.filter(
             is_visible=True,
-            youtube_status=0).order_by('date'),
+            youtube_status=0,
+            date__gte=datetime.today()).order_by('date'),
     ))
 
 
