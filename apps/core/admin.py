@@ -8,7 +8,8 @@ class VideoInline(admin.TabularInline):
 
 
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('title_reunion', 'date', 'is_visible')
+    list_display = ('reunion_type', 'title_reunion', 'date', 'is_visible',
+                    'is_active')
     list_filter = ['youtube_status', 'date']
     search_fields = (
         'title_reunion', 'legislative_body_initials', 'legislative_body',
