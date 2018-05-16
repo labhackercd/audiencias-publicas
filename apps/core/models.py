@@ -57,6 +57,7 @@ class Room(TimestampedMixin):
     max_online_users = models.IntegerField(_('max online users'), default=0)
     views = models.IntegerField(_('views'), default=0)
     is_visible = models.BooleanField(_('is visible'), default=False)
+    is_active = models.BooleanField(_('is active'), default=True)
     external_link = models.URLField(verbose_name=_('link'), null=True,
                                     blank=True)
     closed_time = models.DateTimeField(_('closed time'), null=True, blank=True)

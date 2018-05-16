@@ -176,11 +176,14 @@ def index(request):
     return render(request, 'index.html', context=dict(
         closed_videos=Room.objects.filter(
             youtube_status=2,
-            is_visible=True).order_by('-date')[:5],
+            is_visible=True,
+            is_active=True).order_by('-date')[:5],
         live_videos=Room.objects.filter(
             youtube_status=1,
-            is_visible=True).order_by('-date'),
+            is_visible=True,
+            is_active=True).order_by('-date'),
         agendas=Room.objects.filter(
+            is_active=True,
             is_visible=True,
             youtube_status=0,
             date__gte=datetime.today()).order_by('date'),
@@ -318,7 +321,7 @@ class VideoDetail(DetailView):
 
     def get_object(self, queryset=None):
         obj = super(VideoDetail, self).get_object(queryset=queryset)
-        if obj.is_visible:
+        if obj.is_active:
             return obj
         else:
             raise Http404()
@@ -343,7 +346,7 @@ class WidgetVideoDetail(DetailView):
 
     def get_object(self, queryset=None):
         obj = super(WidgetVideoDetail, self).get_object(queryset=queryset)
-        if obj.is_visible:
+        if obj.is_active:
             return obj
         else:
             raise Http404()

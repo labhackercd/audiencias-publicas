@@ -78,7 +78,7 @@ class RoomFilter(FilterSet):
 
 class RoomViewSet(viewsets.ModelViewSet):
     allowed_methods = ['get']
-    queryset = Room.objects.all()
+    queryset = Room.objects.filter(is_active=True)
     serializer_class = RoomSerializer
     filter_class = RoomFilter
     filter_backends = (
