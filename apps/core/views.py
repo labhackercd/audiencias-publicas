@@ -8,7 +8,7 @@ from apps.core.utils import encrypt
 from apps.core.templatetags.video_utils import belongs_to_group
 from django.views.generic import DetailView, ListView
 from django.shortcuts import render, redirect
-from datetime import datetime
+from datetime import datetime, date
 from django.db.models import Q
 from channels import Group
 from django.utils.decorators import method_decorator
@@ -186,7 +186,7 @@ def index(request):
             is_active=True,
             is_visible=True,
             youtube_status=0,
-            date__gte=datetime.today()).order_by('date'),
+            date__gte=date.today()).order_by('date'),
     ))
 
 
