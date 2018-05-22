@@ -171,6 +171,19 @@ function roomComponent(socket) {
     }
   }
 
+  function openForms() {
+    if (HANDLER === '') {
+      $('.JS-closedQuestionMessage').parent().removeClass('-closed').prepend(`<span><a href="/home/?next=${window.location.pathname}">Faça Login</a> para enviar uma pergunta!</span>`);
+      $('.JS-closedChatMessage').parent().removeClass('-closed').prepend(`<p class="info"><a class="link" href="/home/?next=${window.location.pathname}">Faça Login</a> para participar no chat!</p>`);
+    } else {
+      $('.JS-closedQuestionMessage').parent().removeClass('-closed').prepend('<button class="action JS-openQuestionForm">Fazer uma pergunta</button>')
+      $('.JS-closedChatMessage').parent().removeClass('-closed').prepend('<form class="form JS-formChat" id="chatform"><textarea class="input JS-formInputChat" id="message" name="message" placeholder="Digite mensagens do bate-papo aqui" autocomplete="off" required></textarea><div class="actions"><button class="button" id="go" title="Enviar">Enviar</button></div></form>')
+    }
+    $('.JS-closedQuestionMessage').remove();
+    $('.JS-closedChatMessage').remove();
+    $('.JS-countdown').removeClass('-show');
+  }
+
   function evaluateSocketMessage(message) {
     const data = JSON.parse(message.data);
 
@@ -191,6 +204,14 @@ function roomComponent(socket) {
           $('.JS-roomAlert').removeClass('hide');
           $('.JS-alertPlayBtn').attr('data-video-id', data.video_id);
           $(`.JS-selectVideo[data-video-id=${player.getVideoData().video_id}]`).addClass('-current');
+          if($('.JS-selectVideo[data-live-video]') && $('.JS-closedQuestionMessage')){
+            openForms();
+            $(document).on("click", ".JS-openQuestionForm",function() {
+              events.openQuestionFormClick();
+            }).on("submit", ".JS-formChat",function() {
+              events.sendMessage();
+            });
+          }
         } else {
           elements.$videoFrame.html(data.video_html);
           playVideoById(data.video_id);
