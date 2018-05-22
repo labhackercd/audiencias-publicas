@@ -182,6 +182,7 @@ function roomComponent(socket) {
     $('.JS-closedQuestionMessage').remove();
     $('.JS-closedChatMessage').remove();
     $('.JS-countdown').removeClass('-show');
+    $('.JS-roomStatus').text('Em andamento');
   }
 
   function evaluateSocketMessage(message) {
@@ -194,6 +195,9 @@ function roomComponent(socket) {
       elements.$voteBtn.addClass('disabled');
       elements.$voteBtn.attr('disabled', true);
       elements.$totalVotes.addClass('voted disabled');
+      $('.JS-liveIcon').remove();
+      $('.JS-mainVideoLabel').addClass('-transmited').text('Transmitido');
+      $('.JS-roomStatus').text('Transmissão encerrada');
       return;
     }
 

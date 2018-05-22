@@ -65,7 +65,7 @@ function sendQuestionFormHelper($wrapper) {
 
   function createClosedFormEl() {
     elements.$questionFooter.addClass('-closed');
-    elements.$questionFooter.html('<p class="info JS-closedMessage">Audiência encerrada para participações.</p>');
+    elements.$questionFooter.html('<p class="info JS-closedQuestionMessage">Audiência encerrada para participações.</p>');
   }
 
   function closeForm() {

@@ -40,7 +40,7 @@
       <div class="info">
         <span>{{object.reunion_type}}</span>
         <span>{{object.date}}</span>
-        <span>{{object.get_youtube_status_display}}</span>
+        <span class="JS-roomStatus">{{object.get_youtube_status_display}}</span>
       </div>
     </div>
 
@@ -135,7 +135,7 @@
             <div class="info">
               <span class="status JS-videoStatus">
                   {% if object.latest_video and object.youtube_status == 1 %}
-                    <span class="live-icon"></span> Parte {{ object.get_main_videos|length }}
+                    <span class="live-icon JS-liveIcon"></span> Parte {{ object.get_main_videos|length }}
                   {% elif object.youtube_status == 0 %}
                     Transmissão Prevista
                   {% endif %}
