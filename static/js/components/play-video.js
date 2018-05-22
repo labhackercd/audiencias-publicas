@@ -15,7 +15,7 @@ function playVideoById(video_id) {
     currentVideo.addClass('-current');
     $('.JS-videoStatus').text(currentVideo.attr('data-video-title'));
     if (currentVideo.attr('data-live-video') == "true") {
-      $('.JS-videoStatus').prepend('<span class="live-icon"></span>');
+      $('.JS-videoStatus').prepend('<span class="live-icon JS-liveIcon"></span>');
     }
   }
 }
