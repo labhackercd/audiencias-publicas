@@ -41,7 +41,7 @@ function roomVideosComponent() {
         }
         $('.JS-videoStatus').html($currentVideo.attr('data-video-title'));
         if ($currentVideo.attr('data-live-video') == "true") {
-          $('.JS-videoStatus').prepend('<span class="live-icon"></span>');
+          $('.JS-videoStatus').prepend('<span class="live-icon JS-liveIcon"></span>');
         }
       }
     },

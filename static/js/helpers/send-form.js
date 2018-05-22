@@ -12,7 +12,7 @@ function sendChatFormHelper($wrapper) {
 
   function createClosedFormEl() {
     elements.$chatFooter.addClass('-closed');
-    elements.$chatFooter.prepend('<p class="info">Audiência encerrada.</p>');
+    elements.$chatFooter.prepend('<p class="info JS-closedChatMessage">Audiência encerrada para participações.</p>');
   }
 
   function closeForm(){
@@ -65,7 +65,7 @@ function sendQuestionFormHelper($wrapper) {
 
   function createClosedFormEl() {
     elements.$questionFooter.addClass('-closed');
-    elements.$questionFooter.html('<p class="info">Audiência encerrada.</p>');
+    elements.$questionFooter.html('<p class="info JS-closedQuestionMessage">Audiência encerrada para participações.</p>');
   }
 
   function closeForm() {

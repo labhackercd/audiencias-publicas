@@ -40,7 +40,7 @@
       <div class="info">
         <span>{{object.reunion_type}}</span>
         <span>{{object.date}}</span>
-        <span>{{object.get_youtube_status_display}}</span>
+        <span class="JS-roomStatus">{{object.get_youtube_status_display}}</span>
       </div>
     </div>
 
@@ -86,27 +86,27 @@
         <div class="action-footer {% if object.youtube_status == 2 %}-closed{% endif %} JS-questionFooter">
           {% if object.youtube_status != 2 and user.is_authenticated %}
             <button class="action JS-openQuestionForm">Fazer uma pergunta</button>
-            <form class="question-box JS-formQuestion" id="questionform">
-              <div class="header">
-                <div class="counter JS-character-counter">
-                  <span class="actual-length JS-characterCounterAtualLength">0</span>
-                  /
-                  <span class="max-length">300</span>
-                </div>
-                <button type="button" class="close JS-closeQuestionForm" title="Cancelar pergunta">Cancelar pergunta</button>
+          {% elif object.youtube_status != 2 and not user.is_authenticated %}
+            <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
+          {% elif object.youtube_status == 2 %}
+            <p class="info JS-closedQuestionMessage">Audiência encerrada para participações.</p>
+          {% endif %}
+          <form class="question-box JS-formQuestion" id="questionform">
+            <div class="header">
+              <div class="counter JS-character-counter">
+                <span class="actual-length JS-characterCounterAtualLength">0</span>
+                /
+                <span class="max-length">300</span>
               </div>
-              <textarea class="input JS-formInputQuestion" id="question" name="question" placeholder="Digite aqui sua pergunta" maxlength="300" autocomplete="off" required=""></textarea>
-              <div class="actions">
-                <button class="button submit">
-                  <span class="text">Enviar pergunta</span>
-                </button>
-              </div>
-            </form>
-        {% elif object.youtube_status != 2 and not user.is_authenticated %}
-          <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
-        {% elif object.youtube_status == 2 %}
-          <p class="info">Audiência encerrada para participações.</p>
-        {% endif %}
+              <button type="button" class="close JS-closeQuestionForm" title="Cancelar pergunta">Cancelar pergunta</button>
+            </div>
+            <textarea class="input JS-formInputQuestion" id="question" name="question" placeholder="Digite aqui sua pergunta" maxlength="300" autocomplete="off" required=""></textarea>
+            <div class="actions">
+              <button class="button submit">
+                <span class="text">Enviar pergunta</span>
+              </button>
+            </div>
+          </form>
         </div>
     </aside>
 
@@ -135,7 +135,7 @@
             <div class="info">
               <span class="status JS-videoStatus">
                   {% if object.latest_video and object.youtube_status == 1 %}
-                    <span class="live-icon"></span> Parte {{ object.get_main_videos|length }}
+                    <span class="live-icon JS-liveIcon"></span> Parte {{ object.get_main_videos|length }}
                   {% elif object.youtube_status == 0 %}
                     Transmissão Prevista
                   {% endif %}
@@ -238,7 +238,7 @@
             </div>
           </form>
         {% elif object.youtube_status == 2 and not object.time_to_close %}
-          <p class="info">Audiência encerrada.</p>
+          <p class="info JS-closedChatMessage">Audiência encerrada para participações.</p>
         {% elif not user.is_authenticated %}
           <p class="info"><a class="link" href="/home/?next={{ request.path }}">Faça Login</a> para participar no chat!</p>
         {% endif %}
