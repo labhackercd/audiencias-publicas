@@ -150,11 +150,11 @@
               </span>
             </div>
         </div>
-        {% if object.videos.all %}
+
         <ul class="extras JS-thumbList">
           {% include "includes/room_thumbs.html" with object=object user=request.user %}
         </ul>
-        {% endif %}
+
         {% if user|belongs_to_group:object.legislative_body_initials %}
         <button class="aud-button -video JS-openModal" data-modal-target="addVideo">Adicionar vídeo complementar</button>
           {% if object.get_attachment_videos.count > 1 %}

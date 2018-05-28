@@ -219,6 +219,7 @@ function roomComponent(socket) {
         } else {
           elements.$videoFrame.html(data.video_html);
           playVideoById(data.video_id);
+          $('.JS-roomStatus').text('Em andamendo');
         }
       }
       roomVideosComponent();
