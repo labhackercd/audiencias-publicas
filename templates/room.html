@@ -317,13 +317,6 @@
         {% endfor %}
       ]
       var HANDLER_ADMIN = {{user.profile.is_admin|lower|default:'false'}};
-
-      function loginRedirect() {
-        var next = "{{request.path}}";
-        var login_url = "/home";
-        document.location.href = login_url + '?next=' + next;
-      }
-
       var roomApiUrl = "{% url 'room-detail' pk=object.id %}";
     </script>
   {% compress js %}

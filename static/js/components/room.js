@@ -1,4 +1,4 @@
-/* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
+/* global HANDLER, HANDLER_ADMIN, openEdemSidebar, player */
 import {sendQuestionFormHelper, sendChatFormHelper} from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 import characterCounterComponent from './character-counter';
@@ -321,7 +321,7 @@ function roomComponent(socket) {
 
     vote() {
       if (HANDLER === '') {
-        loginRedirect(); // defined in room.html
+        openEdemSidebar('signin'); // defined in room.html
       } else {
         const id = $(this).closest('.question-card').data('question-id');
 
