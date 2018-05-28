@@ -562,7 +562,7 @@ function roomComponent(socket) {
       $closeQuestionManaging.on('click', events.closeQuestionManaging);
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
-      $shareListItemLink.on('click', events.share);
+      $shareListItemLink.on('click', events.shareQuestion);
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
       $answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
