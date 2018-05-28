@@ -1,4 +1,4 @@
-/* global HANDLER, HANDLER_ADMIN, loginRedirect, player */
+/* global HANDLER, HANDLER_ADMIN, openEdemSidebar, player */
 import {sendQuestionFormHelper, sendChatFormHelper} from '../helpers/send-form';
 import { getCookie } from '../helpers/cookies';
 import characterCounterComponent from './character-counter';
@@ -15,9 +15,6 @@ function roomComponent(socket) {
     $wrapperQuestion: $('.JS-wrapperQuestion'),
     $questionList: $('.JS-questionsList'),
     $questionlistEmpty: $('.JS-questionlistEmpty'),
-    $voteBtnEnabled: $('.JS-voteBtnEnabled'),
-    $voteBtn: $('.JS-voteBtn'),
-    $totalVotes: $('.JS-totalVotes'),
     $openQuestionManaging: $('.JS-openQuestionManaging'),
     $closeQuestionManaging: $('.JS-closeQuestionManaging'),
     $questionManagingList: $('.JS-questionManagingList'),
@@ -171,7 +168,7 @@ function roomComponent(socket) {
     }
   }
 
-  function openForms() {
+  function openRoom() {
     if (HANDLER === '') {
       $('.JS-closedQuestionMessage').parent().removeClass('-closed').prepend(`<span><a href="/home/?next=${window.location.pathname}">Faça Login</a> para enviar uma pergunta!</span>`);
       $('.JS-closedChatMessage').parent().removeClass('-closed').prepend(`<p class="info"><a class="link" href="/home/?next=${window.location.pathname}">Faça Login</a> para participar no chat!</p>`);
@@ -183,6 +180,10 @@ function roomComponent(socket) {
     $('.JS-closedChatMessage').remove();
     $('.JS-countdown').removeClass('-show');
     $('.JS-roomStatus').text('Em andamento');
+    $('.JS-shareListOpenBtn').removeClass('hide');
+    $('.JS-voteBtn').removeClass('disabled');
+    $('.JS-voteBtn').attr('disabled', false);
+    $('.JS-totalVotes').removeClass('disabled');
   }
 
   function evaluateSocketMessage(message) {
@@ -191,10 +192,10 @@ function roomComponent(socket) {
     if (data.closed) {
       sendChatForm.close(data.time_to_close);
       sendQuestionForm.close();
-      elements.$shareListOpenBtn.remove();
-      elements.$voteBtn.addClass('disabled');
-      elements.$voteBtn.attr('disabled', true);
-      elements.$totalVotes.addClass('voted disabled');
+      $('.JS-shareListOpenBtn').addClass('hide');
+      $('.JS-voteBtn').addClass('disabled');
+      $('.JS-voteBtn').attr('disabled', true);
+      $('.JS-totalVotes').addClass('disabled');
       $('.JS-liveIcon').remove();
       $('.JS-mainVideoLabel').addClass('-transmited').text('Transmitido');
       $('.JS-roomStatus').text('Transmissão encerrada');
@@ -203,13 +204,13 @@ function roomComponent(socket) {
 
     if (data.video) {
       elements.$thumbList.html(data.thumbs_html);
-      if(!data.is_attachment) {
+      if(!data.is_attachment && !data.deleted && !data.ordered) {
         if (typeof player !== 'undefined') {
           $('.JS-roomAlert').removeClass('hide');
           $('.JS-alertPlayBtn').attr('data-video-id', data.video_id);
           $(`.JS-selectVideo[data-video-id=${player.getVideoData().video_id}]`).addClass('-current');
           if($('.JS-selectVideo[data-live-video]') && $('.JS-closedQuestionMessage')){
-            openForms();
+            openRoom();
             $(document).on("click", ".JS-openQuestionForm",function() {
               events.openQuestionFormClick();
             }).on("submit", ".JS-formChat",function() {
@@ -219,6 +220,7 @@ function roomComponent(socket) {
         } else {
           elements.$videoFrame.html(data.video_html);
           playVideoById(data.video_id);
+          $('.JS-roomStatus').text('Em andamendo');
         }
       }
       roomVideosComponent();
@@ -320,7 +322,7 @@ function roomComponent(socket) {
 
     vote() {
       if (HANDLER === '') {
-        loginRedirect(); // defined in room.html
+        openEdemSidebar('signin'); // defined in room.html
       } else {
         const id = $(this).closest('.question-card').data('question-id');
 
@@ -519,7 +521,7 @@ function roomComponent(socket) {
   const bindEventsHandlers = {
     onPageLoad() {
       socket.onmessage = evaluateSocketMessage;
-      elements.$voteBtnEnabled.on('click', events.vote);
+      $('.JS-voteBtnEnabled').on('click', events.vote);
       elements.$openQuestionManaging.on('click', events.openQuestionManaging);
       elements.$closeQuestionManaging.on('click', events.closeQuestionManaging);
       elements.$shareListOpenBtn.on('click', events.openShareList);
@@ -561,7 +563,7 @@ function roomComponent(socket) {
       $closeQuestionManaging.on('click', events.closeQuestionManaging);
       $shareListOpenBtn.on('click', events.openShareList);
       $shareListCloseBtn.on('click', events.closeShareList);
-      $shareListItemLink.on('click', events.share);
+      $shareListItemLink.on('click', events.shareQuestion);
       $answeredCheckbox.on('change', events.sendAnsweredForm);
       $priorityCheckbox.on('change', events.sendPriorityForm);
       $answerTimeCheckbox.on('change', events.sendAnswerTimeForm);

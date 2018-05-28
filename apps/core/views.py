@@ -291,6 +291,7 @@ def order_videos(request, room_id):
                     id=video['id']).update(order=video['order'])
             text = {
                 'video': True,
+                'ordered': True,
                 'thumbs_html': room.html_room_thumbnails(),
             }
             Group(room.group_room_name).send(
