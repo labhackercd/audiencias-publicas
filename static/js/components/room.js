@@ -203,7 +203,7 @@ function roomComponent(socket) {
 
     if (data.video) {
       elements.$thumbList.html(data.thumbs_html);
-      if(!data.is_attachment && !data.deleted) {
+      if(!data.is_attachment && !data.deleted && !data.ordered) {
         if (typeof player !== 'undefined') {
           $('.JS-roomAlert').removeClass('hide');
           $('.JS-alertPlayBtn').attr('data-video-id', data.video_id);
