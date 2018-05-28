@@ -87,7 +87,7 @@
           {% if object.youtube_status != 2 and user.is_authenticated %}
             <button class="action JS-openQuestionForm">Fazer uma pergunta</button>
           {% elif object.youtube_status != 2 and not user.is_authenticated %}
-            <span><a href="/home/?next={{ request.path }}">Faça Login</a> para enviar uma pergunta!</span>
+            <span><a class="link JS-openSidebar" data-sidebar-content="signin">Faça Login</a> para enviar uma pergunta!</span>
           {% elif object.youtube_status == 2 %}
             <p class="info JS-closedQuestionMessage">Audiência encerrada para participações.</p>
           {% endif %}
@@ -240,7 +240,7 @@
         {% elif object.youtube_status == 2 and not object.time_to_close %}
           <p class="info JS-closedChatMessage">Audiência encerrada para participações.</p>
         {% elif not user.is_authenticated %}
-          <p class="info"><a class="link" href="/home/?next={{ request.path }}">Faça Login</a> para participar no chat!</p>
+          <p class="info"><a class="link JS-openSidebar" data-sidebar-content="signin">Faça Login</a> para participar no chat!</p>
         {% endif %}
 
         <p class="countdown info JS-countdown">O bate-papo se encerrará em <span class="time JS-countdownTimer"><span class="JS-countdownMinutes">00</span>:<span class="JS-countdownSeconds">00</span></span>.</p>
