@@ -289,6 +289,7 @@ def video_post_save(sender, instance, **kwargs):
 def video_post_delete(sender, instance, **kwargs):
     text = {
         'video': True,
+        'deleted': True,
         'thumbs_html': instance.room.html_room_thumbnails(),
     }
     Group(instance.room.group_room_name).send(
