@@ -182,7 +182,9 @@
           {% for attachment in object.attachments.all %}
           <li>
             <a class="link" href="{{ attachment.url }}" target="_blank">{{ attachment.title }}</a>
+            {% if user|belongs_to_group:object.legislative_body_initials %}
             <a class="aud-button -icon -remove JS-openModal" data-modal-target="addContentDialog" data-dialog-action="{% url 'delete_attachment' attachment.id %}"></a>
+            {% endif %}
           </li>
           {% endfor %}
         </ul>
