@@ -39,9 +39,6 @@
     &.-whatsapp {
       @include icon(whatsapp);
       background-color: $color-whatsapp;
-      @include bp-mediumup {
-        display: none;
-      }
     }
 
     &.-facebook,

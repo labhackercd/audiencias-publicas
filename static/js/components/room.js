@@ -366,7 +366,7 @@ function roomComponent(socket) {
 
     shareRoom(event) {
       event.preventDefault();
-      const windowOptions = 'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes';
+      const windowOptions = 'height=600,width=800,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes';
       window.open($(this).attr('href'), 'popUpWindow', windowOptions);
     },
 
@@ -388,7 +388,7 @@ function roomComponent(socket) {
       switch (socialNetwork) {
         case 'facebook': window.open(facebookUrl, 'popUpWindow', windowOptions); break;
         case 'twitter': window.open(twitterUrl, 'popUpWindow', windowOptions); break;
-        case 'whatsapp': window.open(`whatsapp://send?text=${whatsappMessage}`); break;
+        case 'whatsapp': window.open(`https://api.whatsapp.com/send?text=${whatsappMessage}`); break;
         default: break;
       }
     },
