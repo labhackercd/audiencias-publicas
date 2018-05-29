@@ -181,9 +181,13 @@ function roomComponent(socket) {
     $('.JS-countdown').removeClass('-show');
     $('.JS-roomStatus').text('Em andamento');
     $('.JS-shareListOpenBtn').removeClass('hide');
-    $('.JS-voteBtn').removeClass('disabled');
-    $('.JS-voteBtn').attr('disabled', false);
-    $('.JS-totalVotes').removeClass('disabled');
+    $('.JS-voteBtn').each(function() {
+      if($(this).text() !== 'Sua Pergunta'){
+        $(this).removeClass('disabled');
+        $(this).attr('disabled', false);  
+        $(this).next('.JS-totalVotes').removeClass('disabled');
+      }
+    });
   }
 
   function evaluateSocketMessage(message) {
@@ -211,11 +215,6 @@ function roomComponent(socket) {
           $(`.JS-selectVideo[data-video-id=${player.getVideoData().video_id}]`).addClass('-current');
           if($('.JS-selectVideo[data-live-video]') && $('.JS-closedQuestionMessage')){
             openRoom();
-            $(document).on("click", ".JS-openQuestionForm",function() {
-              events.openQuestionFormClick();
-            }).on("submit", ".JS-formChat",function() {
-              events.sendMessage();
-            });
           }
         } else {
           elements.$videoFrame.html(data.video_html);

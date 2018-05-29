@@ -21,14 +21,14 @@ def simplify(value):
 def vote_action(question, user):
     if question.answered:
         html = render_to_string('includes/question_action.html', {
-            'extra_classes': 'voted disabled',
+            'extra_classes': 'disabled',
             'total_votes': question.votes_count,
             'extra_attributes': 'disabled',
             'room': question.room,
             'upvote_content': 'Pergunta Respondida'})
     elif question.user.username == user:
         html = render_to_string('includes/question_action.html', {
-            'extra_classes': 'voted disabled',
+            'extra_classes': 'disabled',
             'total_votes': question.votes_count,
             'extra_attributes': 'disabled',
             'room': question.room,
