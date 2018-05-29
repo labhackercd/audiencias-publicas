@@ -43,14 +43,19 @@ function sendChatFormHelper($wrapper) {
     },
   };
 
-  (function bindEventsHandlers() {
+  function bindEvents() {
     elements.$formInput.on('keydown', events.formInputKeyDown);
     elements.$formInput.on('keyup', events.formInputKeyUp);
+  }
+
+  (function bindEventsHandlers() {
+    bindEvents();
   }());
 
   return {
     close: showCountdown,
     isBlank: formIsBlank,
+    bindEvents: bindEvents,
   };
 }
 
@@ -65,13 +70,13 @@ function sendQuestionFormHelper($wrapper) {
 
   function createClosedFormEl() {
     elements.$questionFooter.addClass('-closed');
-    elements.$questionFooter.html('<p class="info JS-closedQuestionMessage">Audiência encerrada para participações.</p>');
+    $('.JS-openQuestionForm').remove();
+    elements.$questionFooter.prepend('<p class="info JS-closedQuestionMessage">Audiência encerrada para participações.</p>');
   }
 
   function closeForm() {
     if(!elements.$questionFooter.hasClass('-closed')){  
       createClosedFormEl();
-      elements.$form.remove();
     }
   }
 
