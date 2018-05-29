@@ -23,18 +23,12 @@ function roomComponent(socket) {
     $shareListItemLink: $('.JS-shareListItemLink'),
     $shareRoom: $('.JS-shareRoom'),
     $readMoreQuestion: $('.JS-readMoreQuestion'),
-    $formQuestion: $('.JS-formQuestion'),
-    $openQuestionForm: $('.JS-openQuestionForm'),
-    $closeQuestionForm: $('.JS-closeQuestionForm'),
     $formInputQuestion: $('.JS-formInputQuestion'),
     $answeredCheckbox: $('.JS-answeredCheckbox'),
-    $wrapperChat: $('.JS-wrapperChat'),
     $messages: $('.JS-messages'),
     $messagesList: $('.JS-messagesList'),
     $messagesListEmpty: $('.JS-messagesListEmpty'),
     $readMoreChat: $('.JS-readMoreChat'),
-    $formChat: $('.JS-formChat'),
-    $formInputChat: $('.JS-formInputChat'),
     $videoFrame: $('.JS-videoFrame'),
     $thumbList: $('.JS-thumbList'),
     $priorityCheckbox: $('.JS-priorityCheckbox'),
@@ -79,11 +73,11 @@ function roomComponent(socket) {
   let sendChatForm = {};
 
   function closeQuestionForm() {
-    elements.$formQuestion.removeClass('-active');
+    $('.JS-formQuestion').removeClass('-active');
   }
 
   function openQuestionForm() {
-    elements.$formQuestion.addClass('-active');
+    $('.JS-formQuestion').addClass('-active');
     elements.$formInputQuestion.focus();
   }
 
@@ -170,8 +164,8 @@ function roomComponent(socket) {
 
   function openRoom() {
     if (HANDLER === '') {
-      $('.JS-closedQuestionMessage').parent().removeClass('-closed').prepend(`<span><a href="/home/?next=${window.location.pathname}">Faça Login</a> para enviar uma pergunta!</span>`);
-      $('.JS-closedChatMessage').parent().removeClass('-closed').prepend(`<p class="info"><a class="link" href="/home/?next=${window.location.pathname}">Faça Login</a> para participar no chat!</p>`);
+      $('.JS-closedQuestionMessage').parent().removeClass('-closed').prepend('<span><a class="link JS-openSidebar" data-sidebar-content="signin">Faça Login</a> para enviar uma pergunta!</span>');
+      $('.JS-closedChatMessage').parent().removeClass('-closed').prepend('<p class="info JS-openSidebar" data-sidebar-content="signin">Faça Login</a> para participar no chat!</p>');
     } else {
       $('.JS-closedQuestionMessage').parent().removeClass('-closed').prepend('<button class="action JS-openQuestionForm">Fazer uma pergunta</button>')
       $('.JS-closedChatMessage').parent().removeClass('-closed').prepend('<form class="form JS-formChat" id="chatform"><textarea class="input JS-formInputChat" id="message" name="message" placeholder="Digite mensagens do bate-papo aqui" autocomplete="off" required></textarea><div class="actions"><button class="button" id="go" title="Enviar">Enviar</button></div></form>')
@@ -184,9 +178,17 @@ function roomComponent(socket) {
     $('.JS-voteBtn').each(function() {
       if($(this).text() !== 'Sua Pergunta'){
         $(this).removeClass('disabled');
-        $(this).attr('disabled', false);  
+        $(this).attr('disabled', false);
         $(this).next('.JS-totalVotes').removeClass('disabled');
       }
+    });
+    sendChatForm = sendChatFormHelper($('.JS-wrapperChat'));
+    sendChatForm.bindEvents();
+    $(document).on("click", ".JS-openQuestionForm",function() {
+      events.openQuestionFormClick();
+    });
+    $(document).on("submit", ".JS-formChat",function(event) {
+      events.sendMessage(event);
     });
   }
 
@@ -291,7 +293,7 @@ function roomComponent(socket) {
 
   function sendFormHelperInit() {
     sendQuestionForm = sendQuestionFormHelper(elements.$wrapperQuestion);
-    sendChatForm = sendChatFormHelper(elements.$wrapperChat);
+    sendChatForm = sendChatFormHelper($('.JS-wrapperChat'));
   }
 
   function clickToggleButton() {
@@ -364,7 +366,6 @@ function roomComponent(socket) {
 
     shareRoom(event) {
       event.preventDefault();
-
       const windowOptions = 'height=500,width=1000,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes';
       window.open($(this).attr('href'), 'popUpWindow', windowOptions);
     },
@@ -419,10 +420,10 @@ function roomComponent(socket) {
 
       socket.send(JSON.stringify({
         handler: HANDLER, // defined in room.html
-        message: elements.$formInputChat.val(),
+        message: $('.JS-formInputChat').val(),
       }));
 
-      elements.$formInputChat.val('').focus();
+      $('.JS-formInputChat').val('').focus();
       scrollToBottomChat();
 
       return true;
@@ -527,15 +528,15 @@ function roomComponent(socket) {
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.shareQuestion);
       elements.$shareRoom.on('click', events.shareRoom);
-      elements.$formQuestion.on('submit', events.sendQuestion);
-      elements.$openQuestionForm.on('click', events.openQuestionFormClick);
-      elements.$closeQuestionForm.on('click', events.closeQuestionFormClick);
+      $('.JS-formQuestion').on('submit', events.sendQuestion);
+      $('.JS-openQuestionForm').on('click', events.openQuestionFormClick);
+      $('.JS-closeQuestionForm').on('click', events.closeQuestionFormClick);
       elements.$questionList.on('scroll', events.questionsScroll);
       elements.$readMoreQuestion.on('click', events.readMoreClickQuestion);
       elements.$answeredCheckbox.on('change', events.sendAnsweredForm);
       elements.$messagesList.on('scroll', events.messagesListScroll);
       elements.$readMoreChat.on('click', events.readMoreClickChat);
-      elements.$formChat.on('submit', events.sendMessage);
+      $('.JS-formChat').on('submit', events.sendMessage);
       elements.$orderVideos.on('click', clickToggleButton);
       elements.$priorityCheckbox.on('change', events.sendPriorityForm);
       elements.$answerTimeCheckbox.on('change', events.sendAnswerTimeForm);
