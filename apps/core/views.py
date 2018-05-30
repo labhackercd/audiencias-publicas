@@ -365,6 +365,13 @@ class RoomReportView(DetailView):
         context['messages'] = self.object.messages.all().order_by('-created')
         return context
 
+    def get_object(self, queryset=None):
+        obj = super(RoomReportView, self).get_object(queryset=queryset)
+        if obj.is_active:
+            return obj
+        else:
+            raise Http404()
+
 
 class ClosedVideos(ListView):
     model = Room
@@ -375,7 +382,7 @@ class ClosedVideos(ListView):
         initial_date = self.request.GET.get('initial_date')
         end_date = self.request.GET.get('end_date')
         object_list = Room.objects.filter(
-            is_visible=True, youtube_status=2).order_by('-date')
+            is_visible=True, youtube_status=2, is_active=True).order_by('-date')
         if q:
             object_list = object_list.filter(Q(
                 title_reunion__icontains=q) | Q(
