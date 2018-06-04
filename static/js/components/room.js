@@ -41,6 +41,7 @@ function roomComponent(socket) {
     $orderVideos: $('.JS-orderVideos'),
     $roomVideo: $('.JS-roomVideo'),
     $answeredButton: $('.JS-answeredButton'),
+    $addVideoForm: $('.JS-addVideoForm'),
   };
 
   const vars = {
@@ -88,6 +89,19 @@ function roomComponent(socket) {
         isCurrentUserQuestion = false;
       });
 
+  }
+
+  function extractYoutubeIdOfLink(url){
+    var ID = '';
+    url = url.replace(/(>|<)/gi,'').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+    if(url[2] !== undefined) {
+      ID = url[2].split(/[^0-9a-z_\-]/i);
+      ID = ID[0];
+    }
+    else {
+      ID = url[0];
+    }
+      return ID;
   }
 
   function animateToBottomChat() {
@@ -335,6 +349,11 @@ function roomComponent(socket) {
       }
     },
 
+    onSubmitAddVideoForm(event) {
+      let currentVideoUrlValue = $('.JS-addVideoInputContent').val();
+      $('[name="video_id"').val(extractYoutubeIdOfLink(currentVideoUrlValue));
+    },
+
     closeQuestionFormClick() {
       closeQuestionForm();
     },
@@ -528,6 +547,7 @@ function roomComponent(socket) {
       elements.$shareListCloseBtn.on('click', events.closeShareList);
       elements.$shareListItemLink.on('click', events.shareQuestion);
       elements.$shareRoom.on('click', events.shareRoom);
+      elements.$addVideoForm.on('submit', events.onSubmitAddVideoForm);
       $('.JS-formQuestion').on('submit', events.sendQuestion);
       $('.JS-openQuestionForm').on('click', events.openQuestionFormClick);
       $('.JS-closeQuestionForm').on('click', events.closeQuestionFormClick);
