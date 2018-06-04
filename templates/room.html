@@ -87,7 +87,7 @@
           {% if object.youtube_status != 2 and user.is_authenticated %}
             <button class="action JS-openQuestionForm">Fazer uma pergunta</button>
           {% elif object.youtube_status != 2 and not user.is_authenticated %}
-            <span><a class="link JS-openSidebar" data-sidebar-content="signin">Faça Login</a> para enviar uma pergunta!</span>
+            <p class="info"><a class="link JS-openSidebar" data-sidebar-content="signin">Faça Login</a> para enviar uma pergunta!</p>
           {% elif object.youtube_status == 2 %}
             <p class="info JS-closedQuestionMessage">Audiência encerrada para participações.</p>
           {% endif %}
@@ -151,7 +151,7 @@
             </div>
         </div>
 
-        <ul class="extras JS-thumbList">
+        <ul class="extras JS-thumbList {% if not object.videos.all %}hide{% endif %}">
           {% include "includes/room_thumbs.html" with object=object user=request.user %}
         </ul>
 
