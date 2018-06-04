@@ -13,6 +13,8 @@ PGPASSWORD=$DATABASE_PASSWORD psql -U $DATABASE_USER -w -h $DATABASE_HOST -c "CR
 
 python3 manage.py migrate
 python3 create_admin.py
+python3 manage.py compress --force
+python3 manage.py collectstatic --no-input
 
 crontab /etc/cron.d/audiencias
 crond
