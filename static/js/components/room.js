@@ -223,7 +223,7 @@ function roomComponent(socket) {
     }
 
     if (data.video) {
-      elements.$thumbList.html(data.thumbs_html);
+      elements.$thumbList.removeClass('hide').html(data.thumbs_html);
       if(!data.is_attachment && !data.deleted && !data.ordered) {
         if (typeof player !== 'undefined') {
           $('.JS-roomAlert').removeClass('hide');

@@ -151,7 +151,7 @@
             </div>
         </div>
 
-        <ul class="extras JS-thumbList">
+        <ul class="extras JS-thumbList {% if not object.videos.all %}hide{% endif %}">
           {% include "includes/room_thumbs.html" with object=object user=request.user %}
         </ul>
 
