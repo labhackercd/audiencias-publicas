@@ -2,6 +2,7 @@ from django.conf.urls import include, url
 from django.conf import settings
 from django.contrib import admin
 from apps.core import urls as core_urls
+from apps.notification import urls as notification_urls
 from rest_framework.authtoken.models import Token
 
 
@@ -12,6 +13,7 @@ else:
 
 urlpatterns = [
     url(prefix + r'', include(core_urls)),
+    url(prefix + r'notification/', include(notification_urls)),
     url(prefix + r'admin/', include(admin.site.urls)),
 ]
 

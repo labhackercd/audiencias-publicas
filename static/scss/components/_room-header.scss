@@ -1,0 +1,93 @@
+.room-header {
+  $logo-height: 5rem;
+  $background: $color-edem-dark;
+  $logo-background: $color-edem-main;
+
+  min-height: $logo-height;
+  display: flex;
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+
+  @include bp-largedown {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 0;
+    height: 2.5rem;
+    background-color: $logo-background;
+    margin: 0;
+    padding: 0 0.75rem;
+
+    > .room-title {
+      display: none;
+    }
+  }
+
+  > .logo {
+    height: $logo-height;
+    background-color: $logo-background;
+    padding: 1rem;
+    padding-right: $logo-height;
+    position: relative;
+
+    @include bp-largedown {
+      display: flex;
+      height: auto;
+      padding: 0;
+      padding-right: 0.5rem;
+    }
+
+    &::after {
+      content: '';
+      width: $logo-height;
+      height: $logo-height;
+      background: linear-gradient(-45deg, $background calc(50% - 1px), $logo-background 50%);
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      @include bp-largedown {
+        display: none;
+      }
+    }
+    &:hover { opacity: 0.8; }
+
+    > img {
+      height: 3rem;
+
+      @include bp-largedown {
+        height: 1.5rem;
+      }
+    }
+  }
+
+  > .social-share {
+    display: flex;
+    margin-left: auto;
+    margin-right: 1.75rem;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+    max-width: 8rem;
+    align-self: flex-start;
+    justify-content: flex-end;
+    align-items: center;
+
+    @include bp-largedown {
+      margin: 0;
+      padding: 0;
+      align-self: center;
+    }
+
+
+    > span {
+      display: flex;
+      margin-bottom: 0.25rem;
+
+      @include bp-largedown {
+        display: none;
+      }
+
+    }
+  }
+
+}

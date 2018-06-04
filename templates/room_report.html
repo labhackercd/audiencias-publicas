@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Relatório | {% if object.reunion_theme %}{{object.reunion_theme}}{% else %}{% if obcject.is_joint %}{{object.title_reunion}}{% else %}{{object.legislative_body_alias}}{% endif %}{% endif %}</title>
+  <title>Relatório | {% if object.reunion_theme %}{{object.reunion_theme}}{% else %}{{object.title_reunion}}{% endif %}</title>
   <link rel="stylesheet" href="{% static 'fontastic-labhacker/styles.css' %}" />
   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
   {% compress css %}
@@ -19,11 +19,7 @@
             {% if object.reunion_theme %}
               {{object.reunion_theme}}
             {% else %}
-              {% if obcject.is_joint %}
-                {{object.title_reunion}}
-              {% else %}
-                {{object.legislative_body_alias}}
-              {% endif %}
+              {{object.title_reunion}}
             {% endif %}</h1>
         <p class="info__date">{{object.legislative_body_initials}} - {{object.legislative_body}}</p>
         <p class="info__date">{{object.reunion_type}} realizada em {{object.date}}</p>

@@ -8,7 +8,7 @@
     <section class="section-top">
       <div class="banner">
         <img class="banner__logo" src="{% static 'img/logo-audiencias-full.svg' %}" data-fallback="{% static 'img/logo-audiencias-full.png' %}">
-        <p class="banner__text">Acompanhe ao vivo e participe enviando perguntas aos deputados!</p>
+        <p class="banner__text">{{ config.HOME_DESCRIPTION }}</p>
       </div>
     </section>
 
@@ -60,7 +60,7 @@
                   </td>
 
                   <td class="calendar-table__column">
-                    <div class="calendar-table__event-title">{% if agenda.date|date:"H" == "00" %}Horário não informado{% else %}{{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}{% endif %} - {% if agenda.is_joint %}{{ agenda.title_reunion }}{% else %}{{ agenda.reunion_type }} - {{ agenda.legislative_body_alias }}{% endif %}</div>
+                    <div class="calendar-table__event-title">{% if agenda.date|date:"H" == "00" %}Horário não informado{% else %}{{ agenda.date|date:"H"}}h{{ agenda.date|date:"i"}}{% endif %} - {{ agenda.reunion_type }} - {{ agenda.title_reunion }}</div>
                     <div class="calendar-table__description">
                       {% if agenda.reunion_theme %}
                       <div class="content-truncate">{{ agenda.reunion_theme|truncatechars:150 }}</div>  

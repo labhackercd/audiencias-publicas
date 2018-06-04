@@ -5,7 +5,7 @@
 {% endblock navigation %}
 
 {% block main %}
-  <main class="room-questions">
+  <main class="bem-room-questions">
 
     <div class="wrapper">
 
@@ -20,11 +20,7 @@
           {% if object.reunion_theme %}
             {{object.reunion_theme}}
           {% else %}
-            {% if object.is_joint %}
-              {{object.title_reunion}}
-            {% else %}
-              {{object.legislative_body_alias}}
-            {% endif %}
+            {{object.title_reunion}}
           {% endif %}
         </h1>
       </div>
@@ -60,6 +56,15 @@
 
 {% if object.youtube_status != 2 %}
   {% block websockets %}
+    <script>
+      var HANDLER = "{{handler|default:''}}";
+      var HANDLER_GROUPS = [
+        {% for group in groups %}
+          "{{group}}",
+        {% endfor %}
+      ]
+      var HANDLER_ADMIN = {{user.profile.is_admin|lower|default:'false'}};
+    </script>  
     {% compress js %}
       <script type="text/es6" src="{% static 'js/pages/questions-panel.js' %}"></script>
     {% endcompress %}

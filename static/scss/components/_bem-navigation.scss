@@ -1,0 +1,81 @@
+.navigation {
+  align-items: center;
+  background-color: $color-primary;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.23);
+  display: flex;
+  height: 4em;
+  top: 4em;
+  transition: transform $swift-out .3s;
+  width: 100vw;
+  z-index: 10000;
+
+  @include bp-smallonly {
+    height: 3em;
+  }
+
+  @include bp-smallonly { padding: 0 1em; }
+  @include bp-mediumonly { padding: 0 2em; }
+  @include bp-largeonly { padding: 0 2em 0 2.5em; }
+  @include bp-hugeup { padding: 0 2em 0 5em; }
+
+  .navigation__logo {
+    margin-right: auto;
+  }
+
+  .logo__image--audiencias-logo {
+    height: 2.5em;
+
+    @include bp-smallonly {
+      height: 1.8em;
+    }
+  }
+
+  .logo__image--audiencias-text {
+    height: 1.5em;
+    margin-left: .8em;
+
+    @include bp-smallonly {
+      display: none;
+    }
+  }
+
+  .navigation__auth {
+    align-items: center;
+    color: #fff;
+    display: flex;
+    font-weight: $font-weight-semi-bold;
+    height: 100%;
+    padding: .75em;
+    transition: $hover-transition;
+
+    &:hover {
+      background-color: darken($color-primary, 3%);
+    }
+  }
+
+  .auth__text {
+    margin-right: 1em;
+  }
+
+  .auth__icon {
+    font-size: 1.4em;
+  }
+}
+
+@mixin transition-default($property) {
+  transition: $property 0.3s $swift-out;
+}
+
+@mixin material-shadow($depth) {
+  @if $depth < 1 {
+    box-shadow: none;
+    transition: box-shadow 0.3s $swift-out;
+  }
+  @else if $depth > 5 {
+    @warn "Invalid $depth `#{$depth}` for mixin `material-shadow`.";
+  }
+  @else {
+    box-shadow: bottom-shadow($depth), top-shadow($depth);
+    transition: box-shadow 0.3s $swift-out;
+  }
+}

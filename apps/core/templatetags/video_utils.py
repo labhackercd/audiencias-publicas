@@ -21,38 +21,51 @@ def simplify(value):
 def vote_action(question, user):
     if question.answered:
         html = render_to_string('includes/question_action.html', {
-            'extra_classes': 'voted disabled',
+            'extra_classes': 'disabled',
             'total_votes': question.votes_count,
             'extra_attributes': 'disabled',
             'room': question.room,
             'upvote_content': 'Pergunta Respondida'})
-    elif question.room.youtube_status == 2:
+    elif question.user.username == user:
         html = render_to_string('includes/question_action.html', {
             'extra_classes': 'disabled',
             'total_votes': question.votes_count,
             'extra_attributes': 'disabled',
             'room': question.room,
-            'upvote_content': 'Votação Encerrada'})
-    elif question.user.username == user:
-        html = render_to_string('includes/question_action.html', {
-            'extra_classes': 'voted disabled',
-            'total_votes': question.votes_count,
-            'extra_attributes': 'disabled',
-            'room': question.room,
             'upvote_content': 'Sua Pergunta'})
     elif question.votes.filter(user__username=user).count() > 0:
+        if question.room.youtube_status == 2:
+            extra_classes = 'voted disabled'
+            question_vote = ''
+            extra_attributes = 'disabled'
+        else:
+            extra_classes = 'voted'
+            question_vote = 'question-vote JS-voteBtnEnabled'
+            extra_attributes = ''
         html = render_to_string('includes/question_action.html', {
-            'extra_classes': 'voted',
-            'question_vote': 'question-vote',
+            'extra_classes': extra_classes,
+            'question_vote': question_vote,
             'total_votes': question.votes_count,
+            'extra_attributes': extra_attributes,
             'room': question.room,
             'upvote_content': 'Apoiada por você'})
     else:
+        if question.room.youtube_status == 2:
+            extra_classes = 'disabled'
+            question_vote = ''
+            extra_attributes = 'disabled'
+        else:
+            extra_classes = ''
+            question_vote = 'question-vote JS-voteBtnEnabled'
+            extra_attributes = ''
         html = render_to_string('includes/question_action.html', {
-            'question_vote': 'question-vote',
+            'extra_classes': extra_classes,
+            'question_vote': question_vote,
             'total_votes': question.votes_count,
+            'extra_attributes': extra_attributes,
             'room': question.room,
             'upvote_content': 'Votar Nesta Pergunta'})
+
     return mark_safe(html)
 
 

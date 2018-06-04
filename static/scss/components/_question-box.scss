@@ -1,0 +1,89 @@
+.question-box {
+  position: absolute;
+  z-index: 9;
+  bottom: 0;
+  width: 100%;
+  background-color: $color-edem-action;
+  padding: 1rem;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  visibility: hidden;
+  transform: translateY(calc(100% + 0.5rem));
+  transition: all 0.3s $swift-out;
+
+  &.-active {
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .-closed,
+  .-unauthenticated {
+    background-color: $color-primary-light;
+    color: #fff;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    > .counter {
+      margin-left: auto;
+
+      &.-limitreached {
+        animation: limitCharacter 0.15s ease-in-out 2;
+
+        > .actual-length {
+          color: mix(#fff, $color-edem-red, 25%);
+          font-weight: 700;
+        }
+      }
+
+      > .actual-length {
+        display: inline-flex;
+        transition: color 0.2s;
+      }
+    }
+  }
+
+  .input {
+    color: #000;
+    font-size: $font-size-base;
+    line-height: 1.5em;
+    resize: none;
+    height: 8.5em;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.5em;
+  }
+
+  .actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+
+    > * + * {
+      margin-left: 1rem;
+    }
+  }
+
+  .close {
+    @include icon('times');
+    color: #FFF;
+    font-size: 1rem;
+    margin-left: 1rem;
+    width: 1rem;
+    height: 1rem;
+    overflow: hidden;
+    background: none;
+  }
+
+  .button {
+    font-size: $font-size-base;
+    color: $color-edem-action;
+    padding: 1em 1.5em;
+    background-color: rgba(#FFF, .9);
+
+    &:hover {
+      background-color: #FFF;
+    }
+  }
+}

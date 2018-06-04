@@ -1,0 +1,274 @@
+.room-video {
+
+  &::after {
+    content: '';
+    position: fixed;
+    background-color: rgba($color-edem-dark, 0.8);
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1000000;
+    transition: opacity 0.3s ease;
+  }
+
+  &.-ordering {
+    &::after {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    >.extras .extravideo.-attached {
+      z-index: 1000001;
+      transition: z-index 0s 0s ease; // Used to avoid flashing overlay when ordering videos
+    }
+  }
+
+  > .room-title {
+    padding: 0;
+    margin-bottom: 0.75rem;
+
+    @include bp-largeup {
+      display: none;
+    }
+
+    > .title {
+      font-size: $font-size-deci;
+      line-height: 1.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    > .info {
+      font-size: $font-size-centi;
+      line-height: 1em;
+      text-transform: none;
+    }
+
+  }
+
+  > .heightwrapper{
+    position: relative;
+    max-height: calc(100vh - 26.5rem);
+    min-height: 10rem;
+    margin-bottom: 1rem;
+
+    > .ratiowrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+
+      > .video {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        max-height: calc(100vh - 26.5rem);
+        min-height: 10rem;
+
+        &.-empty {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: black;
+          padding: 2em;
+
+          > p {
+            font-size: $font-size-deca;
+          }
+        }
+      }
+    }
+
+    > .info {
+      position: absolute;
+      top: 100%;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: $font-size-deci;
+      line-height: 1.5rem;
+
+      > .status {
+        display: flex;
+        align-items: center;
+
+        > .live-icon {
+          margin-right: 0.25rem;
+        }
+      }
+
+      > .visitors > .numbers {
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+
+  .aud-button {
+    transition: z-index 0s 0.3s ease; // Used to avoid flashing overlay when ordering videos
+
+    &.-toggled {
+      z-index: 1000001;
+      transition: z-index 0s 0s ease; // Used to avoid flashing overlay when ordering videos
+    }
+  }
+
+  > .extras {
+    display: flex;
+    align-items: start;
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: $color-edem-main;
+    overflow-x: auto;
+    perspective: none !important; // Necessary to override mixitup inline styles when animating.
+
+    @include bp-largedown {
+      padding: 0.75rem;
+    }
+
+    > * + * {
+      margin-left: 1rem;
+
+      @include bp-largedown {
+        margin-left: 0.75rem;
+      }
+    }
+
+    > .extravideo {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      width: 8rem;
+      min-width: 8rem;
+      cursor: pointer;
+      z-index: 2;
+      transition: z-index 0s 0.3s ease; // Used to avoid flashing overlay when ordering videos
+
+      &:hover, &:active {
+        > .wrapper > .thumbnail, > .add {
+          opacity: 1;
+        }
+      }
+
+      &.-current {
+        cursor: default;
+
+        > .wrapper {
+          outline-color: $color-edem-highlight;
+
+          > .thumbnail {
+            opacity: 1;
+          }
+        }
+      }
+
+      &.-main+.-attached {
+        > .wrapper > .aud-button.-left {
+          transform: translateY(-2.5rem);
+        }
+      }
+
+      &.-attached:last-of-type {
+        > .wrapper > .aud-button.-right{
+          transform: translateY(-2.5rem);
+        }
+      }
+
+      > .wrapper {
+        position: relative;
+        display: flex;
+        overflow: hidden;
+        outline-style: solid;
+        outline-color: transparent;
+        outline-width: 2px;
+        margin-bottom: 0.25rem;
+        transition: 0.2s outline ease;
+      }
+
+      > .wrapper > .thumbnail {
+          opacity: 0.5;
+          transition: 0.3s opacity $swift-out;
+          height: 4.5rem;
+        }
+
+      > .wrapper > .label {
+        position: absolute;
+        display: flex;
+        bottom: 0;
+        height: 2rem;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        font-size: $font-size-deci;
+        background-color: rgba(#000, 0.5);
+
+        &.-transmited {
+        @include icon('wifi');
+        @include icon('wifi', after);
+
+          &::before {
+            margin-right: 0.75rem;
+            transform: rotate(-90deg);
+          }
+
+          &::after {
+            position: absolute;
+            left: 2.3em;
+            transform: rotate(90deg);
+          }
+        }
+
+        & > .live-icon {
+          margin-right: 0.5em;
+        }
+      }
+
+      > .wrapper > .aud-button {
+        position: absolute;
+        margin: 0.5rem;
+        transform: translateY(-2.5rem);
+        transition: transform 0.4s $swift-out;
+
+        &.-active {
+          transform: translateY(0);
+        }
+
+        &.-remove {
+          right: 0;
+          top: 0;
+        }
+
+        &.-edit {
+          left: 0;
+          top: 0;
+        }
+
+        &.-left {
+          left: 0;
+          top: 0;
+        }
+
+        &.-right {
+          right: 0;
+          top: 0;
+        }
+      }
+
+      > .title {
+        font-size: $font-size-deci;
+        line-height: 1rem;
+
+        @include bp-largedown {
+          font-size: $font-size-deci
+        }
+      }
+    }
+  }
+
+  > .aud-button {
+    position: relative;
+    margin-top: 1rem;
+    z-index: 2;
+  }
+}

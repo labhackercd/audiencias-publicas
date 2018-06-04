@@ -1,6 +1,6 @@
 from django.conf import settings
 from rest_framework import serializers
-from apps.core.models import Message, Question, UpDownVote, Room
+from apps.core.models import Message, Question, UpDownVote, Room, Video
 from django.contrib.auth import get_user_model
 
 
@@ -53,22 +53,35 @@ class MessageSerializer(serializers.ModelSerializer):
         fields = ('id', 'room', 'user', 'message', 'created', 'modified')
 
 
+class VideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Video
+        fields = ('id', 'video_id', 'title', 'is_attachment', 'order')
+
+
 class RoomSerializer(serializers.ModelSerializer):
     questions_count = serializers.SerializerMethodField()
     messages_count = serializers.SerializerMethodField()
+    youtube_id = serializers.SerializerMethodField()
+    videos = VideoSerializer(many=True)
 
     class Meta:
         model = Room
-        fields = ('id', 'cod_reunion', 'online_users', 'youtube_id',
-                  'legislative_body_alias', 'legislative_body_initials',
-                  'youtube_status', 'is_joint', 'max_online_users', 'created',
-                  'modified', 'is_visible', 'reunion_type', 'title_reunion',
-                  'reunion_object', 'reunion_theme', 'date',
-                  'legislative_body', 'reunion_status', 'location',
-                  'questions_count', 'messages_count')
+        fields = ('id', 'cod_reunion', 'online_users',
+                  'legislative_body_initials', 'youtube_status',
+                  'max_online_users', 'created', 'modified', 'is_visible',
+                  'reunion_type', 'title_reunion', 'reunion_object',
+                  'reunion_theme', 'date', 'legislative_body', 'location',
+                  'questions_count', 'messages_count', 'videos', 'youtube_id')
 
     def get_questions_count(self, obj):
         return obj.questions.count()
 
     def get_messages_count(self, obj):
         return obj.messages.count()
+
+    def get_youtube_id(self, obj):
+        try:
+            return obj.latest_video().video_id
+        except Video.DoesNotExist:
+            return None

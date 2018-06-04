@@ -1,0 +1,14 @@
+{% extends 'includes/modal.html' %}
+
+{% block content %}
+<form method="POST" action="{% url 'create_attachment' object.id %}">
+  {% csrf_token %}
+  <label for="title">Título:</label>
+  <input type="text" name="title" required>
+
+  <label for="link">Link:</label>
+  <input type="url" name="url" required>
+
+  <button class="button" type="submit" name="button">Enviar</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,17 @@
+<div class="aud-modal JS-modal" data-modal-id="{{ modal_id }}">
+
+  <div class="modal">
+
+    <header>
+      {% if title %}
+        <h4 class="title">{{ title }}</h4>
+      {% endif %}
+      <button type="button" class="close JS-closeModal"></button>
+    </header>
+
+    {% block content %}
+    {% endblock content %}
+
+  </div>
+
+</div>

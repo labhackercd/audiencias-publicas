@@ -1,0 +1,107 @@
+.room-chat {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+
+  @include bp-largedown {
+    order: 2;
+  }
+
+  > .aud-button {
+    flex: 0 0 auto;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+
+    @include bp-largedown {
+      margin-top: 1rem;
+    }
+  }
+
+  > .messages {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+    min-height: 0; // Needed for Firefox
+  }
+
+  .messages > .list {
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: #fff;
+    list-style: none;
+    margin-bottom: 0;
+    margin-left: 0;
+    word-break: break-word;
+  }
+
+  .messages > .list > .empty {
+    margin: auto;
+    padding: 0 1rem;
+    color: #000;
+    line-height: 1.2em;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .messages .item {
+    padding: 1.05em 1.5em;
+    color: #000;
+    line-height: 1.75em;
+    font-size: $font-size-deci;
+    font-weight: 300;
+
+    &:nth-child(odd) {
+      background-color: hsl(0, 0, 95%);
+    }
+
+    > .username {
+      font-weight: 700;
+    }
+
+    > .timestamp {
+      font-size: $font-size-centi;
+      word-break: break-word;
+      color: hsl(0, 0, 50%);
+    }
+  }
+}
+
+.chat__floating-header {
+  background-color: $color-primary-xlight;
+  transform: none;
+
+  @include bp-mediumdown {
+    display: none;
+  }
+
+  .header__icon {
+    border: .2em solid;
+    border-radius: 50%;
+    padding: .4em;
+  }
+}
+
+[class^="chat__read-more"] {
+  align-items: center;
+  background-color: rgba($color-primary-xxlight, .85);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-size: .9em;
+  font-weight: 600;
+  height: 30px;
+  justify-content: center;
+  margin-bottom: -30px;
+  transition: $translate-transition;
+  width: 100%;
+  z-index: 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

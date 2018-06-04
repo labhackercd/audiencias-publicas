@@ -1,0 +1,80 @@
+.aud-button {
+  background-color: $color-edem-main;
+  font-size: $font-size-base;
+  color: #fff;
+  padding: 0.75em;
+  box-shadow: 0 2px 4px 0 rgba(#000, 0.2);
+  text-decoration: none;
+  border-radius: 2px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+  @include bp-largedown {
+    font-size: $font-size-deci;
+  }
+
+  &:hover {
+    background-color: mix($color-edem-main, $color-edem-action, 60%);
+  }
+
+  &:active {
+    background-color: $color-edem-main;
+    box-shadow: 0 1px 2px 0 rgba(#000, 0.4);
+  }
+
+  &::before { margin-right: 0.5em; }
+
+  &.-mail { @include icon('envelope'); }
+  &.-discussion { @include icon('link'); }
+  &.-video { @include icon('youtube-play'); }
+  &.-left { @include icon('long-arrow-left'); }
+  &.-right { @include icon('long-arrow-right'); }
+  &.-complete { @include icon('check'); }
+  &.-add { @include icon('files-o'); }
+  &.-edit { @include icon('pencil'); }
+
+  &.-icon {
+    display: flex;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 14px;
+    padding: 0;
+    text-align: center;
+    &::before { margin-right: 0; }
+  }
+
+  &.-order {
+    @include icon('exchange');
+    &:active {
+      background-color: mix($color-edem-main, $color-edem-action, 60%);
+    }
+  }
+
+  &.-toggled {
+    background-color: mix($color-edem-main, $color-edem-action, 60%);
+    box-shadow: 0 1px 2px 0 rgba(#000, 0.4);
+
+    &:hover, {
+      background-color: mix($color-edem-main, $color-edem-action, 35%);
+    }
+  }
+
+  &.-left, &.-right {
+    background-color: mix($color-edem-main, $color-edem-action, 60%);
+
+    &:hover {
+      background-color: mix($color-edem-main, $color-edem-action, 35%);
+    }
+  }
+
+  &.-remove {
+    @include icon('trash');
+    background-color: $color-edem-red;
+
+    &:hover {
+      background-color: mix( $color-edem-red, #fff, 80%);
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{% extends 'includes/modal.html' %}
+
+{% block content %}
+<form method="POST" action="{% url 'create_video_attachment' object.id %}" class="JS-addVideoForm">
+  {% csrf_token %}
+  <label for="title">Título:</label>
+  <input type="text" name="title" required>
+
+  <label for="video_id">URL de vídeo do Youtube:</label>
+  <input class="JS-addVideoInputContent"type="text" pattern="^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+" oninvalid="this.setCustomValidity('Insira uma URL válida do YouTube')" oninput="this.setCustomValidity('')" required>
+  <input type="hidden" name="video_id" value""> {# The user URL input is transferred hidden here via JS and send to the server. This is done in order to change the input value to a YouTube ID unnoticeably to the user #}
+  <button class="button" type="submit" name="button">Enviar</button>
+</form>
+{% endblock content %}

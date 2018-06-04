@@ -1,0 +1,61 @@
+.social-share {
+  display: flex;
+  flex: 1 0 auto;
+
+  > * + * {
+    margin-left: 0.5rem;
+  }
+
+  > .button {
+    $bottom: 2px;
+
+    display: inline-block;
+    width: 2rem;
+    height: 1rem;
+    border-radius: 2px;
+      box-shadow: 0 -#{$bottom} 0 0 rgba(#000, 0.2) inset,
+                  0 0 0 2rem transparent inset;
+    cursor: pointer;
+    background-color: $color-edem-action;
+
+    &:hover {
+      box-shadow: 0 -#{$bottom} 0 0 rgba(#000, 0.2) inset,
+                  0 0 0 2rem rgba(#000, 0.2) inset;
+    }
+
+    &:active {
+      transform: translateY(calc(#{$bottom} / 2));
+      box-shadow: 0 calc(-#{$bottom} / 2) 0 0 rgba(#000, 0.2) inset,
+                  0 0 0 2rem rgba(#000, 0.3) inset;
+    }
+
+    &.-facebook {
+      @include icon(facebook);
+      background-color: $color-facebook;
+    }
+    &.-twitter {
+      @include icon(twitter);
+      background-color: $color-twitter;
+    }
+    &.-whatsapp {
+      @include icon(whatsapp);
+      background-color: $color-whatsapp;
+    }
+
+    &.-facebook,
+    &.-twitter,
+    &.-whatsapp {
+      &::before {
+        text-align: center;
+        color: #fff;
+        font-size: $font-size-deci;
+        line-height: 1rem;
+        transform: translateY(calc(-#{$bottom} / 2));
+        display: block;
+        width: 100%;
+      }
+    }
+
+  }
+
+}

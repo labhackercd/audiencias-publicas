@@ -11,7 +11,7 @@ services:
       - "8000:80"
 
   db:
-    image: postgres
+    image: postgres:9.4
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: audiencias
