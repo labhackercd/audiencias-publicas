@@ -48,7 +48,10 @@ class Command(BaseCommand):
                     room.is_active = False
                 elif item['codEstadoReuniao'] in [2, 3]:
                     room.is_active = True
-                room.youtube_status = item['codEstadoTransmissaoYoutube']
+                if room.youtube_status == 1 and item['codEstadoReuniao'] == 3:
+                    pass
+                else:
+                    room.youtube_status = item['codEstadoTransmissaoYoutube']
                 if item['datSisAudio'] == "":
                     reunion_date = datetime.strptime(item['datReuniaoString'],
                                                      '%d/%m/%Y %H:%M:%S')
