@@ -38,28 +38,64 @@ class VoteViewSet(viewsets.ModelViewSet):
     ordering_fields = ('user', 'vote')
 
 
+class MessageFilter(FilterSet):
+    class Meta:
+        model = Message
+        fields = {
+            'created': ['lt', 'lte', 'gt', 'gte'],
+            'modified': ['lt', 'lte', 'gt', 'gte'],
+            'id': ['exact'],
+            'room__id': ['exact'],
+            'room__cod_reunion': ['exact'],
+            'room__title_reunion': ['exact', 'contains'],
+            'user__id': ['exact'],
+            'user__username': ['exact', 'contains'],
+            'user__first_name': ['exact', 'contains'],
+            'user__last_name': ['exact', 'contains'],
+            'message': ['exact', 'contains'],
+        }
+
+
 class MessageViewSet(viewsets.ModelViewSet):
     allowed_methods = ['get']
     queryset = Message.objects.all()
     serializer_class = MessageSerializer
+    filter_class = MessageFilter
     filter_backends = (
         django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('id', 'room', 'user', 'message')
     search_fields = ('message',)
-    ordering_fields = ('timestamp', 'user', 'room')
+    ordering_fields = ('modified', 'user', 'room')
+
+
+class QuestionFilter(FilterSet):
+    class Meta:
+        model = Question
+        fields = {
+            'created': ['lt', 'lte', 'gt', 'gte'],
+            'modified': ['lt', 'lte', 'gt', 'gte'],
+            'id': ['exact'],
+            'room__id': ['exact'],
+            'room__cod_reunion': ['exact'],
+            'room__title_reunion': ['exact', 'contains'],
+            'user__id': ['exact'],
+            'user__username': ['exact', 'contains'],
+            'user__first_name': ['exact', 'contains'],
+            'user__last_name': ['exact', 'contains'],
+            'question': ['exact', 'contains'],
+        }
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
     allowed_methods = ['get']
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+    filter_class = QuestionFilter
     filter_backends = (
         django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('id', 'room', 'user', 'question')
     search_fields = ('question',)
     ordering_fields = ('up_votes', 'down_votes', 'timestamp')
 
