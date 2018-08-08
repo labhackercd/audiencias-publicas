@@ -5,11 +5,13 @@ from django.contrib.auth import get_user_model
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.shortcuts import redirect
+from apps.core.templatetags.video_utils import belongs_to_group
 
 
 def send_participants_notification(request, room_id):
-    if request.POST:
-        room = Room.objects.get(id=room_id)
+    room = Room.objects.get(id=room_id)
+    group_name = room.legislative_body_initials
+    if request.POST and belongs_to_group(request.user, group_name):
         questions_id = Question.objects.filter(
             room=room).values_list('id', flat=True)
         votes_users = UpDownVote.objects.filter(
