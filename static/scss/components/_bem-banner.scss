@@ -11,6 +11,10 @@
 .banner__logo {
   margin-bottom: 2em;
   width: 28em;
+
+  @include bp-smallonly {
+    width: 18em;
+  }
 }
 
 .banner__text {

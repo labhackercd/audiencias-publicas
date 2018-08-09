@@ -14,6 +14,41 @@
 
   &:last-child {
     padding-right: 3em;
+
+    @include bp-smallonly {
+      padding-right: 0;
+      margin-bottom: 2em;
+      margin-top: 1em;
+    }
+  }
+}
+
+.calendar-table__body {
+  @include bp-smallonly {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.calendar-table__description .show-more {
+  @include bp-smallonly {
+    margin-top: 2em;
+  }
+}
+
+.calendar-table__row {
+  @include bp-smallonly {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1.5em;
+    border-bottom: 1px solid #efedad;
+    width: 100%;
   }
 }
 
