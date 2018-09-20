@@ -94,7 +94,6 @@ OLARK_ID = config('OLARK_ID', default='')
 WEBSERVICE_URL = config('WEBSERVICE_URL', default='')
 RECAPTCHA_SITE_KEY = config('RECAPTCHA_SITE_KEY', default='')
 RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY', default='')
-SITE_NAME = config('SITE_NAME', default='')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -127,7 +126,6 @@ TEMPLATES = [
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
                 'apps.core.processors.analytics',
-                'apps.core.processors.home_customization',
             ],
         },
     },
@@ -313,6 +311,7 @@ NOTIFICATION_EMAIL_LIST = config(
 
 # EDITABLE SETTINGS
 CONSTANCE_CONFIG = {
+    'SITE_NAME': ('Câmara dos Deputados', 'Nome do site', str),
     'HOME_DESCRIPTION': ('Acompanhe ao vivo e participe enviando perguntas aos '
                          'deputados!', 'Descrição que acompanha a logo', str),
     'QUESTIONS_DESCRIPTION': ('Faça sua pergunta ou apoie outra já feita. As '
@@ -323,6 +322,7 @@ CONSTANCE_CONFIG = {
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
+    'Geral': ('SITE_NAME', ),
     'Página inicial': ('HOME_DESCRIPTION', ),
     'Página de sala': ('QUESTIONS_DESCRIPTION', 'ROOM_OBJECT'),
 }
