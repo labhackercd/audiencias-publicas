@@ -49,7 +49,7 @@ def on_receive(message, pk):
     if not data['handler']:
         return
 
-    blackList = config.WORDS_BLACK_LIST.split(',')
+    blackList = [x.strip() for x in config.WORDS_BLACK_LIST.split(',')]
 
     if set(data.keys()) == set(('handler', 'question', 'is_vote')):
         user = User.objects.get(id=decrypt(data['handler']))

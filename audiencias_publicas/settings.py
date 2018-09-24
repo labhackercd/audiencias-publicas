@@ -316,34 +316,34 @@ CONSTANCE_CONFIG = {
                               'aba de perguntas', str),
     'ROOM_OBJECT': ('Pauta', 'Título do objeto da reunião', str),
     'WORDS_BLACK_LIST': (
-        'merda,cu,cuzao,cuzona,cusao,cusona,bunda,fodido,fodida,foda,foder,'
-        'fodedor,fudido,fudida,fuder,chupa,chupada,chupador,chupadora,'
-        'boquete,boqueteira,boquetera,boketeira,boketera,xupa,xupada,xupador,'
-        'xupadora,pauduro,pauzudo,xoxota,chochota,buceta,boceta,busseta,'
-        'bosseta,cacete,cassete,caceta,kacete,kassete,caralho,karalho,'
-        'caraleo,pinto,pica,rola,roludo,gozado,gozada,goso,gosa,gosado,'
-        'gosado,puta,puto,putinho,putinha,putona,putana,putaria,grelo,'
-        'grelinho,filhodaputa,filhosdaputa,puta,fdps,siririca,punheta,trepar,'
-        'trepada,trepadeira,caralho,caralhu,karalho,karalhu,tomarnocu,'
-        'tomanocu,vadia,bosta,quenga,rabo,bolsa,cuzinho,piroca,pqp,puta que '
-        'pariu,porra,carai,cú,viado,fdp,vtnc,corno,bicha,bixa,viado,viadinho,'
-        'pederasta,filho da puta,bundao,bundão,filho de uma egua,'
-        'filho de uma égua,achacador,achacadora,achacadores,achacar,babaca,'
-        'bucetas,cagar,cagaram,cambada,caráleo,corja,cornão,covarde,covardes,'
-        'cretino,cus,cús,cusão,cuzão,cuzinho,cuzona,danar,desgraça,drosoba,'
-        'enrabar,escória,escroto,escrotas,escrotos,fodão,fodona,fudendo,'
-        'fuder,idiota,imundo,imundos,ku,kú,lascar,merdas,patifaria,pilantra,'
-        'pilantragem,pilantras,poha,porcaria,putas,putos,sacanagem,safadeza,'
-        'safado,safados,salafrário,salafrários,vagabundagem,vagabundo,'
-        'vagabundos,veadinho,veadinhos',
+        'merda, cu, cuzao, cuzona, cusao, cusona, bunda, fodido, fodida, foda, foder, '
+        'fodedor, fudido, fudida, fuder, chupa, chupada, chupador, chupadora, '
+        'boquete, boqueteira, boquetera, boketeira, boketera, xupa, xupada, xupador, '
+        'xupadora, pauduro, pauzudo, xoxota, chochota, buceta, boceta, busseta, '
+        'bosseta, cacete, cassete, caceta, kacete, kassete, caralho, karalho, '
+        'caraleo, pinto, pica, rola, roludo, gozado, gozada, goso, gosa, gosado, '
+        'gosado, puta, puto, putinho, putinha, putona, putana, putaria, grelo, '
+        'grelinho, filhodaputa, filhosdaputa, puta, fdps, siririca, punheta, trepar, '
+        'trepada, trepadeira, caralho, caralhu, karalho, karalhu, tomarnocu, '
+        'tomanocu, vadia, bosta, quenga, rabo, bolsa, cuzinho, piroca, pqp, puta que '
+        'pariu, porra, carai, cú, viado, fdp, vtnc, corno, bicha, bixa, viado, viadinho, '
+        'pederasta, filho da puta, bundao, bundão, filho de uma egua, '
+        'filho de uma égua, achacador, achacadora, achacadores, achacar, babaca, '
+        'bucetas, cagar, cagaram, cambada, caráleo, corja, cornão, covarde, covardes, '
+        'cretino, cus, cús, cusão, cuzão, cuzinho, cuzona, danar, desgraça, drosoba, '
+        'enrabar, escória, escroto, escrotas, escrotos, fodão, fodona, fudendo, '
+        'fuder, idiota, imundo, imundos, ku, kú, lascar, merdas, patifaria, pilantra, '
+        'pilantragem, pilantras, poha, porcaria, putas, putos, sacanagem, safadeza, '
+        'safado, safados, salafrário, salafrários, vagabundagem, vagabundo, '
+        'vagabundos, veadinho, veadinhos',
         'Lista de palavras e termos censurados. Devem ser separadas por '
-        'vírgula e sem espaço entre elas',
+        'vírgula.',
         str
     )
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
-    'Geral': ('SITE_NAME', ),
+    'Geral': ('SITE_NAME', 'WORDS_BLACK_LIST'),
     'Página inicial': ('HOME_DESCRIPTION', ),
     'Página de sala': ('QUESTIONS_DESCRIPTION', 'ROOM_OBJECT'),
 }

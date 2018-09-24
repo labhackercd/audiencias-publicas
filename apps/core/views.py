@@ -459,7 +459,7 @@ def censorship(request):
             blacklist = config.WORDS_BLACK_LIST.split(',')
             censored = text
             for word in blacklist:
-                censored = re.sub(word, replace_by, censored,
+                censored = re.sub(word.strip(), replace_by, censored,
                                   flags=re.IGNORECASE)
             return JsonResponse({'original': text, 'censored': censored})
         else:
