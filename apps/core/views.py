@@ -452,17 +452,17 @@ class QuestionDetail(DetailView):
 
 @csrf_exempt
 def censorship(request):
+    blacklist = [x.strip() for x in config.WORDS_BLACK_LIST.split(',')]
     if request.method == 'POST':
         text = request.POST.get('text', None)
         replace_by = request.POST.get('replace_by', '♥')
         if text is not None:
-            blacklist = config.WORDS_BLACK_LIST.split(',')
             censored = text
             for word in blacklist:
-                censored = re.sub(word.strip(), replace_by, censored,
+                censored = re.sub(word, replace_by, censored,
                                   flags=re.IGNORECASE)
             return JsonResponse({'original': text, 'censored': censored})
         else:
             return HttpResponseBadRequest('Missing parameters')
     else:
-        return HttpResponseForbidden()
+        return JsonResponse(blacklist, safe=False)

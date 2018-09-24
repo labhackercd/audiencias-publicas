@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'^widget/(?P<pk>\d+)/?$',
         ensure_csrf_cookie(WidgetVideoDetail.as_view()),
         name='widget_index'),
-    url(r'^censorship/?$', censorship, name='censorship')
+    url(r'^blacklist/?$', censorship, name='censorship')
 ]
 
 router = DefaultRouter()
