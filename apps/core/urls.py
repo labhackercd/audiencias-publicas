@@ -7,7 +7,7 @@ from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              set_priotity, WidgetVideoDetail, create_attachment,
                              delete_attachment, add_external_link,
                              remove_external_link, create_video_attachment,
-                             delete_video, order_videos)
+                             delete_video, order_videos, censorship)
 from apps.core import api
 
 
@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^widget/(?P<pk>\d+)/?$',
         ensure_csrf_cookie(WidgetVideoDetail.as_view()),
         name='widget_index'),
+    url(r'^censorship/?$', censorship, name='censorship')
 ]
 
 router = DefaultRouter()
