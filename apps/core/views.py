@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.http import (Http404, HttpResponseForbidden, HttpResponseRedirect,
-                         HttpResponseBadRequest, HttpResponse)
+                         HttpResponseBadRequest, HttpResponse, JsonResponse)
 from django.utils.translation import ugettext as _
 from django.contrib.sites.models import Site
 from apps.core.models import Question, Room, RoomAttachment, Video
@@ -14,7 +14,10 @@ from channels import Group
 from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
 import json
+import re
+from django.views.decorators.csrf import csrf_exempt
 from itertools import chain
+from constance import config
 from apps.core.forms import RoomAttachmentForm, VideoForm
 
 
@@ -445,3 +448,21 @@ class QuestionDetail(DetailView):
         context['domain'] += settings.FORCE_SCRIPT_NAME
 
         return context
+
+
+@csrf_exempt
+def censorship(request):
+    if request.method == 'POST':
+        text = request.POST.get('text', None)
+        replace_by = request.POST.get('replace_by', '♥')
+        if text is not None:
+            blacklist = config.WORDS_BLACK_LIST.split(',')
+            censored = text
+            for word in blacklist:
+                censored = re.sub(word.strip(), replace_by, censored,
+                                  flags=re.IGNORECASE)
+            return JsonResponse({'original': text, 'censored': censored})
+        else:
+            return HttpResponseBadRequest('Missing parameters')
+    else:
+        return HttpResponseForbidden()
