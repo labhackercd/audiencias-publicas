@@ -5,7 +5,7 @@ from channels import Group
 from apps.core.models import Room, Message, Question, UpDownVote
 from apps.core.utils import decrypt, encrypt
 from apps.core.consumers.utils import get_room, get_data
-from django.conf import settings
+from constance import config
 from channels_presence.models import Room as RoomPresence, Presence
 from channels.auth import channel_session_user, channel_session_user_from_http
 from channels_presence.decorators import touch_presence, remove_presence
@@ -49,7 +49,7 @@ def on_receive(message, pk):
     if not data['handler']:
         return
 
-    blackList = settings.WORDS_BLACK_LIST
+    blackList = config.WORDS_BLACK_LIST.split(',')
 
     if set(data.keys()) == set(('handler', 'question', 'is_vote')):
         user = User.objects.get(id=decrypt(data['handler']))
