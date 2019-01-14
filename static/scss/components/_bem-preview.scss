@@ -18,11 +18,17 @@
   margin: 0 auto;
   justify-content: center;
 
+  label {
+    color: black;
+  }
+
   .searh-input{
     width: 8em;
     margin: 0 0.5em;
     margin-bottom: 0.5em;
+    padding: 0.7rem;
     align-self: center;
+    color: black;
   }
   .search-submit{
     background-color: #092b2a;
