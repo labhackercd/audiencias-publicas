@@ -6,4 +6,5 @@ def analytics(request):
     olark_id = settings.OLARK_ID
     recaptcha_site_key = settings.RECAPTCHA_SITE_KEY
     return {'recaptcha_site_key': recaptcha_site_key,
-            'analytics_id': analytics_id, 'olark_id': olark_id}
+            'analytics_id': analytics_id, 'olark_id': olark_id,
+            'CAMARA_LOGIN': settings.CAMARA_LOGIN}
