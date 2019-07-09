@@ -65,6 +65,7 @@ class RoomSerializer(serializers.ModelSerializer):
     messages_count = serializers.SerializerMethodField()
     answered_questions_count = serializers.SerializerMethodField()
     votes_count = serializers.SerializerMethodField()
+    participants_count = serializers.SerializerMethodField()
     youtube_id = serializers.SerializerMethodField()
     videos = VideoSerializer(many=True)
 
@@ -76,7 +77,7 @@ class RoomSerializer(serializers.ModelSerializer):
                   'reunion_type', 'title_reunion', 'reunion_object',
                   'reunion_theme', 'date', 'legislative_body', 'location',
                   'questions_count', 'answered_questions_count', 'messages_count',
-                  'votes_count', 'videos', 'youtube_id')
+                  'votes_count', 'participants_count', 'videos', 'youtube_id')
 
     def get_answered_questions_count(self, obj):
         return obj.questions.filter(answered=True).count()
@@ -92,6 +93,15 @@ class RoomSerializer(serializers.ModelSerializer):
         votes_count = questions.aggregate(Sum('total_votes'))[
             'total_votes__sum']
         return votes_count
+
+    def get_participants_count(self, obj):
+        questions = obj.questions.all()
+        vote_users = [user_id for question in questions for user_id in question.votes.values_list(
+            'user__id', flat=True)]
+        question_users = list(questions.values_list('user__id', flat=True))
+        message_users = list(obj.messages.values_list('user__id', flat=True))
+        total_users = len(list(set(vote_users + question_users + message_users)))
+        return total_users
 
     def get_youtube_id(self, obj):
         try:
