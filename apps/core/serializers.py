@@ -2,6 +2,7 @@ from django.conf import settings
 from rest_framework import serializers
 from apps.core.models import Message, Question, UpDownVote, Room, Video
 from django.contrib.auth import get_user_model
+from django.db.models import Count, Sum
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -62,6 +63,8 @@ class VideoSerializer(serializers.ModelSerializer):
 class RoomSerializer(serializers.ModelSerializer):
     questions_count = serializers.SerializerMethodField()
     messages_count = serializers.SerializerMethodField()
+    answered_questions_count = serializers.SerializerMethodField()
+    votes_count = serializers.SerializerMethodField()
     youtube_id = serializers.SerializerMethodField()
     videos = VideoSerializer(many=True)
 
@@ -72,13 +75,23 @@ class RoomSerializer(serializers.ModelSerializer):
                   'max_online_users', 'created', 'modified', 'is_visible',
                   'reunion_type', 'title_reunion', 'reunion_object',
                   'reunion_theme', 'date', 'legislative_body', 'location',
-                  'questions_count', 'messages_count', 'videos', 'youtube_id')
+                  'questions_count', 'answered_questions_count', 'messages_count',
+                  'votes_count', 'videos', 'youtube_id')
+
+    def get_answered_questions_count(self, obj):
+        return obj.questions.filter(answered=True).count()
 
     def get_questions_count(self, obj):
         return obj.questions.count()
 
     def get_messages_count(self, obj):
         return obj.messages.count()
+
+    def get_votes_count(self, obj):
+        questions = obj.questions.annotate(total_votes=Count('votes'))
+        votes_count = questions.aggregate(Sum('total_votes'))[
+            'total_votes__sum']
+        return votes_count
 
     def get_youtube_id(self, obj):
         try:
