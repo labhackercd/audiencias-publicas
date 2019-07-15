@@ -6,10 +6,37 @@ from django.db.models import Count, Sum
 
 
 class UserSerializer(serializers.ModelSerializer):
+    questions_count = serializers.SerializerMethodField()
+    messages_count = serializers.SerializerMethodField()
+    votes_count = serializers.SerializerMethodField()
+    participations_count = serializers.SerializerMethodField()
+    questions_votes_count = serializers.SerializerMethodField()
+
     class Meta:
         model = get_user_model()
         fields = ('id', 'email', 'username', 'first_name', 'last_name',
-                  'is_active', 'is_staff', 'is_superuser')
+                  'is_active', 'is_staff', 'is_superuser', 'questions_count',
+                  'messages_count', 'votes_count', 'participations_count',
+                  'questions_votes_count')
+
+
+    def get_questions_count(self, obj):
+        return obj.questions.count()
+
+    def get_messages_count(self, obj):
+        return obj.messages.count()
+
+    def get_votes_count(self, obj):
+        return obj.votes.count()
+
+    def get_participations_count(self, obj):
+        return obj.questions.count() + obj.messages.count() + obj.votes.count()
+
+    def get_questions_votes_count(self, obj):
+        questions = obj.questions.annotate(total_votes=Count('votes'))
+        votes_count = questions.aggregate(Sum('total_votes'))[
+            'total_votes__sum']
+        return votes_count
 
     def to_representation(self, instance):
         ret = super(UserSerializer, self).to_representation(instance)

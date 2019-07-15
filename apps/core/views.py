@@ -20,8 +20,8 @@ from itertools import chain
 from constance import config
 from apps.core.forms import RoomAttachmentForm, VideoForm
 from apps.core.paginator import ViewPaginatorMixin
-from django.db.models.functions import Coalesce
 from operator import itemgetter
+from django.contrib.auth import get_user_model
 
 
 def redirect_to_room(request, cod_reunion):
@@ -536,7 +536,63 @@ class RankingRoomJSONView(ViewPaginatorMixin, View):
                 reverse = False
                 order = order[1:]
             else:
-                reverse=True
-            result_list = sorted(result_list, key=itemgetter(order), reverse=reverse)
+                reverse = True
+            result_list = sorted(
+                result_list, key=itemgetter(order), reverse=reverse)
+        else:
+            result_list = sorted(
+                result_list, key=itemgetter('participants_count'), reverse=True)
+
+        return JsonResponse(self.paginate(result_list, page, limit))
+
+
+class RankingUserJSONView(ViewPaginatorMixin, View):
+    def get(self, request):
+        page = request.GET.get('page')
+        limit = request.GET.get('limit')
+        order = request.GET.get('order')
+
+        if not page:
+            page = 1
+
+        if not limit:
+            limit = 10
+
+        users = get_user_model().objects.all()
+
+        result_list = []
+        for user in users:
+            questions_count = user.questions.count()
+            messages_count = user.messages.count()
+            votes_count = user.votes.count()
+            questions_votes_count = user.questions.annotate(
+                total_votes=Count('votes')).aggregate(
+                    Sum('total_votes'))['total_votes__sum'] or 0
+            participations_count = questions_count + messages_count + votes_count
+
+            user_dict = {
+                'id': user.id,
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'questions_count': questions_count,
+                'questions_votes_count': questions_votes_count,
+                'messages_count': messages_count,
+                'votes_count': votes_count,
+                'participations_count': participations_count
+            }
+            result_list.append(user_dict)
+
+        if order:
+            if order.startswith('-'):
+                reverse = False
+                order = order[1:]
+            else:
+                reverse = True
+            result_list = sorted(
+                result_list, key=itemgetter(order), reverse=reverse)
+        else:
+            result_list = sorted(
+                result_list, key=itemgetter('participations_count'), reverse=True)
 
         return JsonResponse(self.paginate(result_list, page, limit))

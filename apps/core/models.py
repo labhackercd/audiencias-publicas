@@ -142,7 +142,8 @@ class Room(TimestampedMixin):
 
 
 class UpDownVote(TimestampedMixin):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             verbose_name=_('user'), related_name='votes',)
     question = models.ForeignKey('Question', related_name='votes',
                                  verbose_name=_('question'))
     vote = models.BooleanField(_('vote'), default=False,
@@ -161,7 +162,7 @@ class UpDownVote(TimestampedMixin):
 class Message(TimestampedMixin):
     room = models.ForeignKey(Room, related_name='messages', null=True,
                              verbose_name=_('room'))
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='messages',
                              verbose_name=_('user'))
     message = models.TextField(_('message'))
 
@@ -209,7 +210,8 @@ class Video(TimestampedMixin):
 class Question(TimestampedMixin):
     room = models.ForeignKey(Room, related_name='questions', null=True,
                              verbose_name=_('room'))
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             verbose_name=_('user'), related_name='questions')
     question = models.TextField(_('question'), max_length=300)
     video = models.ForeignKey(Video, verbose_name=_('video'), null=True,
                               related_name='questions',
