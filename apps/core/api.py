@@ -104,7 +104,7 @@ class RoomFilter(FilterSet):
     class Meta:
         model = Room
         fields = {
-            'date': ['lt', 'gte'],
+            'date': ['lt', 'gte', 'year', 'month', 'day'],
             'legislative_body_initials': ['exact'],
             'cod_reunion': ['exact'],
             'is_visible': ['exact'],

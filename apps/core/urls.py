@@ -7,7 +7,7 @@ from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
                              set_priotity, WidgetVideoDetail, create_attachment,
                              delete_attachment, add_external_link,
                              remove_external_link, create_video_attachment,
-                             delete_video, order_videos, censorship)
+                             delete_video, order_videos, censorship, RankingRoomJSONView)
 from apps.core import api
 
 
@@ -59,4 +59,5 @@ router.register(r'api/vote', api.VoteViewSet)
 urlpatterns += router.urls
 urlpatterns += [
     url(r'^api/$', api.api_root),
+    url(r'^api/ranking/$', RankingRoomJSONView.as_view()),
 ]

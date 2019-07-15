@@ -6,10 +6,10 @@ from django.contrib.sites.models import Site
 from apps.core.models import Question, Room, RoomAttachment, Video
 from apps.core.utils import encrypt
 from apps.core.templatetags.video_utils import belongs_to_group
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
 from django.shortcuts import render, redirect
 from datetime import datetime, date
-from django.db.models import Q
+from django.db.models import Q, Count, Sum
 from channels import Group
 from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
@@ -19,6 +19,9 @@ from django.views.decorators.csrf import csrf_exempt
 from itertools import chain
 from constance import config
 from apps.core.forms import RoomAttachmentForm, VideoForm
+from apps.core.paginator import ViewPaginatorMixin
+from django.db.models.functions import Coalesce
+from operator import itemgetter
 
 
 def redirect_to_room(request, cod_reunion):
@@ -466,3 +469,74 @@ def censorship(request):
             return HttpResponseBadRequest('Missing parameters')
     else:
         return JsonResponse(blacklist, safe=False)
+
+
+class RankingRoomJSONView(ViewPaginatorMixin, View):
+    def get(self, request):
+        page = request.GET.get('page')
+        limit = request.GET.get('limit')
+        order = request.GET.get('order')
+        initial_date = request.GET.get('initial_date')
+        end_date = request.GET.get('end_date')
+
+        if not page:
+            page = 1
+
+        if not limit:
+            limit = 10
+
+        if initial_date or end_date:
+            q_filter = Q()
+            if initial_date:
+                q_filter = q_filter & Q(date__gte=initial_date)
+            if end_date:
+                q_filter = q_filter & Q(date__lte=end_date)
+            rooms = Room.objects.filter(q_filter)
+        else:
+            rooms = Room.objects.all()
+
+        result_list = []
+        for room in rooms:
+            questions = room.questions.all()
+            votes_count = questions.annotate(
+                total_votes=Count('votes')).aggregate(Sum('total_votes'))[
+                'total_votes__sum'] or 0
+            vote_users = [user_id for question in questions for user_id in question.votes.values_list(
+                'user__id', flat=True)]
+            question_users = list(questions.values_list('user__id', flat=True))
+            message_users = list(
+                room.messages.values_list('user__id', flat=True))
+            total_users = len(
+                list(set(vote_users + question_users + message_users)))
+            room_dict = {
+                'id': room.id,
+                'cod_reunion': room.cod_reunion,
+                'legislative_body_initials': room.legislative_body_initials,
+                'youtube_status': room.youtube_status,
+                'max_online_users': room.max_online_users,
+                'created': room.created,
+                'modified': room.modified,
+                'reunion_type': room.reunion_type,
+                'title_reunion': room.title_reunion,
+                'reunion_object': room.reunion_object,
+                'reunion_theme': room.reunion_theme,
+                'date': room.date,
+                'legislative_body': room.legislative_body,
+                'location': room.location,
+                'questions_count': room.questions.count(),
+                'answered_questions_count': room.questions.filter(answered=True).count(),
+                'messages_count': room.messages.count(),
+                'votes_count': votes_count,
+                'participants_count': total_users
+            }
+            result_list.append(room_dict)
+
+        if order:
+            if order.startswith('-'):
+                reverse = False
+                order = order[1:]
+            else:
+                reverse=True
+            result_list = sorted(result_list, key=itemgetter(order), reverse=reverse)
+
+        return JsonResponse(self.paginate(result_list, page, limit))
