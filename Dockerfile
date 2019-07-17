@@ -1,6 +1,6 @@
 FROM labhackercd/alpine-python3-nodejs
 
-ENV BUILD_PACKAGES postgresql-dev postgresql-client gettext
+ENV BUILD_PACKAGES postgresql-dev postgresql-client gettext libffi-dev
 
 RUN apk add --update --no-cache $BUILD_PACKAGES
 RUN mkdir -p /var/labhacker/audiencias
