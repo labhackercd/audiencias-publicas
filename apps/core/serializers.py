@@ -35,7 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
     def get_questions_votes_count(self, obj):
         questions = obj.questions.annotate(total_votes=Count('votes'))
         votes_count = questions.aggregate(Sum('total_votes'))[
-            'total_votes__sum']
+            'total_votes__sum'] or 0
         return votes_count
 
     def to_representation(self, instance):
@@ -118,7 +118,7 @@ class RoomSerializer(serializers.ModelSerializer):
     def get_votes_count(self, obj):
         questions = obj.questions.annotate(total_votes=Count('votes'))
         votes_count = questions.aggregate(Sum('total_votes'))[
-            'total_votes__sum']
+            'total_votes__sum'] or 0
         return votes_count
 
     def get_participants_count(self, obj):
