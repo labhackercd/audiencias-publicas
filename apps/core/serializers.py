@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'email', 'username', 'first_name', 'last_name',
                   'is_active', 'is_staff', 'is_superuser', 'questions_count',
                   'messages_count', 'votes_count', 'participations_count',
-                  'questions_votes_count')
+                  'questions_votes_count', 'date_joined', 'last_login')
 
 
     def get_questions_count(self, obj):

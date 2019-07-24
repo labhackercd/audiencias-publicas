@@ -12,16 +12,29 @@ from apps.core.serializers import (QuestionSerializer, MessageSerializer,
                                    RoomSerializer)
 
 
+class UserFilter(FilterSet):
+    class Meta:
+        model = get_user_model()
+        fields = {
+            'date_joined': ['lt', 'lte', 'gt', 'gte'],
+            'last_login': ['lt', 'lte', 'gt', 'gte'],
+            'id': ['exact'],
+            'username': ['exact', 'contains'],
+            'first_name': ['exact', 'contains'],
+            'last_name': ['exact', 'contains'],
+        }
+
+
 class UserViewSet(viewsets.ModelViewSet):
     allowed_methods = ['get', 'put', 'delete']
     lookup_field = 'username'
     queryset = get_user_model().objects.all()
     serializer_class = UserSerializer
+    filter_class = UserFilter
     filter_backends = (
         django_filters.DjangoFilterBackend,
         filters.SearchFilter,
     )
-    filter_fields = ('id', )
     search_fields = ('username', 'first_name', 'last_name')
 
 
