@@ -85,7 +85,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 20
+    'PAGE_SIZE': 100
 }
 
 CAMARA_LOGIN = config('CAMARA_LOGIN', default=False, cast=bool)
