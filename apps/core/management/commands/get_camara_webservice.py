@@ -37,7 +37,7 @@ class Command(BaseCommand):
                     room.title_reunion = item['txtTituloReuniao']
                 else:
                     room.title_reunion = item['txtApelido']
-                room.reunion_theme = item['txtTemaReuniao']
+                room.reunion_theme = item['txtTemaResumido']
                 room.legislative_body_initials = item['txtSiglaOrgao']
                 room.legislative_body = item['txtNomeOrgao']
                 room.reunion_type = item['txtTipoReuniao']
