@@ -402,7 +402,7 @@ function roomComponent(socket) {
 
       const facebookUrl = `http://www.facebook.com/sharer/sharer.php?u=${questionUrl}`;
       const twitterUrl = `http://twitter.com/share?text=Apoie esta pergunta!&url=${questionUrl}`;
-      const whatsappMessage = encodeURIComponent('As perguntas mais votadas serão respondidas pelos deputados agora! Acesse em ') + encodeURIComponent(questionUrl);
+      const whatsappMessage = encodeURIComponent('As perguntas mais votadas serão respondidas agora! Acesse em ') + encodeURIComponent(questionUrl);
 
       switch (socialNetwork) {
         case 'facebook': window.open(facebookUrl, 'popUpWindow', windowOptions); break;
