@@ -8,6 +8,7 @@ import datetime
 from channels import Group
 from apps.core.utils import encrypt
 import json
+from constance import config
 
 
 class TimestampedMixin(models.Model):
@@ -270,6 +271,17 @@ class RoomAttachment(TimestampedMixin):
 
 def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
+    user_message = config.WELCOME_MESSAGE_USER_ID
+    message = config.WELCOME_MESSAGE
+    if user_message != 0 and message != '':
+        firs_message = Message.objects.filter(room=instance.id,
+                                              user_id=user_message,
+                                              message=message)
+
+        if instance.youtube_status == 1 and len(firs_message) == 0:
+            Message.objects.create(room=instance,
+                                   user_id=user_message,
+                                   message=message)
     if instance.youtube_status in [2, 3]:
         is_closed = True
         if not instance.closed_time:
