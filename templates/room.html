@@ -65,7 +65,16 @@
       <h2 class="room-h2">Perguntas</h2>
       <p>{{ config.QUESTIONS_DESCRIPTION }}</p>
       {% if user|belongs_to_group:object.legislative_body_initials %}
-      <a class="link" href="{{request.path}}/perguntas">Ir para a página de perguntas</a>
+      <div>
+
+      </div>
+
+      <div class="info">
+        <a class="link" href="{{request.path}}/perguntas">Ir para a página de perguntas</a>
+        <a class="printLink" href="{{request.path}}/perguntas">Imprimir perguntas</a>
+        <!-- Inserir chamada da função para imprimir aqui -->
+      </div>
+      
       {% endif %}
         <div class="questions-section ">
           <ul class="questions__list JS-questionsList" id="questions">

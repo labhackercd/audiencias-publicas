@@ -32,6 +32,11 @@
         </div>
         <span class="numberofquestions">{{counter}} pergunta{% if counter > 1 %}s{% endif %}</span>
       </div>
+      
+      <div class="info">
+        <a class="printLink" href="{{request.path}}/perguntas">Imprimir perguntas</a>
+        <!-- Inserir chamada da função para imprimir aqui -->
+      </div>
 
       <ul class="room-questions__list" id="questions">
         {% if questions %}
