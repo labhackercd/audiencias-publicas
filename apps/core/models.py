@@ -273,6 +273,14 @@ def room_post_save(sender, instance, created, **kwargs):
     is_closed = False
     user_message = config.WELCOME_MESSAGE_USER_ID
     message = config.WELCOME_MESSAGE
+    video = config.WELCOME_VIDEO
+    video_title = config.WELCOME_VIDEO_TITLE
+
+    if created and video != '':
+        Video.objects.create(room=instance,
+                             video_id=video,
+                             title=video_title,
+                             is_attachment=True)
     if user_message != 0 and message != '':
         firs_message = Message.objects.filter(room=instance.id,
                                               user_id=user_message,
