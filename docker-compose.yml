@@ -1,4 +1,4 @@
-version: '2.3'
+version: "2.3"
 services:
   nginx:
     image: nginx:latest
@@ -32,17 +32,17 @@ services:
       DATABASE_USER: root
       DATABASE_HOST: db
       DATABASE_PORT: 5432
-      DEBUG: 'False'
+      DEBUG: "False"
       REDIS_SERVER: redis
       WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
-      COMPRESS_OFFLINE: 'True'
+      COMPRESS_OFFLINE: "True"
     volumes:
       - data:/var/labhacker/audiencias
     depends_on:
-      - 'web'
+      - "web"
 
   web:
-    image: labhackercd/audiencias-publicas
+    build: .
     command: ./start-web.sh
     restart: on-failure
     links:
@@ -55,10 +55,16 @@ services:
       ADMIN_EMAIL: admin@admin.com
       ADMIN_USERNAME: admin
       DATABASE_URL: postgres://root:audiencias@db:5432/audiencias
-      DEBUG: 'False'
+      DATABASE_ENGINE: postgresql_psycopg2
+      DATABASE_NAME: audiencias
+      DATABASE_PASSWORD: audiencias
+      DATABASE_USER: root
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DEBUG: "False"
       REDIS_SERVER: redis
       WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
-      COMPRESS_OFFLINE: 'True'
+      COMPRESS_OFFLINE: "True"
     expose:
       - "8000"
     depends_on:
