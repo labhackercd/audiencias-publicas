@@ -30,7 +30,30 @@
         box-shadow: 0 2px 8px rgba(#000, 0.3);
       }
     }
+
+    > .info {
+      display: flex;
+      justify-content: end;
+      align-items:end;
+      > .printLink {
+        align-items: end;
+        justify-content: end;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover { opacity: 0.8; }
+        font-size: $font-size-base;
+        line-height: 1.5em;
+        margin-bottom: 0.5rem;
+    
+        @include bp-largedown {
+          font-size: $font-size-centi;
+        }
+      }
+    }
+
   }
+
+
 
 
 }
