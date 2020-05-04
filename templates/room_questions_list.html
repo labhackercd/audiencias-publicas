@@ -34,8 +34,8 @@
       </div>
       
       <div class="info">
-        <a class="printLink" href="{{request.path}}/perguntas">Imprimir perguntas</a>
-        <!-- Inserir chamada da função para imprimir aqui -->
+        <a class="printLink" value="click" onclick="printQuestions()">Imprimir perguntas</a>
+       
       </div>
 
       <ul class="room-questions__list" id="questions">
@@ -54,6 +54,11 @@
 
 {% block extra_js %}
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
+  <script>
+    function printQuestions(){
+      window.print();
+    }
+    </script>
 {% endblock extra_js %}
 
 {% block olark  %}
