@@ -9,6 +9,13 @@
   flex-shrink: 0;
   flex-direction: column;
   font-size: 0.9rem;
+  @media print {
+    display: block;
+    page-break-inside: avoid;
+    border: 1px solid black;
+    border-style: solid;
+    margin: 1;
+  }
 
   &:last-child {
     margin-bottom: 0;

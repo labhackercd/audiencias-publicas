@@ -5,8 +5,7 @@ from apps.notification.models import ParticipantNotification
 class ParticipantNotificationAdmin(admin.ModelAdmin):
     list_display = (
         'room', 'created')
-    list_filter = [
-        'room', 'created']
+    list_filter = ['created']
     search_fields = (
         'room__title_reunion', 'room__legislative_body_initials',
         'room__legislative_body',

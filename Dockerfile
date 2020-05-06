@@ -8,7 +8,7 @@ RUN mkdir -p /var/labhacker/audiencias
 ADD . /var/labhacker/audiencias
 WORKDIR /var/labhacker/audiencias
 
-RUN pip3 install -r requirements.txt psycopg2 gunicorn && \
+RUN pip3 install -r requirements.txt gunicorn && \
     rm -r /root/.cache
 
 RUN npm install && \

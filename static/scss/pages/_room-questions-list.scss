@@ -9,12 +9,25 @@
   overflow: hidden;
   padding: 1em;
   min-height: 100vh;
+  @media print{
+    overflow: visible;
+    display: block;
+    background: white;
+  }
+
+
 
   > .wrapper {
     max-width: 960px;
+    min-width: 40%;
     margin-left: auto;
     margin-right: auto;
-    > .flex {
+    @media print {
+      min-width: 100%;
+      margin: 0;
+    }
+  
+    > .flex { 
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -30,7 +43,34 @@
         box-shadow: 0 2px 8px rgba(#000, 0.3);
       }
     }
+
+    > .info {
+      display: flex;
+      justify-content: end;
+      align-items:end;
+      > .printLink {
+        align-items: end;
+        justify-content: end;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover { opacity: 0.8; }
+        font-size: $font-size-base;
+        line-height: 1.5em;
+        margin-bottom: 0.5rem;
+
+        @media print {
+          display: none;
+        }
+    
+        @include bp-largedown {
+          font-size: $font-size-centi;
+        }
+      }
+    }
+
   }
+
+
 
 
 }
@@ -76,6 +116,11 @@
   flex-direction: column;
   height: auto;
   margin: 1em -.5em 0;
+  @media print {
+    display: block;
+    
+  }
+}
 
   .list__item {
     display: flex;
@@ -114,12 +159,15 @@
     flex-direction: column;
     overflow: hidden;
     padding: .75em;
+    @media print{
+      overflow: visible;
+    }
 
     @include bp-mediumdown {
       margin: 0;
     }
   }
-}
+
 
 .room-questions__empty {
   color: $color-primary-xlight;

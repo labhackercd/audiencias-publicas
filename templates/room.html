@@ -65,7 +65,15 @@
       <h2 class="room-h2">Perguntas</h2>
       <p>{{ config.QUESTIONS_DESCRIPTION }}</p>
       {% if user|belongs_to_group:object.legislative_body_initials %}
-      <a class="link" href="{{request.path}}/perguntas">Ir para a página de perguntas</a>
+      <div>
+
+      </div>
+
+      <div class="info">
+        <a class="link" href="{{request.path}}/perguntas">Ir para a página de perguntas</a>
+        <a class="printLink" value="click" onclick="printExternal()">Imprimir perguntas</a>
+      </div>
+      
       {% endif %}
         <div class="questions-section ">
           <ul class="questions__list JS-questionsList" id="questions">
@@ -297,6 +305,25 @@
   <script type="text/javascript" src="{% static 'js/components/read-more-less.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/components/share-buttons.js' %}"></script>
   <script src='https://www.youtube.com/iframe_api' async></script>
+  <script>
+    function printExternal() {
+        var printWindow = window.open( "{{request.path}}/perguntas", 'Print', 'left=200, top=200, width=950, height=500, toolbar=0, resizable=0');
+
+        printWindow.addEventListener('load', function() {
+            if (Boolean(printWindow.chrome)) {
+                printWindow.print();
+                setTimeout(function(){
+                    printWindow.close();
+                }, 500);
+                alert("Perguntas impressas ou salvas com sucesso!");
+            } else {
+                printWindow.print();
+                alert("Perguntas impressas ou salvas com sucesso!");
+                printWindow.close();
+            }
+        }, true);
+    }
+  </script>
   {% if object.latest_video %}
     <script>
         var player;

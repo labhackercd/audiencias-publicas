@@ -32,6 +32,11 @@
         </div>
         <span class="numberofquestions">{{counter}} pergunta{% if counter > 1 %}s{% endif %}</span>
       </div>
+      
+      <div class="info">
+        <a class="printLink" value="click" onclick="printQuestions()">Imprimir perguntas</a>
+       
+      </div>
 
       <ul class="room-questions__list" id="questions">
         {% if questions %}
@@ -49,6 +54,11 @@
 
 {% block extra_js %}
   <script type="text/javascript" src="{% static 'mixitup/build/jquery.mixitup.min.js' %}"></script>
+  <script>
+    function printQuestions(){
+      window.print();
+    }
+    </script>
 {% endblock extra_js %}
 
 {% block olark  %}

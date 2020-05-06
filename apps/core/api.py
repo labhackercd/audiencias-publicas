@@ -46,7 +46,7 @@ class VoteViewSet(viewsets.ModelViewSet):
         django_filters.DjangoFilterBackend,
         filters.SearchFilter,
         filters.OrderingFilter)
-    filter_fields = ('user', 'vote')
+    filter_fields = ('user', 'vote', 'user__username')
     search_fields = ('user', 'vote', 'object_pk')
     ordering_fields = ('user', 'vote')
 

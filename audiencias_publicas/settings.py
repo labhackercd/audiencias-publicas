@@ -340,13 +340,31 @@ CONSTANCE_CONFIG = {
         'Lista de palavras e termos censurados. Devem ser separadas por '
         'vírgula.',
         str
-    )
+    ),
+    'WELCOME_MESSAGE': (
+        '', 'Mensagem de boas vindas quando iniciar a trasmissão',  str),
+    'WELCOME_MESSAGE_USER_ID': (
+        0, 'Id do usuário que irá mandar as mensagens de boas-vindas', int),
+    'WELCOME_VIDEO': (
+        '',
+        'Vídeo introdutório que irá aparecer assim que a sala for criada',
+        str
+    ),
+    'WELCOME_VIDEO_TITLE': (
+        'Saiba mais',
+        'Título do vídeo introdutório que irá aparecer assim que a sala '
+        'for criada',
+        str
+    ),
 }
 
 CONSTANCE_CONFIG_FIELDSETS = {
     'Geral': ('SITE_NAME', 'WORDS_BLACK_LIST'),
     'Página inicial': ('HOME_DESCRIPTION', ),
     'Página de sala': ('QUESTIONS_DESCRIPTION', 'ROOM_OBJECT'),
+    'Mensagens': (
+        'WELCOME_MESSAGE', 'WELCOME_MESSAGE_USER_ID', 'WELCOME_VIDEO',
+        'WELCOME_VIDEO_TITLE')
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
