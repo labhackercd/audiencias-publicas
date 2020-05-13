@@ -281,15 +281,10 @@ def room_post_save(sender, instance, created, **kwargs):
                              video_id=video,
                              title=video_title,
                              is_attachment=True)
-    if user_message != 0 and message != '':
-        firs_message = Message.objects.filter(room=instance.id,
-                                              user_id=user_message,
-                                              message=message)
-
-        if instance.youtube_status == 1 and len(firs_message) == 0:
-            Message.objects.create(room=instance,
-                                   user_id=user_message,
-                                   message=message)
+    if created and user_message != 0 and message != '':
+        Message.objects.create(room=instance,
+                               user_id=user_message,
+                               message=message)
     if instance.youtube_status in [2, 3]:
         is_closed = True
         if not instance.closed_time:
