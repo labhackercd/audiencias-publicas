@@ -25,7 +25,6 @@ After install these dependencies enter inside the directory where you download t
 
 ```
 pipenv install -r requirements.txt
-apt install redis
 apt install redis-server
 npm install node-sass
 ```
@@ -33,12 +32,24 @@ npm install node-sass
 After install redis check if it is running in your computer using:
 
 ```
-sudo systemctl status redis
+systemctl status redis
+```
+
+If it is not, start it using:
+
+```
+systemctl enable redis
+```
+
+In case you need to restart it, it can be done with:
+
+```
+systemctl restart redis
 ```
 
 #### Add Edem Navigation top bar
 
-You just need to run the following commands if you are using it inside Câmara dos Deputados. Otherwise you can skip then and go to the next section (Running the Audiencias).
+You just need to run the following commands if you are using it inside the e-Democracia. Otherwise you can skip then and go to the next section (Running the Audiencias).
 
 Go to templates/components/edem-navigation directory
 
@@ -53,10 +64,11 @@ git submodule init
 git submodule update --remote
 ```
 
+This Edem Navigation will allow you to login into the audiencias with the e-Democracia login. In case you just want to run it see how it looks, you can login into the audiencias using an admin account. An admin user can be created using django admin commands.
 
 #### Running the Audiencias
 
-If you are inside and pipenv environment you can run:
+If you are inside and pipenv environment you can run it with:
 
 ```
 pipenv run src/manage.py migrate
