@@ -1,4 +1,4 @@
-# audiencias-publicas
+# Audiencias Públicas
 > Participate remotely in events via a three-paneled approach: live video, chat, and crowdsourced ranked questions. See what we're focused on next: https://trello.com/b/Wy9vwUA1/audiencias-publicas-interativas
 
 
@@ -6,7 +6,7 @@
  
 ### 1. Using Docker
 
-Run the following command and all the necessary dependences will be installed:
+Run the following command and all the necessary dependences will be installed and the project will start to run automatically:
 
 ```
  docker-compose up
@@ -36,7 +36,7 @@ After install redis check if it is running in your computer using:
 sudo systemctl status redis
 ```
 
-#### Install Edem Navigation top bar
+#### Add Edem Navigation top bar
 
 You just need to run the following commands if you are using it inside Câmara dos Deputados. Otherwise you can skip then and go to the next section (Running the Audiencias).
 
@@ -56,14 +56,24 @@ git submodule update --remote
 
 #### Running the Audiencias
 
+If you are inside and pipenv environment you can run:
+
 ```
 pipenv run src/manage.py migrate
 pipenv run src/manage.py runserver
 ```
 
+Otherwise in case you are running it direct in your machine, inside the root of your directory, the following commands:
+
+```
+./manage.py migrate
+./manage.py runserver
+```
+
+
 ## Support
 
-Fell free to create any issue on this repository and contact the team responsible to maintain this project here on GitHub (@msfernandes, @erivanio, @cfviotti and @pettalves) or via email: labhacker@camara.leg.br.
+Fell free to create any issue on this repository and contact the team responsible to maintain this project here on GitHub ( @erivanio, @thiagonf, @joaopaulonsoares and @teogenesmoura) or via email: labhacker@camara.leg.br.
 
 ## Contributing
 1. Fork of this repository
