@@ -1,5 +1,5 @@
 # Audiencias Públicas
-> Participate remotely in events via a three-paneled approach: live video, chat, and crowdsourced ranked questions. See what we're focused on next: https://trello.com/b/Wy9vwUA1/audiencias-publicas-interativas
+> Participate remotely in events via a three-paneled approach: live video, chat, and crowdsourced ranked questions. You can see the audiencias running in the following link <https://edemocracia.camara.leg.br/audiencias/>
 
 
 ## Installation for developers
@@ -81,7 +81,6 @@ Otherwise in case you are running it direct in your machine, inside the root of 
 ./manage.py migrate
 ./manage.py runserver
 ```
-
 
 ## Support
 
