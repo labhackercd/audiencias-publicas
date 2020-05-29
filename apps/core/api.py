@@ -60,6 +60,7 @@ class MessageFilter(FilterSet):
             'id': ['exact'],
             'room__id': ['exact'],
             'room__cod_reunion': ['exact'],
+            'room__legislative_body_initials': ['exact'],
             'room__title_reunion': ['exact', 'contains'],
             'user__id': ['exact'],
             'user__username': ['exact', 'contains'],
@@ -79,7 +80,7 @@ class MessageViewSet(viewsets.ModelViewSet):
         filters.SearchFilter,
         filters.OrderingFilter)
     search_fields = ('message',)
-    ordering_fields = ('modified', 'user', 'room')
+    ordering_fields = ('created', 'modified', 'user', 'room')
 
 
 class QuestionFilter(FilterSet):
@@ -91,6 +92,7 @@ class QuestionFilter(FilterSet):
             'id': ['exact'],
             'room__id': ['exact'],
             'room__cod_reunion': ['exact'],
+            'room__legislative_body_initials': ['exact'],
             'room__title_reunion': ['exact', 'contains'],
             'user__id': ['exact'],
             'user__username': ['exact', 'contains'],
@@ -110,7 +112,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
         filters.SearchFilter,
         filters.OrderingFilter)
     search_fields = ('question',)
-    ordering_fields = ('up_votes', 'down_votes', 'timestamp')
+    ordering_fields = ('created', 'modified')
 
 
 class RoomFilter(FilterSet):
