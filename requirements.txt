@@ -54,7 +54,7 @@ six==1.12.0
 social-auth-app-django==3.1.0
 social-auth-core==3.2.0
 sqlparse==0.3.0
-Twisted==19.7.0
+Twisted==20.3.0
 txaio==18.8.1
 urllib3==1.25.3
 zope.interface==4.6.0
