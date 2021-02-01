@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'corsheaders',
     'debug_toolbar',
     'macros',
+    'drf_yasg',
 
     'djangobower',
     'compressor',
