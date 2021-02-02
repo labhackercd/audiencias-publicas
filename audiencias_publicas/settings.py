@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'apps.core',
     'apps.accounts',
     'apps.notification',
+    'apps.reports',
 
     'django.contrib.admin',
     'django.contrib.auth',

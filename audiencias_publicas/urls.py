@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib import admin
 from apps.core import urls as core_urls
 from apps.notification import urls as notification_urls
+from apps.reports import urls as reports_urls
 from rest_framework.authtoken.models import Token
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -39,6 +40,7 @@ urlpatterns = [
     url(prefix + r'', include(core_urls)),
     url(prefix + r'notification/', include(notification_urls)),
     url(prefix + r'admin/', include(admin.site.urls)),
+    url(prefix + r'api/reports/', include(reports_urls)),
 ]
 
 admin.site.unregister(Token)
