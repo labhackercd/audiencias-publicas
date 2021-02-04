@@ -68,7 +68,6 @@ services:
 
   redis:
     image: redis:alpine
-    command: redis-server
   
   celeryworker:
     build: .
