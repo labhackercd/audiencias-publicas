@@ -59,3 +59,7 @@ txaio==18.8.1
 urllib3==1.25.3
 zope.interface==4.6.0
 drf-yasg==1.17.1
+django-celery-beat==1.4.0
+django-celery-results==1.1.2
+celery==4.2.1
+kombu==4.2.1
