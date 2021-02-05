@@ -1,6 +1,11 @@
 from django.conf.urls import url
-from apps.reports import views
+from apps.reports import api
+from rest_framework.routers import DefaultRouter
 
-urlpatterns = [
-    url(r'^data/$', views.initial_view, name='initial_view'),
+router = DefaultRouter()
+router.register(r'api/new-users', api.NewUsersViewSet)
+
+urlpatterns = router.urls
+urlpatterns += [
+    url(r'^api/$', api.api_reports_root),
 ]
