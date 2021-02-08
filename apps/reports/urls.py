@@ -7,5 +7,5 @@ router.register(r'api/new-users', api.NewUsersViewSet)
 
 urlpatterns = router.urls
 urlpatterns += [
-    url(r'^api/$', api.api_reports_root),
+    url(r'^api/$', api.api_reports_root, name='reports_api_root'),
 ]
