@@ -40,7 +40,7 @@ urlpatterns = [
     url(prefix + r'', include(core_urls)),
     url(prefix + r'notification/', include(notification_urls)),
     url(prefix + r'admin/', include(admin.site.urls)),
-    url(prefix + r'api/reports/', include(reports_urls)),
+    url(prefix + r'reports/', include(reports_urls)),
 ]
 
 admin.site.unregister(Token)

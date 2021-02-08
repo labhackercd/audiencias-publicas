@@ -1,0 +1,28 @@
+# -*- encoding: utf-8 -*-
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
+from apps.core.models import TimestampedMixin
+
+
+PERIOD_CHOICES = (
+    ('daily', _('Daily')),
+    ('monthly', _('Monthly')),
+    ('yearly', _('Yearly')),
+    ('all', _('All the time')),
+)
+
+class NewUsers(TimestampedMixin):
+    start_date = models.DateField(_('start date'), db_index=True)
+    end_date = models.DateField(_('end date'), db_index=True)
+    period = models.CharField(_('period'), max_length=200, db_index=True,
+                              choices=PERIOD_CHOICES, default='daily')
+    new_users = models.IntegerField(_('new users'), null=True, blank=True,
+                                    default=0)
+    class Meta:
+        verbose_name = _('new user')
+        verbose_name_plural = _('new users')
+        unique_together = ('start_date', 'period')
+
+    def __str__(self):
+        return ('{} - {}').format(
+            self.start_date.strftime("%d/%m/%Y"), self.period)
