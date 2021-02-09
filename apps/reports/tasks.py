@@ -55,7 +55,7 @@ def get_new_users_daily(start_date=None):
 @app.task(name="get_new_users_monthly")
 def get_new_users_monthly(start_date=None):
     batch_size = 100
-    end_date = date.today().replace(day=1) - timedelta(days=1)
+    end_date = date.today()
 
     if not start_date:
         start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
@@ -79,15 +79,16 @@ def get_new_users_monthly(start_date=None):
 @app.task(name="get_new_users_yearly")
 def get_new_users_yearly(start_date=None):
     batch_size = 100
-    end_date = date.today().replace(day=1, month=1) - timedelta(days=1)
+    today = date.today()
+    last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
-        start_date = end_date.replace(day=1, month=1).strftime('%Y-%m-%d')
+        start_date = today.replace(day=1).strftime('%Y-%m-%d')
 
     registers_monthly = NewUsers.objects.filter(
         period='monthly',
         start_date__gte=start_date,
-        end_date__lte=end_date.strftime('%Y-%m-%d'))
+        end_date__lte=today.replace(day=last_day).strftime('%Y-%m-%d'))
 
     data_by_year = registers_monthly.annotate(
         year=TruncYear('start_date')).values('year').annotate(

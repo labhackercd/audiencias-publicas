@@ -11,6 +11,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 import json
 from rest_framework.test import APIClient
+import calendar
 
 
 class TestNewUsers():
@@ -34,7 +35,7 @@ class TestNewUsers():
                         start_date=content.start_date)
         assert 'UNIQUE constraint failed' in str(
             excinfo.value)
-        ## PostgreSQL message error    
+        ## PostgreSQL message error
         # assert 'duplicate key value violates unique constraint' in str(
         #     excinfo.value)
 
@@ -86,7 +87,7 @@ class TestNewUsers():
         assert daily_data.end_date == date(2020, 10, 1)
         assert daily_data.period == 'daily'
         assert daily_data.new_users == 1
-    
+
     @pytest.mark.django_db
     def test_get_new_users_daily_without_args(self):
         yesterday = date.today() - timedelta(days=1)
@@ -103,7 +104,7 @@ class TestNewUsers():
         assert daily_data.new_users == 1
 
     @pytest.mark.django_db
-    def test_get_new_users_monthly(self):
+    def test_get_new_users_monthly_with_args(self):
         mixer.cycle(5).blend(NewUsers, period='daily',
                              new_users=10, start_date=mixer.sequence(
                                  '2020-10-1{0}'),
@@ -120,7 +121,25 @@ class TestNewUsers():
         assert monthly_data.new_users == 50
 
     @pytest.mark.django_db
-    def test_get_new_users_yearly(self):
+    def test_get_new_users_monthly_without_args(self):
+        today = date.today()
+        mixer.blend(NewUsers, period='daily', new_users=10, start_date=today,
+                    end_date=today)
+
+        get_new_users_monthly.apply()
+
+        monthly_data = NewUsers.objects.filter(
+            period='monthly').first()
+
+        last_day = calendar.monthrange(today.year,
+                                       today.month)[1]
+        assert monthly_data.start_date == today.replace(day=1)
+        assert monthly_data.end_date == today.replace(day=last_day)
+        assert monthly_data.period == 'monthly'
+        assert monthly_data.new_users == 10
+
+    @pytest.mark.django_db
+    def test_get_new_users_yearly_with_args(self):
         start_dates = ['2019-01-01', '2019-02-01', '2019-03-01']
         end_dates = ['2019-01-31', '2019-02-28', '2019-03-31']
         for i in range(3):
@@ -137,12 +156,29 @@ class TestNewUsers():
         assert yearly_data.period == 'yearly'
         assert yearly_data.new_users == 30
 
+    @pytest.mark.django_db
+    def test_get_new_users_yearly_without_args(self):
+        today = date.today()
+        last_day_month = calendar.monthrange(today.year, today.month)[1]
+        mixer.blend(NewUsers, period='monthly', new_users=10,
+                    start_date=today.replace(day=1),
+                    end_date=today.replace(day=last_day_month))
+
+        get_new_users_yearly.apply()
+
+        yearly_data = NewUsers.objects.filter(period='yearly').first()
+
+        assert yearly_data.start_date == today.replace(day=1, month=1)
+        assert yearly_data.end_date == today.replace(day=31, month=12)
+        assert yearly_data.period == 'yearly'
+        assert yearly_data.new_users == 10
+
     def test_reports_api_root_url(api_client):
         url = reverse('reports_api_root')
         client = APIClient()
         response = client.get(url)
         request = json.loads(response.content)
-        
+
         assert response.status_code == 200
 
     @pytest.mark.django_db
@@ -152,6 +188,6 @@ class TestNewUsers():
         client = APIClient()
         response = client.get(url)
         request = json.loads(response.content)
-        
+
         assert response.status_code == 200
         assert request['count'] == 5
