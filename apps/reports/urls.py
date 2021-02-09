@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'api/new-users', api.NewUsersViewSet)
+router.register(r'api/votes', api.VotesReportViewSet)
 
 urlpatterns = router.urls
 urlpatterns += [

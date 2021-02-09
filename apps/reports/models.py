@@ -11,16 +11,36 @@ PERIOD_CHOICES = (
     ('all', _('All the time')),
 )
 
-class NewUsers(TimestampedMixin):
+
+class AnalysisMixin(TimestampedMixin):
     start_date = models.DateField(_('start date'), db_index=True)
     end_date = models.DateField(_('end date'), db_index=True)
     period = models.CharField(_('period'), max_length=200, db_index=True,
                               choices=PERIOD_CHOICES, default='daily')
+
+    class Meta:
+        abstract = True
+
+
+class NewUsers(AnalysisMixin):
     new_users = models.IntegerField(_('new users'), null=True, blank=True,
                                     default=0)
     class Meta:
         verbose_name = _('new user')
         verbose_name_plural = _('new users')
+        unique_together = ('start_date', 'period')
+
+    def __str__(self):
+        return ('{} - {}').format(
+            self.start_date.strftime("%d/%m/%Y"), self.period)
+
+
+class VotesReport(AnalysisMixin):
+    votes = models.IntegerField(_('votes'), null=True, blank=True,
+                                default=0)
+    class Meta:
+        verbose_name = _('vote')
+        verbose_name_plural = _('votes')
         unique_together = ('start_date', 'period')
 
     def __str__(self):
