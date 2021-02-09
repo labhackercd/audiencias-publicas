@@ -5,8 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import viewsets
-from apps.reports.models import NewUsers
-from apps.reports.serializers import NewUsersSerializer
+from apps.reports.models import NewUsers, VotesReport
+from apps.reports.serializers import NewUsersSerializer, VotesReportSerializer
 
 
 class NewUsersFilter(FilterSet):
@@ -29,9 +29,31 @@ class NewUsersViewSet(viewsets.ReadOnlyModelViewSet):
     )
 
 
+class VotesReportFilter(FilterSet):
+    class Meta:
+        model = VotesReport
+        fields = {
+            'start_date': ['lt', 'lte', 'gt', 'gte'],
+            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'period': ['exact'],
+        }
+
+
+class VotesReportViewSet(viewsets.ReadOnlyModelViewSet):
+    allowed_methods = ['get']
+    queryset = VotesReport.objects.all()
+    serializer_class = VotesReportSerializer
+    filter_class = VotesReportFilter
+    filter_backends = (
+        django_filters.DjangoFilterBackend,
+    )
+
+
 @api_view(['GET'])
 def api_reports_root(request, format=None):
     return Response({
         'newusers': reverse('newusers-list',
                             request=request, format=format),
+        'votes': reverse('votesreport-list',
+                         request=request, format=format),
     })
