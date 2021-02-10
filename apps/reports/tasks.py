@@ -1,7 +1,7 @@
 from audiencias_publicas.celery import app
 from django.contrib.auth import get_user_model
-from apps.reports.models import NewUsers, VotesReport
-from apps.core.models import UpDownVote
+from apps.reports.models import NewUsers, VotesReport, RoomsReport
+from apps.core.models import UpDownVote, Room
 from collections import Counter
 from datetime import date, timedelta
 import calendar
@@ -193,3 +193,96 @@ def get_votes_yearly(start_date=None):
                     for result in votes_by_year]
 
     VotesReport.objects.bulk_create(votes_yearly, batch_size)
+
+
+def create_rooms_object(rooms_by_date, period='daily'):
+    if period == 'daily':
+        rooms_count = rooms_by_date[1]
+        start_date = end_date = rooms_by_date[0]
+
+    else:
+        rooms_count = rooms_by_date['total_rooms']
+
+        if period == 'monthly':
+            start_date = rooms_by_date['month']
+            last_day = calendar.monthrange(start_date.year,
+                                           start_date.month)[1]
+            end_date = start_date.replace(day=last_day)
+
+        elif period == 'yearly':
+            start_date = rooms_by_date['year']
+            end_date = start_date.replace(day=31, month=12)
+
+    report_object = RoomsReport(start_date=start_date, end_date=end_date,
+                                rooms=rooms_count, period=period)
+    return report_object
+
+
+@app.task(name="get_rooms_daily")
+def get_rooms_daily(start_date=None):
+    batch_size = 100
+    yesterday = date.today() - timedelta(days=1)
+
+    if not start_date:
+        start_date = yesterday.strftime('%Y-%m-%d')
+
+    rooms = Room.objects.filter(created__gte=start_date)
+
+    rooms_by_date_list = [room.created.strftime('%Y-%m-%d')
+                          for room in rooms]
+
+    rooms_by_day = Counter(rooms_by_date_list)
+
+    rooms_daily = [create_rooms_object(result, 'daily')
+                   for result in rooms_by_day.items()]
+
+    RoomsReport.objects.bulk_create(rooms_daily, batch_size)
+
+
+@app.task(name="get_rooms_monthly")
+def get_rooms_monthly(start_date=None):
+    batch_size = 100
+    end_date = date.today()
+
+    if not start_date:
+        start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
+
+    rooms_daily = RoomsReport.objects.filter(
+        period='daily',
+        start_date__gte=start_date,
+        end_date__lte=end_date.strftime('%Y-%m-%d'))
+
+    rooms_by_month = rooms_daily.annotate(
+        month=TruncMonth('start_date')).values('month').annotate(
+            total_rooms=Sum('rooms')).values(
+                'month', 'total_rooms')
+
+    rooms_monthly = [create_rooms_object(result, 'monthly')
+                         for result in rooms_by_month]
+
+    RoomsReport.objects.bulk_create(rooms_monthly, batch_size)
+
+
+@app.task(name="get_rooms_yearly")
+def get_rooms_yearly(start_date=None):
+    batch_size = 100
+    today = date.today()
+    last_day = calendar.monthrange(today.year, today.month)[1]
+
+    if not start_date:
+        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+
+    rooms_monthly = RoomsReport.objects.filter(
+        period='monthly',
+        start_date__gte=start_date,
+        end_date__lte=today.replace(day=last_day).strftime('%Y-%m-%d'))
+
+    rooms_by_year = rooms_monthly.annotate(
+        year=TruncYear('start_date')).values('year').annotate(
+            total_rooms=Sum('rooms')).values(
+                'year', 'total_rooms')
+
+    rooms_yearly = [create_rooms_object(result, 'yearly')
+                    for result in rooms_by_year]
+
+    RoomsReport.objects.bulk_create(rooms_yearly, batch_size)
