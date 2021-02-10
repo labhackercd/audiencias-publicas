@@ -71,7 +71,7 @@ class TestVotesReport():
         assert votes_object.votes == 10
 
     @pytest.mark.django_db
-    def test_get_new_users_daily_without_args(self):
+    def test_get_votes_daily_without_args(self):
         today = date.today()
         mixer.blend(UpDownVote)
 
