@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from apps.reports.models import NewUsers, VotesReport, RoomsReport
-from django.contrib.auth import get_user_model
+from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
+                                 QuestionsReport)
 
 
 class NewUsersSerializer(serializers.ModelSerializer):
@@ -22,3 +22,10 @@ class RoomsReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomsReport
         fields = ('start_date', 'end_date', 'period', 'rooms')
+
+
+class QuestionsReportSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = QuestionsReport
+        fields = ('start_date', 'end_date', 'period', 'questions')

@@ -1,7 +1,8 @@
 from audiencias_publicas.celery import app
 from django.contrib.auth import get_user_model
-from apps.reports.models import NewUsers, VotesReport, RoomsReport
-from apps.core.models import UpDownVote, Room
+from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
+                                 QuestionsReport)
+from apps.core.models import UpDownVote, Room, Question
 from collections import Counter
 from datetime import date, timedelta
 import calendar
@@ -286,3 +287,96 @@ def get_rooms_yearly(start_date=None):
                     for result in rooms_by_year]
 
     RoomsReport.objects.bulk_create(rooms_yearly, batch_size)
+
+
+def create_questions_object(questions_by_date, period='daily'):
+    if period == 'daily':
+        questions_count = questions_by_date[1]
+        start_date = end_date = questions_by_date[0]
+
+    else:
+        questions_count = questions_by_date['total_questions']
+
+        if period == 'monthly':
+            start_date = questions_by_date['month']
+            last_day = calendar.monthrange(start_date.year,
+                                           start_date.month)[1]
+            end_date = start_date.replace(day=last_day)
+
+        elif period == 'yearly':
+            start_date = questions_by_date['year']
+            end_date = start_date.replace(day=31, month=12)
+
+    report_object = QuestionsReport(start_date=start_date, end_date=end_date,
+                                    questions=questions_count, period=period)
+    return report_object
+
+
+@app.task(name="get_questions_daily")
+def get_questions_daily(start_date=None):
+    batch_size = 100
+    yesterday = date.today() - timedelta(days=1)
+
+    if not start_date:
+        start_date = yesterday.strftime('%Y-%m-%d')
+
+    questions = Question.objects.filter(created__gte=start_date)
+
+    questions_by_date_list = [question.created.strftime('%Y-%m-%d')
+                          for question in questions]
+
+    questions_by_day = Counter(questions_by_date_list)
+
+    questions_daily = [create_questions_object(result, 'daily')
+                   for result in questions_by_day.items()]
+
+    QuestionsReport.objects.bulk_create(questions_daily, batch_size)
+
+
+@app.task(name="get_questions_monthly")
+def get_questions_monthly(start_date=None):
+    batch_size = 100
+    end_date = date.today()
+
+    if not start_date:
+        start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
+
+    questions_daily = QuestionsReport.objects.filter(
+        period='daily',
+        start_date__gte=start_date,
+        end_date__lte=end_date.strftime('%Y-%m-%d'))
+
+    questions_by_month = questions_daily.annotate(
+        month=TruncMonth('start_date')).values('month').annotate(
+            total_questions=Sum('questions')).values(
+                'month', 'total_questions')
+
+    questions_monthly = [create_questions_object(result, 'monthly')
+                         for result in questions_by_month]
+
+    QuestionsReport.objects.bulk_create(questions_monthly, batch_size)
+
+
+@app.task(name="get_questions_yearly")
+def get_questions_yearly(start_date=None):
+    batch_size = 100
+    today = date.today()
+    last_day = calendar.monthrange(today.year, today.month)[1]
+
+    if not start_date:
+        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+
+    questions_monthly = QuestionsReport.objects.filter(
+        period='monthly',
+        start_date__gte=start_date,
+        end_date__lte=today.replace(day=last_day).strftime('%Y-%m-%d'))
+
+    questions_by_year = questions_monthly.annotate(
+        year=TruncYear('start_date')).values('year').annotate(
+            total_questions=Sum('questions')).values(
+                'year', 'total_questions')
+
+    questions_yearly = [create_questions_object(result, 'yearly')
+                    for result in questions_by_year]
+
+    QuestionsReport.objects.bulk_create(questions_yearly, batch_size)

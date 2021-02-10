@@ -5,9 +5,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import viewsets
-from apps.reports.models import NewUsers, VotesReport, RoomsReport
-from apps.reports.serializers import (NewUsersSerializer, VotesReportSerializer,
-                                      RoomsReportSerializer)
+from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
+                                 QuestionsReport)
+from apps.reports.serializers import (NewUsersSerializer,
+                                      VotesReportSerializer,
+                                      RoomsReportSerializer,
+                                      QuestionsReportSerializer)
 
 class NewUsersFilter(FilterSet):
     class Meta:
@@ -69,6 +72,26 @@ class RoomsReportViewSet(viewsets.ReadOnlyModelViewSet):
     )
 
 
+class QuestionsReportFilter(FilterSet):
+    class Meta:
+        model = QuestionsReport
+        fields = {
+            'start_date': ['lt', 'lte', 'gt', 'gte'],
+            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'period': ['exact'],
+        }
+
+
+class QuestionsReportViewSet(viewsets.ReadOnlyModelViewSet):
+    allowed_methods = ['get']
+    queryset = QuestionsReport.objects.all()
+    serializer_class = QuestionsReportSerializer
+    filter_class = QuestionsReportFilter
+    filter_backends = (
+        django_filters.DjangoFilterBackend,
+    )
+
+
 @api_view(['GET'])
 def api_reports_root(request, format=None):
     return Response({
@@ -78,4 +101,6 @@ def api_reports_root(request, format=None):
                          request=request, format=format),
         'rooms': reverse('roomsreport-list',
                          request=request, format=format),
+        'questions': reverse('questionsreport-list',
+                             request=request, format=format),
     })
