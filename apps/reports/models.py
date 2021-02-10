@@ -46,3 +46,16 @@ class VotesReport(AnalysisMixin):
     def __str__(self):
         return ('{} - {}').format(
             self.start_date.strftime("%d/%m/%Y"), self.period)
+
+
+class RoomsReport(AnalysisMixin):
+    rooms = models.IntegerField(_('rooms'), null=True, blank=True,
+                                default=0)
+    class Meta:
+        verbose_name = _('room')
+        verbose_name_plural = _('rooms')
+        unique_together = ('start_date', 'period')
+
+    def __str__(self):
+        return ('{} - {}').format(
+            self.start_date.strftime("%d/%m/%Y"), self.period)
