@@ -1,8 +1,8 @@
 from audiencias_publicas.celery import app
 from django.contrib.auth import get_user_model
 from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
-                                 QuestionsReport)
-from apps.core.models import UpDownVote, Room, Question
+                                 QuestionsReport, MessagesReport)
+from apps.core.models import UpDownVote, Room, Question, Message
 from collections import Counter
 from datetime import date, timedelta
 import calendar
@@ -380,3 +380,96 @@ def get_questions_yearly(start_date=None):
                     for result in questions_by_year]
 
     QuestionsReport.objects.bulk_create(questions_yearly, batch_size)
+
+
+def create_messages_object(messages_by_date, period='daily'):
+    if period == 'daily':
+        messages_count = messages_by_date[1]
+        start_date = end_date = messages_by_date[0]
+
+    else:
+        messages_count = messages_by_date['total_messages']
+
+        if period == 'monthly':
+            start_date = messages_by_date['month']
+            last_day = calendar.monthrange(start_date.year,
+                                           start_date.month)[1]
+            end_date = start_date.replace(day=last_day)
+
+        elif period == 'yearly':
+            start_date = messages_by_date['year']
+            end_date = start_date.replace(day=31, month=12)
+
+    report_object = MessagesReport(start_date=start_date, end_date=end_date,
+                                   messages=messages_count, period=period)
+    return report_object
+
+
+@app.task(name="get_messages_daily")
+def get_messages_daily(start_date=None):
+    batch_size = 100
+    yesterday = date.today() - timedelta(days=1)
+
+    if not start_date:
+        start_date = yesterday.strftime('%Y-%m-%d')
+
+    messages = Message.objects.filter(created__gte=start_date)
+
+    messages_by_date_list = [message.created.strftime('%Y-%m-%d')
+                             for message in messages]
+
+    messages_by_day = Counter(messages_by_date_list)
+
+    messages_daily = [create_messages_object(result, 'daily')
+                      for result in messages_by_day.items()]
+
+    MessagesReport.objects.bulk_create(messages_daily, batch_size)
+
+
+@app.task(name="get_messages_monthly")
+def get_messages_monthly(start_date=None):
+    batch_size = 100
+    end_date = date.today()
+
+    if not start_date:
+        start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
+
+    messages_daily = MessagesReport.objects.filter(
+        period='daily',
+        start_date__gte=start_date,
+        end_date__lte=end_date.strftime('%Y-%m-%d'))
+
+    messages_by_month = messages_daily.annotate(
+        month=TruncMonth('start_date')).values('month').annotate(
+            total_messages=Sum('messages')).values(
+                'month', 'total_messages')
+
+    messages_monthly = [create_messages_object(result, 'monthly')
+                         for result in messages_by_month]
+
+    MessagesReport.objects.bulk_create(messages_monthly, batch_size)
+
+
+@app.task(name="get_messages_yearly")
+def get_messages_yearly(start_date=None):
+    batch_size = 100
+    today = date.today()
+    last_day = calendar.monthrange(today.year, today.month)[1]
+
+    if not start_date:
+        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+
+    messages_monthly = MessagesReport.objects.filter(
+        period='monthly',
+        start_date__gte=start_date,
+        end_date__lte=today.replace(day=last_day).strftime('%Y-%m-%d'))
+
+    messages_by_year = messages_monthly.annotate(
+        year=TruncYear('start_date')).values('year').annotate(
+            total_messages=Sum('messages')).values(
+                'year', 'total_messages')
+
+    messages_yearly = [create_messages_object(result, 'yearly')
+                        for result in messages_by_year]
+
+    MessagesReport.objects.bulk_create(messages_yearly, batch_size)
