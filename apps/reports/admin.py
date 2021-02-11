@@ -1,6 +1,6 @@
 from django.contrib import admin
 from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
-                                 QuestionsReport)
+                                 QuestionsReport, MessagesReport)
 
 
 class NewUsersAdmin(admin.ModelAdmin):
@@ -23,7 +23,13 @@ class QuestionsReportAdmin(admin.ModelAdmin):
     list_filter = ['start_date', 'period']
 
 
+class MessagesReportAdmin(admin.ModelAdmin):
+    list_display = ('start_date', 'period', 'messages', 'created')
+    list_filter = ['start_date', 'period']
+
+
 admin.site.register(NewUsers, NewUsersAdmin)
 admin.site.register(VotesReport, VotesReportAdmin)
 admin.site.register(RoomsReport, RoomsReportAdmin)
 admin.site.register(QuestionsReport, QuestionsReportAdmin)
+admin.site.register(MessagesReport, MessagesReportAdmin)

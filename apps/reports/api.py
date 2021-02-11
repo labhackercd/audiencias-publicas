@@ -6,11 +6,13 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import viewsets
 from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
-                                 QuestionsReport)
+                                 QuestionsReport, MessagesReport)
 from apps.reports.serializers import (NewUsersSerializer,
                                       VotesReportSerializer,
                                       RoomsReportSerializer,
-                                      QuestionsReportSerializer)
+                                      QuestionsReportSerializer,
+                                      MessagesReportSerializer)
+
 
 class NewUsersFilter(FilterSet):
     class Meta:
@@ -92,6 +94,26 @@ class QuestionsReportViewSet(viewsets.ReadOnlyModelViewSet):
     )
 
 
+class MessagesReportFilter(FilterSet):
+    class Meta:
+        model = MessagesReport
+        fields = {
+            'start_date': ['lt', 'lte', 'gt', 'gte'],
+            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'period': ['exact'],
+        }
+
+
+class MessagesReportViewSet(viewsets.ReadOnlyModelViewSet):
+    allowed_methods = ['get']
+    queryset = MessagesReport.objects.all()
+    serializer_class = MessagesReportSerializer
+    filter_class = MessagesReportFilter
+    filter_backends = (
+        django_filters.DjangoFilterBackend,
+    )
+
+
 @api_view(['GET'])
 def api_reports_root(request, format=None):
     return Response({
@@ -103,4 +125,6 @@ def api_reports_root(request, format=None):
                          request=request, format=format),
         'questions': reverse('questionsreport-list',
                              request=request, format=format),
+        'messages': reverse('messagesreport-list',
+                            request=request, format=format),
     })
