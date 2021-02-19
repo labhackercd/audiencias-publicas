@@ -31,11 +31,11 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    url(prefix + r'^swagger(?P<format>\.json|\.yaml)$',
+    url(prefix + r'swagger(?P<format>\.json|\.yaml)$',
         schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    url(prefix + r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0),
+    url(prefix + r'swagger/$', schema_view.with_ui('swagger', cache_timeout=0),
         name='schema-swagger-ui'),
-    url(prefix + r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0),
+    url(prefix + r'redoc/$', schema_view.with_ui('redoc', cache_timeout=0),
         name='schema-redoc'),
     url(prefix + r'', include(core_urls)),
     url(prefix + r'notification/', include(notification_urls)),
