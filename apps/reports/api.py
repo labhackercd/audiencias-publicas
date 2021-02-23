@@ -7,12 +7,14 @@ from rest_framework.reverse import reverse
 from rest_framework.renderers import JSONRenderer
 from rest_framework import viewsets, filters
 from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
-                                 QuestionsReport, MessagesReport)
+                                 QuestionsReport, MessagesReport,
+                                 ParticipantsReport)
 from apps.reports.serializers import (NewUsersSerializer,
                                       VotesReportSerializer,
                                       RoomsReportSerializer,
                                       QuestionsReportSerializer,
-                                      MessagesReportSerializer)
+                                      MessagesReportSerializer,
+                                      ParticipantsReportSerializer)
 from django.db.models import Sum
 
 
@@ -258,6 +260,52 @@ class MessagesReportViewSet(viewsets.ReadOnlyModelViewSet):
         }
 
 
+class ParticipantsReportFilter(FilterSet):
+    class Meta:
+        model = ParticipantsReport
+        fields = {
+            'start_date': ['lt', 'lte', 'gt', 'gte'],
+            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'period': ['exact'],
+        }
+
+
+class ParticipantsReportViewSet(viewsets.ReadOnlyModelViewSet):
+    allowed_methods = ['get']
+    queryset = ParticipantsReport.objects.all()
+    serializer_class = ParticipantsReportSerializer
+    filter_class = ParticipantsReportFilter
+    filter_backends = (
+        django_filters.DjangoFilterBackend,
+        filters.OrderingFilter
+    )
+    ordering_fields = '__all__'
+    renderer_classes = (ModelJSONRenderer, )
+
+    def get_queryset(self):
+        queryset = self.queryset
+
+        sum_total_results = queryset.aggregate(
+            Sum('participants'))['participants__sum']
+
+        self.sum_total_results = sum_total_results if sum_total_results else 0
+
+        return queryset
+
+    def get_renderer_context(self):
+        """
+        Returns a dict that is passed through to Renderer.render(),
+        as the `renderer_context` keyword argument.
+        """
+        return {
+            'view': self,
+            'args': getattr(self, 'args', ()),
+            'kwargs': getattr(self, 'kwargs', {}),
+            'request': getattr(self, 'request', None),
+            'sum_total_results': self.sum_total_results,
+        }
+
+
 @api_view(['GET'])
 def api_reports_root(request, format=None):
     return Response({
@@ -271,4 +319,6 @@ def api_reports_root(request, format=None):
                              request=request, format=format),
         'messages': reverse('messagesreport-list',
                             request=request, format=format),
+        'participants': reverse('participantsreport-list',
+                                request=request, format=format),
     })

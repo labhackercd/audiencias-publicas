@@ -129,4 +129,4 @@ class TestQuestionsReport():
         request = json.loads(response.content)
 
         assert response.status_code == 200
-        assert request['count'] == 5
+        assert request['objects']['count'] == 5
