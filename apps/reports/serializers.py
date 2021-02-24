@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
-                                 QuestionsReport, MessagesReport)
+                                 QuestionsReport, MessagesReport,
+                                 ParticipantsReport)
 
 
 class NewUsersSerializer(serializers.ModelSerializer):
@@ -36,3 +37,10 @@ class MessagesReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = MessagesReport
         fields = ('start_date', 'end_date', 'period', 'messages')
+
+
+class ParticipantsReportSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ParticipantsReport
+        fields = ('start_date', 'end_date', 'period', 'participants')

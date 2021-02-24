@@ -8,6 +8,7 @@ router.register(r'api/votes', api.VotesReportViewSet)
 router.register(r'api/rooms', api.RoomsReportViewSet)
 router.register(r'api/questions', api.QuestionsReportViewSet)
 router.register(r'api/messages', api.MessagesReportViewSet)
+router.register(r'api/participants', api.ParticipantsReportViewSet)
 
 urlpatterns = router.urls
 urlpatterns += [
