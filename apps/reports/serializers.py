@@ -33,10 +33,19 @@ class QuestionsReportSerializer(serializers.ModelSerializer):
 
 
 class MessagesReportSerializer(serializers.ModelSerializer):
+    month = serializers.SerializerMethodField()
+    year = serializers.SerializerMethodField()
+
+    def get_month(self, obj):
+        return obj.start_date.month
+
+    def get_year(self, obj):
+        return obj.start_date.year
 
     class Meta:
         model = MessagesReport
-        fields = ('start_date', 'end_date', 'period', 'messages')
+        fields = ('start_date', 'end_date', 'period', 'messages', 'month',
+                  'year')
 
 
 class ParticipantsReportSerializer(serializers.ModelSerializer):

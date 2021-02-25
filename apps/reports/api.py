@@ -21,8 +21,8 @@ class NewUsersFilter(FilterSet):
     class Meta:
         model = NewUsers
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -49,8 +49,8 @@ class VotesReportFilter(FilterSet):
     class Meta:
         model = VotesReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -77,8 +77,8 @@ class RoomsReportFilter(FilterSet):
     class Meta:
         model = RoomsReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -105,8 +105,8 @@ class QuestionsReportFilter(FilterSet):
     class Meta:
         model = QuestionsReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -133,8 +133,8 @@ class MessagesReportFilter(FilterSet):
     class Meta:
         model = MessagesReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -161,8 +161,8 @@ class ParticipantsReportFilter(FilterSet):
     class Meta:
         model = ParticipantsReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
