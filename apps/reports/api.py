@@ -4,7 +4,6 @@ from django_filters import rest_framework as django_filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.renderers import JSONRenderer
 from rest_framework import viewsets, filters
 from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
                                  QuestionsReport, MessagesReport,
@@ -18,23 +17,12 @@ from apps.reports.serializers import (NewUsersSerializer,
 from django.db.models import Sum
 
 
-class ModelJSONRenderer(JSONRenderer):
-    """
-    Add "objects" and "sum_total_results" in Json
-    """
-    def render(self, data, accepted_media_type=None, renderer_context=None):
-        data = {'objects': data,
-                'sum_total_results': renderer_context['sum_total_results']}
-        return super(ModelJSONRenderer, self).render(data, accepted_media_type,
-                                                     renderer_context)
-
-
 class NewUsersFilter(FilterSet):
     class Meta:
         model = NewUsers
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -49,38 +37,20 @@ class NewUsersViewSet(viewsets.ReadOnlyModelViewSet):
         filters.OrderingFilter
     )
     ordering_fields = '__all__'
-    renderer_classes = (ModelJSONRenderer, )
 
-    def get_queryset(self):
-        queryset = self.queryset
-
-        sum_total_results = queryset.aggregate(
-            Sum('new_users'))['new_users__sum']
-
-        self.sum_total_results = sum_total_results if sum_total_results else 0
-
-        return queryset
-
-    def get_renderer_context(self):
-        """
-        Returns a dict that is passed through to Renderer.render(),
-        as the `renderer_context` keyword argument.
-        """
-        return {
-            'view': self,
-            'args': getattr(self, 'args', ()),
-            'kwargs': getattr(self, 'kwargs', {}),
-            'request': getattr(self, 'request', None),
-            'sum_total_results': self.sum_total_results,
-        }
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data['sum_total_results'] = sum([data.get('new_users', 0)
+            for data in response.data['results']])
+        return response
 
 
 class VotesReportFilter(FilterSet):
     class Meta:
         model = VotesReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -95,38 +65,20 @@ class VotesReportViewSet(viewsets.ReadOnlyModelViewSet):
         filters.OrderingFilter
     )
     ordering_fields = '__all__'
-    renderer_classes = (ModelJSONRenderer, )
 
-    def get_queryset(self):
-        queryset = self.queryset
-
-        sum_total_results = queryset.aggregate(
-            Sum('votes'))['votes__sum']
-
-        self.sum_total_results = sum_total_results if sum_total_results else 0
-
-        return queryset
-
-    def get_renderer_context(self):
-        """
-        Returns a dict that is passed through to Renderer.render(),
-        as the `renderer_context` keyword argument.
-        """
-        return {
-            'view': self,
-            'args': getattr(self, 'args', ()),
-            'kwargs': getattr(self, 'kwargs', {}),
-            'request': getattr(self, 'request', None),
-            'sum_total_results': self.sum_total_results,
-        }
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data['sum_total_results'] = sum([data.get('votes', 0)
+            for data in response.data['results']])
+        return response
 
 
 class RoomsReportFilter(FilterSet):
     class Meta:
         model = RoomsReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -141,39 +93,20 @@ class RoomsReportViewSet(viewsets.ReadOnlyModelViewSet):
         filters.OrderingFilter
     )
     ordering_fields = '__all__'
-    renderer_classes = (ModelJSONRenderer, )
 
-    def get_queryset(self):
-        queryset = self.queryset
-
-        sum_total_results = queryset.aggregate(
-            Sum('rooms'))['rooms__sum']
-
-        self.sum_total_results = sum_total_results if sum_total_results else 0
-
-        return queryset
-
-    def get_renderer_context(self):
-        """
-        Returns a dict that is passed through to Renderer.render(),
-        as the `renderer_context` keyword argument.
-        """
-        return {
-            'view': self,
-            'args': getattr(self, 'args', ()),
-            'kwargs': getattr(self, 'kwargs', {}),
-            'request': getattr(self, 'request', None),
-            'sum_total_results': self.sum_total_results,
-        }
-
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data['sum_total_results'] = sum([data.get('rooms', 0)
+            for data in response.data['results']])
+        return response
 
 
 class QuestionsReportFilter(FilterSet):
     class Meta:
         model = QuestionsReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -188,38 +121,20 @@ class QuestionsReportViewSet(viewsets.ReadOnlyModelViewSet):
         filters.OrderingFilter
     )
     ordering_fields = '__all__'
-    renderer_classes = (ModelJSONRenderer, )
 
-    def get_queryset(self):
-        queryset = self.queryset
-
-        sum_total_results = queryset.aggregate(
-            Sum('questions'))['questions__sum']
-
-        self.sum_total_results = sum_total_results if sum_total_results else 0
-
-        return queryset
-
-    def get_renderer_context(self):
-        """
-        Returns a dict that is passed through to Renderer.render(),
-        as the `renderer_context` keyword argument.
-        """
-        return {
-            'view': self,
-            'args': getattr(self, 'args', ()),
-            'kwargs': getattr(self, 'kwargs', {}),
-            'request': getattr(self, 'request', None),
-            'sum_total_results': self.sum_total_results,
-        }
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data['sum_total_results'] = sum([data.get('questions', 0)
+            for data in response.data['results']])
+        return response
 
 
 class MessagesReportFilter(FilterSet):
     class Meta:
         model = MessagesReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -234,38 +149,20 @@ class MessagesReportViewSet(viewsets.ReadOnlyModelViewSet):
         filters.OrderingFilter
     )
     ordering_fields = '__all__'
-    renderer_classes = (ModelJSONRenderer, )
 
-    def get_queryset(self):
-        queryset = self.queryset
-
-        sum_total_results = queryset.aggregate(
-            Sum('messages'))['messages__sum']
-
-        self.sum_total_results = sum_total_results if sum_total_results else 0
-
-        return queryset
-
-    def get_renderer_context(self):
-        """
-        Returns a dict that is passed through to Renderer.render(),
-        as the `renderer_context` keyword argument.
-        """
-        return {
-            'view': self,
-            'args': getattr(self, 'args', ()),
-            'kwargs': getattr(self, 'kwargs', {}),
-            'request': getattr(self, 'request', None),
-            'sum_total_results': self.sum_total_results,
-        }
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data['sum_total_results'] = sum([data.get('messages', 0)
+            for data in response.data['results']])
+        return response
 
 
 class ParticipantsReportFilter(FilterSet):
     class Meta:
         model = ParticipantsReport
         fields = {
-            'start_date': ['lt', 'lte', 'gt', 'gte'],
-            'end_date': ['lt', 'lte', 'gt', 'gte'],
+            'start_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'end_date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'period': ['exact'],
         }
 
@@ -280,30 +177,12 @@ class ParticipantsReportViewSet(viewsets.ReadOnlyModelViewSet):
         filters.OrderingFilter
     )
     ordering_fields = '__all__'
-    renderer_classes = (ModelJSONRenderer, )
 
-    def get_queryset(self):
-        queryset = self.queryset
-
-        sum_total_results = queryset.aggregate(
-            Sum('participants'))['participants__sum']
-
-        self.sum_total_results = sum_total_results if sum_total_results else 0
-
-        return queryset
-
-    def get_renderer_context(self):
-        """
-        Returns a dict that is passed through to Renderer.render(),
-        as the `renderer_context` keyword argument.
-        """
-        return {
-            'view': self,
-            'args': getattr(self, 'args', ()),
-            'kwargs': getattr(self, 'kwargs', {}),
-            'request': getattr(self, 'request', None),
-            'sum_total_results': self.sum_total_results,
-        }
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        response.data['sum_total_results'] = sum([data.get('participants', 0)
+            for data in response.data['results']])
+        return response
 
 
 @api_view(['GET'])
