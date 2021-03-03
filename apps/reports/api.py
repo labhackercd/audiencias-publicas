@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import viewsets, filters
+from rest_framework.pagination import LimitOffsetPagination
 from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
                                  QuestionsReport, MessagesReport,
                                  ParticipantsReport)
@@ -13,8 +14,12 @@ from apps.reports.serializers import (NewUsersSerializer,
                                       RoomsReportSerializer,
                                       QuestionsReportSerializer,
                                       MessagesReportSerializer,
-                                      ParticipantsReportSerializer)
+                                      ParticipantsReportSerializer,
+                                      RoomRankingSerializer)
+from apps.core.models import Room
 from django.db.models import Sum
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
 class NewUsersFilter(FilterSet):
@@ -185,6 +190,37 @@ class ParticipantsReportViewSet(viewsets.ReadOnlyModelViewSet):
         return response
 
 
+class RoomRankingFilter(FilterSet):
+    class Meta:
+        model = Room
+        fields = {
+            'date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
+            'legislative_body_initials': ['exact'],
+        }
+
+
+class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
+    allowed_methods = ['get']
+    queryset = Room.objects.filter(is_active=True, is_visible=True)
+    serializer_class = RoomRankingSerializer
+    pagination_class = LimitOffsetPagination
+    filter_class = RoomRankingFilter
+    filter_backends = (
+        django_filters.DjangoFilterBackend,
+        filters.OrderingFilter,
+        filters.SearchFilter
+    )
+    search_fields = (
+        'legislative_body_initials', 'legislative_body', 'reunion_type',
+        'title_reunion', 'reunion_object', 'reunion_theme')
+    ordering_fields = ('date', 'messages_count', 'questions_count',
+                       'votes_count', 'participants_count')
+
+    @method_decorator(cache_page(60 * 60 * 2)) # 2 hours
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+
 @api_view(['GET'])
 def api_reports_root(request, format=None):
     return Response({
@@ -200,4 +236,6 @@ def api_reports_root(request, format=None):
                             request=request, format=format),
         'participants': reverse('participantsreport-list',
                                 request=request, format=format),
+        'ranking': reverse('ranking-list',
+                           request=request, format=format),
     })

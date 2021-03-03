@@ -2,6 +2,7 @@ from rest_framework import serializers
 from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
                                  QuestionsReport, MessagesReport,
                                  ParticipantsReport)
+from apps.core.models import Room
 
 
 class NewUsersSerializer(serializers.ModelSerializer):
@@ -98,3 +99,18 @@ class ParticipantsReportSerializer(serializers.ModelSerializer):
         model = ParticipantsReport
         fields = ('start_date', 'end_date', 'period', 'participants', 'month',
                   'year')
+
+
+class RoomRankingSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format="%Y-%m-%d")
+    messages_count = serializers.ReadOnlyField()
+    questions_count = serializers.ReadOnlyField()
+    votes_count = serializers.ReadOnlyField()
+    participants_count = serializers.ReadOnlyField()
+
+    class Meta:
+        model = Room
+        fields = ('title_reunion', 'reunion_theme',
+                  'legislative_body_initials', 'date',
+                  'messages_count', 'questions_count', 'votes_count',
+                  'participants_count', 'get_absolute_url')
