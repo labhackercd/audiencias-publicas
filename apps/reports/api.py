@@ -196,6 +196,7 @@ class RoomRankingFilter(FilterSet):
         fields = {
             'date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'legislative_body_initials': ['exact'],
+            'reunion_type': ['exact'],
         }
 
 
@@ -213,8 +214,7 @@ class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = (
         'legislative_body_initials', 'legislative_body', 'reunion_type',
         'title_reunion', 'reunion_object', 'reunion_theme')
-    ordering_fields = ('date', 'messages_count', 'questions_count',
-                       'votes_count', 'participants_count')
+    ordering_fields = ('date', 'reunion_type', 'legislative_body_initials')
 
     @method_decorator(cache_page(60 * 60 * 2)) # 2 hours
     def list(self, request, *args, **kwargs):

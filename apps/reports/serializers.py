@@ -110,7 +110,7 @@ class RoomRankingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Room
-        fields = ('title_reunion', 'reunion_theme',
+        fields = ('title_reunion', 'reunion_theme', 'reunion_type',
                   'legislative_body_initials', 'date',
                   'messages_count', 'questions_count', 'votes_count',
                   'participants_count', 'get_absolute_url')
