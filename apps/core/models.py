@@ -141,6 +141,30 @@ class Room(TimestampedMixin):
     def group_room_questions_name(self):
         return "video-room-questions-%s" % self.id
 
+    @property
+    def questions_count(self):
+        return self.questions.count()
+
+    @property
+    def messages_count(self):
+        return self.messages.count()
+
+    @property
+    def votes_count(self):
+        return UpDownVote.objects.filter(question__room=self).count()
+
+    @property
+    def participants_count(self):
+        questions = self.questions.prefetch_related('votes__user')
+        vote_users = [user_id for question in questions
+            for user_id in question.votes.values_list('user__id', flat=True)]
+        question_users = list(questions.values_list('user__id', flat=True))
+        message_users = list(
+            self.messages.values_list('user__id', flat=True))
+        total_users = len(
+            list(set(vote_users + question_users + message_users)))
+        return total_users
+
 
 class UpDownVote(TimestampedMixin):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
