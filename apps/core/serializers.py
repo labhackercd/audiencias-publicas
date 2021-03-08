@@ -88,11 +88,11 @@ class VideoSerializer(serializers.ModelSerializer):
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    questions_count = serializers.SerializerMethodField()
-    messages_count = serializers.SerializerMethodField()
+    messages_count = serializers.ReadOnlyField()
+    questions_count = serializers.ReadOnlyField()
+    votes_count = serializers.ReadOnlyField()
+    participants_count = serializers.ReadOnlyField()
     answered_questions_count = serializers.SerializerMethodField()
-    votes_count = serializers.SerializerMethodField()
-    participants_count = serializers.SerializerMethodField()
     youtube_id = serializers.SerializerMethodField()
     videos = VideoSerializer(many=True)
 
@@ -108,27 +108,6 @@ class RoomSerializer(serializers.ModelSerializer):
 
     def get_answered_questions_count(self, obj):
         return obj.questions.filter(answered=True).count()
-
-    def get_questions_count(self, obj):
-        return obj.questions.count()
-
-    def get_messages_count(self, obj):
-        return obj.messages.count()
-
-    def get_votes_count(self, obj):
-        questions = obj.questions.annotate(total_votes=Count('votes'))
-        votes_count = questions.aggregate(Sum('total_votes'))[
-            'total_votes__sum'] or 0
-        return votes_count
-
-    def get_participants_count(self, obj):
-        questions = obj.questions.all()
-        vote_users = [user_id for question in questions for user_id in question.votes.values_list(
-            'user__id', flat=True)]
-        question_users = list(questions.values_list('user__id', flat=True))
-        message_users = list(obj.messages.values_list('user__id', flat=True))
-        total_users = len(list(set(vote_users + question_users + message_users)))
-        return total_users
 
     def get_youtube_id(self, obj):
         try:
