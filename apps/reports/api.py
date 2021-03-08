@@ -43,7 +43,7 @@ class NewUsersViewSet(viewsets.ReadOnlyModelViewSet):
     )
     ordering_fields = '__all__'
 
-    @method_decorator(cache_page(60 * 60 * 2))  # 2 hours
+    @method_decorator(cache_page(60 * 60 * 6))  # 6 hours
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response.data['sum_total_results'] = sum([data.get('new_users', 0)
@@ -72,7 +72,7 @@ class VotesReportViewSet(viewsets.ReadOnlyModelViewSet):
     )
     ordering_fields = '__all__'
 
-    @method_decorator(cache_page(60 * 60 * 2))  # 2 hours
+    @method_decorator(cache_page(60 * 60 * 6))  # 6 hours
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response.data['sum_total_results'] = sum([data.get('votes', 0)
@@ -101,7 +101,7 @@ class RoomsReportViewSet(viewsets.ReadOnlyModelViewSet):
     )
     ordering_fields = '__all__'
 
-    @method_decorator(cache_page(60 * 60 * 2))  # 2 hours
+    @method_decorator(cache_page(60 * 60 * 6))  # 6 hours
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response.data['sum_total_results'] = sum([data.get('rooms', 0)
@@ -130,7 +130,7 @@ class QuestionsReportViewSet(viewsets.ReadOnlyModelViewSet):
     )
     ordering_fields = '__all__'
 
-    @method_decorator(cache_page(60 * 60 * 2))  # 2 hours
+    @method_decorator(cache_page(60 * 60 * 6))  # 6 hours
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response.data['sum_total_results'] = sum([data.get('questions', 0)
@@ -159,7 +159,7 @@ class MessagesReportViewSet(viewsets.ReadOnlyModelViewSet):
     )
     ordering_fields = '__all__'
 
-    @method_decorator(cache_page(60 * 60 * 2))  # 2 hours
+    @method_decorator(cache_page(60 * 60 * 6))  # 6 hours
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response.data['sum_total_results'] = sum([data.get('messages', 0)
@@ -188,7 +188,7 @@ class ParticipantsReportViewSet(viewsets.ReadOnlyModelViewSet):
     )
     ordering_fields = '__all__'
 
-    @method_decorator(cache_page(60 * 60 * 2))  # 2 hours
+    @method_decorator(cache_page(60 * 60 * 6))  # 6 hours
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
         response.data['sum_total_results'] = sum([data.get('participants', 0)
@@ -222,7 +222,7 @@ class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
         'title_reunion', 'reunion_object', 'reunion_theme')
     ordering_fields = ('date', 'reunion_type', 'legislative_body_initials')
 
-    @method_decorator(cache_page(60 * 60 * 2)) # 2 hours
+    @method_decorator(cache_page(60 * 60 * 6)) # 6 hours
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
 
