@@ -228,7 +228,8 @@ def get_rooms_daily(start_date=None):
     if not start_date:
         start_date = yesterday.strftime('%Y-%m-%d')
 
-    rooms = Room.objects.filter(created__gte=start_date)
+    rooms = Room.objects.filter(created__gte=start_date, is_active=True,
+                                is_visible=True)
 
     rooms_by_date_list = [room.created.strftime('%Y-%m-%d')
                           for room in rooms]
