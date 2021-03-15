@@ -73,7 +73,7 @@ class TestRoomsReport():
     @pytest.mark.django_db
     def test_get_rooms_daily_without_args(self):
         today = date.today()
-        mixer.blend(Room)
+        mixer.blend(Room, is_active=True, is_visible=True)
 
         get_rooms_daily.apply()
 

@@ -135,7 +135,9 @@ def get_votes_daily(start_date=None):
     if not start_date:
         start_date = yesterday.strftime('%Y-%m-%d')
 
-    votes = UpDownVote.objects.filter(created__gte=start_date)
+    votes = UpDownVote.objects.filter(created__gte=start_date,
+                                      question__room__is_active=True,
+                                      question__room__is_visible=True)
 
     votes_by_date_list = [vote.created.strftime('%Y-%m-%d')
                           for vote in votes]
@@ -322,7 +324,9 @@ def get_questions_daily(start_date=None):
     if not start_date:
         start_date = yesterday.strftime('%Y-%m-%d')
 
-    questions = Question.objects.filter(created__gte=start_date)
+    questions = Question.objects.filter(created__gte=start_date,
+                                        room__is_active=True,
+                                        room__is_visible=True)
 
     questions_by_date_list = [question.created.strftime('%Y-%m-%d')
                           for question in questions]
@@ -415,7 +419,9 @@ def get_messages_daily(start_date=None):
     if not start_date:
         start_date = yesterday.strftime('%Y-%m-%d')
 
-    messages = Message.objects.filter(created__gte=start_date)
+    messages = Message.objects.filter(created__gte=start_date,
+                                      room__is_active=True,
+                                      room__is_visible=True)
 
     messages_by_date_list = [message.created.strftime('%Y-%m-%d')
                              for message in messages]
@@ -508,17 +514,23 @@ def get_participants_daily(start_date=None):
     if not start_date:
         start_date = yesterday.strftime('%Y-%m-%d')
 
-    votes = UpDownVote.objects.filter(created__gte=start_date)
+    votes = UpDownVote.objects.filter(created__gte=start_date,
+                                      question__room__is_active=True,
+                                      question__room__is_visible=True)
     vote_users = [(user_id, dt.strftime('%Y-%m-%d'))
                   for user_id, dt in votes.values_list(
                       'user_id', 'created')]
 
-    messages = Message.objects.filter(created__gte=start_date)
+    messages = Message.objects.filter(created__gte=start_date,
+                                      room__is_active=True,
+                                      room__is_visible=True)
     message_users = [(user_id, dt.strftime('%Y-%m-%d'))
                      for user_id, dt in messages.values_list(
                         'user_id', 'created')]
 
-    questions = Question.objects.filter(created__gte=start_date)
+    questions = Question.objects.filter(created__gte=start_date,
+                                        room__is_active=True,
+                                        room__is_visible=True)
     question_users = [(user_id, dt.strftime('%Y-%m-%d'))
                       for user_id, dt in questions.values_list(
                           'user_id', 'created')]
