@@ -1,7 +1,7 @@
 import pytest
 from mixer.backend.django import mixer
 from apps.reports.models import VotesReport
-from apps.core.models import UpDownVote
+from apps.core.models import UpDownVote, Question, Room
 from django.db import IntegrityError
 from apps.reports.tasks import (create_votes_object,
                                 get_votes_daily,
@@ -73,7 +73,9 @@ class TestVotesReport():
     @pytest.mark.django_db
     def test_get_votes_daily_without_args(self):
         today = date.today()
-        mixer.blend(UpDownVote)
+        active_room = mixer.blend(Room, is_active=True, is_visible=True)
+        question = mixer.blend(Question, room=active_room)
+        mixer.blend(UpDownVote, question=question)
 
         get_votes_daily.apply()
 

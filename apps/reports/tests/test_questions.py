@@ -1,7 +1,7 @@
 import pytest
 from mixer.backend.django import mixer
 from apps.reports.models import QuestionsReport
-from apps.core.models import Question
+from apps.core.models import Question, Room
 from django.db import IntegrityError
 from apps.reports.tasks import (create_questions_object,
                                 get_questions_daily,
@@ -73,7 +73,8 @@ class TestQuestionsReport():
     @pytest.mark.django_db
     def test_get_questions_daily_without_args(self):
         today = date.today()
-        mixer.blend(Question)
+        active_room = mixer.blend(Room, is_active=True, is_visible=True)
+        mixer.blend(Question, room=active_room)
 
         get_questions_daily.apply()
 

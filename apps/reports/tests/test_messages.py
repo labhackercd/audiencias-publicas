@@ -1,7 +1,7 @@
 import pytest
 from mixer.backend.django import mixer
 from apps.reports.models import MessagesReport
-from apps.core.models import Message
+from apps.core.models import Message, Room
 from django.db import IntegrityError
 from apps.reports.tasks import (create_messages_object,
                                 get_messages_daily,
@@ -73,7 +73,8 @@ class TestMessagesReport():
     @pytest.mark.django_db
     def test_get_messages_daily_without_args(self):
         today = date.today()
-        mixer.blend(Message)
+        active_room = mixer.blend(Room, is_active=True, is_visible=True)
+        mixer.blend(Message, room=active_room)
 
         get_messages_daily.apply()
 
