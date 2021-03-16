@@ -8,6 +8,7 @@ from apps.core.models import Room
 class NewUsersSerializer(serializers.ModelSerializer):
     month = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
+    modified = serializers.DateTimeField(format="%d/%m/%Y %H:%M")
 
     def get_month(self, obj):
         return obj.start_date.month
@@ -18,12 +19,13 @@ class NewUsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = NewUsers
         fields = ('start_date', 'end_date', 'period', 'new_users', 'month',
-                  'year')
+                  'year', 'modified')
 
 
 class VotesReportSerializer(serializers.ModelSerializer):
     month = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
+    modified = serializers.DateTimeField(format="%d/%m/%Y %H:%M")
 
     def get_month(self, obj):
         return obj.start_date.month
@@ -34,12 +36,13 @@ class VotesReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = VotesReport
         fields = ('start_date', 'end_date', 'period', 'votes', 'month',
-                  'year')
+                  'year', 'modified')
 
 
 class RoomsReportSerializer(serializers.ModelSerializer):
     month = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
+    modified = serializers.DateTimeField(format="%d/%m/%Y %H:%M")
 
     def get_month(self, obj):
         return obj.start_date.month
@@ -50,12 +53,13 @@ class RoomsReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomsReport
         fields = ('start_date', 'end_date', 'period', 'rooms', 'month',
-                  'year')
+                  'year', 'modified')
 
 
 class QuestionsReportSerializer(serializers.ModelSerializer):
     month = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
+    modified = serializers.DateTimeField(format="%d/%m/%Y %H:%M")
 
     def get_month(self, obj):
         return obj.start_date.month
@@ -66,12 +70,13 @@ class QuestionsReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionsReport
         fields = ('start_date', 'end_date', 'period', 'questions', 'month',
-                  'year')
+                  'year', 'modified')
 
 
 class MessagesReportSerializer(serializers.ModelSerializer):
     month = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
+    modified = serializers.DateTimeField(format="%d/%m/%Y %H:%M")
 
     def get_month(self, obj):
         return obj.start_date.month
@@ -82,12 +87,13 @@ class MessagesReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = MessagesReport
         fields = ('start_date', 'end_date', 'period', 'messages', 'month',
-                  'year')
+                  'year', 'modified')
 
 
 class ParticipantsReportSerializer(serializers.ModelSerializer):
     month = serializers.SerializerMethodField()
     year = serializers.SerializerMethodField()
+    modified = serializers.DateTimeField(format="%d/%m/%Y %H:%M")
 
     def get_month(self, obj):
         return obj.start_date.month
@@ -98,7 +104,7 @@ class ParticipantsReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = ParticipantsReport
         fields = ('start_date', 'end_date', 'period', 'participants', 'month',
-                  'year')
+                  'year', 'modified')
 
 
 class RoomRankingSerializer(serializers.ModelSerializer):
