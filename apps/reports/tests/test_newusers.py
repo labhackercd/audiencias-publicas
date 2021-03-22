@@ -48,6 +48,7 @@ class TestNewUsers():
         assert new_users_object.end_date == '2020-11-23'
         assert new_users_object.new_users == 10
 
+    @pytest.mark.django_db
     def test_create_new_users_monthly(self):
         data_monthly = {
             'month': date(2020, 1, 1),
@@ -61,6 +62,7 @@ class TestNewUsers():
         assert new_users_object.end_date == date(2020, 1, 31)
         assert new_users_object.new_users == 10
 
+    @pytest.mark.django_db
     def test_create_new_users_yearly(self):
         data_yearly = {
             'year': date(2019, 1, 1),
@@ -122,19 +124,17 @@ class TestNewUsers():
 
     @pytest.mark.django_db
     def test_get_new_users_monthly_without_args(self):
-        today = date.today()
-        mixer.blend(NewUsers, period='daily', new_users=10, start_date=today,
-                    end_date=today)
+        yesterday = date.today() - timedelta(days=1)
+        mixer.blend(NewUsers, period='daily', new_users=10,
+                    start_date=yesterday, end_date=yesterday)
 
         get_new_users_monthly.apply()
 
         monthly_data = NewUsers.objects.filter(
             period='monthly').first()
 
-        last_day = calendar.monthrange(today.year,
-                                       today.month)[1]
-        assert monthly_data.start_date == today.replace(day=1)
-        assert monthly_data.end_date == today.replace(day=last_day)
+        assert monthly_data.start_date == yesterday.replace(day=1)
+        assert monthly_data.end_date == yesterday
         assert monthly_data.period == 'monthly'
         assert monthly_data.new_users == 10
 
@@ -158,18 +158,36 @@ class TestNewUsers():
 
     @pytest.mark.django_db
     def test_get_new_users_yearly_without_args(self):
-        today = date.today()
-        last_day_month = calendar.monthrange(today.year, today.month)[1]
+        yesterday = date.today() - timedelta(days=1)
         mixer.blend(NewUsers, period='monthly', new_users=10,
-                    start_date=today.replace(day=1),
-                    end_date=today.replace(day=last_day_month))
+                    start_date=yesterday.replace(day=1),
+                    end_date=yesterday)
 
         get_new_users_yearly.apply()
 
         yearly_data = NewUsers.objects.filter(period='yearly').first()
 
-        assert yearly_data.start_date == today.replace(day=1, month=1)
-        assert yearly_data.end_date == today.replace(day=31, month=12)
+        assert yearly_data.start_date == yesterday.replace(day=1, month=1)
+        assert yearly_data.end_date == yesterday
+        assert yearly_data.period == 'yearly'
+        assert yearly_data.new_users == 10
+
+    @pytest.mark.django_db
+    def test_get_new_users_yearly_current_year(self):
+        yesterday = date.today() - timedelta(days=1)
+        mixer.blend(NewUsers, period='monthly', new_users=10,
+                    start_date=yesterday.replace(day=1),
+                    end_date=yesterday)
+        mixer.blend(NewUsers, period='yearly', new_users=9,
+                    start_date=yesterday.replace(day=1, month=1),
+                    end_date=yesterday - timedelta(days=1))
+
+        get_new_users_yearly.apply()
+
+        yearly_data = NewUsers.objects.filter(period='yearly').first()
+
+        assert yearly_data.start_date == yesterday.replace(day=1, month=1)
+        assert yearly_data.end_date == yesterday
         assert yearly_data.period == 'yearly'
         assert yearly_data.new_users == 10
 
