@@ -93,8 +93,8 @@ class TestNewUsers():
     @pytest.mark.django_db
     def test_get_new_users_daily_without_args(self):
         yesterday = date.today() - timedelta(days=1)
-        mixer.blend(get_user_model(), date_joined=yesterday)
-
+        user = mixer.blend(get_user_model(), date_joined=yesterday)
+        print(user.__dict__)
         get_new_users_daily.apply()
 
         daily_data = NewUsers.objects.filter(
