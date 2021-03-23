@@ -234,6 +234,8 @@ def get_votes_yearly(start_date=None):
 
 
 def create_rooms_object(rooms_by_date, period='daily'):
+    yesterday = date.today() - timedelta(days=1)
+
     if period == 'daily':
         rooms_count = rooms_by_date[1]
         start_date = end_date = rooms_by_date[0]
@@ -243,13 +245,25 @@ def create_rooms_object(rooms_by_date, period='daily'):
 
         if period == 'monthly':
             start_date = rooms_by_date['month']
-            last_day = calendar.monthrange(start_date.year,
-                                           start_date.month)[1]
-            end_date = start_date.replace(day=last_day)
+            if (start_date.year == yesterday.year and
+                start_date.month == yesterday.month):
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                last_day = calendar.monthrange(start_date.year,
+                                               start_date.month)[1]
+                end_date = start_date.replace(day=last_day)
 
         elif period == 'yearly':
             start_date = rooms_by_date['year']
-            end_date = start_date.replace(day=31, month=12)
+            if start_date.year == yesterday.year:
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                end_date = start_date.replace(day=31, month=12)
+
+        if RoomsReport.objects.filter(
+            start_date=start_date, period=period).exists():
+            RoomsReport.objects.filter(
+                start_date=start_date, period=period).delete()
 
     report_object = RoomsReport(start_date=start_date, end_date=end_date,
                                 rooms=rooms_count, period=period)
@@ -259,12 +273,16 @@ def create_rooms_object(rooms_by_date, period='daily'):
 @app.task(name="get_rooms_daily")
 def get_rooms_daily(start_date=None):
     batch_size = 100
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = yesterday.strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
-    rooms = Room.objects.filter(created__gte=start_date, is_active=True,
+    rooms = Room.objects.filter(created__gte=start_date,
+                                created__lte=yesterday,
+                                is_active=True,
                                 is_visible=True)
 
     rooms_by_date_list = [room.created.strftime('%Y-%m-%d')

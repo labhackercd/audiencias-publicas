@@ -7,7 +7,7 @@ from apps.reports.tasks import (create_rooms_object,
                                 get_rooms_daily,
                                 get_rooms_monthly,
                                 get_rooms_yearly)
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from django.urls import reverse
 import json
 from rest_framework.test import APIClient
@@ -44,6 +44,7 @@ class TestRoomsReport():
         assert rooms_object.end_date == '2020-11-23'
         assert rooms_object.rooms == 10
 
+    @pytest.mark.django_db
     def test_create_rooms_monthly(self):
         data_monthly = {
             'month': date(2020, 1, 1),
@@ -57,6 +58,7 @@ class TestRoomsReport():
         assert rooms_object.end_date == date(2020, 1, 31)
         assert rooms_object.rooms == 10
 
+    @pytest.mark.django_db
     def test_create_rooms_yearly(self):
         data_yearly = {
             'year': date(2019, 1, 1),
@@ -72,51 +74,69 @@ class TestRoomsReport():
 
     @pytest.mark.django_db
     def test_get_rooms_daily_without_args(self):
-        today = date.today()
-        mixer.blend(Room, is_active=True, is_visible=True)
+        yesterday = datetime.now() - timedelta(days=1)
+        room = mixer.blend(Room, is_active=True, is_visible=True)
+        room.created = yesterday
+        room.save()
 
         get_rooms_daily.apply()
 
         daily_data = RoomsReport.objects.filter(
             period='daily').first()
 
-        assert daily_data.start_date == today
-        assert daily_data.end_date == today
+        assert daily_data.start_date == yesterday.date()
+        assert daily_data.end_date == yesterday.date()
         assert daily_data.period == 'daily'
         assert daily_data.rooms == 1
 
     @pytest.mark.django_db
     def test_get_rooms_monthly_without_args(self):
-        today = date.today()
-        mixer.blend(RoomsReport, period='daily', rooms=10, start_date=today,
-                    end_date=today)
+        yesterday = date.today() - timedelta(days=1)
+        mixer.blend(RoomsReport, period='daily', rooms=10,
+                    start_date=yesterday, end_date=yesterday)
 
         get_rooms_monthly.apply()
 
         monthly_data = RoomsReport.objects.filter(
             period='monthly').first()
 
-        last_day = calendar.monthrange(today.year,
-                                       today.month)[1]
-        assert monthly_data.start_date == today.replace(day=1)
-        assert monthly_data.end_date == today.replace(day=last_day)
+        assert monthly_data.start_date == yesterday.replace(day=1)
+        assert monthly_data.end_date == yesterday
         assert monthly_data.period == 'monthly'
         assert monthly_data.rooms == 10
 
     @pytest.mark.django_db
     def test_get_rooms_yearly_without_args(self):
-        today = date.today()
-        last_day_month = calendar.monthrange(today.year, today.month)[1]
+        yesterday = date.today() - timedelta(days=1)
         mixer.blend(RoomsReport, period='monthly', rooms=10,
-                    start_date=today.replace(day=1),
-                    end_date=today.replace(day=last_day_month))
+                    start_date=yesterday.replace(day=1),
+                    end_date=yesterday)
 
         get_rooms_yearly.apply()
 
         yearly_data = RoomsReport.objects.filter(period='yearly').first()
 
-        assert yearly_data.start_date == today.replace(day=1, month=1)
-        assert yearly_data.end_date == today.replace(day=31, month=12)
+        assert yearly_data.start_date == yesterday.replace(day=1, month=1)
+        assert yearly_data.end_date == yesterday
+        assert yearly_data.period == 'yearly'
+        assert yearly_data.rooms == 10
+
+    @pytest.mark.django_db
+    def test_get_rooms_yearly_current_year(self):
+        yesterday = date.today() - timedelta(days=1)
+        mixer.blend(RoomsReport, period='monthly', rooms=10,
+                    start_date=yesterday.replace(day=1),
+                    end_date=yesterday)
+        mixer.blend(RoomsReport, period='yearly', rooms=9,
+                    start_date=yesterday.replace(day=1, month=1),
+                    end_date=yesterday - timedelta(days=1))
+
+        get_rooms_yearly.apply()
+
+        yearly_data = RoomsReport.objects.filter(period='yearly').first()
+
+        assert yearly_data.start_date == yesterday.replace(day=1, month=1)
+        assert yearly_data.end_date == yesterday
         assert yearly_data.period == 'yearly'
         assert yearly_data.rooms == 10
 
