@@ -5,13 +5,15 @@ from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
                                  ParticipantsReport)
 from apps.core.models import UpDownVote, Room, Question, Message
 from collections import Counter
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 import calendar
 from django.db.models.functions import TruncMonth, TruncYear
 from django.db.models import Sum
 
 
 def create_new_users_object(registers_by_date, period='daily'):
+    yesterday = date.today() - timedelta(days=1)
+
     if period == 'daily':
         registers_count = registers_by_date[1]
         start_date = end_date = registers_by_date[0]
@@ -21,13 +23,25 @@ def create_new_users_object(registers_by_date, period='daily'):
 
         if period == 'monthly':
             start_date = registers_by_date['month']
-            last_day = calendar.monthrange(start_date.year,
-                                           start_date.month)[1]
-            end_date = start_date.replace(day=last_day)
+            if (start_date.year == yesterday.year and
+                start_date.month == yesterday.month):
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                last_day = calendar.monthrange(start_date.year,
+                                               start_date.month)[1]
+                end_date = start_date.replace(day=last_day)
 
         elif period == 'yearly':
             start_date = registers_by_date['year']
-            end_date = start_date.replace(day=31, month=12)
+            if start_date.year == yesterday.year:
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                end_date = start_date.replace(day=31, month=12)
+
+        if NewUsers.objects.filter(
+            start_date=start_date, period=period).exists():
+            NewUsers.objects.filter(
+                start_date=start_date, period=period).delete()
 
     report_object = NewUsers(start_date=start_date, end_date=end_date,
                              new_users=registers_count, period=period)
@@ -37,12 +51,15 @@ def create_new_users_object(registers_by_date, period='daily'):
 @app.task(name="get_new_users_daily")
 def get_new_users_daily(start_date=None):
     batch_size = 100
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = yesterday.strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
-    users = get_user_model().objects.filter(date_joined__gte=start_date)
+    users = get_user_model().objects.filter(date_joined__gte=start_date,
+                                            date_joined__lte=yesterday)
 
     date_joined_list = [user.date_joined.strftime('%Y-%m-%d')
                         for user in users]
@@ -105,6 +122,8 @@ def get_new_users_yearly(start_date=None):
 
 
 def create_votes_object(votes_by_date, period='daily'):
+    yesterday = date.today() - timedelta(days=1)
+
     if period == 'daily':
         votes_count = votes_by_date[1]
         start_date = end_date = votes_by_date[0]
@@ -114,13 +133,25 @@ def create_votes_object(votes_by_date, period='daily'):
 
         if period == 'monthly':
             start_date = votes_by_date['month']
-            last_day = calendar.monthrange(start_date.year,
-                                           start_date.month)[1]
-            end_date = start_date.replace(day=last_day)
+            if (start_date.year == yesterday.year and
+                start_date.month == yesterday.month):
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                last_day = calendar.monthrange(start_date.year,
+                                               start_date.month)[1]
+                end_date = start_date.replace(day=last_day)
 
         elif period == 'yearly':
             start_date = votes_by_date['year']
-            end_date = start_date.replace(day=31, month=12)
+            if start_date.year == yesterday.year:
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                end_date = start_date.replace(day=31, month=12)
+
+        if VotesReport.objects.filter(
+            start_date=start_date, period=period).exists():
+            VotesReport.objects.filter(
+                start_date=start_date, period=period).delete()
 
     report_object = VotesReport(start_date=start_date, end_date=end_date,
                                 votes=votes_count, period=period)
@@ -130,12 +161,15 @@ def create_votes_object(votes_by_date, period='daily'):
 @app.task(name="get_votes_daily")
 def get_votes_daily(start_date=None):
     batch_size = 100
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = yesterday.strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
     votes = UpDownVote.objects.filter(created__gte=start_date,
+                                      created__lte=yesterday,
                                       question__room__is_active=True,
                                       question__room__is_visible=True)
 
@@ -200,6 +234,8 @@ def get_votes_yearly(start_date=None):
 
 
 def create_rooms_object(rooms_by_date, period='daily'):
+    yesterday = date.today() - timedelta(days=1)
+
     if period == 'daily':
         rooms_count = rooms_by_date[1]
         start_date = end_date = rooms_by_date[0]
@@ -209,13 +245,25 @@ def create_rooms_object(rooms_by_date, period='daily'):
 
         if period == 'monthly':
             start_date = rooms_by_date['month']
-            last_day = calendar.monthrange(start_date.year,
-                                           start_date.month)[1]
-            end_date = start_date.replace(day=last_day)
+            if (start_date.year == yesterday.year and
+                start_date.month == yesterday.month):
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                last_day = calendar.monthrange(start_date.year,
+                                               start_date.month)[1]
+                end_date = start_date.replace(day=last_day)
 
         elif period == 'yearly':
             start_date = rooms_by_date['year']
-            end_date = start_date.replace(day=31, month=12)
+            if start_date.year == yesterday.year:
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                end_date = start_date.replace(day=31, month=12)
+
+        if RoomsReport.objects.filter(
+            start_date=start_date, period=period).exists():
+            RoomsReport.objects.filter(
+                start_date=start_date, period=period).delete()
 
     report_object = RoomsReport(start_date=start_date, end_date=end_date,
                                 rooms=rooms_count, period=period)
@@ -225,12 +273,16 @@ def create_rooms_object(rooms_by_date, period='daily'):
 @app.task(name="get_rooms_daily")
 def get_rooms_daily(start_date=None):
     batch_size = 100
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = yesterday.strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
-    rooms = Room.objects.filter(created__gte=start_date, is_active=True,
+    rooms = Room.objects.filter(created__gte=start_date,
+                                created__lte=yesterday,
+                                is_active=True,
                                 is_visible=True)
 
     rooms_by_date_list = [room.created.strftime('%Y-%m-%d')
@@ -294,6 +346,8 @@ def get_rooms_yearly(start_date=None):
 
 
 def create_questions_object(questions_by_date, period='daily'):
+    yesterday = date.today() - timedelta(days=1)
+
     if period == 'daily':
         questions_count = questions_by_date[1]
         start_date = end_date = questions_by_date[0]
@@ -303,13 +357,25 @@ def create_questions_object(questions_by_date, period='daily'):
 
         if period == 'monthly':
             start_date = questions_by_date['month']
-            last_day = calendar.monthrange(start_date.year,
-                                           start_date.month)[1]
-            end_date = start_date.replace(day=last_day)
+            if (start_date.year == yesterday.year and
+                start_date.month == yesterday.month):
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                last_day = calendar.monthrange(start_date.year,
+                                               start_date.month)[1]
+                end_date = start_date.replace(day=last_day)
 
         elif period == 'yearly':
             start_date = questions_by_date['year']
-            end_date = start_date.replace(day=31, month=12)
+            if start_date.year == yesterday.year:
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                end_date = start_date.replace(day=31, month=12)
+
+        if QuestionsReport.objects.filter(
+            start_date=start_date, period=period).exists():
+            QuestionsReport.objects.filter(
+                start_date=start_date, period=period).delete()
 
     report_object = QuestionsReport(start_date=start_date, end_date=end_date,
                                     questions=questions_count, period=period)
@@ -319,12 +385,15 @@ def create_questions_object(questions_by_date, period='daily'):
 @app.task(name="get_questions_daily")
 def get_questions_daily(start_date=None):
     batch_size = 100
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = yesterday.strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
     questions = Question.objects.filter(created__gte=start_date,
+                                        created__lte=yesterday,
                                         room__is_active=True,
                                         room__is_visible=True)
 
@@ -389,6 +458,8 @@ def get_questions_yearly(start_date=None):
 
 
 def create_messages_object(messages_by_date, period='daily'):
+    yesterday = date.today() - timedelta(days=1)
+
     if period == 'daily':
         messages_count = messages_by_date[1]
         start_date = end_date = messages_by_date[0]
@@ -398,13 +469,25 @@ def create_messages_object(messages_by_date, period='daily'):
 
         if period == 'monthly':
             start_date = messages_by_date['month']
-            last_day = calendar.monthrange(start_date.year,
-                                           start_date.month)[1]
-            end_date = start_date.replace(day=last_day)
+            if (start_date.year == yesterday.year and
+                start_date.month == yesterday.month):
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                last_day = calendar.monthrange(start_date.year,
+                                               start_date.month)[1]
+                end_date = start_date.replace(day=last_day)
 
         elif period == 'yearly':
             start_date = messages_by_date['year']
-            end_date = start_date.replace(day=31, month=12)
+            if start_date.year == yesterday.year:
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                end_date = start_date.replace(day=31, month=12)
+
+        if MessagesReport.objects.filter(
+            start_date=start_date, period=period).exists():
+            MessagesReport.objects.filter(
+                start_date=start_date, period=period).delete()
 
     report_object = MessagesReport(start_date=start_date, end_date=end_date,
                                    messages=messages_count, period=period)
@@ -414,12 +497,15 @@ def create_messages_object(messages_by_date, period='daily'):
 @app.task(name="get_messages_daily")
 def get_messages_daily(start_date=None):
     batch_size = 100
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = yesterday.strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
     messages = Message.objects.filter(created__gte=start_date,
+                                      created__lte=yesterday,
                                       room__is_active=True,
                                       room__is_visible=True)
 
@@ -484,6 +570,8 @@ def get_messages_yearly(start_date=None):
 
 
 def create_participants_object(participants_by_date, period='daily'):
+    yesterday = date.today() - timedelta(days=1)
+
     if period == 'daily':
         participants_count = participants_by_date[1]
         start_date = end_date = participants_by_date[0]
@@ -493,13 +581,25 @@ def create_participants_object(participants_by_date, period='daily'):
 
         if period == 'monthly':
             start_date = participants_by_date['month']
-            last_day = calendar.monthrange(start_date.year,
-                                           start_date.month)[1]
-            end_date = start_date.replace(day=last_day)
+            if (start_date.year == yesterday.year and
+                start_date.month == yesterday.month):
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                last_day = calendar.monthrange(start_date.year,
+                                               start_date.month)[1]
+                end_date = start_date.replace(day=last_day)
 
         elif period == 'yearly':
             start_date = participants_by_date['year']
-            end_date = start_date.replace(day=31, month=12)
+            if start_date.year == yesterday.year:
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                end_date = start_date.replace(day=31, month=12)
+
+        if ParticipantsReport.objects.filter(
+            start_date=start_date, period=period).exists():
+            ParticipantsReport.objects.filter(
+                start_date=start_date, period=period).delete()
 
     report_object = ParticipantsReport(start_date=start_date,
         end_date=end_date, participants=participants_count, period=period)
@@ -509,12 +609,15 @@ def create_participants_object(participants_by_date, period='daily'):
 @app.task(name="get_participants_daily")
 def get_participants_daily(start_date=None):
     batch_size = 100
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = yesterday.strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
     votes = UpDownVote.objects.filter(created__gte=start_date,
+                                      created__lte=yesterday,
                                       question__room__is_active=True,
                                       question__room__is_visible=True)
     vote_users = [(user_id, dt.strftime('%Y-%m-%d'))
@@ -522,6 +625,7 @@ def get_participants_daily(start_date=None):
                       'user_id', 'created')]
 
     messages = Message.objects.filter(created__gte=start_date,
+                                      created__lte=yesterday,
                                       room__is_active=True,
                                       room__is_visible=True)
     message_users = [(user_id, dt.strftime('%Y-%m-%d'))
@@ -529,6 +633,7 @@ def get_participants_daily(start_date=None):
                         'user_id', 'created')]
 
     questions = Question.objects.filter(created__gte=start_date,
+                                        created__lte=yesterday,
                                         room__is_active=True,
                                         room__is_visible=True)
     question_users = [(user_id, dt.strftime('%Y-%m-%d'))
