@@ -346,6 +346,8 @@ def get_rooms_yearly(start_date=None):
 
 
 def create_questions_object(questions_by_date, period='daily'):
+    yesterday = date.today() - timedelta(days=1)
+
     if period == 'daily':
         questions_count = questions_by_date[1]
         start_date = end_date = questions_by_date[0]
@@ -355,13 +357,25 @@ def create_questions_object(questions_by_date, period='daily'):
 
         if period == 'monthly':
             start_date = questions_by_date['month']
-            last_day = calendar.monthrange(start_date.year,
-                                           start_date.month)[1]
-            end_date = start_date.replace(day=last_day)
+            if (start_date.year == yesterday.year and
+                start_date.month == yesterday.month):
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                last_day = calendar.monthrange(start_date.year,
+                                               start_date.month)[1]
+                end_date = start_date.replace(day=last_day)
 
         elif period == 'yearly':
             start_date = questions_by_date['year']
-            end_date = start_date.replace(day=31, month=12)
+            if start_date.year == yesterday.year:
+                end_date = yesterday.strftime('%Y-%m-%d')
+            else:
+                end_date = start_date.replace(day=31, month=12)
+
+        if QuestionsReport.objects.filter(
+            start_date=start_date, period=period).exists():
+            QuestionsReport.objects.filter(
+                start_date=start_date, period=period).delete()
 
     report_object = QuestionsReport(start_date=start_date, end_date=end_date,
                                     questions=questions_count, period=period)
@@ -371,12 +385,15 @@ def create_questions_object(questions_by_date, period='daily'):
 @app.task(name="get_questions_daily")
 def get_questions_daily(start_date=None):
     batch_size = 100
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = yesterday.strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            hour=0, minute=0, second=0, microsecond=0)
 
     questions = Question.objects.filter(created__gte=start_date,
+                                        created__lte=yesterday,
                                         room__is_active=True,
                                         room__is_visible=True)
 
