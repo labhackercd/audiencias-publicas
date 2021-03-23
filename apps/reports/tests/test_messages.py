@@ -7,7 +7,7 @@ from apps.reports.tasks import (create_messages_object,
                                 get_messages_daily,
                                 get_messages_monthly,
                                 get_messages_yearly)
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from django.urls import reverse
 import json
 from rest_framework.test import APIClient
@@ -44,6 +44,7 @@ class TestMessagesReport():
         assert messages_object.end_date == '2020-11-23'
         assert messages_object.messages == 10
 
+    @pytest.mark.django_db
     def test_create_messages_monthly(self):
         data_monthly = {
             'month': date(2020, 1, 1),
@@ -57,6 +58,7 @@ class TestMessagesReport():
         assert messages_object.end_date == date(2020, 1, 31)
         assert messages_object.messages == 10
 
+    @pytest.mark.django_db
     def test_create_messages_yearly(self):
         data_yearly = {
             'year': date(2019, 1, 1),
@@ -72,52 +74,73 @@ class TestMessagesReport():
 
     @pytest.mark.django_db
     def test_get_messages_daily_without_args(self):
-        today = date.today()
+        yesterday = datetime.now() - timedelta(days=1)
         active_room = mixer.blend(Room, is_active=True, is_visible=True)
-        mixer.blend(Message, room=active_room)
+        active_room.created = yesterday
+        active_room.save()
+
+        message = mixer.blend(Message, room=active_room)
+        message.created = yesterday
+        message.save()
 
         get_messages_daily.apply()
 
         daily_data = MessagesReport.objects.filter(
             period='daily').first()
 
-        assert daily_data.start_date == today
-        assert daily_data.end_date == today
+        assert daily_data.start_date == yesterday.date()
+        assert daily_data.end_date == yesterday.date()
         assert daily_data.period == 'daily'
         assert daily_data.messages == 1
 
     @pytest.mark.django_db
     def test_get_messages_monthly_without_args(self):
-        today = date.today()
-        mixer.blend(MessagesReport, period='daily', messages=10, start_date=today,
-                    end_date=today)
+        yesterday = date.today() - timedelta(days=1)
+        mixer.blend(MessagesReport, period='daily', messages=10,
+                    start_date=yesterday, end_date=yesterday)
 
         get_messages_monthly.apply()
 
         monthly_data = MessagesReport.objects.filter(
             period='monthly').first()
 
-        last_day = calendar.monthrange(today.year,
-                                       today.month)[1]
-        assert monthly_data.start_date == today.replace(day=1)
-        assert monthly_data.end_date == today.replace(day=last_day)
+        assert monthly_data.start_date == yesterday.replace(day=1)
+        assert monthly_data.end_date == yesterday
         assert monthly_data.period == 'monthly'
         assert monthly_data.messages == 10
 
     @pytest.mark.django_db
     def test_get_messages_yearly_without_args(self):
-        today = date.today()
-        last_day_month = calendar.monthrange(today.year, today.month)[1]
+        yesterday = date.today() - timedelta(days=1)
         mixer.blend(MessagesReport, period='monthly', messages=10,
-                    start_date=today.replace(day=1),
-                    end_date=today.replace(day=last_day_month))
+                    start_date=yesterday.replace(day=1),
+                    end_date=yesterday)
 
         get_messages_yearly.apply()
 
         yearly_data = MessagesReport.objects.filter(period='yearly').first()
 
-        assert yearly_data.start_date == today.replace(day=1, month=1)
-        assert yearly_data.end_date == today.replace(day=31, month=12)
+        assert yearly_data.start_date == yesterday.replace(day=1, month=1)
+        assert yearly_data.end_date == yesterday
+        assert yearly_data.period == 'yearly'
+        assert yearly_data.messages == 10
+
+    @pytest.mark.django_db
+    def test_get_messages_yearly_current_year(self):
+        yesterday = date.today() - timedelta(days=1)
+        mixer.blend(MessagesReport, period='monthly', messages=10,
+                    start_date=yesterday.replace(day=1),
+                    end_date=yesterday)
+        mixer.blend(MessagesReport, period='yearly', messages=9,
+                    start_date=yesterday.replace(day=1, month=1),
+                    end_date=yesterday - timedelta(days=1))
+
+        get_messages_yearly.apply()
+
+        yearly_data = MessagesReport.objects.filter(period='yearly').first()
+
+        assert yearly_data.start_date == yesterday.replace(day=1, month=1)
+        assert yearly_data.end_date == yesterday
         assert yearly_data.period == 'yearly'
         assert yearly_data.messages == 10
 
