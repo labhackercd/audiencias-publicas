@@ -94,7 +94,7 @@ class TestNewUsers():
     def test_get_new_users_daily_without_args(self):
         yesterday = date.today() - timedelta(days=1)
         user = mixer.blend(get_user_model(), date_joined=yesterday)
-        print(user.__dict__)
+
         get_new_users_daily.apply()
 
         daily_data = NewUsers.objects.filter(
