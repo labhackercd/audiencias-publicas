@@ -20,6 +20,7 @@ from apps.core.models import Room
 from django.db.models import Sum
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from datetime import timedelta, datetime
 
 
 class NewUsersFilter(FilterSet):
@@ -203,12 +204,15 @@ class RoomRankingFilter(FilterSet):
             'date': ['lt', 'lte', 'gt', 'gte', 'year', 'month'],
             'legislative_body_initials': ['exact'],
             'reunion_type': ['exact'],
+            'is_active': ['exact'],
         }
 
 
 class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
     allowed_methods = ['get']
-    queryset = Room.objects.filter(is_active=True, is_visible=True)
+    queryset = Room.objects.filter(date__lte=yesterday)
     serializer_class = RoomRankingSerializer
     pagination_class = LimitOffsetPagination
     filter_class = RoomRankingFilter
