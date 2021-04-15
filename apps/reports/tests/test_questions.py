@@ -75,11 +75,8 @@ class TestQuestionsReport():
     @pytest.mark.django_db
     def test_get_questions_daily_without_args(self):
         yesterday = datetime.now() - timedelta(days=1)
-        active_room = mixer.blend(Room, is_active=True, is_visible=True)
-        active_room.created = yesterday
-        active_room.save()
 
-        question = mixer.blend(Question, room=active_room)
+        question = mixer.blend(Question)
         question.created = yesterday
         question.save()
 
