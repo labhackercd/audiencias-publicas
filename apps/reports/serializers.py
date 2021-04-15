@@ -53,7 +53,7 @@ class RoomsReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = RoomsReport
         fields = ('start_date', 'end_date', 'period', 'rooms', 'month',
-                  'year', 'modified', 'is_active')
+                  'year', 'modified')
 
 
 class QuestionsReportSerializer(serializers.ModelSerializer):
