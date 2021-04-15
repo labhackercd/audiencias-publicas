@@ -169,9 +169,7 @@ def get_votes_daily(start_date=None):
             hour=0, minute=0, second=0, microsecond=0)
 
     votes = UpDownVote.objects.filter(created__gte=start_date,
-                                      created__lte=yesterday,
-                                      question__room__is_active=True,
-                                      question__room__is_visible=True)
+                                      created__lte=yesterday)
 
     votes_by_date_list = [vote.created.strftime('%Y-%m-%d')
                           for vote in votes]
