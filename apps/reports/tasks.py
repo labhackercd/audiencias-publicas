@@ -235,11 +235,15 @@ def create_rooms_object(rooms_by_date, period='daily'):
     yesterday = date.today() - timedelta(days=1)
 
     if period == 'daily':
-        rooms_count = rooms_by_date[1]
+        total_rooms = rooms_by_date[1][0]
+        finished_rooms = rooms_by_date[1][1]
+        canceled_rooms = rooms_by_date[1][2]
         start_date = end_date = rooms_by_date[0]
 
     else:
-        rooms_count = rooms_by_date['total_rooms']
+        total_rooms = rooms_by_date['total']
+        finished_rooms = rooms_by_date['finished']
+        canceled_rooms = rooms_by_date['canceled']
 
         if period == 'monthly':
             start_date = rooms_by_date['month']
@@ -264,7 +268,9 @@ def create_rooms_object(rooms_by_date, period='daily'):
                 start_date=start_date, period=period).delete()
 
     report_object = RoomsReport(start_date=start_date, end_date=end_date,
-                                rooms=rooms_count, period=period)
+                                period=period, total_rooms=total_rooms,
+                                finished_rooms=finished_rooms,
+                                canceled_rooms=canceled_rooms)
     return report_object
 
 
@@ -278,18 +284,31 @@ def get_rooms_daily(start_date=None):
         start_date = yesterday.replace(
             hour=0, minute=0, second=0, microsecond=0)
 
-    rooms = Room.objects.filter(created__gte=start_date,
-                                created__lte=yesterday,
-                                is_active=True,
-                                is_visible=True)
+    total_rooms = Room.objects.filter(date__gte=start_date,
+                                      date__lte=yesterday)
+    finished_rooms = total_rooms.filter(is_active=True)
+    canceled_rooms = total_rooms.filter(is_active=False)
 
-    rooms_by_date_list = [room.created.strftime('%Y-%m-%d')
-                          for room in rooms]
+    total_by_date_list = [room.date.strftime('%Y-%m-%d')
+                          for room in total_rooms]
 
-    rooms_by_day = Counter(rooms_by_date_list)
+    finished_by_date_list = [room.date.strftime('%Y-%m-%d')
+                             for room in finished_rooms]
+
+    canceled_by_date_list = [room.date.strftime('%Y-%m-%d')
+                             for room in canceled_rooms]
+
+    total_by_day = dict(Counter(total_by_date_list))
+    finished_by_day = dict(Counter(finished_by_date_list))
+    canceled_by_day = dict(Counter(canceled_by_date_list))
+
+    dicts = total_by_day, finished_by_day, canceled_by_day
+
+    result_dict = {k: [d.get(day, 0) for d in dicts]
+                       for day in {day for d in dicts for day in d}}
 
     rooms_daily = [create_rooms_object(result, 'daily')
-                   for result in rooms_by_day.items()]
+                   for result in result_dict.items()]
 
     RoomsReport.objects.bulk_create(rooms_daily, batch_size)
 
@@ -309,8 +328,9 @@ def get_rooms_monthly(start_date=None):
 
     rooms_by_month = rooms_daily.annotate(
         month=TruncMonth('start_date')).values('month').annotate(
-            total_rooms=Sum('rooms')).values(
-                'month', 'total_rooms')
+            total=Sum('total_rooms'), finished=Sum('finished_rooms'),
+            canceled=Sum('canceled_rooms')).values(
+                'month', 'total', 'finished', 'canceled')
 
     rooms_monthly = [create_rooms_object(result, 'monthly')
                          for result in rooms_by_month]
@@ -334,8 +354,9 @@ def get_rooms_yearly(start_date=None):
 
     rooms_by_year = rooms_monthly.annotate(
         year=TruncYear('start_date')).values('year').annotate(
-            total_rooms=Sum('rooms')).values(
-                'year', 'total_rooms')
+            total=Sum('total_rooms'), finished=Sum('finished_rooms'),
+            canceled=Sum('canceled_rooms')).values(
+                'year', 'total', 'finished', 'canceled')
 
     rooms_yearly = [create_rooms_object(result, 'yearly')
                     for result in rooms_by_year]
