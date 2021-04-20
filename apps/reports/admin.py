@@ -15,7 +15,8 @@ class VotesReportAdmin(admin.ModelAdmin):
 
 
 class RoomsReportAdmin(admin.ModelAdmin):
-    list_display = ('start_date', 'period', 'rooms', 'created')
+    list_display = ('start_date', 'period', 'finished_rooms', 'canceled_rooms',
+                    'total_rooms', 'created')
     list_filter = ['start_date', 'period']
 
 

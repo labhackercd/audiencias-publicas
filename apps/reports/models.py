@@ -49,8 +49,12 @@ class VotesReport(AnalysisMixin):
 
 
 class RoomsReport(AnalysisMixin):
-    rooms = models.IntegerField(_('rooms'), null=True, blank=True,
-                                default=0)
+    finished_rooms = models.IntegerField(_('finished rooms'), null=True,
+                                         blank=True, default=0)
+    canceled_rooms = models.IntegerField(_('canceled rooms'), null=True,
+                                         blank=True, default=0)
+    total_rooms = models.IntegerField(_('total rooms'), null=True, blank=True,
+                                      default=0)
     class Meta:
         verbose_name = _('room')
         verbose_name_plural = _('rooms')
