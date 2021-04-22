@@ -75,11 +75,8 @@ class TestParticipantsReport():
     @pytest.mark.django_db
     def test_get_participants_daily_without_args(self):
         yesterday = datetime.now() - timedelta(days=1)
-        active_room = mixer.blend(Room, is_active=True, is_visible=True)
-        active_room.created = yesterday
-        active_room.save()
 
-        message = mixer.blend(Message, room=active_room)
+        message = mixer.blend(Message)
         message.created = yesterday
         message.save()
 

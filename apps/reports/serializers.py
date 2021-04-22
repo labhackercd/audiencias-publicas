@@ -52,8 +52,9 @@ class RoomsReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RoomsReport
-        fields = ('start_date', 'end_date', 'period', 'rooms', 'month',
-                  'year', 'modified')
+        fields = ('start_date', 'end_date', 'period', 'total_rooms',
+                  'finished_rooms', 'canceled_rooms', 'month', 'year',
+                  'modified')
 
 
 class QuestionsReportSerializer(serializers.ModelSerializer):
@@ -119,4 +120,4 @@ class RoomRankingSerializer(serializers.ModelSerializer):
         fields = ('title_reunion', 'reunion_theme', 'reunion_type',
                   'legislative_body_initials', 'date',
                   'messages_count', 'questions_count', 'votes_count',
-                  'participants_count', 'get_absolute_url')
+                  'participants_count', 'get_absolute_url', 'is_active')

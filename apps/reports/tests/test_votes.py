@@ -75,14 +75,7 @@ class TestVotesReport():
     @pytest.mark.django_db
     def test_get_votes_daily_without_args(self):
         yesterday = datetime.now() - timedelta(days=1)
-        active_room = mixer.blend(
-            Room, is_active=True, is_visible=True)
-        active_room.created = yesterday
-        active_room.save()
-        question = mixer.blend(Question, room=active_room)
-        question.created = yesterday
-        question.save()
-        vote = mixer.blend(UpDownVote, question=question)
+        vote = mixer.blend(UpDownVote)
         vote.created = yesterday
         vote.save()
 
