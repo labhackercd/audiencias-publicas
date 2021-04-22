@@ -304,7 +304,7 @@ def get_rooms_daily(start_date=None):
 
     dicts = total_by_day, finished_by_day, canceled_by_day
 
-    result_dict = {k: [d.get(day, 0) for d in dicts]
+    result_dict = {day: [d.get(day, 0) for d in dicts]
                        for day in {day for d in dicts for day in d}}
 
     rooms_daily = [create_rooms_object(result, 'daily')

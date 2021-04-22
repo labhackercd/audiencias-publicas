@@ -52,8 +52,9 @@ class RoomsReportSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RoomsReport
-        fields = ('start_date', 'end_date', 'period', 'rooms', 'month',
-                  'year', 'modified')
+        fields = ('start_date', 'end_date', 'period', 'total_rooms',
+                  'finished_rooms', 'canceled_rooms', 'month', 'year',
+                  'modified')
 
 
 class QuestionsReportSerializer(serializers.ModelSerializer):
