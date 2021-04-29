@@ -735,3 +735,25 @@ def get_participants_yearly(start_date=None):
                             for result in participants_by_year.items()]
 
     ParticipantsReport.objects.bulk_create(participants_yearly, batch_size)
+
+
+@app.task(name="get_participants_all_the_time")
+def get_participants_all_the_time():
+    yesterday = datetime.now() - timedelta(days=1)
+
+    vote_users = UpDownVote.objects.all().values_list('user_id')
+    message_users = Message.objects.all().values_list('user_id')
+    question_users = Question.objects.all().values_list('user_id')
+
+    count_participants = len(list(set(
+        list(vote_users) + list(message_users) + list(question_users))))
+
+    first_room = Room.objects.all().order_by('created').first()
+
+    ParticipantsReport.objects.update_or_create(
+        period='all',
+        start_date=first_room.created,
+        defaults={
+            'end_date': yesterday,
+            'participants': count_participants
+        })

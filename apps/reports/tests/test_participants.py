@@ -6,7 +6,8 @@ from apps.core.models import Message, Room
 from apps.reports.tasks import (create_participants_object,
                                 get_participants_daily,
                                 get_participants_monthly,
-                                get_participants_yearly)
+                                get_participants_yearly,
+                                get_participants_all_the_time)
 from datetime import date, datetime, timedelta
 from django.urls import reverse
 import json
@@ -138,6 +139,32 @@ class TestParticipantsReport():
         assert yearly_data.end_date == yesterday
         assert yearly_data.period == 'yearly'
         assert yearly_data.participants == 1
+
+    @pytest.mark.django_db
+    def test_get_participants_all_the_time(self):
+        yesterday = date.today() - timedelta(days=1)
+        initial_date = date(year=2020, month=1, day=1)
+
+        first_room = mixer.blend(Room)
+        first_room.created = initial_date
+        first_room.save()
+
+        mixer.blend(ParticipantsReport, period='all', participants=0,
+                    start_date=initial_date,
+                    end_date=yesterday - timedelta(days=1))
+
+        message = mixer.blend(Message)
+        message.created = yesterday
+        message.save()
+
+        get_participants_all_the_time.apply()
+
+        all_data = ParticipantsReport.objects.get(period='all')
+
+        assert all_data.start_date == initial_date
+        assert all_data.end_date == yesterday
+        assert all_data.period == 'all'
+        assert all_data.participants == 1
 
     @pytest.mark.django_db
     def test_participants_api_url(api_client):
