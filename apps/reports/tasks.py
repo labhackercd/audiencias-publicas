@@ -586,38 +586,37 @@ def get_messages_yearly(start_date=None):
 
 def create_participants_object(participants_by_date, period='daily'):
     yesterday = date.today() - timedelta(days=1)
+    participants_count = participants_by_date[1]
 
     if period == 'daily':
-        participants_count = participants_by_date[1]
         start_date = end_date = participants_by_date[0]
 
-    else:
-        participants_count = participants_by_date['total_participants']
+    elif period == 'monthly':
+        year, month = participants_by_date[0].split('-')
+        start_date = date(year=int(year), month=int(month), day=1)
+        if (start_date.year == yesterday.year and
+            start_date.month == yesterday.month):
+            end_date = yesterday.strftime('%Y-%m-%d')
+        else:
+            last_day = calendar.monthrange(start_date.year,
+                                           start_date.month)[1]
+            end_date = start_date.replace(day=last_day)
 
-        if period == 'monthly':
-            start_date = participants_by_date['month']
-            if (start_date.year == yesterday.year and
-                start_date.month == yesterday.month):
-                end_date = yesterday.strftime('%Y-%m-%d')
-            else:
-                last_day = calendar.monthrange(start_date.year,
-                                               start_date.month)[1]
-                end_date = start_date.replace(day=last_day)
+    elif period == 'yearly':
+        start_date = date(year=int(participants_by_date[0]), month=1, day=1)
+        if start_date.year == yesterday.year:
+            end_date = yesterday.strftime('%Y-%m-%d')
+        else:
+            end_date = start_date.replace(day=31, month=12)
 
-        elif period == 'yearly':
-            start_date = participants_by_date['year']
-            if start_date.year == yesterday.year:
-                end_date = yesterday.strftime('%Y-%m-%d')
-            else:
-                end_date = start_date.replace(day=31, month=12)
-
-        if ParticipantsReport.objects.filter(
-            start_date=start_date, period=period).exists():
-            ParticipantsReport.objects.filter(
-                start_date=start_date, period=period).delete()
+    if ParticipantsReport.objects.filter(
+        start_date=start_date, period=period).exists():
+        ParticipantsReport.objects.filter(
+            start_date=start_date, period=period).delete()
 
     report_object = ParticipantsReport(start_date=start_date,
         end_date=end_date, participants=participants_count, period=period)
+
     return report_object
 
 
@@ -663,23 +662,38 @@ def get_participants_daily(start_date=None):
 @app.task(name="get_participants_monthly")
 def get_participants_monthly(start_date=None):
     batch_size = 100
-    end_date = date.today()
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            day=1, hour=0, minute=0, second=0, microsecond=0)
 
-    participants_daily = ParticipantsReport.objects.filter(
-        period='daily',
-        start_date__gte=start_date,
-        end_date__lte=end_date.strftime('%Y-%m-%d'))
+    votes = UpDownVote.objects.filter(created__gte=start_date,
+                                      created__lte=yesterday)
+    vote_users = [(user_id, dt.strftime('%Y-%m'))
+                  for user_id, dt in votes.values_list(
+                      'user_id', 'created')]
 
-    participants_by_month = participants_daily.annotate(
-        month=TruncMonth('start_date')).values('month').annotate(
-            total_participants=Sum('participants')).values(
-                'month', 'total_participants')
+    messages = Message.objects.filter(created__gte=start_date,
+                                      created__lte=yesterday)
+    message_users = [(user_id, dt.strftime('%Y-%m'))
+                     for user_id, dt in messages.values_list(
+                        'user_id', 'created')]
+
+    questions = Question.objects.filter(created__gte=start_date,
+                                        created__lte=yesterday)
+    question_users = [(user_id, dt.strftime('%Y-%m'))
+                      for user_id, dt in questions.values_list(
+                          'user_id', 'created')]
+
+    participants = list(set(
+        list(vote_users) + list(message_users) + list(question_users)))
+
+    participants_by_month = Counter(elem[1] for elem in participants)
 
     participants_monthly = [create_participants_object(result, 'monthly')
-                        for result in participants_by_month]
+                            for result in participants_by_month.items()]
 
     ParticipantsReport.objects.bulk_create(participants_monthly, batch_size)
 
@@ -687,23 +701,59 @@ def get_participants_monthly(start_date=None):
 @app.task(name="get_participants_yearly")
 def get_participants_yearly(start_date=None):
     batch_size = 100
-    today = date.today()
-    last_day = calendar.monthrange(today.year, today.month)[1]
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
-        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+        start_date = yesterday.replace(
+            day=1, month=1, hour=0, minute=0, second=0, microsecond=0)
 
-    participants_monthly = ParticipantsReport.objects.filter(
-        period='monthly',
-        start_date__gte=start_date,
-        end_date__lte=today.replace(day=last_day).strftime('%Y-%m-%d'))
+    votes = UpDownVote.objects.filter(created__gte=start_date,
+                                      created__lte=yesterday)
+    vote_users = [(user_id, dt.strftime('%Y'))
+                  for user_id, dt in votes.values_list(
+                      'user_id', 'created')]
 
-    participants_by_year = participants_monthly.annotate(
-        year=TruncYear('start_date')).values('year').annotate(
-            total_participants=Sum('participants')).values(
-                'year', 'total_participants')
+    messages = Message.objects.filter(created__gte=start_date,
+                                      created__lte=yesterday)
+    message_users = [(user_id, dt.strftime('%Y'))
+                     for user_id, dt in messages.values_list(
+                        'user_id', 'created')]
+
+    questions = Question.objects.filter(created__gte=start_date,
+                                        created__lte=yesterday)
+    question_users = [(user_id, dt.strftime('%Y'))
+                      for user_id, dt in questions.values_list(
+                          'user_id', 'created')]
+
+    participants = list(set(
+        list(vote_users) + list(message_users) + list(question_users)))
+
+    participants_by_year = Counter(elem[1] for elem in participants)
 
     participants_yearly = [create_participants_object(result, 'yearly')
-                       for result in participants_by_year]
+                            for result in participants_by_year.items()]
 
     ParticipantsReport.objects.bulk_create(participants_yearly, batch_size)
+
+
+@app.task(name="get_participants_all_the_time")
+def get_participants_all_the_time():
+    yesterday = datetime.now() - timedelta(days=1)
+
+    vote_users = UpDownVote.objects.all().values_list('user_id')
+    message_users = Message.objects.all().values_list('user_id')
+    question_users = Question.objects.all().values_list('user_id')
+
+    count_participants = len(list(set(
+        list(vote_users) + list(message_users) + list(question_users))))
+
+    first_room = Room.objects.all().order_by('created').first()
+
+    ParticipantsReport.objects.update_or_create(
+        period='all',
+        start_date=first_room.created,
+        defaults={
+            'end_date': yesterday,
+            'participants': count_participants
+        })

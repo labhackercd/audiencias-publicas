@@ -6,7 +6,8 @@ from apps.core.models import Message, Room
 from apps.reports.tasks import (create_participants_object,
                                 get_participants_daily,
                                 get_participants_monthly,
-                                get_participants_yearly)
+                                get_participants_yearly,
+                                get_participants_all_the_time)
 from datetime import date, datetime, timedelta
 from django.urls import reverse
 import json
@@ -35,6 +36,7 @@ class TestParticipantsReport():
         # assert 'duplicate key value violates unique constraint' in str(
         #     excinfo.value)
 
+    @pytest.mark.django_db
     def test_create_participants_daily(self):
         data_daily = ['2020-11-23', 10]
         participants_object = create_participants_object(data_daily, 'daily')
@@ -46,24 +48,18 @@ class TestParticipantsReport():
 
     @pytest.mark.django_db
     def test_create_participants_monthly(self):
-        data_monthly = {
-            'month': date(2020, 1, 1),
-            'total_participants': 10
-        }
+        data_monthly = ['2020-11', 10]
 
         participants_object = create_participants_object(data_monthly, 'monthly')
 
         assert participants_object.period == 'monthly'
-        assert participants_object.start_date == date(2020, 1, 1)
-        assert participants_object.end_date == date(2020, 1, 31)
+        assert participants_object.start_date == date(2020, 11, 1)
+        assert participants_object.end_date == date(2020, 11, 30)
         assert participants_object.participants == 10
 
     @pytest.mark.django_db
     def test_create_participants_yearly(self):
-        data_yearly = {
-            'year': date(2019, 1, 1),
-            'total_participants': 10
-        }
+        data_yearly = ['2019', 10]
 
         participants_object = create_participants_object(data_yearly, 'yearly')
 
@@ -93,8 +89,9 @@ class TestParticipantsReport():
     @pytest.mark.django_db
     def test_get_participants_monthly_without_args(self):
         yesterday = date.today() - timedelta(days=1)
-        mixer.blend(ParticipantsReport, period='daily', participants=10,
-                    start_date=yesterday, end_date=yesterday)
+        message = mixer.blend(Message)
+        message.created = yesterday
+        message.save()
 
         get_participants_monthly.apply()
 
@@ -104,14 +101,14 @@ class TestParticipantsReport():
         assert monthly_data.start_date == yesterday.replace(day=1)
         assert monthly_data.end_date == yesterday
         assert monthly_data.period == 'monthly'
-        assert monthly_data.participants == 10
+        assert monthly_data.participants == 1
 
     @pytest.mark.django_db
     def test_get_participants_yearly_without_args(self):
         yesterday = date.today() - timedelta(days=1)
-        mixer.blend(ParticipantsReport, period='monthly', participants=10,
-                    start_date=yesterday.replace(day=1),
-                    end_date=yesterday)
+        message = mixer.blend(Message)
+        message.created = yesterday
+        message.save()
 
         get_participants_yearly.apply()
 
@@ -121,15 +118,16 @@ class TestParticipantsReport():
         assert yearly_data.start_date == yesterday.replace(day=1, month=1)
         assert yearly_data.end_date == yesterday
         assert yearly_data.period == 'yearly'
-        assert yearly_data.participants == 10
+        assert yearly_data.participants == 1
 
     @pytest.mark.django_db
     def test_get_participants_yearly_current_year(self):
         yesterday = date.today() - timedelta(days=1)
-        mixer.blend(ParticipantsReport, period='monthly', participants=10,
-                    start_date=yesterday.replace(day=1),
-                    end_date=yesterday)
-        mixer.blend(ParticipantsReport, period='yearly', participants=9,
+        message = mixer.blend(Message)
+        message.created = yesterday
+        message.save()
+
+        mixer.blend(ParticipantsReport, period='yearly', participants=0,
                     start_date=yesterday.replace(day=1, month=1),
                     end_date=yesterday - timedelta(days=1))
 
@@ -140,7 +138,33 @@ class TestParticipantsReport():
         assert yearly_data.start_date == yesterday.replace(day=1, month=1)
         assert yearly_data.end_date == yesterday
         assert yearly_data.period == 'yearly'
-        assert yearly_data.participants == 10
+        assert yearly_data.participants == 1
+
+    @pytest.mark.django_db
+    def test_get_participants_all_the_time(self):
+        yesterday = date.today() - timedelta(days=1)
+        initial_date = date(year=2020, month=1, day=1)
+
+        first_room = mixer.blend(Room)
+        first_room.created = initial_date
+        first_room.save()
+
+        mixer.blend(ParticipantsReport, period='all', participants=0,
+                    start_date=initial_date,
+                    end_date=yesterday - timedelta(days=1))
+
+        message = mixer.blend(Message)
+        message.created = yesterday
+        message.save()
+
+        get_participants_all_the_time.apply()
+
+        all_data = ParticipantsReport.objects.get(period='all')
+
+        assert all_data.start_date == initial_date
+        assert all_data.end_date == yesterday
+        assert all_data.period == 'all'
+        assert all_data.participants == 1
 
     @pytest.mark.django_db
     def test_participants_api_url(api_client):
