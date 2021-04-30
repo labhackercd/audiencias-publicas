@@ -105,7 +105,11 @@ class RoomsReportViewSet(viewsets.ReadOnlyModelViewSet):
     @method_decorator(cache_page(60 * 60 * 6))  # 6 hours
     def list(self, request, *args, **kwargs):
         response = super().list(request, *args, **kwargs)
-        response.data['sum_total_results'] = sum([data.get('rooms', 0)
+        response.data['sum_total_results'] = sum([data.get('total_rooms', 0)
+            for data in response.data['results']])
+        response.data['sum_finished'] = sum([data.get('finished_rooms', 0)
+            for data in response.data['results']])
+        response.data['sum_canceled'] = sum([data.get('canceled_rooms', 0)
             for data in response.data['results']])
         return response
 
