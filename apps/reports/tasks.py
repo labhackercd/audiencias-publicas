@@ -103,7 +103,7 @@ def get_new_users_yearly(start_date=None):
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
-        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+        start_date = today.replace(day=1, month=1).strftime('%Y-%m-%d')
 
     registers_monthly = NewUsers.objects.filter(
         period='monthly',
@@ -213,7 +213,7 @@ def get_votes_yearly(start_date=None):
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
-        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+        start_date = today.replace(day=1, month=1).strftime('%Y-%m-%d')
 
     votes_monthly = VotesReport.objects.filter(
         period='monthly',
@@ -345,7 +345,7 @@ def get_rooms_yearly(start_date=None):
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
-        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+        start_date = today.replace(day=1, month=1).strftime('%Y-%m-%d')
 
     rooms_monthly = RoomsReport.objects.filter(
         period='monthly',
@@ -456,7 +456,7 @@ def get_questions_yearly(start_date=None):
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
-        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+        start_date = today.replace(day=1, month=1).strftime('%Y-%m-%d')
 
     questions_monthly = QuestionsReport.objects.filter(
         period='monthly',
@@ -566,7 +566,7 @@ def get_messages_yearly(start_date=None):
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
-        start_date = today.replace(day=1).strftime('%Y-%m-%d')
+        start_date = today.replace(day=1, month=1).strftime('%Y-%m-%d')
 
     messages_monthly = MessagesReport.objects.filter(
         period='monthly',
@@ -748,11 +748,11 @@ def get_participants_all_the_time():
     count_participants = len(list(set(
         list(vote_users) + list(message_users) + list(question_users))))
 
-    first_room = Room.objects.all().order_by('created').first()
+    first_room = Room.objects.all().order_by('date').first()
 
     ParticipantsReport.objects.update_or_create(
         period='all',
-        start_date=first_room.created,
+        start_date=first_room.date,
         defaults={
             'end_date': yesterday,
             'participants': count_participants
