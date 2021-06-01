@@ -21,6 +21,7 @@ from django.db.models import Sum
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from datetime import timedelta, datetime
+from django.utils import timezone
 
 
 class NewUsersFilter(FilterSet):
@@ -213,7 +214,7 @@ class RoomRankingFilter(FilterSet):
 
 
 class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
     allowed_methods = ['get']
     queryset = Room.objects.filter(date__lte=yesterday)
@@ -229,10 +230,6 @@ class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
         'legislative_body_initials', 'legislative_body', 'reunion_type',
         'title_reunion', 'reunion_object', 'reunion_theme')
     ordering_fields = ('date', 'reunion_type', 'legislative_body_initials')
-
-    @method_decorator(cache_page(60 * 60 * 6)) # 6 hours
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
 
 
 @api_view(['GET'])
