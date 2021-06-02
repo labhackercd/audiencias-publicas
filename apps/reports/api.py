@@ -17,10 +17,9 @@ from apps.reports.serializers import (NewUsersSerializer,
                                       ParticipantsReportSerializer,
                                       RoomRankingSerializer)
 from apps.core.models import Room
-from django.db.models import Sum
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from datetime import timedelta, datetime
+from datetime import timedelta
 from django.utils import timezone
 
 
