@@ -5,10 +5,11 @@ from apps.reports.models import (NewUsers, VotesReport, RoomsReport,
                                  ParticipantsReport)
 from apps.core.models import UpDownVote, Room, Question, Message
 from collections import Counter
-from datetime import date, timedelta, datetime
+from datetime import date, timedelta
 import calendar
 from django.db.models.functions import TruncMonth, TruncYear
 from django.db.models import Sum
+from django.utils import timezone
 
 
 def create_new_users_object(registers_by_date, period='daily'):
@@ -51,7 +52,7 @@ def create_new_users_object(registers_by_date, period='daily'):
 @app.task(name="get_new_users_daily")
 def get_new_users_daily(start_date=None):
     batch_size = 100
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
@@ -161,7 +162,7 @@ def create_votes_object(votes_by_date, period='daily'):
 @app.task(name="get_votes_daily")
 def get_votes_daily(start_date=None):
     batch_size = 100
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
@@ -277,7 +278,7 @@ def create_rooms_object(rooms_by_date, period='daily'):
 @app.task(name="get_rooms_daily")
 def get_rooms_daily(start_date=None):
     batch_size = 100
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
@@ -404,7 +405,7 @@ def create_questions_object(questions_by_date, period='daily'):
 @app.task(name="get_questions_daily")
 def get_questions_daily(start_date=None):
     batch_size = 100
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
@@ -514,7 +515,7 @@ def create_messages_object(messages_by_date, period='daily'):
 @app.task(name="get_messages_daily")
 def get_messages_daily(start_date=None):
     batch_size = 100
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
@@ -623,7 +624,7 @@ def create_participants_object(participants_by_date, period='daily'):
 @app.task(name="get_participants_daily")
 def get_participants_daily(start_date=None):
     batch_size = 100
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
@@ -662,7 +663,7 @@ def get_participants_daily(start_date=None):
 @app.task(name="get_participants_monthly")
 def get_participants_monthly(start_date=None):
     batch_size = 100
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
@@ -701,7 +702,7 @@ def get_participants_monthly(start_date=None):
 @app.task(name="get_participants_yearly")
 def get_participants_yearly(start_date=None):
     batch_size = 100
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
     yesterday = yesterday.replace(hour=23, minute=59, second=59)
 
     if not start_date:
@@ -739,7 +740,7 @@ def get_participants_yearly(start_date=None):
 
 @app.task(name="get_participants_all_the_time")
 def get_participants_all_the_time():
-    yesterday = datetime.now() - timedelta(days=1)
+    yesterday = timezone.now() - timedelta(days=1)
 
     vote_users = UpDownVote.objects.all().values_list('user_id')
     message_users = Message.objects.all().values_list('user_id')
