@@ -13,7 +13,7 @@ from django.utils import timezone
 
 
 def create_new_users_object(registers_by_date, period='daily'):
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = timezone.now().date() - timedelta(days=1)
 
     if period == 'daily':
         registers_count = registers_by_date[1]
@@ -76,7 +76,7 @@ def get_new_users_daily(start_date=None):
 @app.task(name="get_new_users_monthly")
 def get_new_users_monthly(start_date=None):
     batch_size = 100
-    end_date = date.today()
+    end_date = timezone.now().date()
 
     if not start_date:
         start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
@@ -100,7 +100,7 @@ def get_new_users_monthly(start_date=None):
 @app.task(name="get_new_users_yearly")
 def get_new_users_yearly(start_date=None):
     batch_size = 100
-    today = date.today()
+    today = timezone.now().date()
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
@@ -123,7 +123,7 @@ def get_new_users_yearly(start_date=None):
 
 
 def create_votes_object(votes_by_date, period='daily'):
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = timezone.now().date() - timedelta(days=1)
 
     if period == 'daily':
         votes_count = votes_by_date[1]
@@ -186,7 +186,7 @@ def get_votes_daily(start_date=None):
 @app.task(name="get_votes_monthly")
 def get_votes_monthly(start_date=None):
     batch_size = 100
-    end_date = date.today()
+    end_date = timezone.now().date()
 
     if not start_date:
         start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
@@ -210,7 +210,7 @@ def get_votes_monthly(start_date=None):
 @app.task(name="get_votes_yearly")
 def get_votes_yearly(start_date=None):
     batch_size = 100
-    today = date.today()
+    today = timezone.now().date()
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
@@ -233,7 +233,7 @@ def get_votes_yearly(start_date=None):
 
 
 def create_rooms_object(rooms_by_date, period='daily'):
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = timezone.now().date() - timedelta(days=1)
 
     if period == 'daily':
         total_rooms = rooms_by_date[1][0]
@@ -317,7 +317,7 @@ def get_rooms_daily(start_date=None):
 @app.task(name="get_rooms_monthly")
 def get_rooms_monthly(start_date=None):
     batch_size = 100
-    end_date = date.today()
+    end_date = timezone.now().date()
 
     if not start_date:
         start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
@@ -342,7 +342,7 @@ def get_rooms_monthly(start_date=None):
 @app.task(name="get_rooms_yearly")
 def get_rooms_yearly(start_date=None):
     batch_size = 100
-    today = date.today()
+    today = timezone.now().date()
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
@@ -366,7 +366,7 @@ def get_rooms_yearly(start_date=None):
 
 
 def create_questions_object(questions_by_date, period='daily'):
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = timezone.now().date() - timedelta(days=1)
 
     if period == 'daily':
         questions_count = questions_by_date[1]
@@ -429,7 +429,7 @@ def get_questions_daily(start_date=None):
 @app.task(name="get_questions_monthly")
 def get_questions_monthly(start_date=None):
     batch_size = 100
-    end_date = date.today()
+    end_date = timezone.now().date()
 
     if not start_date:
         start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
@@ -453,7 +453,7 @@ def get_questions_monthly(start_date=None):
 @app.task(name="get_questions_yearly")
 def get_questions_yearly(start_date=None):
     batch_size = 100
-    today = date.today()
+    today = timezone.now().date()
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
@@ -476,7 +476,7 @@ def get_questions_yearly(start_date=None):
 
 
 def create_messages_object(messages_by_date, period='daily'):
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = timezone.now().date() - timedelta(days=1)
 
     if period == 'daily':
         messages_count = messages_by_date[1]
@@ -539,7 +539,7 @@ def get_messages_daily(start_date=None):
 @app.task(name="get_messages_monthly")
 def get_messages_monthly(start_date=None):
     batch_size = 100
-    end_date = date.today()
+    end_date = timezone.now().date()
 
     if not start_date:
         start_date = end_date.replace(day=1).strftime('%Y-%m-%d')
@@ -563,7 +563,7 @@ def get_messages_monthly(start_date=None):
 @app.task(name="get_messages_yearly")
 def get_messages_yearly(start_date=None):
     batch_size = 100
-    today = date.today()
+    today = timezone.now().date()
     last_day = calendar.monthrange(today.year, today.month)[1]
 
     if not start_date:
@@ -586,7 +586,7 @@ def get_messages_yearly(start_date=None):
 
 
 def create_participants_object(participants_by_date, period='daily'):
-    yesterday = date.today() - timedelta(days=1)
+    yesterday = timezone.now().date() - timedelta(days=1)
     participants_count = participants_by_date[1]
 
     if period == 'daily':
