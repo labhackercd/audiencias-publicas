@@ -213,10 +213,7 @@ class RoomRankingFilter(FilterSet):
 
 
 class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
-    yesterday = timezone.now() - timedelta(days=1)
-    yesterday = yesterday.replace(hour=23, minute=59, second=59)
     allowed_methods = ['get']
-    queryset = Room.objects.filter(date__lte=yesterday)
     serializer_class = RoomRankingSerializer
     pagination_class = LimitOffsetPagination
     filter_class = RoomRankingFilter
@@ -229,6 +226,11 @@ class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
         'legislative_body_initials', 'legislative_body', 'reunion_type',
         'title_reunion', 'reunion_object', 'reunion_theme')
     ordering_fields = ('date', 'reunion_type', 'legislative_body_initials')
+
+    def get_queryset(self):
+        yesterday = timezone.now() - timedelta(days=1)
+        yesterday = yesterday.replace(hour=23, minute=59, second=59)
+        return Room.objects.filter(date__lte=yesterday)
 
 
 @api_view(['GET'])
