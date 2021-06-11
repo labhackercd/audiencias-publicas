@@ -232,6 +232,10 @@ class RoomRankingViewSet(viewsets.ReadOnlyModelViewSet):
         yesterday = yesterday.replace(hour=23, minute=59, second=59)
         return Room.objects.filter(date__lte=yesterday)
 
+    @method_decorator(cache_page(60 * 60 * 6)) # 6 hours
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 @api_view(['GET'])
 def api_reports_root(request, format=None):
