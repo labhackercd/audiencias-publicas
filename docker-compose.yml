@@ -68,6 +68,35 @@ services:
 
   redis:
     image: redis:alpine
+  
+  celeryworker:
+    build: .
+    command: bash -c "celery -A audiencias_publicas worker -l info"
+    volumes:
+      - .:/var/labhacker/audiencias
+    environment:
+      <<: *database-variables
+      <<: *application-variables
+    restart: always
+    depends_on:
+      - db
+      - redis
+      - web
+
+  celerybeat:
+    build: .
+    command: ./start_celery_beat.sh
+    volumes:
+      - .:/var/labhacker/audiencias
+    environment:
+      <<: *database-variables
+      <<: *application-variables
+    restart: always
+    depends_on:
+      - db
+      - redis
+      - web
+      - celeryworker
 
 volumes:
   data:

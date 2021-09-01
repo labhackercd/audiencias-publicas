@@ -10,6 +10,8 @@ from apps.core.models import Message, Question, UpDownVote, Room
 from apps.core.serializers import (QuestionSerializer, MessageSerializer,
                                    VoteSerializer, UserSerializer,
                                    RoomSerializer)
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 
 
 class UserFilter(FilterSet):
@@ -37,6 +39,10 @@ class UserViewSet(viewsets.ModelViewSet):
     )
     search_fields = ('username', 'first_name', 'last_name')
 
+    @method_decorator(cache_page(60 * 5))  # 5 minutes
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class VoteViewSet(viewsets.ModelViewSet):
     allowed_methods = ['get']
@@ -49,6 +55,10 @@ class VoteViewSet(viewsets.ModelViewSet):
     filter_fields = ('user', 'vote', 'user__username')
     search_fields = ('user', 'vote', 'object_pk')
     ordering_fields = ('user', 'vote')
+
+    @method_decorator(cache_page(60 * 5))  # 5 minutes
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class MessageFilter(FilterSet):
@@ -82,6 +92,10 @@ class MessageViewSet(viewsets.ModelViewSet):
     search_fields = ('message',)
     ordering_fields = ('created', 'modified', 'user', 'room')
 
+    @method_decorator(cache_page(60 * 5))  # 5 minutes
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class QuestionFilter(FilterSet):
     class Meta:
@@ -114,6 +128,10 @@ class QuestionViewSet(viewsets.ModelViewSet):
     search_fields = ('question',)
     ordering_fields = ('created', 'modified')
 
+    @method_decorator(cache_page(60 * 5))  # 5 minutes
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
 
 class RoomFilter(FilterSet):
     class Meta:
@@ -141,6 +159,10 @@ class RoomViewSet(viewsets.ModelViewSet):
         'title_reunion', 'reunion_object', 'reunion_theme', 'legislative_body',
         'location')
     ordering_fields = '__all__'
+
+    @method_decorator(cache_page(60 * 1))  # 1 minute
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 @api_view(['GET'])

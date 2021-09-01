@@ -1,6 +1,6 @@
 {% load video_utils %}
 
-{% if room.is_visible and room.latest_video %}
+{% if room.is_visible and room.is_active and room.latest_video %}
   <li class="list__video" data-video-id="{{room.id}}">
 		<a class="video__link" href="{{room.get_absolute_url}}">
 		  <img class="video__thumbnail" src="https://i.ytimg.com/vi/{{room.latest_video.video_id}}/mqdefault.jpg">

@@ -65,7 +65,7 @@ docs/_build/
 target/
 
 ### Django Decouple ###
-*.ini
+audiencias_publicas/*.ini
 
 ### Pycharm ###
 *.idea

@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'apps.core',
     'apps.accounts',
     'apps.notification',
+    'apps.reports',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -55,6 +56,9 @@ INSTALLED_APPS = (
     'corsheaders',
     'debug_toolbar',
     'macros',
+    'drf_yasg',
+    'django_celery_beat',
+    'django_celery_results',
 
     'djangobower',
     'compressor',
@@ -368,3 +372,13 @@ CONSTANCE_CONFIG_FIELDSETS = {
 }
 
 CONSTANCE_BACKEND = 'constance.backends.database.DatabaseBackend'
+
+# Celery
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Sao_Paulo'
+CELERY_ENABLE_UTC = False

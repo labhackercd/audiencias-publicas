@@ -1,0 +1,6 @@
+[run]
+source = apps/
+omit = *migrations*,**_init__.py,*manage.py,**audiencias_publicas/*
+
+[report]
+show_missing = True
