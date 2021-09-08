@@ -10,11 +10,11 @@
 {% block main %}
   <main class="video-list">
     <form class="header__search" method="GET" action="{% url 'video_list' %}">
-      <input class="searh-input" placeholder="pesquisa..." type="text" name="q" value={{ request.GET.q }}>
+      <input class="searh-input" placeholder="Pesquisar por termo..." type="text" name="q" value={{ request.GET.q }}>
       <label for="initial-date">De</label>
-      <input class="searh-input" placeholder="01/01/2015" type="text" name="initial_date" id="initial-date" value={{ request.GET.initial_date }}>
+      <input class="searh-input" placeholder="dd/mm/yyyy" type="text" name="initial_date" id="initial-date" value={{ request.GET.initial_date }}>
       <label for="end-date">Até</label>
-      <input class="searh-input" placeholder="31/12/2017" type="text" name="end_date" id="end-date" value={{ request.GET.end_date }}>
+      <input class="searh-input" placeholder="dd/mm/yyyy" type="text" name="end_date" id="end-date" value={{ request.GET.end_date }}>
       <button class="search-submit" type="submit">Filtrar</button>
     </form>
     <div class="preview--video-list">
