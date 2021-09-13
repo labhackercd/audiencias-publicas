@@ -35,7 +35,7 @@ services:
     environment: *database-variables
 
   worker:
-    image: labhackercd/audiencias-publicas
+    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:3.5.1
     command: ./start-worker.sh
     links:
       - redis
@@ -49,7 +49,7 @@ services:
       - "web"
 
   web:
-    image: labhackercd/audiencias-publicas
+    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:3.5.1
     command: ./start-web.sh
     restart: on-failure
     links:
