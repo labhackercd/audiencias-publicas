@@ -1,14 +1,15 @@
-# -*- encoding: utf-8 -*-
 from django.db import models
 from django.utils.translation import ugettext as _
 from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils import timezone
 import datetime
-from channels import Group
+# from channels import Group
 from apps.core.utils import encrypt
 import json
 from constance import config
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 class TimestampedMixin(models.Model):
@@ -130,8 +131,8 @@ class Room(TimestampedMixin):
                 'closed': True,
                 'time_to_close': self.time_to_close(),
             }
-            Group(self.group_room_name).send({'text': json.dumps(text)})
-        Group('home').send({'text': json.dumps(notification)})
+            # Group(self.group_room_name).send({'text': json.dumps(text)})
+        # Group('home').send({'text': json.dumps(notification)})
 
     @property
     def group_room_name(self):
@@ -167,10 +168,10 @@ class Room(TimestampedMixin):
 
 
 class UpDownVote(TimestampedMixin):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                              verbose_name=_('user'), related_name='votes',)
     question = models.ForeignKey('Question', related_name='votes',
-                                 verbose_name=_('question'))
+                                 verbose_name=_('question'), on_delete=models.CASCADE)
     vote = models.BooleanField(_('vote'), default=False,
                                choices=((True, _('Up Vote')),
                                (False, _('Down Vote'))))
@@ -186,9 +187,9 @@ class UpDownVote(TimestampedMixin):
 
 class Message(TimestampedMixin):
     room = models.ForeignKey(Room, related_name='messages', null=True,
-                             verbose_name=_('room'))
+                             verbose_name=_('room'), on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='messages',
-                             verbose_name=_('user'))
+                             verbose_name=_('user'), on_delete=models.CASCADE)
     message = models.TextField(_('message'))
 
     class Meta:
@@ -206,7 +207,7 @@ class Message(TimestampedMixin):
 
 class Video(TimestampedMixin):
     room = models.ForeignKey(Room, related_name='videos',
-                             verbose_name=_('room'))
+                             verbose_name=_('room'), on_delete=models.CASCADE)
     video_id = models.CharField(_('youtube id'), max_length=200)
     title = models.CharField(_('title'), max_length=200, null=True, blank=True)
     is_attachment = models.BooleanField(_('is_attachment'), default=False)
@@ -227,15 +228,15 @@ class Video(TimestampedMixin):
             'video_html': self.room.html_room_video(),
             'thumbs_html': self.room.html_room_thumbnails(),
         }
-        Group(self.room.group_room_name).send(
-            {'text': json.dumps(text)}
-        )
+        # Group(self.room.group_room_name).send(
+        #     {'text': json.dumps(text)}
+        # )
 
 
 class Question(TimestampedMixin):
     room = models.ForeignKey(Room, related_name='questions', null=True,
-                             verbose_name=_('room'))
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             verbose_name=_('room'), on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
                              verbose_name=_('user'), related_name='questions')
     question = models.TextField(_('question'), max_length=300)
     video = models.ForeignKey(Video, verbose_name=_('video'), null=True,
@@ -267,9 +268,9 @@ class Question(TimestampedMixin):
             'counter': self.room.questions.count(),
             'id': self.id
         }
-        Group(self.room.group_room_questions_name).send(
-            {'text': json.dumps(text)}
-        )
+        # Group(self.room.group_room_questions_name).send(
+        #     {'text': json.dumps(text)}
+        # )
 
     class Meta:
         verbose_name = _('question')
@@ -281,7 +282,7 @@ class Question(TimestampedMixin):
 
 class RoomAttachment(TimestampedMixin):
     room = models.ForeignKey(Room, related_name='attachments',
-                             verbose_name=_('room'))
+                             verbose_name=_('room'), on_delete=models.CASCADE)
     title = models.CharField(_('title'), max_length=200, null=True, blank=True)
     url = models.URLField(verbose_name=_('link'))
 
@@ -324,7 +325,11 @@ def video_post_save(sender, instance, **kwargs):
     }
     instance.send_video()
     if not instance.is_attachment:
-        Group('home').send({'text': json.dumps(notification)})
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.group_send)(
+            'home',
+            {'text': json.dumps(notification)}
+        )
 
 
 def video_post_delete(sender, instance, **kwargs):
@@ -333,9 +338,9 @@ def video_post_delete(sender, instance, **kwargs):
         'deleted': True,
         'thumbs_html': instance.room.html_room_thumbnails(),
     }
-    Group(instance.room.group_room_name).send(
-        {'text': json.dumps(text)}
-    )
+    # Group(instance.room.group_room_name).send(
+    #     {'text': json.dumps(text)}
+    # )
 
 
 def vote_post_save(sender, instance, **kwargs):
