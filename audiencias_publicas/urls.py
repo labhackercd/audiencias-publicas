@@ -1,10 +1,10 @@
-from django.conf.urls import include, url
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.contrib import admin
 from apps.core import urls as core_urls
 from apps.notification import urls as notification_urls
 from apps.reports import urls as reports_urls
-from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.models import TokenProxy
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -31,18 +31,21 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    url(prefix + r'swagger(?P<format>\.json|\.yaml)$',
-        schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    url(prefix + r'swagger/$', schema_view.with_ui('swagger', cache_timeout=0),
-        name='schema-swagger-ui'),
-    url(prefix + r'redoc/$', schema_view.with_ui('redoc', cache_timeout=0),
-        name='schema-redoc'),
-    url(prefix + r'', include(core_urls)),
-    url(prefix + r'notification/', include(notification_urls)),
-    url(prefix + r'admin/', include(admin.site.urls)),
-    url(prefix + r'reports/', include(reports_urls)),
+    re_path(prefix + '', include(core_urls)),
+    re_path(prefix + 'notification/', include(notification_urls)),
+    re_path(prefix + 'admin/', admin.site.urls),
+    re_path(prefix + 'reports/', include(reports_urls)),
 ]
 
-admin.site.unregister(Token)
+urlpatterns += [
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$',
+            schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),
+         name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0),
+         name='schema-redoc'),
+]
+
+admin.site.unregister(TokenProxy)
 
 admin.site.site_header = 'Audiências Públicas Interativas'
