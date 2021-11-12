@@ -11,9 +11,9 @@ from drf_yasg import openapi
 
 
 if settings.URL_PREFIX:
-    prefix = r'^%s/' % (settings.URL_PREFIX)
+    prefix = settings.URL_PREFIX
 else:
-    prefix = r'^'
+    prefix = ''
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -31,10 +31,10 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    re_path(prefix + '', include(core_urls)),
-    re_path(prefix + 'notification/', include(notification_urls)),
-    re_path(prefix + 'admin/', admin.site.urls),
-    re_path(prefix + 'reports/', include(reports_urls)),
+    path(prefix + '', include(core_urls)),
+    path(prefix + 'notification/', include(notification_urls)),
+    path(prefix + 'admin/', admin.site.urls),
+    path(prefix + 'reports/', include(reports_urls)),
 ]
 
 urlpatterns += [
