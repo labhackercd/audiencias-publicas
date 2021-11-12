@@ -11,6 +11,8 @@ from constance import config
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
+channel_layer = get_channel_layer()
+
 
 class TimestampedMixin(models.Model):
     created = models.DateTimeField(_('created'), editable=False,
@@ -132,7 +134,12 @@ class Room(TimestampedMixin):
                 'time_to_close': self.time_to_close(),
             }
             # Group(self.group_room_name).send({'text': json.dumps(text)})
-        # Group('home').send({'text': json.dumps(notification)})
+        async_to_sync(channel_layer.group_send)(
+            'home',
+            {'type': 'home.message',
+             'text': json.dumps(notification)}
+        )
+
 
     @property
     def group_room_name(self):
@@ -325,10 +332,10 @@ def video_post_save(sender, instance, **kwargs):
     }
     instance.send_video()
     if not instance.is_attachment:
-        channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             'home',
-            {'text': json.dumps(notification)}
+            {'type': 'home.message',
+             'text': json.dumps(notification)}
         )
 
 
