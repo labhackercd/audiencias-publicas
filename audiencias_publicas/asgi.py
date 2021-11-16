@@ -8,6 +8,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 from apps.core.routing import websocket_urlpatterns
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'audiencias_publicas.settings')
+os.environ['DJANGO_ALLOW_ASYNC_UNSAFE'] = 'true'
 
 application = ProtocolTypeRouter({
     'http': get_asgi_application(),
