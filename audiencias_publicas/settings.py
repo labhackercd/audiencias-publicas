@@ -271,10 +271,10 @@ LOGGING = {
             'propagate': True,
             'level': 'INFO'
         },
-        'chat': {
+        'ws-logger': {
             'handlers': ['console'],
             'propagate': False,
-            'level': 'DEBUG',
+            'level': 'INFO',
         },
     },
 }

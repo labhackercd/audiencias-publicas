@@ -81,7 +81,7 @@ def set_answer_time(request, question_id):
                 async_to_sync(channel_layer.group_send)(
                     question.room.group_room_questions_name,
                     {'type': 'questions_panel',
-                    'text': json.dumps(text_question_panel)}
+                     'text': json.dumps(text_question_panel)}
                 )
                 return HttpResponse(status=200)
             else:
@@ -131,7 +131,7 @@ def set_answered(request, question_id):
             async_to_sync(channel_layer.group_send)(
                 question.room.group_room_questions_name,
                 {'type': 'questions_panel',
-                'text': json.dumps(text_question_panel)}
+                 'text': json.dumps(text_question_panel)}
             )
 
             return HttpResponse(status=200)
