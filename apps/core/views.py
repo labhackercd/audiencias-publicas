@@ -21,6 +21,10 @@ from constance import config
 from apps.core.forms import RoomAttachmentForm, VideoForm
 from operator import itemgetter
 from django.contrib.auth import get_user_model
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
+channel_layer = get_channel_layer()
 
 
 def redirect_to_room(request, cod_reunion):
@@ -34,7 +38,7 @@ def redirect_to_room(request, cod_reunion):
 
 
 def set_answer_time(request, question_id):
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         answer_time = request.POST.get('answer_time')
         video_id = request.POST.get('video_id')
         if answer_time:
@@ -74,9 +78,11 @@ def set_answer_time(request, question_id):
                     'html': html_question_panel,
                     'id': question.id
                 }
-                # Group(question.room.group_room_questions_name).send(
-                #     {'text': json.dumps(text_question_panel)}
-                # )
+                async_to_sync(channel_layer.group_send)(
+                    question.room.group_room_questions_name,
+                    {'type': 'questions_panel',
+                    'text': json.dumps(text_question_panel)}
+                )
                 return HttpResponse(status=200)
             else:
                 return HttpResponseForbidden()
@@ -87,7 +93,7 @@ def set_answer_time(request, question_id):
 
 
 def set_answered(request, question_id):
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         answered = request.POST.get('answered')
         question = Question.objects.get(pk=question_id)
         group_name = question.room.legislative_body_initials
@@ -122,9 +128,11 @@ def set_answered(request, question_id):
                 'html': html_question_panel,
                 'id': question.id
             }
-            # Group(question.room.group_room_questions_name).send(
-            #     {'text': json.dumps(text_question_panel)}
-            # )
+            async_to_sync(channel_layer.group_send)(
+                question.room.group_room_questions_name,
+                {'type': 'questions_panel',
+                'text': json.dumps(text_question_panel)}
+            )
 
             return HttpResponse(status=200)
         else:
@@ -134,7 +142,7 @@ def set_answered(request, question_id):
 
 
 def set_priotity(request, question_id):
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         is_priority = request.POST.get('is_priority')
         question = Question.objects.get(pk=question_id)
         group_name = question.room.legislative_body_initials
@@ -167,9 +175,11 @@ def set_priotity(request, question_id):
                 'html': html_question_panel,
                 'id': question.id
             }
-            # Group(question.room.group_room_questions_name).send(
-            #     {'text': json.dumps(text_question_panel)}
-            # )
+            async_to_sync(channel_layer.group_send)(
+                question.room.group_room_questions_name,
+                {'type': 'questions_panel',
+                 'text': json.dumps(text_question_panel)}
+            )
             return HttpResponse(status=200)
         else:
             return HttpResponseForbidden()
@@ -196,7 +206,7 @@ def index(request):
 
 
 def create_attachment(request, room_id):
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         room = Room.objects.get(pk=room_id)
         group_name = room.legislative_body_initials
         if belongs_to_group(request.user, group_name):
@@ -213,7 +223,7 @@ def create_attachment(request, room_id):
 
 
 def delete_attachment(request, attachment_id):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         attachment = RoomAttachment.objects.get(pk=attachment_id)
         group_name = attachment.room.legislative_body_initials
         if belongs_to_group(request.user, group_name):
@@ -226,7 +236,7 @@ def delete_attachment(request, attachment_id):
 
 
 def add_external_link(request, room_id):
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         room = Room.objects.get(pk=room_id)
         group_name = room.legislative_body_initials
         if belongs_to_group(request.user, group_name):
@@ -240,7 +250,7 @@ def add_external_link(request, room_id):
 
 
 def remove_external_link(request, room_id):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         room = Room.objects.get(pk=room_id)
         group_name = room.legislative_body_initials
         if belongs_to_group(request.user, group_name):
@@ -254,7 +264,7 @@ def remove_external_link(request, room_id):
 
 
 def create_video_attachment(request, room_id):
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         room = Room.objects.get(pk=room_id)
         group_name = room.legislative_body_initials
         if belongs_to_group(request.user, group_name):
@@ -273,7 +283,7 @@ def create_video_attachment(request, room_id):
 
 
 def delete_video(request, video_id):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         video = Video.objects.get(pk=video_id)
         group_name = video.room.legislative_body_initials
         if belongs_to_group(request.user, group_name):
@@ -286,7 +296,7 @@ def delete_video(request, video_id):
 
 
 def order_videos(request, room_id):
-    if request.user.is_authenticated() and request.method == 'POST':
+    if request.user.is_authenticated and request.method == 'POST':
         room = Room.objects.get(pk=room_id)
         group_name = room.legislative_body_initials
         if belongs_to_group(request.user, group_name):
@@ -315,7 +325,7 @@ class VideoDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(VideoDetail, self).get_context_data(**kwargs)
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             context['handler'] = encrypt(str(self.request.user.id).rjust(10))
             context['groups'] = list(self.request.user.groups.all()
                                      .values_list('name', flat=True))
@@ -340,7 +350,7 @@ class WidgetVideoDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(WidgetVideoDetail, self).get_context_data(**kwargs)
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             context['handler'] = encrypt(str(self.request.user.id).rjust(10))
             context['groups'] = list(self.request.user.groups.all()
                                      .values_list('name', flat=True))
@@ -425,7 +435,7 @@ class RoomQuestionList(DetailView):
         context['questions'] = list(chain(
             priority_questions, other_questions, answered_questions))
         context['counter'] = self.object.questions.count()
-        if self.request.user.is_authenticated():
+        if self.request.user.is_authenticated:
             context['handler'] = encrypt(str(self.request.user.id).rjust(10))
             context['groups'] = list(self.request.user.groups.all()
                                      .values_list('name', flat=True))
