@@ -4,6 +4,7 @@ function previewVideosComponent(socket) {
     $liveList: $('.preview--live-videos .preview__list'),
     $closed: $('.preview--closed-videos'),
     $closedList: $('.preview--closed-videos .preview__list'),
+    $calendarList: $('.calendar-rooms'),
   };
 
   const elementsVar = {
@@ -44,6 +45,9 @@ function previewVideosComponent(socket) {
         }
 
         elements.$liveList.prepend(data.html);
+        elements.$calendarList.filter(function(){
+          return $(this).data('calendar-id') === data.id
+        }).remove();
       } else if(!videoExists && data.is_closed) {
         if (elements.$closedList.children().length === 0) {
           elements.$closed.removeClass('hide');

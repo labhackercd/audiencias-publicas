@@ -42,7 +42,7 @@
           <table class="calendar-table">
             <tbody class="calendar-table__body">
               {% for agenda in agendas %}
-                <tr class="calendar-table__row">
+                <tr class="calendar-table__row calendar-rooms" data-calendar-id="{{agenda.id}}">
                   <td class="calendar-table__column">
                     <div class="calendar-table__date-wrapper">
 
