@@ -275,9 +275,11 @@ class Question(TimestampedMixin):
             'counter': self.room.questions.count(),
             'id': self.id
         }
-        # Group(self.room.group_room_questions_name).send(
-        #     {'text': json.dumps(text)}
-        # )
+        async_to_sync(channel_layer.group_send)(
+            self.room.group_room_questions_name,
+            {'type': 'questions_panel',
+             'text': json.dumps(text)}
+        )
 
     class Meta:
         verbose_name = _('question')
@@ -358,6 +360,11 @@ def vote_post_delete(sender, instance, **kwargs):
     instance.question.send_notification(instance.user)
 
 
+def question_post_save(sender, instance, **kwargs):
+    instance.send_notification(instance.user)
+
+
+models.signals.post_save.connect(question_post_save, sender=Question)
 models.signals.post_save.connect(vote_post_save, sender=UpDownVote)
 models.signals.post_delete.connect(vote_post_delete, sender=UpDownVote)
 models.signals.post_save.connect(room_post_save, sender=Room)
