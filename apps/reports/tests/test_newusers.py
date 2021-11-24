@@ -17,7 +17,7 @@ import calendar
 class TestNewUsers():
     def test_apps(self):
         from apps.reports.apps import ReportsConfig
-        assert ReportsConfig.name == 'reports'
+        assert ReportsConfig.name == 'apps.reports'
 
     @pytest.mark.django_db
     def test_new_users_create(self):
