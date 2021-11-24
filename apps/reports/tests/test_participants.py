@@ -12,7 +12,6 @@ from datetime import date, datetime, timedelta
 from django.urls import reverse
 import json
 from rest_framework.test import APIClient
-import calendar
 
 
 class TestParticipantsReport():
@@ -145,15 +144,15 @@ class TestParticipantsReport():
         yesterday = date.today() - timedelta(days=1)
         initial_date = date(year=2020, month=1, day=1)
 
-        first_room = mixer.blend(Room)
+        first_room = mixer.blend(Room, date=initial_date)
         first_room.created = initial_date
         first_room.save()
 
         mixer.blend(ParticipantsReport, period='all', participants=0,
                     start_date=initial_date,
-                    end_date=yesterday - timedelta(days=1))
+                    end_date=yesterday)
 
-        message = mixer.blend(Message)
+        message = mixer.blend(Message, room=first_room)
         message.created = yesterday
         message.save()
 
