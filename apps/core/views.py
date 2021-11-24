@@ -9,8 +9,7 @@ from apps.core.templatetags.video_utils import belongs_to_group
 from django.views.generic import DetailView, ListView, View
 from django.shortcuts import render, redirect
 from datetime import datetime, date
-from django.db.models import Q, Count, Sum
-# from channels import Group
+from django.db.models import Q
 from django.utils.decorators import method_decorator
 from django.views.decorators.clickjacking import xframe_options_exempt
 import json
@@ -19,8 +18,6 @@ from django.views.decorators.csrf import csrf_exempt
 from itertools import chain
 from constance import config
 from apps.core.forms import RoomAttachmentForm, VideoForm
-from operator import itemgetter
-from django.contrib.auth import get_user_model
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
@@ -68,9 +65,11 @@ def set_answer_time(request, question_id):
                     'groupName': group_name,
                     'handlerAction': encrypt(str(request.user.id).rjust(10)),
                 }
-                # Group(question.room.group_room_name).send(
-                #     {'text': json.dumps(text)}
-                # )
+                async_to_sync(channel_layer.group_send)(
+                    question.room.group_room_name,
+                    {'type': 'room_events',
+                     'text': json.dumps(text)}
+                )
 
                 html_question_panel = question.html_question_body(
                     request.user, 'question-panel')
@@ -118,9 +117,12 @@ def set_answered(request, question_id):
                 'groupName': group_name,
                 'handlerAction': encrypt(str(request.user.id).rjust(10)),
             }
-            # Group(question.room.group_room_name).send(
-            #     {'text': json.dumps(text)}
-            # )
+
+            async_to_sync(channel_layer.group_send)(
+                question.room.group_room_name,
+                {'type': 'room_events',
+                 'text': json.dumps(text)}
+            )
 
             html_question_panel = question.html_question_body(
                 request.user, 'question-panel')
@@ -166,20 +168,26 @@ def set_priotity(request, question_id):
                 'groupName': group_name,
                 'handlerAction': encrypt(str(request.user.id).rjust(10)),
             }
-            # Group(question.room.group_room_name).send(
-            #     {'text': json.dumps(text)}
-            # )
+
+            async_to_sync(channel_layer.group_send)(
+                question.room.group_room_name,
+                {'type': 'room_events',
+                 'text': json.dumps(text)}
+            )
+
             html_question_panel = question.html_question_body(
                 request.user, 'question-panel')
             text_question_panel = {
                 'html': html_question_panel,
                 'id': question.id
             }
+
             async_to_sync(channel_layer.group_send)(
                 question.room.group_room_questions_name,
                 {'type': 'questions_panel',
                  'text': json.dumps(text_question_panel)}
             )
+
             return HttpResponse(status=200)
         else:
             return HttpResponseForbidden()
@@ -309,9 +317,13 @@ def order_videos(request, room_id):
                 'ordered': True,
                 'thumbs_html': room.html_room_thumbnails(),
             }
-            # Group(room.group_room_name).send(
-            #     {'text': json.dumps(text)}
-            # )
+
+            async_to_sync(channel_layer.group_send)(
+                room.group_room_name,
+                {'type': 'room_events',
+                 'text': json.dumps(text)}
+            )
+
             return HttpResponse(status=200)
         else:
             return HttpResponseForbidden()

@@ -4,7 +4,6 @@ from django.conf import settings
 from django.template.loader import render_to_string
 from django.utils import timezone
 import datetime
-# from channels import Group
 from apps.core.utils import encrypt
 import json
 from constance import config
@@ -133,7 +132,11 @@ class Room(TimestampedMixin):
                 'closed': True,
                 'time_to_close': self.time_to_close(),
             }
-            # Group(self.group_room_name).send({'text': json.dumps(text)})
+            async_to_sync(channel_layer.group_send)(
+                self.group_room_name,
+                {'type': 'room_events',
+                 'text': json.dumps(text)}
+            )
         async_to_sync(channel_layer.group_send)(
             'home',
             {'type': 'home.message',
@@ -235,9 +238,11 @@ class Video(TimestampedMixin):
             'video_html': self.room.html_room_video(),
             'thumbs_html': self.room.html_room_thumbnails(),
         }
-        # Group(self.room.group_room_name).send(
-        #     {'text': json.dumps(text)}
-        # )
+        async_to_sync(channel_layer.group_send)(
+            self.room.group_room_name,
+            {'type': 'room_events',
+                'text': json.dumps(text)}
+        )
 
 
 class Question(TimestampedMixin):
@@ -347,9 +352,11 @@ def video_post_delete(sender, instance, **kwargs):
         'deleted': True,
         'thumbs_html': instance.room.html_room_thumbnails(),
     }
-    # Group(instance.room.group_room_name).send(
-    #     {'text': json.dumps(text)}
-    # )
+    async_to_sync(channel_layer.group_send)(
+        instance.room.group_room_name,
+        {'type': 'room_events',
+         'text': json.dumps(text)}
+    )
 
 
 def vote_post_save(sender, instance, **kwargs):
