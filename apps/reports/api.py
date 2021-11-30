@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 from django_filters import FilterSet
 from django_filters import rest_framework as django_filters
 from rest_framework.decorators import api_view

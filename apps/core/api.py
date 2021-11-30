@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 from django.contrib.auth import get_user_model
 from django_filters import FilterSet
 from django_filters import rest_framework as django_filters
