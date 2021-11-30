@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.http import (Http404, HttpResponseForbidden, HttpResponseRedirect,
                          HttpResponseBadRequest, HttpResponse, JsonResponse)
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.sites.models import Site
 from apps.core.models import Question, Room, RoomAttachment, Video
 from apps.core.utils import encrypt
