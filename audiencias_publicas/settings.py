@@ -47,7 +47,6 @@ INSTALLED_APPS = (
     'compressor',
     'compressor_toolkit',
     'channels',
-    'channels_presence',
     'django_js_reverse',
 )
 
