@@ -5,8 +5,6 @@ from apps.core.models import Message, Question, UpDownVote
 from apps.core.utils import decrypt, encrypt
 from apps.core.consumers.utils import get_room, get_data
 from constance import config
-from channels_presence.models import Room as RoomPresence, Presence
-from channels_presence.decorators import touch_presence, remove_presence
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth import get_user_model
 from asgiref.sync import sync_to_async
@@ -26,29 +24,21 @@ class RoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
         if room is not None:
-            # room_presence = RoomPresence.objects.add(
-            #     self.group_name, self.channel_name, self.scope["user"])
-            # anonymous_count = room_presence.get_anonymous_count()
-            # users_count = room_presence.get_users().count()
-            # room.online_users = anonymous_count + users_count
+            room.online_users += 1
             room.views += 1
 
-            # if room.online_users > room.max_online_users:
-            #     room.max_online_users = room.online_users
+            if room.online_users > room.max_online_users:
+                room.max_online_users = room.online_users
+
             async_save = sync_to_async(room.save)
             await async_save()
 
             log.info('Room websocket connected.')
     
-    @touch_presence
     async def receive(self, text_data=None, bytes_data=None):
         room_id = self.scope['url_route']['kwargs']['room_id']
         room = get_room(room_id)
         data = get_data(text_data)
-
-        if 'heartbeat' in data.keys():
-            Presence.objects.touch(self.channel_name)
-            return 0
 
         if not data['handler']:
             return 0
@@ -139,12 +129,11 @@ class RoomConsumer(AsyncWebsocketConsumer):
             log.info("Message unexpected format data")
             return
 
-    @remove_presence
     async def disconnect(self, close_code):
-        # room_id = self.scope['url_route']['kwargs']['room_id']
-        # room = get_room(room_id)
-        # room.online_users -= 1
-        # room.save()
+        room_id = self.scope['url_route']['kwargs']['room_id']
+        room = get_room(room_id)
+        room.online_users -= 1
+        room.save()
 
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
         log.info('Room websocket disconnected. Code: %s' % close_code)
