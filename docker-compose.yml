@@ -26,7 +26,7 @@ services:
       - web
     volumes:
       - data:/var/labhacker/audiencias
-      - ./config/etc/nginx/conf.d/:/etc/nginx/conf.d/:z
+      - ./config/etc/nginx/conf.d:/etc/nginx/conf.d:z
     ports:
       - "8000:80"
 
@@ -35,7 +35,7 @@ services:
     environment: *database-variables
 
   worker:
-    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:3.5.1
+    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:channels-update
     command: ./start-worker.sh
     links:
       - redis
@@ -49,7 +49,7 @@ services:
       - "web"
 
   web:
-    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:3.5.1
+    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:channels-update
     command: ./start-web.sh
     restart: on-failure
     links:
@@ -70,7 +70,8 @@ services:
     image: redis:alpine
   
   celeryworker:
-    build: .
+    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:channels-update
+    # build: .
     command: bash -c "celery -A audiencias_publicas worker -l info"
     volumes:
       - .:/var/labhacker/audiencias
@@ -84,7 +85,8 @@ services:
       - web
 
   celerybeat:
-    build: .
+    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:channels-update
+    # build: .
     command: ./start_celery_beat.sh
     volumes:
       - .:/var/labhacker/audiencias
