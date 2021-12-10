@@ -219,6 +219,7 @@ if DEBUG:
 # Authentication stuffs
 URL_PREFIX = config('URL_PREFIX', default='')
 FORCE_SCRIPT_NAME = config('FORCE_SCRIPT_NAME', default='')
+USE_X_FORWARDED_HOST = config('USE_X_FORWARDED_HOST', default=False)
 LOGIN_URL = config('LOGIN_URL', default='/login/')
 LOGIN_REDIRECT_URL = config('LOGIN_REDIRECT_URL', default='/')
 LOGOUT_REDIRECT_URL = config('LOGOUT_REDIRECT_URL', default='/')
