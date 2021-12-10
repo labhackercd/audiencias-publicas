@@ -40,8 +40,9 @@ class RoomConsumer(AsyncWebsocketConsumer):
         room = get_room(room_id)
         data = get_data(text_data)
 
-        if not data['handler']:
-            return 0
+        if not 'handler' in data.keys():
+            log.info('Connected as annonymous user.')
+            return
 
         blackList = [x.strip() for x in config.WORDS_BLACK_LIST.split(',')]
 
