@@ -11,7 +11,7 @@ from drf_yasg import openapi
 
 
 if settings.URL_PREFIX:
-    prefix = settings.URL_PREFIX
+    prefix = settings.URL_PREFIX + '/'
 else:
     prefix = ''
 
@@ -38,11 +38,11 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    re_path(r'^swagger(?P<format>\.json|\.yaml)$',
+    re_path(prefix + r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),
+    path(prefix + 'swagger/', schema_view.with_ui('swagger', cache_timeout=0),
          name='schema-swagger-ui'),
-    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0),
+    path(prefix + 'redoc/', schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
 ]
 

@@ -3,7 +3,7 @@ from django.urls import path
 from apps.core.consumers import home, room, room_questions
 
 if settings.URL_PREFIX:
-    prefix = settings.URL_PREFIX
+    prefix = settings.URL_PREFIX + '/'
 else:
     prefix = ''
 

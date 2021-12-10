@@ -109,7 +109,7 @@ class Room(TimestampedMixin):
                                                                'created')
 
     def get_absolute_url(self):
-        return "%s/sala/%i" % (settings.FORCE_SCRIPT_NAME, self.pk)
+        return "%s/sala/%i" % (settings.URL_PREFIX, self.pk)
 
     def html_body(self):
         return render_to_string('includes/home_video.html', {'room': self})
