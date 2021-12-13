@@ -9,6 +9,7 @@ import json
 from constance import config
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from django.urls import reverse
 
 channel_layer = get_channel_layer()
 
@@ -109,7 +110,7 @@ class Room(TimestampedMixin):
                                                                'created')
 
     def get_absolute_url(self):
-        return "%s/sala/%i" % (settings.URL_PREFIX, self.pk)
+        return reverse('video_room', args=[str(self.id)])
 
     def html_body(self):
         return render_to_string('includes/home_video.html', {'room': self})

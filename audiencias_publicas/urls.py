@@ -10,11 +10,6 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
 
-if settings.URL_PREFIX:
-    prefix = settings.URL_PREFIX + '/'
-else:
-    prefix = ''
-
 schema_view = get_schema_view(
     openapi.Info(
         title="Audiências Interativas API",
@@ -31,20 +26,23 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
-    path(prefix + '', include(core_urls)),
-    path(prefix + 'notification/', include(notification_urls)),
-    path(prefix + 'admin/', admin.site.urls),
-    path(prefix + 'reports/', include(reports_urls)),
+    path('', include(core_urls)),
+    path('notification/', include(notification_urls)),
+    path('admin/', admin.site.urls),
+    path('reports/', include(reports_urls)),
 ]
 
 urlpatterns += [
-    re_path(prefix + r'^swagger(?P<format>\.json|\.yaml)$',
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$',
             schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path(prefix + 'swagger/', schema_view.with_ui('swagger', cache_timeout=0),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),
          name='schema-swagger-ui'),
-    path(prefix + 'redoc/', schema_view.with_ui('redoc', cache_timeout=0),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
 ]
+
+if settings.URL_PREFIX:
+    urlpatterns = [path(f'{settings.URL_PREFIX}/', include(urlpatterns))]
 
 admin.site.unregister(TokenProxy)
 
