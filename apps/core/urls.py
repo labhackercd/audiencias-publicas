@@ -1,4 +1,4 @@
-from django.urls import path, re_path
+from django.urls import path
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework.routers import DefaultRouter
 from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
