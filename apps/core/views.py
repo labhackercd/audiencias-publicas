@@ -348,9 +348,11 @@ class VideoDetail(DetailView):
         return context
 
     def get_object(self, queryset=None):
-        obj = super(VideoDetail, self).get_object(queryset=queryset)
-        if obj.is_active:
-            return obj
+        room = super(VideoDetail, self).get_object(queryset=queryset)
+        if room.is_active:
+            room.views += 1
+            room.save()
+            return room
         else:
             raise Http404()
 
