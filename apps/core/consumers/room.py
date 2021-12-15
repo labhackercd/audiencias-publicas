@@ -24,14 +24,6 @@ class RoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
         if room is not None:
-            room.online_users += 1
-
-            if room.online_users > room.max_online_users:
-                room.max_online_users = room.online_users
-
-            async_save = sync_to_async(room.save)
-            await async_save()
-
             log.info('Room websocket connected.')
     
     async def receive(self, text_data=None, bytes_data=None):
@@ -129,11 +121,6 @@ class RoomConsumer(AsyncWebsocketConsumer):
             return
 
     async def disconnect(self, close_code):
-        room_id = self.scope['url_route']['kwargs']['room_id']
-        room = get_room(room_id)
-        room.online_users -= 1
-        room.save()
-
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
         log.info('Room websocket disconnected. Code: %s' % close_code)
     
