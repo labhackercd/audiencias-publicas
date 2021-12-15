@@ -25,7 +25,6 @@ class RoomConsumer(AsyncWebsocketConsumer):
 
         if room is not None:
             room.online_users += 1
-            room.views += 1
 
             if room.online_users > room.max_online_users:
                 room.max_online_users = room.online_users
