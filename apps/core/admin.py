@@ -20,35 +20,46 @@ class RoomAdmin(admin.ModelAdmin):
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('user', 'room', 'message', 'created')
     list_filter = ['created']
-    search_fields = ['message', 'user', 'room']
+    search_fields = [
+        'message', 'user__first_name', 'user__username',
+        'room__title_reunion', 'room__reunion_object',
+        'room__reunion_theme']
     raw_id_fields = ('user', 'room')
 
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('user', 'room', 'question', 'created')
     list_filter = ['created']
-    search_fields = ['question', 'user', 'room']
+    search_fields = [
+        'question', 'user__first_name', 'user__username',
+        'room__title_reunion', 'room__reunion_object',
+        'room__reunion_theme']
     raw_id_fields = ('room', 'user', 'video')
 
 
 class UpDownVoteAdmin(admin.ModelAdmin):
     list_display = ('user', 'question', 'created')
     list_filter = ['created']
-    search_fields = ['user', 'question']
+    search_fields = [
+        'user__first_name', 'user__username', 'question__question']
     raw_id_fields = ('user', 'question')
 
 
 class RoomAttachmentAdmin(admin.ModelAdmin):
     list_display = ('room', 'title', 'url')
     list_filter = ['created']
-    search_fields = ['title', 'url', 'room']
+    search_fields = [
+        'title', 'url', 'room__title_reunion',
+        'room__reunion_object', 'room__reunion_theme']
     raw_id_fields = ('room', )
 
 
 class VideoAdmin(admin.ModelAdmin):
     list_display = ('room', 'title', 'video_id', 'is_attachment')
     list_filter = ['created', 'is_attachment']
-    search_fields = ['title', 'video_id', 'room']
+    search_fields = [
+        'title', 'video_id', 'room__title_reunion',
+        'room__reunion_object', 'room__reunion_theme']
     raw_id_fields = ('room', )
 
 
