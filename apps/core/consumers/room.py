@@ -1,16 +1,39 @@
 import json
 import logging
 import re
-from apps.core.models import Message, Question, UpDownVote
+from apps.core.models import Message, Question, UpDownVote, Room
 from apps.core.utils import decrypt, encrypt
 from apps.core.consumers.utils import get_room, get_data
 from constance import config
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth import get_user_model
+from channels_presence.models import Room as RoomPresence
+from channels_presence.decorators import touch_presence
 from asgiref.sync import sync_to_async
 
 User = get_user_model()
 log = logging.getLogger('ws-logger')
+
+
+@sync_to_async
+def set_max_online_users(room_id, group_name, channel_name, user):
+    room_presence = RoomPresence.objects.add(
+        group_name, channel_name, user)
+    anonymous_count = room_presence.get_anonymous_count()
+    users_count = room_presence.get_users().count()
+    room = get_room(room_id)
+    room.online_users = anonymous_count + users_count
+    if room.online_users > room.max_online_users:
+        room.max_online_users = room.online_users
+    room.save(update_fields=['online_users', 'max_online_users'])
+
+
+@sync_to_async
+def set_user_offline(room_id, group_name, channel_name):
+    RoomPresence.objects.remove(group_name, channel_name)
+    room = get_room(room_id)
+    room.online_users -= 1
+    room.save(update_fields=['online_users'])
 
 
 class RoomConsumer(AsyncWebsocketConsumer):
@@ -24,14 +47,20 @@ class RoomConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
         if room is not None:
+            await set_max_online_users(
+                room_id, self.group_name, self.channel_name, self.scope['user'])
             log.info('Room websocket connected.')
     
+    @touch_presence
     async def receive(self, text_data=None, bytes_data=None):
         room_id = self.scope['url_route']['kwargs']['room_id']
         room = get_room(room_id)
         data = get_data(text_data)
 
-        if not 'handler' in data.keys():
+        try:
+            if not 'handler' in data.keys():
+                return
+        except AttributeError:
             return
 
         blackList = [x.strip() for x in config.WORDS_BLACK_LIST.split(',')]
@@ -121,7 +150,9 @@ class RoomConsumer(AsyncWebsocketConsumer):
             return
 
     async def disconnect(self, close_code):
+        room_id = self.scope['url_route']['kwargs']['room_id']
         await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        await set_user_offline(room_id, self.group_name, self.channel_name)
         log.info('Room websocket disconnected. Code: %s' % close_code)
     
     async def room_events(self, event):
