@@ -62,6 +62,10 @@ CORS_ALLOW_METHODS = (
     'OPTIONS'
 )
 
+# Default primary key field type
+# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
