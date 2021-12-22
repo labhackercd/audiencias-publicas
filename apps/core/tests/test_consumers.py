@@ -1,5 +1,6 @@
 import pytest
 from channels.testing import WebsocketCommunicator
+from apps.core.consumers.utils import get_room, get_data
 from apps.core.consumers.home import HomeConsumer
 from apps.core.consumers.room_questions import QuestionsPanelConsumer
 from channels.layers import get_channel_layer
@@ -17,6 +18,24 @@ TEST_CHANNEL_LAYERS = {
         'BACKEND': 'channels.layers.InMemoryChannelLayer'
     }
 }
+
+
+@pytest.mark.django_db
+def test_utils_get_room():
+    room1 = mixer.blend(Room, is_active=True, pk=1)
+    room2 = get_room(1)
+    assert room1 == room2
+
+@pytest.mark.django_db
+def test_utils_get_room_value_error():
+    with pytest.raises(ValueError):
+        get_room('test')
+
+
+@pytest.mark.django_db
+def test_utils_get_room_not_exists():
+    with pytest.raises(Room.DoesNotExist):
+        get_room(1)
 
 
 @pytest.mark.asyncio

@@ -9,11 +9,11 @@ def get_room(pk):
     try:
         return Room.objects.get(pk=pk, is_active=True)
     except ValueError:
-        log.info('Invalid path.')
-        return
+        log.info('Invalid value.')
+        raise
     except Room.DoesNotExist:
         log.info('Room does not exists.')
-        return
+        raise
 
 
 def get_data(json_text):
@@ -21,4 +21,4 @@ def get_data(json_text):
         return json.loads(json_text)
     except ValueError:
         log.info("Message isn't json text")
-        return
+        raise
