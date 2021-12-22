@@ -29,11 +29,12 @@ class TestParticipantsReport():
             mixer.blend(ParticipantsReport,
                         period=content.period,
                         start_date=content.start_date)
-        assert 'UNIQUE constraint failed' in str(
-            excinfo.value)
-        ## PostgreSQL message error
-        # assert 'duplicate key value violates unique constraint' in str(
+        ## sqlite3 message error
+        # assert 'UNIQUE constraint failed' in str(
         #     excinfo.value)
+        ## PostgreSQL message error
+        assert 'duplicate key value violates unique constraint' in str(
+            excinfo.value)
 
     @pytest.mark.django_db
     def test_create_participants_daily(self):
