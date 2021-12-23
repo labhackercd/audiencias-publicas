@@ -26,6 +26,7 @@ def test_utils_get_room():
     room2 = get_room(1)
     assert room1 == room2
 
+
 @pytest.mark.django_db
 def test_utils_get_room_value_error():
     with pytest.raises(ValueError):
@@ -36,6 +37,19 @@ def test_utils_get_room_value_error():
 def test_utils_get_room_not_exists():
     with pytest.raises(Room.DoesNotExist):
         get_room(1)
+
+
+@pytest.mark.django_db
+def test_utils_get_data():
+    json_text = '{"text": "This is a test message."}'
+    response = get_data(json_text)
+    assert response == {'text': 'This is a test message.'}
+
+
+@pytest.mark.django_db
+def test_utils_get_data_value_error():
+    with pytest.raises(ValueError):
+        get_data('test')
 
 
 @pytest.mark.asyncio
