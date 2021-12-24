@@ -1,14 +1,17 @@
 import pytest
+from django.urls import path
 from channels.testing import WebsocketCommunicator
+from channels.layers import get_channel_layer
+from channels.routing import URLRouter
 from apps.core.consumers.utils import get_room, get_data
 from apps.core.consumers.home import HomeConsumer
 from apps.core.consumers.room_questions import QuestionsPanelConsumer
-from channels.layers import get_channel_layer
+from apps.core.consumers.room import RoomConsumer
+from apps.core.utils import encrypt
+from apps.core.models import Room, Question
+from apps.accounts.models import User
 from mixer.backend.django import mixer
-from apps.core.models import Room
 from asgiref.sync import sync_to_async
-from channels.routing import URLRouter
-from django.urls import path
 import os
 
 os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
@@ -81,7 +84,7 @@ async def test_home_consumer(settings):
 
 
 @pytest.mark.asyncio
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 async def test_question_panel_consumer(settings):
     
     settings.CHANNEL_LAYERS = TEST_CHANNEL_LAYERS
@@ -115,5 +118,74 @@ async def test_question_panel_consumer(settings):
     
     assert response == message['text']
     
+    # Close
+    await communicator.disconnect()
+
+
+@pytest.mark.asyncio
+@pytest.mark.django_db
+async def test_room_consumer():
+    room = await sync_to_async(
+        mixer.blend)(Room, is_active=True, is_visible=True)
+    user = await sync_to_async(
+        mixer.blend)(User, is_active=True)
+
+    application = URLRouter([
+        path('sala/<int:room_id>/stream/',
+        RoomConsumer.as_asgi()),
+    ])
+
+    communicator = WebsocketCommunicator(
+        application,
+        '/sala/%s/stream/' % room.id)
+    communicator.scope['user'] = user
+    connected, _ = await communicator.connect()
+    
+    assert connected
+
+    handler = encrypt(str(user.id).rjust(10))
+    question = await sync_to_async(
+        mixer.blend)(Question, room=room)
+
+    # Test send vote
+    new_vote_data = {
+        'handler': handler,
+        'question': question.id,
+        'is_vote': True,
+    }
+    
+    await communicator.send_json_to(data=new_vote_data)
+    response = await communicator.receive_json_from(timeout=5)
+    assert response['user'] == handler
+    assert len(response['voteList']) == 1
+    
+    # Test remove vote
+    await communicator.send_json_to(data=new_vote_data)
+    response = await communicator.receive_json_from(timeout=5)
+    assert response['user'] == handler
+    assert len(response['voteList']) == 0
+
+    # Test send message
+    new_message_data = {
+        'handler': handler,
+        'message': 'Test message',
+    }
+    
+    await communicator.send_json_to(data=new_message_data)
+    response = await communicator.receive_json_from(timeout=5)
+    assert response['chat'] == True
+
+    # Test send question
+    new_question_data = {
+        'handler': handler,
+        'question': 'Test pederasta?',
+        'is_vote': False,
+    }
+    
+    await communicator.send_json_to(data=new_question_data)
+    response = await communicator.receive_json_from(timeout=5)
+    assert response['user'] == handler
+    assert response['question'] == True
+
     # Close
     await communicator.disconnect()

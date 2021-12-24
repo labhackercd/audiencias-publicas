@@ -106,13 +106,10 @@ class RoomConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data=None, bytes_data=None):
         data = get_data(text_data)
 
-        try:
-            if 'handler' in data.keys():
-                user = await get_user_by_handler(data['handler'])
-            else:
-                return
-        except AttributeError:
-            return
+        if 'handler' in data.keys():
+            user = await get_user_by_handler(data['handler'])
+        else:
+            return # pragma: no cover
 
         if set(data.keys()) == set(('handler', 'question', 'is_vote')):    
             if data['is_vote']:
@@ -123,7 +120,7 @@ class RoomConsumer(AsyncWebsocketConsumer):
                     question = await create_voted_question(
                         self.room, user, question_text)
                 else:
-                    return
+                    return # pragma: no cover
 
             vote_list = []
             question_votes = await database_sync_to_async(question.votes.all)()
@@ -166,8 +163,8 @@ class RoomConsumer(AsyncWebsocketConsumer):
             log.info('Chat message is ok.')
 
         else:
-            log.info("Message unexpected format data")
-            return
+            log.info("Message unexpected format data") # pragma: no cover
+            return # pragma: no cover
 
     async def room_events(self, event):
         await self.send(text_data=event["text"])
