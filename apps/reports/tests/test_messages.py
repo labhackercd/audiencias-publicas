@@ -1,7 +1,7 @@
 import pytest
 from mixer.backend.django import mixer
 from apps.reports.models import MessagesReport
-from apps.core.models import Message, Room
+from apps.core.models import Message
 from django.db import IntegrityError
 from apps.reports.tasks import (create_messages_object,
                                 get_messages_daily,
@@ -11,7 +11,6 @@ from datetime import date, datetime, timedelta
 from django.urls import reverse
 import json
 from rest_framework.test import APIClient
-import calendar
 
 
 class TestMessagesReport():
@@ -29,11 +28,12 @@ class TestMessagesReport():
             mixer.blend(MessagesReport,
                         period=content.period,
                         start_date=content.start_date)
-        assert 'UNIQUE constraint failed' in str(
-            excinfo.value)
-        ## PostgreSQL message error
-        # assert 'duplicate key value violates unique constraint' in str(
+        ## sqlite3 message error
+        # assert 'UNIQUE constraint failed' in str(
         #     excinfo.value)
+        ## PostgreSQL message error
+        assert 'duplicate key value violates unique constraint' in str(
+            excinfo.value)
 
     def test_create_messages_daily(self):
         data_daily = ['2020-11-23', 10]

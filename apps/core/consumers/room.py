@@ -9,98 +9,123 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth import get_user_model
 from channels_presence.models import Room as RoomPresence
 from channels_presence.decorators import touch_presence
-from asgiref.sync import sync_to_async
+from channels.db import database_sync_to_async
 
 User = get_user_model()
 log = logging.getLogger('ws-logger')
 
 
-@sync_to_async
-def set_max_online_users(room_id, group_name, channel_name, user):
+@database_sync_to_async
+def set_max_online_users(room, group_name, channel_name, user):
     room_presence = RoomPresence.objects.add(
         group_name, channel_name, user)
     anonymous_count = room_presence.get_anonymous_count()
     users_count = room_presence.get_users().count()
-    room = get_room(room_id)
     room.online_users = anonymous_count + users_count
     if room.online_users > room.max_online_users:
         room.max_online_users = room.online_users
     room.save(update_fields=['online_users', 'max_online_users'])
 
 
-@sync_to_async
-def set_user_offline(room_id, group_name, channel_name):
+@database_sync_to_async
+def set_user_offline(room, group_name, channel_name):
     RoomPresence.objects.remove(group_name, channel_name)
-    room = get_room(room_id)
     room.online_users -= 1
     room.save(update_fields=['online_users'])
 
 
-class RoomConsumer(AsyncWebsocketConsumer):
+@database_sync_to_async
+def get_user_by_handler(handler):
+    user = User.objects.get(id=decrypt(handler))
+    return user
 
+
+@database_sync_to_async
+def create_voted_question(room, user, query):
+    question = Question.objects.create(
+        room=room, user=user, question=query)
+    UpDownVote.objects.create(
+        question=question, user=user, vote=True)
+    return question
+
+
+@database_sync_to_async
+def create_chat_message(room, user, message_text):
+    message = Message.objects.create(
+        room=room, user=user, message=message_text)
+    return message
+
+
+@database_sync_to_async
+def toggle_vote(question_id, user):
+    question = Question.objects.get(id=question_id)
+    if question.user != user:
+        vote, created = UpDownVote.objects.get_or_create(
+            user=user, question=question, vote=True)
+
+        if not created:
+            vote.delete()
+    return question
+
+
+def clean_text(text):
+    blackList = [x.strip() for x in config.WORDS_BLACK_LIST.split(',')]
+    wordList = re.sub(
+        "[^\w]", " ", text.lower()).split()
+    censured_words = list(set(blackList) & set(wordList))
+
+    if censured_words:
+        for word in censured_words:
+            text = re.sub(
+                word, '♥', text, flags=re.IGNORECASE)
+    
+    return text
+
+
+class RoomConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         room_id = self.scope['url_route']['kwargs']['room_id']
-        room = get_room(room_id)
-        self.group_name = room.group_room_name
+        self.room = await database_sync_to_async(Room.objects.get)(id=room_id)
+        self.group_name = self.room.group_room_name
+        self.user = self.scope['user']
 
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
 
-        if room is not None:
+        if self.room is not None:
             await set_max_online_users(
-                room_id, self.group_name, self.channel_name, self.scope['user'])
+                self.room, self.group_name, self.channel_name, self.user)
             log.info('Room websocket connected.')
-    
+
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        await set_user_offline(self.room, self.group_name, self.channel_name)
+        log.info('Room websocket disconnected. Code: %s' % close_code)
+
     @touch_presence
     async def receive(self, text_data=None, bytes_data=None):
-        room_id = self.scope['url_route']['kwargs']['room_id']
-        room = get_room(room_id)
         data = get_data(text_data)
 
-        try:
-            if not 'handler' in data.keys():
-                return
-        except AttributeError:
-            return
+        if 'handler' in data.keys():
+            user = await get_user_by_handler(data['handler'])
+        else:
+            return # pragma: no cover
 
-        blackList = [x.strip() for x in config.WORDS_BLACK_LIST.split(',')]
-
-        if set(data.keys()) == set(('handler', 'question', 'is_vote')):
-            user = User.objects.get(id=decrypt(data['handler']))
-            
+        if set(data.keys()) == set(('handler', 'question', 'is_vote')):    
             if data['is_vote']:
-                question = Question.objects.get(id=data['question'])
-                
-                if question.user != user:
-                    vote, created = UpDownVote.objects.get_or_create(
-                        user=user, question=question, vote=True
-                    )
-
-                    if not created:
-                        vote.delete()
-
+                question = await toggle_vote(data['question'], user)
             else:
-                if len(data['question']) <= 300:
-                    wordList = re.sub(
-                        "[^\w]", " ", data['question'].lower()).split()
-                    censured_words = list(set(blackList) & set(wordList))
-                    query = data['question']
-
-                    if censured_words:
-                        for word in censured_words:
-                            query = re.sub(word, '♥', query, flags=re.IGNORECASE)
-                    
-                    question = Question.objects.create(
-                        room=room, user=user, question=query)
-                    UpDownVote.objects.create(
-                        question=question, user=user, vote=True)
-
+                if len(data['question']) <= 300 and data['question'].strip():
+                    question_text = clean_text(data['question'])
+                    question = await create_voted_question(
+                        self.room, user, question_text)
                 else:
-                    return
+                    return # pragma: no cover
 
             vote_list = []
-
-            for vote in question.votes.all():
+            question_votes = await database_sync_to_async(question.votes.all)()
+            
+            for vote in question_votes:
                 vote_list.append(encrypt(str(vote.user.id).rjust(10)))
             
             text_question = {
@@ -122,17 +147,9 @@ class RoomConsumer(AsyncWebsocketConsumer):
             log.info('Question message is ok.')
 
         elif set(data.keys()) == set(('handler', 'message')):
-            word_list = re.sub("[^\w]", " ", data['message'].lower()).split()
-            censured_words = list(set(blackList) & set(word_list))
-            message = data['message']
-
-            if message.strip():
-                if censured_words:
-                    for word in censured_words:
-                        message = re.sub(word, '♥', message, flags=re.IGNORECASE)
-                user = User.objects.get(id=decrypt(data['handler']))
-                message = Message.objects.create(
-                    room=room, user=user, message=message)
+            if data['message'].strip():
+                message_text = clean_text(data['message'])
+                message = await create_chat_message(self.room, user, message_text)
                 text_chat = {
                     "chat": True,
                     "html": message.html_body()
@@ -146,14 +163,8 @@ class RoomConsumer(AsyncWebsocketConsumer):
             log.info('Chat message is ok.')
 
         else:
-            log.info("Message unexpected format data")
-            return
+            log.info("Message unexpected format data") # pragma: no cover
+            return # pragma: no cover
 
-    async def disconnect(self, close_code):
-        room_id = self.scope['url_route']['kwargs']['room_id']
-        await self.channel_layer.group_discard(self.group_name, self.channel_name)
-        await set_user_offline(room_id, self.group_name, self.channel_name)
-        log.info('Room websocket disconnected. Code: %s' % close_code)
-    
     async def room_events(self, event):
         await self.send(text_data=event["text"])

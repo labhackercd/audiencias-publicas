@@ -11,7 +11,6 @@ from datetime import date, datetime, timedelta
 from django.urls import reverse
 import json
 from rest_framework.test import APIClient
-import calendar
 
 
 class TestRoomsReport():
@@ -29,11 +28,12 @@ class TestRoomsReport():
             mixer.blend(RoomsReport,
                         period=content.period,
                         start_date=content.start_date)
-        assert 'UNIQUE constraint failed' in str(
-            excinfo.value)
-        ## PostgreSQL message error
-        # assert 'duplicate key value violates unique constraint' in str(
+        ## sqlite3 message error
+        # assert 'UNIQUE constraint failed' in str(
         #     excinfo.value)
+        ## PostgreSQL message error
+        assert 'duplicate key value violates unique constraint' in str(
+            excinfo.value)
 
     def test_create_rooms_daily(self):
         data_daily = ['2020-11-23', [10, 5, 5]]

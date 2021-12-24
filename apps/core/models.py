@@ -242,7 +242,7 @@ class Video(TimestampedMixin):
         async_to_sync(channel_layer.group_send)(
             self.room.group_room_name,
             {'type': 'room_events',
-                'text': json.dumps(text)}
+             'text': json.dumps(text)}
         )
 
 
