@@ -2,7 +2,7 @@ import pytest
 from mixer.backend.django import mixer
 from apps.reports.models import ParticipantsReport
 from django.db import IntegrityError
-from apps.core.models import Message, Room
+from apps.core.models import Message, Question, Room, UpDownVote
 from apps.reports.tasks import (create_participants_object,
                                 get_participants_daily,
                                 get_participants_monthly,
@@ -149,9 +149,16 @@ class TestParticipantsReport():
         first_room.created = initial_date
         first_room.save()
 
+        ParticipantsReport.objects.all().delete()
+
         mixer.blend(ParticipantsReport, period='all', participants=0,
                     start_date=initial_date,
                     end_date=yesterday)
+
+
+        Message.objects.all().delete()
+        UpDownVote.objects.all().delete()
+        Question.objects.all().delete()
 
         message = mixer.blend(Message, room=first_room)
         message.created = yesterday
