@@ -84,7 +84,7 @@ async def test_home_consumer(settings):
 
 
 @pytest.mark.asyncio
-@pytest.mark.django_db(transaction=True)
+@pytest.mark.django_db()
 async def test_question_panel_consumer(settings):
     
     settings.CHANNEL_LAYERS = TEST_CHANNEL_LAYERS
