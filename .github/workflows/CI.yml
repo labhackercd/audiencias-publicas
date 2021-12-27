@@ -13,10 +13,11 @@ jobs:
         run: docker-compose up -d
 
       - name: Generate coverage report
-        run: docker-compose exec -T web sh -c "pytest --cov-report=xml term-missing --cov=./"
+        run: docker-compose exec -T web sh -c "pytest --cov-report=xml --cov=apps"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
+          file: ./coverage.xml
           name: codecov-umbrella
           verbose: true
