@@ -8,7 +8,15 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: recursive
+
       - name: Build the stack
         run: docker-compose up -d
-      - name: Test
+
+      - name: Generate coverage report
         run: docker-compose exec web sh -c "pytest --cov-report term-missing --cov=apps"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
+          verbose: true
