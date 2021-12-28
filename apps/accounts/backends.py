@@ -14,7 +14,7 @@ class AudienciasAuthBackend(RemoteUserBackend):
         remote_user_data = json.loads(
             request.META.get('HTTP_REMOTE_USER_DATA')
         )
-        user, created = UserModel.objects.get_or_create(
+        user, _ = UserModel.objects.get_or_create(
             email=remote_user_data['email']
         )
         user.username = remote_user
