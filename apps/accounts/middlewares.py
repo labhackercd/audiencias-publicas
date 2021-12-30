@@ -70,6 +70,7 @@ class AudienciasRemoteUser(RemoteUserMiddleware):
         except ImportError:
             # backend failed to load
             auth.logout(request)
+            raise
         else:
             if isinstance(stored_backend, AudienciasAuthBackend):
                 auth.logout(request)
