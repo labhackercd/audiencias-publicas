@@ -5,7 +5,6 @@ from django.contrib.auth.models import AnonymousUser
 from django.test.client import RequestFactory
 from apps.accounts.backends import AudienciasAuthBackend
 from apps.accounts.middlewares import AudienciasRemoteUser
-from django.test import Client
 from django.core.exceptions import ImproperlyConfigured
 from django.contrib import auth
 import json
@@ -15,10 +14,15 @@ TEST_AUTHENTICATION_BACKENDS = (
     'apps.accounts.backends.AudienciasAuthBackend',
 )
 
+
+@pytest.fixture
+def test_user(db, django_user_model):
+    return django_user_model.objects.create_user(
+        username='testuser', email='test@e.com', is_active=True)
+
+
 @pytest.mark.django_db
-def test_remote_user_authenticate():
-    user = mixer.blend(
-        User, username='testuser', email='test@e.com', is_active=True)
+def test_remote_user_authenticate(test_user):
     user_data = {
         'email': 'test@e.com',
         'first_name': 'test',
@@ -27,9 +31,9 @@ def test_remote_user_authenticate():
     request.META['HTTP_REMOTE_USER_DATA'] = json.dumps(user_data)
     auth_backend = AudienciasAuthBackend()
     authenticated_user = auth_backend.authenticate(
-        request, user.username)
+        request, test_user.username)
 
-    assert user == authenticated_user
+    assert test_user == authenticated_user
 
 
 def test_no_remote_user_authenticate():
@@ -41,11 +45,9 @@ def test_no_remote_user_authenticate():
 
 
 @pytest.mark.django_db
-def test_user_no_remote_user_middleware():
-    user = mixer.blend(User, username='testuser', is_active=True)
-
+def test_user_no_remote_user_middleware(test_user):
     request = RequestFactory().get('/')
-    request.user = user
+    request.user = test_user
     auth_middleware = AudienciasRemoteUser()
     response = auth_middleware.process_request(request)
 
@@ -53,12 +55,10 @@ def test_user_no_remote_user_middleware():
 
 
 @pytest.mark.django_db
-def test_invalid_username_remote_user_middleware():
-    user = mixer.blend(User, username='testuser', is_active=True)
-    client = Client()
-    client.force_login(user)
+def test_invalid_username_remote_user_middleware(test_user, client):
+    client.force_login(test_user)
     request = RequestFactory().get('/')
-    request.user = user
+    request.user = test_user
     request.META['HTTP_AUTH_USER'] = 'invaliduser'
     request.session = client.session
     auth_middleware = AudienciasRemoteUser()
@@ -76,12 +76,10 @@ def test_utils_get_room_value_error():
 
 
 @pytest.mark.django_db
-def test_valid_username_authenticated_middleware():
-    user = mixer.blend(User, username='testuser', is_active=True)
-    client = Client()
-    client.force_login(user)
+def test_valid_username_authenticated_middleware(test_user, client):
+    client.force_login(test_user)
     request = RequestFactory().get('/')
-    request.user = user
+    request.user = test_user
     request.META['HTTP_AUTH_USER'] = 'testuser'
     request.session = client.session
     auth_middleware = AudienciasRemoteUser()
@@ -91,12 +89,10 @@ def test_valid_username_authenticated_middleware():
 
 
 @pytest.mark.django_db
-def test_force_logout_if_no_header_middleware():
-    user = mixer.blend(User, username='testuser', is_active=True)
-    client = Client()
-    client.force_login(user)
+def test_force_logout_if_no_header_middleware(test_user, client):
+    client.force_login(test_user)
     request = RequestFactory().get('/')
-    request.user = user
+    request.user = test_user
     request.session = client.session
     auth_middleware = AudienciasRemoteUser()
     auth_middleware.force_logout_if_no_header = True
@@ -106,13 +102,11 @@ def test_force_logout_if_no_header_middleware():
 
 
 @pytest.mark.django_db
-def test_remove_invalid_user_no_session_key():
+def test_remove_invalid_user_no_session_key(test_user, client):
     with pytest.raises(ImportError):
-        user = mixer.blend(User, username='testuser', is_active=True)
-        client = Client()
-        client.force_login(user)
+        client.force_login(test_user)
         request = RequestFactory().get('/')
-        request.user = user
+        request.user = test_user
         request.session = client.session
         del request.session[auth.BACKEND_SESSION_KEY]
         auth_middleware = AudienciasRemoteUser()
@@ -121,14 +115,12 @@ def test_remove_invalid_user_no_session_key():
 
 
 @pytest.mark.django_db
-def test_remove_invalid_user_invalid_session_key():
+def test_remove_invalid_user_invalid_session_key(test_user, client):
     settings.AUTHENTICATION_BACKENDS = TEST_AUTHENTICATION_BACKENDS
     backend_path = 'apps.accounts.backends.AudienciasAuthBackend'
-    user = mixer.blend(User, username='testuser', is_active=True)
-    client = Client()
-    client.force_login(user)
+    client.force_login(test_user)
     request = RequestFactory().get('/')
-    request.user = user
+    request.user = test_user
     request.session = client.session
     request.session[auth.BACKEND_SESSION_KEY] = backend_path
     auth_middleware = AudienciasRemoteUser()
@@ -167,13 +159,11 @@ def test_valid_username_unauthenticated_middleware():
 
 
 @pytest.mark.django_db
-def test_valid_username_unauthenticated_with_profile_middleware():
+def test_valid_username_unauthenticated_with_profile_middleware(test_user):
     from django.contrib.sessions.middleware import SessionMiddleware
     settings.AUTHENTICATION_BACKENDS = TEST_AUTHENTICATION_BACKENDS
     backend_path = 'apps.accounts.backends.AudienciasAuthBackend'
-    existing_user = mixer.blend(User,
-        username='testuser', email='test@e.com', is_active=True)
-    mixer.blend(UserProfile, user=existing_user)
+    mixer.blend(UserProfile, user=test_user)
     user_data = {
         'email': 'test@e.com',
         'avatar': '/media/img/avatar.png',
