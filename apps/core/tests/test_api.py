@@ -4,7 +4,6 @@ from apps.core.models import Room
 from apps.core.permissions import ApiKeyPermission
 from apps.accounts.models import User
 from django.urls import reverse
-from django.conf import settings
 from django.test import RequestFactory
 
 
