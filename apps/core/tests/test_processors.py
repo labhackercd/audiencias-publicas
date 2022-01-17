@@ -1,4 +1,3 @@
-import pytest
 from apps.core.processors import analytics
 from django.test import RequestFactory
 from django.conf import settings
