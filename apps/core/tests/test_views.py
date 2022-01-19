@@ -3,6 +3,7 @@ from apps.core.models import Question, Room, UpDownVote, Video, RoomAttachment
 from apps.accounts.models import UserProfile
 from mixer.backend.django import mixer
 from django.urls import reverse
+from django.test import RequestFactory
 import json
 
 
@@ -467,22 +468,25 @@ def test_delete_video_unauthenticated(client):
     assert response.status_code == 403
 
 
-# @pytest.mark.django_db
-# def test_order_videos(client, test_user):
-#     room = mixer.blend(Room)
-#     video = mixer.blend(Video, order=0)
-#     mixer.blend(UserProfile, is_admin=True, user=test_user)
-#     client.force_login(test_user)
+@pytest.mark.django_db
+def test_order_videos(test_user, client):
+    room = mixer.blend(Room)
+    video = mixer.blend(Video, video_id='testVideo', order=1)
+    mixer.blend(UserProfile, is_admin=True, user=test_user)
+    client.force_login(test_user)
 
-#     data = json.dumps({"data": [{"id": video.id, "order": "1"}]})
+    data = {'data': json.dumps([{'id': video.id, 'order': 2}])}
 
-#     url = reverse('order_videos',
-#                   kwargs={'room_id': room.id})
-
-#     response = client.post(url, data, content_type='accept/json')
-
-#     assert response.status_code == 200
-#     assert video.order == 1
+    url = reverse('order_videos',
+                  kwargs={'room_id': room.id})
+    
+    response = client.post(
+        url,
+        data=data,
+    )
+    ordered_video = Video.objects.get(video_id='testVideo')
+    assert response.status_code == 200
+    assert ordered_video.order == 2
 
 
 @pytest.mark.django_db
