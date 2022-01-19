@@ -35,7 +35,7 @@ services:
       - "8000:80"
 
   db:
-    image: postgres:9.4
+    image: postgres:9.6
     environment: *database-variables
 
   worker:
