@@ -12,7 +12,6 @@ RUN pip3 install -r requirements.txt gunicorn && \
     rm -r /root/.cache
 
 RUN npm install && \
-    npm install -g --unsafe-perm node-sass --save && \
     npm rebuild node-sass --force
 
 RUN python3 manage.py bower_install --allow-root && \

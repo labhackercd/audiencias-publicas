@@ -202,6 +202,7 @@ COMPRESS_PRECOMPILERS = [
     ('text/es6', BROWSERIFY + ' {infile} -t babelify --outfile {outfile}')
 ]
 
+COMPRESS_ENABLED = config('COMPRESS_ENABLED', default=True)
 COMPRESS_ROOT = os.path.join(BASE_DIR, 'static')
 COMPRESS_OFFLINE = config('COMPRESS_OFFLINE', default=False)
 
