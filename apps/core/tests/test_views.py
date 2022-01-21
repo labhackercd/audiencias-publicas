@@ -1,6 +1,7 @@
 import pytest
 from apps.core.models import Question, Room, UpDownVote, Video, RoomAttachment
 from apps.accounts.models import UserProfile
+from apps.core.views import index
 from mixer.backend.django import mixer
 from django.urls import reverse
 from django.test import RequestFactory
@@ -224,8 +225,9 @@ def test_set_priotity_unauthenticated(client):
 
 
 @pytest.mark.django_db
-def test_index(client):
-    response = client.get('/')
+def test_index():
+    request = RequestFactory().get('/')
+    response = index(request)
 
     assert response.status_code == 200
 
