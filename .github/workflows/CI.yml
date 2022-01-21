@@ -6,8 +6,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          submodules: true
+
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
 
       - name: Build the stack
         run: docker-compose up -d
