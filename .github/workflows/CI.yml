@@ -7,7 +7,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          submodules: recursive
+          submodules: true
 
       - name: Build the stack
         run: docker-compose up -d
