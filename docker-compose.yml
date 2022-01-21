@@ -19,6 +19,7 @@ x-application-variables: &application-variables
   WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
   COMPRESS_ENABLED: 'True'
   COMPRESS_OFFLINE: 'True'
+  COMPRESS_ROOT_DIR: 'public'
   URL_PREFIX: 
   FORCE_SCRIPT_NAME:
   STATIC_URL: /static/
