@@ -6,12 +6,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Checkout submodules
-        run: git submodule update --init --recursive
+        with:
+          submodules: recursive
 
       - name: Build the stack
         run: docker-compose up -d
+      
+      - name: Force compress staticfiles
+        run: docker-compose exec -T web sh -c "python3 manage.py compress --force"
 
       - name: Generate coverage report
         run: docker-compose exec -T web sh -c "pytest --cov-report=xml --cov=apps"
