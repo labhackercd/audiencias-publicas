@@ -46,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
             if api_key != settings.SECRET_KEY:
                 ret.pop('email')
         else:
-            ret.pop('email')
+            ret.pop('email') # pragma: no cover
 
         ret.pop('is_active', None)
         ret.pop('is_staff', None)

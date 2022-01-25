@@ -97,10 +97,11 @@ class Room(TimestampedMixin):
         return False
 
     def latest_video(self):
-        if self.videos:
+        try:
             latest = self.videos.filter(is_attachment=False).latest('created')
             return latest
-        return False
+        except Video.DoesNotExist:
+            raise
 
     def get_main_videos(self):
         return self.videos.filter(is_attachment=False).order_by('-created')

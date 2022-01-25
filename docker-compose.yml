@@ -14,10 +14,12 @@ x-application-variables: &application-variables
   DATABASE_NAME: audiencias
   DATABASE_HOST: db
   DATABASE_PORT: 5432
-  DEBUG: "False"
+  DEBUG: 'False'
   REDIS_SERVER: redis
   WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
-  COMPRESS_OFFLINE: "True"
+  COMPRESS_ENABLED: 'True'
+  COMPRESS_OFFLINE: 'True'
+  COMPRESS_ROOT_DIR: 'public'
   URL_PREFIX: 
   FORCE_SCRIPT_NAME:
   STATIC_URL: /static/
@@ -35,7 +37,7 @@ services:
       - "8000:80"
 
   db:
-    image: postgres:9.4
+    image: postgres:9.6
     environment: *database-variables
 
   worker:
