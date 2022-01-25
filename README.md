@@ -20,8 +20,8 @@ Depending on how Docker/Docker Compose was installed in your machine you may nee
 
 - run the following command when the Docker container is already up:
 ```bash
-sudo docker-compose exec backend sh -c "pytest --cov-report term-missing --cov=apps"
-``` 
+sudo docker-compose exec -T web sh -c "pytest --cov-report term-missing --cov=apps"
+```
 
 ### 2. Installing Audiencias localy
 
