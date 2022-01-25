@@ -12,8 +12,8 @@ jobs:
       - name: Build the stack
         run: docker-compose up -d
       
-      - name: Install node-sass
-        run: docker-compose exec -T web sh -c "npm install -g node-sass"
+      - name: Rebuild node-sass
+        run: docker-compose exec -T web sh -c "npm rebuild node-sass --force"
       
       - name: Compress staticfiles
         run: docker-compose exec -T web sh -c "python3 manage.py compress --force"
