@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/gh/labhackercd/audiencias-publicas/branch/django-channels-update/graph/badge.svg?token=52UT246A6P)](https://codecov.io/gh/labhackercd/audiencias-publicas)
+
 # Audiencias Públicas
 > Participate remotely in events via a three-paneled approach: live video, chat, and crowdsourced ranked questions. You can see the audiencias running in the following link <https://edemocracia.camara.leg.br/audiencias/>
 
@@ -13,6 +15,13 @@ Run the following command and all the necessary dependences will be installed an
 ```
 
 Depending on how Docker/Docker Compose was installed in your machine you may need to run this command as a super user.
+
+**How to run tests.**
+
+- run the following command when the Docker container is already up:
+```bash
+sudo docker-compose exec backend sh -c "pytest --cov-report term-missing --cov=apps"
+``` 
 
 ### 2. Installing Audiencias localy
 
@@ -78,13 +87,13 @@ pipenv run src/manage.py runserver
 Otherwise in case you are running it direct in your machine, inside the root of your directory, the following commands:
 
 ```
-./manage.py migrate
-./manage.py runserver
+python3 manage.py migrate
+python3 manage.py runserver
 ```
 
 ## Support
 
-Fell free to create any issue on this repository and contact the team responsible to maintain this project here on GitHub ( @erivanio, @thiagonf, @joaopaulonsoares and @teogenesmoura) or via email: labhacker@camara.leg.br.
+Fell free to create any issue on this repository and contact the team responsible to maintain this project here on GitHub (@erivanio) or via email: labhacker@camara.leg.br.
 
 ## Contributing
 1. Fork of this repository
