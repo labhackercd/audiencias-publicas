@@ -6,6 +6,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.shortcuts import redirect
 from apps.core.templatetags.video_utils import belongs_to_group
+from django.http import Http404
 
 
 def send_participants_notification(request, room_id):
@@ -50,3 +51,5 @@ def send_participants_notification(request, room_id):
         notification.save()
 
         return redirect('video_room', pk=room_id)
+    else:
+        raise Http404()

@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path
 from django.views.decorators.csrf import ensure_csrf_cookie
 from rest_framework.routers import DefaultRouter
 from apps.core.views import (VideoDetail, RoomQuestionList, ClosedVideos,
@@ -12,41 +12,41 @@ from apps.core import api
 
 
 urlpatterns = [
-    url(r'^$', index, name='home'),
-    url(r'^pergunta/(?P<pk>\d+)/?$', QuestionDetail.as_view(),
-        name='question_detail'),
-    url(r'^pergunta/(?P<question_id>\d+)/definir_resposta/?$', set_answer_time,
-        name='set_question_answer_time'),
-    url(r'^pergunta/(?P<question_id>\d+)/respondida/?$', set_answered,
-        name='set_question_answered'),
-    url(r'^pergunta/(?P<question_id>\d+)/prioritaria/?$', set_priotity,
-        name='set_question_priotity'),
-    url(r'^sala/(?P<pk>\d+)/?$', VideoDetail.as_view(), name='video_room'),
-    url(r'^sala/(?P<room_id>\d+)/anexo/adicionar/?$', create_attachment,
-        name='create_attachment'),
-    url(r'^anexo/(?P<attachment_id>\d+)/deletar/?$', delete_attachment,
-        name='delete_attachment'),
-    url(r'^sala/(?P<room_id>\d+)/video/adicionar/?$', create_video_attachment,
-        name='create_video_attachment'),
-    url(r'^video/(?P<video_id>\d+)/deletar/?$', delete_video,
-        name='delete_video'),
-    url(r'^sala/(?P<room_id>\d+)/link/adicionar/?$', add_external_link,
-        name='add_external_link'),
-    url(r'^sala/(?P<room_id>\d+)/link/deletar/?$', remove_external_link,
-        name='remove_external_link'),
-    url(r'^sala/(?P<pk>\d+)/relatorio/?$', RoomReportView.as_view(),
-        name='room_report'),
-    url(r'^sala/reuniao/(?P<cod_reunion>\d+)/?$', redirect_to_room,
-        name='video_reunion_room'),
-    url(r'^sala/(?P<pk>\d+)/perguntas/?$', RoomQuestionList.as_view(),
-        name='questions_list'),
-    url(r'^sala/(?P<room_id>\d+)/ordered-videos/?$', order_videos,
-        name='order_videos'),
-    url(r'^fechadas/?$', ClosedVideos.as_view(), name='video_list'),
-    url(r'^widget/(?P<pk>\d+)/?$',
-        ensure_csrf_cookie(WidgetVideoDetail.as_view()),
-        name='widget_index'),
-    url(r'^blacklist/?$', censorship, name='censorship')
+    path('', index, name='home'),
+    path('pergunta/<int:pk>/', QuestionDetail.as_view(),
+         name='question_detail'),
+    path('pergunta/<int:question_id>/definir_resposta/', set_answer_time,
+         name='set_question_answer_time'),
+    path('pergunta/<int:question_id>/respondida/', set_answered,
+         name='set_question_answered'),
+    path('pergunta/<int:question_id>/prioritaria/', set_priotity,
+         name='set_question_priotity'),
+    path('sala/<int:pk>/', VideoDetail.as_view(), name='video_room'),
+    path('sala/<int:room_id>/anexo/adicionar/', create_attachment,
+         name='create_attachment'),
+    path('anexo/<int:attachment_id>/deletar/', delete_attachment,
+         name='delete_attachment'),
+    path('sala/<int:room_id>/video/adicionar/', create_video_attachment,
+         name='create_video_attachment'),
+    path('video/<int:video_id>/deletar/', delete_video,
+         name='delete_video'),
+    path('sala/<int:room_id>/link/adicionar/', add_external_link,
+         name='add_external_link'),
+    path('sala/<int:room_id>/link/deletar/', remove_external_link,
+         name='remove_external_link'),
+    path('sala/<int:pk>/relatorio/', RoomReportView.as_view(),
+         name='room_report'),
+    path('sala/reuniao/<int:cod_reunion>/', redirect_to_room,
+         name='video_reunion_room'),
+    path('sala/<int:pk>/perguntas/', RoomQuestionList.as_view(),
+         name='questions_list'),
+    path('sala/<int:room_id>/ordered-videos/', order_videos,
+         name='order_videos'),
+    path('fechadas/', ClosedVideos.as_view(), name='video_list'),
+    path('widget/<int:pk>/',
+         ensure_csrf_cookie(WidgetVideoDetail.as_view()),
+         name='widget_index'),
+    path('blacklist/', censorship, name='censorship')
 ]
 
 router = DefaultRouter()
@@ -58,5 +58,5 @@ router.register(r'api/vote', api.VoteViewSet)
 
 urlpatterns += router.urls
 urlpatterns += [
-    url(r'^api/$', api.api_root),
+    path('api/', api.api_root, name='api_root'),
 ]

@@ -1,11 +1,11 @@
-# -*- encoding: utf-8 -*-
 from django.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from apps.core.models import TimestampedMixin, Room
 
 
 class ParticipantNotification(TimestampedMixin):
-    room = models.ForeignKey(Room, verbose_name=_('room'))
+    room = models.ForeignKey(Room, verbose_name=_('room'),
+                             on_delete=models.CASCADE)
     emails = models.TextField()
     subject = models.CharField(_('subject'), max_length=100)
     content = models.TextField(_('content'))

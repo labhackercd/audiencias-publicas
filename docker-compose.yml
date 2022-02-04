@@ -14,28 +14,34 @@ x-application-variables: &application-variables
   DATABASE_NAME: audiencias
   DATABASE_HOST: db
   DATABASE_PORT: 5432
-  DEBUG: "False"
+  DEBUG: 'False'
   REDIS_SERVER: redis
   WEBSERVICE_URL: https://infoleg.camara.leg.br/ws-pauta/evento/interativo
-  COMPRESS_OFFLINE: "True"
+  COMPRESS_ENABLED: 'True'
+  COMPRESS_OFFLINE: 'True'
+  COMPRESS_ROOT_DIR: 'public'
+  URL_PREFIX: 
+  FORCE_SCRIPT_NAME:
+  STATIC_URL: /static/
+  ENABLE_REMOTE_USER: 'False'
 
 services:
   nginx:
-    image: nginx:latest
+    image: nginx:1.15.10
     depends_on:
       - web
     volumes:
-      - data:/var/labhacker/audiencias
-      - ./config/etc/nginx/conf.d/:/etc/nginx/conf.d/:z
+      - ./:/var/labhacker/audiencias:z
+      - ./config/etc/nginx/conf.d:/etc/nginx/conf.d:z
     ports:
       - "8000:80"
 
   db:
-    image: postgres:9.4
+    image: postgres:9.6
     environment: *database-variables
 
   worker:
-    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:3.5.1
+    image: audiencias-publicas_web:latest
     command: ./start-worker.sh
     links:
       - redis
@@ -49,14 +55,14 @@ services:
       - "web"
 
   web:
-    image: dockerhub-pub.camara.leg.br/labhacker/audiencias-publicas:3.5.1
+    build: .
     command: ./start-web.sh
     restart: on-failure
     links:
       - db
       - redis
     volumes:
-      - data:/var/labhacker/audiencias
+      - ./:/var/labhacker/audiencias
     environment:
       <<: *database-variables
       <<: *application-variables
@@ -70,7 +76,7 @@ services:
     image: redis:alpine
   
   celeryworker:
-    build: .
+    image: audiencias-publicas_web:latest
     command: bash -c "celery -A audiencias_publicas worker -l info"
     volumes:
       - .:/var/labhacker/audiencias
@@ -84,7 +90,7 @@ services:
       - web
 
   celerybeat:
-    build: .
+    image: audiencias-publicas_web:latest
     command: ./start_celery_beat.sh
     volumes:
       - .:/var/labhacker/audiencias

@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 from django.contrib.auth import get_user_model
 from django_filters import FilterSet
 from django_filters import rest_framework as django_filters
@@ -40,7 +39,7 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ('username', 'first_name', 'last_name')
 
     @method_decorator(cache_page(60 * 5))  # 5 minutes
-    def list(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs): # pragma: no cover
         return super().list(request, *args, **kwargs)
 
 
@@ -57,7 +56,7 @@ class VoteViewSet(viewsets.ModelViewSet):
     ordering_fields = ('user', 'vote')
 
     @method_decorator(cache_page(60 * 5))  # 5 minutes
-    def list(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs): # pragma: no cover
         return super().list(request, *args, **kwargs)
 
 
@@ -93,7 +92,7 @@ class MessageViewSet(viewsets.ModelViewSet):
     ordering_fields = ('created', 'modified', 'user', 'room')
 
     @method_decorator(cache_page(60 * 5))  # 5 minutes
-    def list(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs): # pragma: no cover
         return super().list(request, *args, **kwargs)
 
 
@@ -129,7 +128,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     ordering_fields = ('created', 'modified')
 
     @method_decorator(cache_page(60 * 5))  # 5 minutes
-    def list(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs): # pragma: no cover
         return super().list(request, *args, **kwargs)
 
 
@@ -161,7 +160,7 @@ class RoomViewSet(viewsets.ModelViewSet):
     ordering_fields = '__all__'
 
     @method_decorator(cache_page(60 * 1))  # 1 minute
-    def list(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs): # pragma: no cover
         return super().list(request, *args, **kwargs)
 
 

@@ -1,20 +1,11 @@
 from django import template
-from django.template.defaultfilters import stringfilter
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
 from django.contrib.auth.models import Group
 import datetime
-import re
 
 
 register = template.Library()
-
-
-@register.filter
-@stringfilter
-def simplify(value):
-    replaced = re.sub(' - Audiência Pública .*', '', value)
-    return replaced
 
 
 @register.simple_tag()
