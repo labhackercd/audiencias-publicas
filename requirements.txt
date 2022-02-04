@@ -8,7 +8,7 @@ autobahn==19.8.1
 Automat==0.7.0
 backcall==0.2.0
 billiard==3.6.4.0
-celery==5.2.0
+celery==5.2.2
 certifi==2019.6.16
 cffi==1.12.3
 channels==3.0.4
