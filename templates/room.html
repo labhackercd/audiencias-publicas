@@ -70,7 +70,7 @@
       </div>
 
       <div class="info">
-        <a class="link" href="{{request.path}}/perguntas">Ir para a página de perguntas</a>
+        <a class="link" href="{{request.path}}perguntas">Ir para a página de perguntas</a>
         <a class="printLink" value="click" onclick="printExternal()">Imprimir perguntas</a>
       </div>
       
@@ -307,7 +307,7 @@
   <script src='https://www.youtube.com/iframe_api' async></script>
   <script>
     function printExternal() {
-        var printWindow = window.open( "{{request.path}}/perguntas", 'Print', 'left=200, top=200, width=950, height=500, toolbar=0, resizable=0');
+        var printWindow = window.open( "{{request.path}}perguntas", 'Print', 'left=200, top=200, width=950, height=500, toolbar=0, resizable=0');
 
         printWindow.addEventListener('load', function() {
             if (Boolean(printWindow.chrome)) {
