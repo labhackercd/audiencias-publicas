@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 
 class User(AbstractUser):
@@ -19,6 +19,7 @@ class User(AbstractUser):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
-                                related_name='profile')
+                                related_name='profile',
+                                on_delete=models.CASCADE)
     avatar_url = models.URLField(blank=True, null=True)
     is_admin = models.BooleanField(default=False)

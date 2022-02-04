@@ -214,7 +214,7 @@
       <div class="room-info">
         <ul class="list">
           <li>
-            <a class="link" href="{{request.path}}/relatorio">Ir para a página de relatório</a>
+            <a class="link" href="{% url 'room_report' pk=object.id %}">Ir para a página de relatório</a>
           </li>
         </ul>
       </div>

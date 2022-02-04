@@ -1,0 +1,29 @@
+name: CI
+on: [pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Build the stack
+        run: docker-compose up -d
+      
+      - name: Rebuild node-sass
+        run: docker-compose exec -T web sh -c "npm uninstall node-sass && npm install node-sass"
+      
+      - name: Compress staticfiles
+        run: docker-compose exec -T web sh -c "python3 manage.py compress --force"
+
+      - name: Generate coverage report
+        run: docker-compose exec -T web sh -c "pytest --cov-report=xml --cov=apps"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          file: ./coverage.xml
+          name: codecov-umbrella
+          verbose: true

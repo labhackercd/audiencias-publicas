@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path
 from apps.reports import api
 from rest_framework.routers import DefaultRouter
 
@@ -13,5 +13,5 @@ router.register(r'api/ranking', api.RoomRankingViewSet, 'ranking')
 
 urlpatterns = router.urls
 urlpatterns += [
-    url(r'^api/$', api.api_reports_root, name='reports_api_root'),
+    path('api/', api.api_reports_root, name='reports_api_root'),
 ]

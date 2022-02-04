@@ -1,6 +1,6 @@
 [run]
 source = apps/
-omit = *migrations*,**_init__.py,*manage.py,**audiencias_publicas/*
+omit = *migrations*,**_init__.py,*manage.py,**audiencias_publicas/*, **routing.py
 
 [report]
 show_missing = True

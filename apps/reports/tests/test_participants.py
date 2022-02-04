@@ -2,7 +2,7 @@ import pytest
 from mixer.backend.django import mixer
 from apps.reports.models import ParticipantsReport
 from django.db import IntegrityError
-from apps.core.models import Message, Room
+from apps.core.models import Message, Question, Room, UpDownVote
 from apps.reports.tasks import (create_participants_object,
                                 get_participants_daily,
                                 get_participants_monthly,
@@ -12,7 +12,6 @@ from datetime import date, datetime, timedelta
 from django.urls import reverse
 import json
 from rest_framework.test import APIClient
-import calendar
 
 
 class TestParticipantsReport():
@@ -30,11 +29,12 @@ class TestParticipantsReport():
             mixer.blend(ParticipantsReport,
                         period=content.period,
                         start_date=content.start_date)
-        assert 'UNIQUE constraint failed' in str(
-            excinfo.value)
-        ## PostgreSQL message error
-        # assert 'duplicate key value violates unique constraint' in str(
+        ## sqlite3 message error
+        # assert 'UNIQUE constraint failed' in str(
         #     excinfo.value)
+        ## PostgreSQL message error
+        assert 'duplicate key value violates unique constraint' in str(
+            excinfo.value)
 
     @pytest.mark.django_db
     def test_create_participants_daily(self):
@@ -145,15 +145,22 @@ class TestParticipantsReport():
         yesterday = date.today() - timedelta(days=1)
         initial_date = date(year=2020, month=1, day=1)
 
-        first_room = mixer.blend(Room)
+        first_room = mixer.blend(Room, date=initial_date)
         first_room.created = initial_date
         first_room.save()
 
+        ParticipantsReport.objects.all().delete()
+
         mixer.blend(ParticipantsReport, period='all', participants=0,
                     start_date=initial_date,
-                    end_date=yesterday - timedelta(days=1))
+                    end_date=yesterday)
 
-        message = mixer.blend(Message)
+
+        Message.objects.all().delete()
+        UpDownVote.objects.all().delete()
+        Question.objects.all().delete()
+
+        message = mixer.blend(Message, room=first_room)
         message.created = yesterday
         message.save()
 

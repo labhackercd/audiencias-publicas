@@ -1,12 +1,19 @@
-from channels import Group
+from channels.generic.websocket import AsyncWebsocketConsumer
+import logging
 
+log = logging.getLogger("ws-logger")
 
-def on_connect(message):
-    message.reply_channel.send({
-        'accept': True
-    })
-    Group('home').add(message.reply_channel)
+class HomeConsumer(AsyncWebsocketConsumer):
 
+    async def connect(self):
+        self.group_name = 'home'
+        await self.channel_layer.group_add(self.group_name, self.channel_name)
+        await self.accept()
+        log.info('Home websocket connected.')
 
-def on_disconnect(message):
-    Group('home').discard(message.reply_channel)
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
+        log.info('Home websocket disconnected. Code: %s' % close_code)
+
+    async def home_message(self, event):
+        await self.send(text_data=event["text"])

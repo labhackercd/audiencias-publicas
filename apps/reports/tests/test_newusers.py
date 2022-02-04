@@ -11,13 +11,12 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 import json
 from rest_framework.test import APIClient
-import calendar
 
 
 class TestNewUsers():
     def test_apps(self):
         from apps.reports.apps import ReportsConfig
-        assert ReportsConfig.name == 'reports'
+        assert ReportsConfig.name == 'apps.reports'
 
     @pytest.mark.django_db
     def test_new_users_create(self):
@@ -33,11 +32,12 @@ class TestNewUsers():
             mixer.blend(NewUsers,
                         period=content.period,
                         start_date=content.start_date)
-        assert 'UNIQUE constraint failed' in str(
-            excinfo.value)
-        ## PostgreSQL message error
-        # assert 'duplicate key value violates unique constraint' in str(
+        ## sqlite3 message error
+        # assert 'UNIQUE constraint failed' in str(
         #     excinfo.value)
+        ## PostgreSQL message error
+        assert 'duplicate key value violates unique constraint' in str(
+            excinfo.value)
 
     def test_create_new_users_daily(self):
         data_daily = ['2020-11-23', 10]

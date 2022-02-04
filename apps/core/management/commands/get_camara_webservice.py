@@ -80,7 +80,7 @@ class Command(BaseCommand):
                                 theme = lines[i + 1].upper()
                             elif 'TEMA:' in line:
                                 theme = re.sub(r'.*TEMA:', '', line).strip()
-                            if theme is not '':
+                            if theme != '':
                                 if theme.startswith('"'):
                                     theme = re.findall(r'"(.*?)"', theme)[0]
                                 elif theme.startswith('“'):
