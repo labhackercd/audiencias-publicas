@@ -1,2 +1,2 @@
 #!/bin/bash
-python3 manage.py runworker
+python3 manage.py runworker channels
