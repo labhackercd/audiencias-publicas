@@ -83,7 +83,7 @@ pycparser==2.19
 pycrypto==2.6.1
 Pygments==2.10.0
 PyHamcrest==1.9.0
-PyJWT==1.7.1
+PyJWT==2.4.0
 pyOpenSSL==21.0.0
 pyparsing==2.4.7
 pytest==6.2.5
